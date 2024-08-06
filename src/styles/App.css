@@ -6,7 +6,7 @@
 
 @font-face {
   font-family: 'SF Pro';
-  src: url('/public/fonts/ios.ttf') format('truetype');
+  src: url('/fonts/ios.ttf') format('truetype');
   font-weight: normal;
   font-style: normal;
 }
