@@ -5,14 +5,22 @@ const Login: React.FC = () => {
   return (
     <div className="container">
       <div className="left-side">
-        <h1>Bem-vindo(a)!</h1>
-        <p>Entre e explore nossos recursos de amostragem de água.</p>
-        <button className="login-button">Entrar</button>
+        <div className='content-left-side'>
+          <h1>Seja bem-vindo(a)!</h1>
+          <p>Entre e explore nossos recursos de amostragem de água.</p>
+          <button className="login-button">Entrar</button>
+        </div>
       </div>
       <div className="right-side">
-        <img src="src/assets/images/celular.svg" alt="Celular" />
-        <p>COM PONTOS DE</p>
-        <p>COLETA <span>ATUALIZADOS</span></p>
+        <div className="content">
+            <div className="content-names-sector">
+              <p>Engineering Technical School - Ca</p>  
+            </div>
+            <div className="content-img">
+              <img src="src/assets/images/celular.svg" alt="Celular" />
+            </div>
+        </div>
+
       </div>
     </div>
   );

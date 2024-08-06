@@ -5,7 +5,6 @@
   }
   
   .left-side, .right-side {
-    flex: 1;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -14,22 +13,46 @@
   
   .left-side {
     background-color: white;
+    width: 40%;
+  }
+
+  .content-left-side {
+    width: 300px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  h1 {
+    margin-bottom: 7px;
   }
   
   .right-side {
     background: linear-gradient(to right, #00A4FD, #A1DFDB);
     color: white;
+    width: 60%;
   }
 
   .right-side img{
-    width: 724px;
-    height: 510px;
+    width: 95%;
+  }
+
+  .content-names-sector {
+    display: flex;
+    text-align: end;
+  }
+
+  .content-img {
+    display: flex;
+    justify-content: flex-end;
+    margin-right: 2%;
   }
   
   .login-button {
     margin-top: 20px;
-    width: 320px;
-    height: 55px;
+    width: 250px;
+    height: 40px;
     border-radius: 10px;
     border: none;
     background-color: #01A4FD;
