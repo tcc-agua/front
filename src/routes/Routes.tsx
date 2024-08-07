@@ -1,16 +1,34 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-// import HomePage from '../pages/HomePage';
-import LoginPage from '../pages/LoginPage';
-// import NotFoundPage from '../pages/NotFoundPage';
+import { Initial } from '../pages/Initial/Initial';
+import { Dashboards } from '../pages/Dashboards/Dashboards';
+import { Map } from '../pages/Map/Map';
+import { Collect } from '../pages/Collect/Collect';
+import { PointCollect } from '../pages/PointCollect/PointCollect';
+import { Historic } from '../pages/Historic/Historic';
+import { ExportExcel } from '../pages/ExportExcel/ExportExcel';
+import LoginPage from '../pages/Login/Login';
+import { NotFound } from '../pages/NotFound/NotFound';
 
 const AppRoutes: React.FC = () => {
   return (
     <Router>
       <Routes>
-        {/* <Route path="/" element={<HomePage />} /> */}
-        <Route path="/login" element={<LoginPage />} />
-        {/* <Route path="*" element={<NotFoundPage />} /> */}
+         <Route path="/" element={<LoginPage />} />
+
+
+        <Route path="initial" element={<Initial />}>
+          <Route index element={<Dashboards />}/>
+          <Route path='mapa' element={<Map />}/>
+          <Route path='coleta_de_dados' element={<Collect />}>
+            <Route path='pontos_de_coleta' element={<PointCollect />}/>
+          </Route>
+          <Route path='historico' element={<Historic />}/>
+          <Route path='exportar_excel' element={<ExportExcel />}/>
+        </Route>
+
+        <Route path="*" element={<NotFound/>}/>
+
       </Routes>
     </Router>
   );
