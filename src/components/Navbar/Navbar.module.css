@@ -1,0 +1,32 @@
+.container_navbar{
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid #EAEAEA;
+}
+
+.welcome{
+    display: flex;
+    justify-content: flex-start;
+    width: 50%;
+    padding: 20px;
+}
+
+.nav_options{
+    display: flex;
+    flex-direction: row;
+    justify-content: end;
+    width: 50%;
+}
+
+.nav_content_options{
+    display: flex;
+    padding: 20px;
+    align-items: center;
+    text-decoration: none;
+}
+
+.icons{
+    width: 25px;
+    height: 25px;
+    margin-right: 8px;
+}

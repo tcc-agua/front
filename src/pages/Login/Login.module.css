@@ -3,13 +3,13 @@
   height: 100vh;
 }
 
-.left-side, .right-side {
+.left_side, .right_side {
   display: flex;
   flex-direction: column;
   align-items: center;
 }
 
-.left-side {
+.left_side {
   background-color: white;
   width: 40%;
   display: flex;
@@ -17,7 +17,7 @@
   justify-content: space-between;
 }
 
-.content-left-side {
+.content_left_side {
   width: 60%;
   height: 85%;
   display: flex;
@@ -27,7 +27,7 @@
   text-align: center;
 }
 
-.content-left-side-main {
+.content_left_side_main {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -39,14 +39,14 @@ h1 {
   margin-bottom: 7px;
 }
 
-.content-right-side {
+.content_right_side {
   display: flex;
   flex-direction: column;
   align-items: flex-end;
   height: 100%;
 }
 
-.right-side {
+.right_side {
   background: linear-gradient(to right, #00A4FD, #A1DFDB);
   color: white;
   width: 60%;
@@ -55,11 +55,11 @@ h1 {
   justify-content: center;
 }
 
-.right-side img {
+.right_side img {
   width: 95%;
 }
 
-.content-names-sector {
+.content_names_sector {
   display: flex;
   font-weight: bold;
   text-align: center;
@@ -68,14 +68,14 @@ h1 {
   height: 10%;
 }
 
-.content-img {
+.content_img {
   display: flex;
   justify-content: flex-end;
   height: 90%;
   margin-right: 2%;
 }
 
-.login-button {
+.login_button {
   margin-top: 20px;
   width: 250px;
   height: 40px;
@@ -87,7 +87,7 @@ h1 {
   font-size: 16px;
 }
 
-.login-button:hover {
+.login_button:hover {
   background-color: #0079bb;
 }
 
@@ -96,7 +96,7 @@ h1 {
   height: 50px;
 }
 
-.header-left {
+.header_left {
   display: flex;
   align-items: flex-start;
   margin-left: 7px;
@@ -114,7 +114,7 @@ h1 {
   font-size: 1.3em;
 }
 
-.footer-left {
+.footer_left {
   width: 100%;
   height: 5%;
   display: flex;
@@ -128,25 +128,25 @@ h1 {
   color: #BEBEBE;
 }
 
-.vertical-line {
+.vertical_line {
   width: 2px;
   height: 30px;
   background-color: #D8D8D8;
   margin: 15px;
 }
 
-.ct-sector {
+.ct_sector {
   bottom: 0;
   right: 0;
   margin: 10px;
   margin-top: 6px;
 }
 
-.ct-sector p {
+.ct_sector p {
   font-weight: bold;
 }
 
-.footer-right-side {
+.footer_right_side {
   width: 100%;
   height: 5%;
   display: flex;
@@ -162,33 +162,33 @@ h1 {
     justify-content: center;
   }
 
-  .left-side {
+  .left_side {
     width: 100%;
     height: 35%;
   }
 
-  .vertical-line, .subtitle {
+  .vertical_line, .subtitle {
     display: none;
   }
 
-  .header-left {
+  .header_left {
     width: 100%;
     justify-content: center;
     margin-top: 50px;
   }
 
-  .content-left-side {
+  .content_left_side {
     width: 80%;
   }
 
-  .right-side {
+  .right_side {
     width: 90%;
     border-radius: 10px;
     height: 55%;
     order: 1;
   }
 
-  .footer-left {
+  .footer_left {
     display: none;
   }
 }

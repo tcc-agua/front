@@ -7,17 +7,17 @@ import { Collect } from '../pages/Collect/Collect';
 import { PointCollect } from '../pages/PointCollect/PointCollect';
 import { Historic } from '../pages/Historic/Historic';
 import { ExportExcel } from '../pages/ExportExcel/ExportExcel';
-import LoginPage from '../pages/Login/Login';
+import Login from '../pages/Login/Login';
 import { NotFound } from '../pages/NotFound/NotFound';
 
 const AppRoutes: React.FC = () => {
   return (
     <Router>
       <Routes>
-         <Route path="/" element={<LoginPage />} />
+         <Route path="/" element={<Login />} />
 
 
-        <Route path="initial" element={<Initial />}>
+        <Route path="inicial" element={<Initial />}>
           <Route index element={<Dashboards />}/>
           <Route path='mapa' element={<Map />}/>
           <Route path='coleta_de_dados' element={<Collect />}>
