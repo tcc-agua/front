@@ -18,7 +18,7 @@ const AppRoutes: React.FC = () => {
 
 
         <Route path="inicial" element={<Initial />}>
-          <Route index element={<Dashboards />}/>
+          <Route path='dashboards' index element={<Dashboards />}/>
           <Route path='mapa' element={<Map />}/>
           <Route path='coleta_de_dados' element={<Collect />}>
             <Route path='pontos_de_coleta' element={<PointCollect />}/>

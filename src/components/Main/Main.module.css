@@ -1,5 +1,6 @@
 .container_main{
     display: flex;
-    padding: 15px;
+    padding: 10px;
     background-color: #F9F9F9;
+    width: 100%;
 }

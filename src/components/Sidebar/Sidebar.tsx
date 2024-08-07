@@ -11,7 +11,7 @@ export function Sidebar(){
             </header>
             <section>
                 <div className={styles.options}>
-                    <Link className={styles.content_options} to={"/inicial"}>
+                    <Link className={styles.content_options} to={"/inicial/dashboards"}>
                         <img src="src\assets\images\home.svg" alt="home" className={styles.imagem}/>
                         <p>Página Inicial</p>
                     </Link>
