@@ -24,7 +24,16 @@ export function Dashboards(){
                         </div>
                     </div>
                     <div className={styles.weekly_weather}>
-                        
+                        <div className={styles.title}>
+                            <h1>Clima Semanal</h1>
+                        </div>
+                        <div className={styles.content_weather}>
+                            <div className={styles.seg}></div>
+                            <div className={styles.seg}></div>
+                            <div className={styles.seg}></div>
+                            <div className={styles.seg}></div>
+                            <div className={styles.seg}></div>
+                        </div>
                     </div>
                 </section>
                 <section className={styles.right_side}>

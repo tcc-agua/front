@@ -15,7 +15,7 @@
     background-color: white;
     border: 1px solid #eaeaea;
     margin: 15px 25px;
-    width: 500px;
+    width: 600px;
     height: 160px;
     border-radius: 10px;
     padding: 15px;
@@ -62,4 +62,16 @@ span {
   color: #00A4FD;
   font-weight: bold;
   font-size: 10px;
+}
+
+.weekly_weather {
+    display: flex;
+    flex-direction: column;
+    background-color: white;
+    border: 1px solid #eaeaea;
+    margin: 15px 25px;
+    width: 600px;
+    height: 150px;
+    border-radius: 10px;
+    padding: 15px;
 }
