@@ -14,21 +14,17 @@ const AppRoutes: React.FC = () => {
   return (
     <Router>
       <Routes>
-         <Route path="/" element={<Login />} />
-
-
+        <Route path="/" element={<Login />} />
         <Route path="inicial" element={<Initial />}>
-          <Route path='dashboards' index element={<Dashboards />}/>
-          <Route path='mapa' element={<Map />}/>
+          <Route index element={<Dashboards />} /> {/* Dashboards como o conteúdo padrão */}
+          <Route path='mapa' element={<Map />} />
           <Route path='coleta_de_dados' element={<Collect />}>
-            <Route path='pontos_de_coleta' element={<PointCollect />}/>
+            <Route path='pontos_de_coleta' element={<PointCollect />} />
           </Route>
-          <Route path='historico' element={<Historic />}/>
-          <Route path='exportar_excel' element={<ExportExcel />}/>
+          <Route path='historico' element={<Historic />} />
+          <Route path='exportar_excel' element={<ExportExcel />} />
         </Route>
-
-        <Route path="*" element={<NotFound/>}/>
-
+        <Route path="*" element={<NotFound />} />
       </Routes>
     </Router>
   );

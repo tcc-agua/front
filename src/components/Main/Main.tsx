@@ -1,13 +1,12 @@
 import styles from './Main.module.css'
-import { Dashboards } from '../../pages/Dashboards/Dashboards'
-import { Collect } from '../../pages/Collect/Collect'
+import React from 'react';
 
-export function Main(){
-    return(
-        <>
+const Main: React.FC = ({ children }) => {
+    return (
         <div className={styles.container_main}>
-        <Collect />
+            {children}
         </div>
-        </>
     )
 }
+
+export default Main;
