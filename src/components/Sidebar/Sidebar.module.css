@@ -29,8 +29,8 @@
 }
 
 .content_options img {
-    height: 35px;
-    width: 35px;
+    height: 30px;
+    width: 30px;
 }
 
 .content_options p{
@@ -41,7 +41,7 @@
 }
 
 .title_side {
-    font-size: 20px;
+    font-size: 15px;
 }
 
 .content_options:hover,
