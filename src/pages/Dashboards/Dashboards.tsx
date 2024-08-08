@@ -1,4 +1,3 @@
-import React from "react";
 import styles from "./Dashboards.module.css"
 
 export function Dashboards(){
@@ -10,7 +9,7 @@ export function Dashboards(){
                         <div className={styles.title}>
                            <h1>Atualizações</h1> 
                         </div>
-                        <div className={styles.content_updates}> {/* Corrigido para content_updates */}
+                        <div className={styles.content_updates}> 
                             <div className={styles.first_update}>
                                 <p className={styles.point}>Poço PM 36</p>
                                 <p className={styles.main_information}>PH menos ácido</p>
