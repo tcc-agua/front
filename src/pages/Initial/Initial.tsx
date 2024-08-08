@@ -9,8 +9,9 @@ export function Initial(){
         <div className={styles.grid_container}>
             <Sidebar />
             <Navbar />
-            <Main />
-            <Outlet />
+            <Main>
+                <Outlet />
+            </Main>
         </div>
     )
 }
