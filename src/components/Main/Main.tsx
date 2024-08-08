@@ -5,7 +5,6 @@ export function Main(){
     return(
         <>
         <div className={styles.container_main}>
-            
         </div>
         </>
     )
