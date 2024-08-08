@@ -3,19 +3,27 @@ import styles from  './Collect.module.css'
 
 export function Collect(){
     return(
-        <>
-        <div>
+        <main>
+        <section className={styles.up_side}>
             <div>
                 <p>Insira os <span>dados</span> atualizados do ponto que acabou de coletar!</p>
             </div>
-            <div className={styles.search_navbar}>
-
+            <div>
+                <input
+                    className={styles.search_bar}
+                    type="text"
+                    // value={}
+                    // onChange={}
+                    placeholder="Procure o ponto que deseja adicionar novos dados aqui!"
+                />
             </div>
             <div>
                 <p>Selecione:</p>
             </div>
+        </section>
 
-            <div>
+        <section className={styles.down_side}>
+            <div className={styles.side_left}>
                 <div className={styles.card_um}>
                     <div>
                         <p className={styles.detail1}>Estações de Tratamento de Água S.</p>
@@ -53,8 +61,32 @@ export function Collect(){
                     </div>
                 </div>
             </div>
-        </div>
+
+            <div className={styles.side_right}>
+                <div>
+                    <p>Pontos Recentes</p>
+                </div>
+
+                <div>
+                    <p>AG - 02</p>
+                </div>
+                <div>
+                    <p>TQ - 01</p>
+                </div>
+                <div>
+                    <p>PM - 21</p>
+                </div>
+                <div>
+                    <p>PM - 56</p>
+                </div>
+                <div>
+                    <p>PT - 09</p>
+                </div>
+            </div>
+        </section>
+            
+        
         <Outlet/>
-        </>
+        </main>
     )
 }
