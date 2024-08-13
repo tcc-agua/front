@@ -2,8 +2,8 @@
     display: grid;
     height: 100vh;
 
-    grid-template-columns: 20% 1fr;
-    grid-template-rows: 10% 1fr;
+    grid-template-columns: 230px 1fr;
+    grid-template-rows: 50px 1fr;
     grid-template-areas: 
         'Sidebar Navbar'
         'Sidebar Main'
@@ -22,4 +22,17 @@ aside{
 main{
   grid-area: Main;
 }
-  
+
+@media (max-width: 680px) {
+  .grid_container {
+      grid-template-columns: 1fr;
+      grid-template-rows: 50px 1fr;
+      grid-template-areas:
+          'Navbar'
+          'Main';
+  }
+
+  aside {
+    display: none;
+  }
+}

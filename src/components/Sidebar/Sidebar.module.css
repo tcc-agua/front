@@ -8,7 +8,7 @@
 
 .logo {
     width: 50px;
-    margin-right: 10px;
+    margin-right: 10px; 
 }
 
 .header_container {
@@ -24,13 +24,16 @@
 
 .content_options{
     display: flex;
-    padding: 15px;
+    padding: 10px;
+    margin-left: 7px;
     text-decoration: none;
+    font-size: 14px;
+    align-items: center;
 }
 
 .content_options img {
-    height: 30px;
-    width: 30px;
+    height: 23px;
+    width: 23px;
 }
 
 .content_options p{
@@ -47,4 +50,28 @@
 .content_options:hover,
 .imagem:hover{
     color: #01A4FD;
+}
+
+.showSidebar {
+    display: flex;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 230px;
+    height: 100%;
+    z-index: 1000; 
+    transition: transform 0.3s ease-in-out;
+    transform: translateX(0);
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+}
+
+.hideSidebar {
+    transform: translateX(-100%);
+}
+
+
+@media (max-width: 680px) {
+    .container {
+        display: none; 
+    }
 }
