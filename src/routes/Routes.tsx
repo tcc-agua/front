@@ -7,7 +7,7 @@ import { Collect } from '../pages/Collect/Collect';
 import { PointCollect } from '../pages/PointCollect/PointCollect';
 import { Historic } from '../pages/Historic/Historic';
 import { ExportExcel } from '../pages/ExportExcel/ExportExcel';
-// import Login from '../pages/Login/Login';
+import Login from '../pages/Login/Login';
 import { NotFound } from '../pages/NotFound/NotFound';
 import SplashPage from '../pages/Splash/Splash';
 // import Graphic from '../components/Graphic/Graphic';
@@ -24,7 +24,7 @@ const AppRoutes: React.FC = () => {
       <Routes>
         {/* <Route path="/" element={<Graphic chartDataProp={mockData} />} /> */}
         <Route path="/" element={<SplashPage />} />
-        {/* <Route path="/" element={<Login />} /> */}
+        <Route path="/login" element={<Login />} />
         <Route path="inicial" element={<Initial />}>
           <Route index element={<Dashboards />} />
           <Route path='mapa' element={<Map />} />
