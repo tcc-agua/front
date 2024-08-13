@@ -1,29 +1,35 @@
 .container {
-    display: flex;
     width: 100%;
+    height:100%;
+    display: flex;
+    justify-content: space-between;
+    margin: 15px;
 }
 
 .left_side, .right_side {
     display: flex;
     flex-direction: column;
-    align-items: center;
 }
+
+.left_side { width: 50%; }
+.right_side { width: 50%; }
+
 
 .updates {
     display: flex;
     flex-direction: column;
     background-color: white;
     border: 1px solid #eaeaea;
-    margin: 15px 25px;
-    width: 600px;
-    height: 160px;
+    width: 95%;
+    height: 23vh;
     border-radius: 10px;
     padding: 15px;
+    margin-bottom: 15px;
 }
 
 .title {
-    font-size: 12px;
-    padding: 5px;
+    font-size: 1.5vh;
+    padding: 1.3vh;
 }
 
 .content_updates { 
@@ -36,22 +42,25 @@
 .first_update, .second_update {
     border: 1px solid #eaeaea;
     border-radius: 7px;
-    width: 49%;
+    width: 48.5%;
     box-sizing: border-box;
     padding: 5px 10px;
+    height: 100%;
 }
 
 .point {
-    font-size: 13px;
+    font-size: 2vh;
 }
 
 .main_information {
     font-weight: bold;
-    font-size: 15px;
+    font-size: 2.5vh;
 }
 
 .extra_information {
-    font-size: 10px;
+    display: flex;
+    font-size: 1.5vh;
+    
 }
 
 .point, .main_information, .extra_information {
@@ -61,7 +70,6 @@
 .extra {
   color: #00A4FD;
   font-weight: bold;
-  font-size: 10px;
 }
 
 .weekly_weather {
@@ -69,9 +77,181 @@
     flex-direction: column;
     background-color: white;
     border: 1px solid #eaeaea;
-    margin: 15px 25px;
-    width: 600px;
-    height: 150px;
+    width: 95%;
+    height: 22vh;
     border-radius: 10px;
     padding: 15px;
+    margin-bottom: 15px;
+}
+
+.content_weather { 
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    justify-content: space-between;
+}
+
+.weekday {
+    border: 1px solid #eaeaea;
+    width: 19%;
+    border-radius: 7px;
+    box-sizing: border-box;
+    height: 12vh;
+}
+
+.seg, .ter, .qua, .qui, .sex {
+    width: 100%;
+    height: 100%;
+    border-radius: 7px;
+    color: white;
+    padding: 10px;
+}
+
+.seg { background-color: #D543CB; }
+.ter { background-color: #00A4FD; }
+.qua { background-color: #419E98; }
+.qui { background-color: #37A264; }
+.sex { background-color: #007BC0; }
+
+.title_weekday {
+    font-size: 2vh;
+}
+
+.temperature {
+    font-weight: bold;
+    padding: 5px 0px;
+    font-size: 3vh;
+}
+
+.climate {
+    font-size: 1.5vh;
+    text-align: end;
+}
+
+.last_activities {
+    display: flex;
+    flex-direction: column;
+    background-color: white;
+    border: 1px solid #eaeaea;
+    width: 95%;
+    height: 47vh;
+    border-radius: 10px;
+    padding: 15px;
+    margin-bottom: 15px;
+}
+
+.content_last_activities {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.activity {
+    display: flex;
+    padding: 5px;
+    margin: 2vh 2vh;
+}
+
+.icon_activity {
+    width: 6.3vh;
+    height: 6.3vh;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+}
+
+
+.icon_correct { background-color: #DEF5F3; }
+.icon_export { background-color: #F7EEF6; }
+
+
+.imgs_activity {
+    width: 50%;
+    height: 50%;
+}
+
+.text_activity {
+    margin-left: 10px;
+}
+
+h4 {
+    font-size: 2vh;
+}
+
+.days {
+    margin-top: 3px;
+    font-size: 1.8vh;
+}
+
+
+.gray {
+    color: #8d8d8d;
+}
+
+.green {
+    color: #45e475;
+}
+
+
+.linha_hr {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+hr {
+    width: 70%;
+}
+
+.graphic {
+    display: flex;
+    flex-direction: column;
+    background-color: white;
+    border: 1px solid #eaeaea;
+    width: 95%;
+    height: 35vh;
+    border-radius: 10px;
+    padding: 15px;
+}
+
+.mapview {
+    display: flex;
+    flex-direction: column;
+    background-color: white;
+    border: 1px solid #eaeaea;
+    width: 95%;
+    height: 35.5vh;
+    border-radius: 10px;
+    padding: 15px;
+}
+
+@media (max-width: 1080px) {
+    .container {
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .left_side, .right_side { width: 100%; }
+
+    .left_side {
+        margin-bottom: 15px;
+    }
+}
+
+@media (max-width: 680px) {
+    .container {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .left_side, .right_side {
+        width: 100%;
+    }
+
+    .updates, .weekly_weather, .graphic, .last_activities, .mapview {
+        width: 100%;
+    }
 }
