@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import styles from './Login.module.css';
 
 const Login: React.FC = () => {
@@ -15,7 +16,7 @@ const Login: React.FC = () => {
           <div className={styles.content_left_side_main}>
             <h1>Seja bem_vindo(a)!</h1>
             <p>Entre e explore nossos recursos de amostragem de água.</p>
-            <button className={styles.login_button}>Entrar</button>
+            <Link className={styles.login_button} to={'/inicial'}>Entrar</Link>
           </div>
         </div>
         <div className={styles.footer_left}>
