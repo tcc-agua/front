@@ -1,0 +1,56 @@
+.splashContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: #01A4FD;
+  transition: opacity 1s ease-out;
+  overflow: hidden; 
+}
+
+.fadeOut {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.dropContainer {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  height: 100vh;
+}
+
+.drop {
+  width: 50px;
+  height: 70px;
+  background-color: white;
+  border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+  position: absolute;
+  top: -100px;
+  animation: dropAnimation 2s ease-in-out forwards, fadeOut 1s ease-out 3s forwards;
+}
+
+@keyframes dropAnimation {
+  0% {
+    top: -100px;
+    transform: scale(1);
+  }
+  80% {
+    top: 50%;
+    transform: scale(1.2); 
+  }
+  100% {
+    top: 50%;
+    transform: scale(1);
+  }
+}
+
+@keyframes fadeOut {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}

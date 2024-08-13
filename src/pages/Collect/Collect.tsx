@@ -3,10 +3,10 @@ import styles from  './Collect.module.css'
 
 export function Collect(){
     return(
-        <main>
+        <main className={styles.container_all}>
         <section className={styles.up_side}>
             <div>
-                <p>Insira os <span>dados</span> atualizados do ponto que acabou de coletar!</p>
+                <p>Insira os <span className={styles.data_color}>dados</span> atualizados do ponto que acabou de coletar!</p>
             </div>
             <div>
                 <input
