@@ -1,4 +1,6 @@
 import styles from "./Dashboards.module.css"
+import icon_correct from "../../assets/images/correct.svg"
+import icon_export from "../../assets/images/export_activity.svg"
 
 export function Dashboards(){
     return(
@@ -64,8 +66,60 @@ export function Dashboards(){
                             </div>
                         </div>
                     </div>
+                    <div className={styles.graphic}>
+                        <div className={styles.title}>
+                           <h2>Gráfico</h2> 
+                        </div>
+                    </div>
+                    
                 </div>
                 <div className={styles.right_side}>
+                    <div className={styles.last_activities}>
+                        <div className={styles.title}>
+                           <h2>Últimas atividades</h2> 
+                        </div>
+                        <div className={styles.content_last_activities}>
+                            <div className={styles.activity}>
+                                <div className={`${styles.icon_activity} ${styles.icon_correct}`}>
+                                    <img className={styles.imgs_activity} src={icon_correct} alt="icon_correct" />
+                                </div>
+                                <div className={styles.text_activity}>
+                                    <h4>Dados “ETAS” <span className={styles.gray}>preenchidos com</span><span className={styles.green}> sucesso!</span></h4>
+                                    <p className={styles.days}>1 dia atrás</p>
+                                </div>
+                            </div>
+                            <div className={styles.linha_hr}>
+                              <hr />  
+                            </div>
+                            <div className={styles.activity}>
+                                <div className={`${styles.icon_activity} ${styles.icon_correct}`}>
+                                    <img className={styles.imgs_activity} src={icon_correct} alt="icon_correct" />
+                                </div>
+                                <div className={styles.text_activity}>
+                                    <h4>Dados “NA” <span className={styles.gray}>preenchidos com </span><span className={styles.green}>sucesso!</span></h4>
+                                    <p className={styles.days}>1 dia atrás</p>
+                                </div>
+                            </div>
+                            <div className={styles.linha_hr}>
+                              <hr />  
+                            </div>
+                            <div className={styles.activity}>
+                                <div className={`${styles.icon_activity} ${styles.icon_export}`}>
+                                    <img className={styles.imgs_activity} src={icon_export} alt="icon_export" />
+                                </div>
+                                <div className={styles.text_activity}>
+                                    <h4>Dados "NA" <span className={styles.gray}>exportados para Excel.</span></h4>
+                                    <p className={styles.days}>7 dias atrás</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div className={styles.mapview}>
+                        <div className={styles.title}>
+                           <h2>Mapa de Curitiba</h2> 
+                        </div>
+                        <div className={styles.content_mapview}></div>
+                    </div>
                 </div>
             </div>
         </>
