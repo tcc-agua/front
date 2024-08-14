@@ -10,19 +10,11 @@ import { ExportExcel } from '../pages/ExportExcel/ExportExcel';
 import Login from '../pages/Login/Login';
 import { NotFound } from '../pages/NotFound/NotFound';
 import SplashPage from '../pages/Splash/Splash';
-// import Graphic from '../components/Graphic/Graphic';
-
-const mockData = {
-  months: ["Janeiro", "Fevereiro", "Março", "Abril", "Maio"],
-  expense: [500, 700, 300, 800, 600],
-  income: [1000, 1200, 900, 1400, 1300]
-};
 
 const AppRoutes: React.FC = () => {
   return (
     <Router>
       <Routes>
-        {/* <Route path="/" element={<Graphic chartDataProp={mockData} />} /> */}
         <Route path="/" element={<SplashPage />} />
         <Route path="/login" element={<Login />} />
         <Route path="inicial" element={<Initial />}>
