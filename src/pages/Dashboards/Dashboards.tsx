@@ -2,6 +2,7 @@ import styles from "./Dashboards.module.css"
 import icon_correct from "../../assets/images/correct.svg"
 import icon_export from "../../assets/images/export_activity.svg"
 import Graphic from "../../components/Graphic/Graphic"
+import MapSpline from "../../components/MapSpline/MapSpline"
 
 const mockData = {
     months: ["Janeiro", "Fevereiro", "Março", "Abril", "Maio"],
@@ -128,7 +129,9 @@ export function Dashboards(){
                         <div className={styles.title}>
                            <h2>Mapa de Curitiba</h2> 
                         </div>
-                        <div className={styles.content_mapview}></div>
+                        <div className={styles.content_mapview}>
+                            <MapSpline />
+                        </div>
                     </div>
                 </div>
             </div>

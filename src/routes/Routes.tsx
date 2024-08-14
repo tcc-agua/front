@@ -10,6 +10,8 @@ import ExportExcel from '../pages/ExportExcel/ExportExcel';
 import Login from '../pages/Login/Login';
 import { NotFound } from '../pages/NotFound/NotFound';
 import SplashPage from '../pages/Splash/Splash';
+import Profile from '../pages/Profile/Profile';
+import Settings from '../pages/Settings/Settings';
 
 const AppRoutes: React.FC = () => {
   return (
@@ -17,6 +19,8 @@ const AppRoutes: React.FC = () => {
       <Routes>
         <Route path="/" element={<SplashPage />} />
         <Route path="/login" element={<Login />} />
+        <Route path="/perfil" element={<Profile />}/>
+        <Route path="/configuracoes" element={<Settings />}/>
         <Route path="inicial" element={<Initial />}>
           <Route index element={<Dashboards />} />
           <Route path='mapa' element={<Map />} />
