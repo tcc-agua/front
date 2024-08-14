@@ -45,6 +45,7 @@
     box-sizing: border-box;
     padding: 5px 10px;
     height: 100%;
+    height: 100px;
 }
 
 .point {
