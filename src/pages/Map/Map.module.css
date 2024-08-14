@@ -1,0 +1,83 @@
+.main {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.container {
+    display: block;
+    align-items: center;
+    justify-content: center;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    width: 94%;
+    height: 95%;
+}
+
+.title {
+    font-weight: normal;
+    font-size: 1.3em;
+    margin-left: 3%;
+    margin-top: 3%;
+    margin-bottom: 2%;
+}
+
+.map {
+    width: 85%;
+    height: 65%;
+    margin-left: 7%;
+    margin-bottom: 2%;
+}
+
+.captitle {
+    font-weight: normal;
+    font-size: 1.3em;
+    margin-left: 3%;
+    margin-bottom: 1.5%;
+}
+
+.caption {
+    width: 85%;
+    height: 40%;
+    margin-left: 7%;
+}
+
+
+.points {
+    height: 25%;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    display: flex;
+    font-weight: normal;
+}
+
+.azulclaro, .verde, .azulescuro, .verdeagua, .roxo {
+    height: 12px;
+    width: 12px;
+}
+
+.azulclaro{
+    background-color: #00A4FD;
+}
+
+.verde {
+    background-color: #37A264;
+}
+
+.azulescuro{
+    background-color: #007BC0;
+}
+
+.verdeagua {
+    background-color: #419E98;
+}
+
+.roxo{
+    background-color: #791D73;
+}
+
+.subtitle{
+    font-size: 1.05em;
+}
