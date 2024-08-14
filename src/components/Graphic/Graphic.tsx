@@ -37,7 +37,7 @@ const Graphic = ({ chartDataProp }) => {
     return (
         <>
             <div className="bg-white dark:bg-darksecondary dark:shadow-none shadow-lg shadow-slate-600 mb-10 rounded-md">
-                <Chart options={options} series={series} type='area' height={500} />
+                <Chart options={options} series={series} type='area' height={260} />
             </div>
         </>
     );

@@ -1,6 +1,13 @@
 import styles from "./Dashboards.module.css"
 import icon_correct from "../../assets/images/correct.svg"
 import icon_export from "../../assets/images/export_activity.svg"
+import Graphic from "../../components/Graphic/Graphic"
+
+const mockData = {
+    months: ["Janeiro", "Fevereiro", "Março", "Abril", "Maio"],
+    expense: [500, 700, 300, 800, 600],
+    income: [1000, 1200, 900, 1400, 1300]
+  };
 
 export function Dashboards(){
     return(
@@ -69,6 +76,9 @@ export function Dashboards(){
                     <div className={styles.graphic}>
                         <div className={styles.title}>
                            <h2>Gráfico</h2> 
+                        </div>
+                        <div className={styles.grafico}>
+                            <Graphic chartDataProp={mockData} />
                         </div>
                     </div>
                     
