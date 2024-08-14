@@ -1,0 +1,48 @@
+.coleta {
+  background-color: #fff;
+  padding: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  margin-bottom: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  max-width: 100%; 
+  overflow: hidden; 
+}
+
+.coleta:hover {
+  background-color: #f9f9f9;
+}
+
+.title {
+  display: flex;
+  align-items: center;
+  gap: 1rem; 
+  flex-wrap: wrap; 
+}
+
+.date {
+  font-size: 1rem;
+}
+
+.separator {
+  width: 1px;
+  background-color: #ccc;
+  height: 2em; 
+  margin: 0 1rem;
+}
+
+.description {
+  color: #949494;
+  flex: 1; /* Permite que a descrição use o espaço restante */
+  overflow: hidden; /* Oculta o texto que excede o contêiner */
+  text-overflow: ellipsis; /* Adiciona reticências (...) se o texto for muito longo */
+  white-space: nowrap; /* Impede a quebra de linha na descrição */
+}
+
+.details {
+  margin-top: 0.5rem;
+  padding: 0.5rem;
+  background-color: #f1f1f1;
+  border-radius: 4px;
+}
