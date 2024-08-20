@@ -1,6 +1,6 @@
 .container {
     margin-top: 5%;
-    margin-left:5%;
+    margin-left: 5%;
     width: 100%;
 }
 
@@ -21,8 +21,8 @@
     display: flex;
     justify-content: center;
     gap: 1em;
-    width:60%;
-    max-width: 800px; /* Ajuste conforme necessário */
+    width: 60%;
+    max-width: 800px;
 }
 
 @media (max-width: 600px) {
@@ -45,40 +45,145 @@
 .colects {
     display: flex;
     flex-direction: column;
-    width: 100%; 
+    width: 100%;
     max-width: 97%;
 }
 
 .coleta {
     background-color: #fff;
-    padding: 2rem;
     border: 1px solid #ccc;
     border-radius: 4px;
     margin-bottom: 1rem;
     cursor: pointer;
-    transition: background-color 0.3s;
-    width: calc(100% - 2em);
 }
 
-.coleta:hover {
-    background-color: #f9f9f9;
-}
-
-.title {
-    display: flex;
-    justify-content: space-between;
-    width: 100%;
-}
 
 .date {
     font-size: 1.2rem;
     font-weight: bold;
-    margin-bottom: 0.5rem;
 }
 
 .details {
-    margin-top: 0.5rem;
-    padding: 0.5rem;
-    background-color: #f1f1f1;
-    border-radius: 4px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #303030;
+}
+
+.close {
+    cursor: pointer;
+    margin-left: 95%;
+    margin-top: -3%;
+    font-size: x-large;
+    font-weight: normal;
+    background-color: #fff;
+    color: #cccccc;
+    border: none;
+}
+
+.modalContent {
+    background: white;
+    padding: 3%;
+    border-radius: 10px;
+    width: 40%;
+    height: 60%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+@media (max-width: 600px) {
+    .modalContent{
+        width: 65%;
+        height: 70%;
+    }
+}
+
+
+.pointName {
+    margin-top: 5%;
+    margin-bottom: 10%;
+    font-size: larger;
+    text-align: center;
+}
+
+main {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+}
+
+.infoContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 45%;
+    height: 100%;
+}
+
+.information {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    font-size: large;
+    font-weight: bold;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    margin-top: 5%;
+    margin-bottom: 10%;
+    height: 40%;
+    width: 40%;
+}
+
+.separator {
+    border-left: 1px solid #ccc;
+    height: 55%;
+    margin-top: 7%;
+}
+
+@media (max-width: 600px) {
+    .information {
+        width: 35%;
+        height: 55%;
+    }
+
+    .pointName {
+        margin-top: 10%;
+        font-size: larger;
+    }
+
+    main {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .infoContainer {
+        width: 100%;
+    }
+
+    .separator {
+        display: block;
+        width: 50%;
+        height: 1px;
+        background-color: #ccc;
+        margin: 1rem 0; /* Espaço em torno do separador */
+    }
 }

@@ -1,4 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
+import arrow from '../../assets/images/arrow.svg';
 
 interface DropdownItem {
   id: string;
@@ -68,7 +69,10 @@ const DropdownButton: React.FC<DropdownButtonProps> = ({
         }}
       >
         <span>{selectedOption ? selectedOption.label : title}</span>
-        <span style={{ transform: isOpen ? 'rotate(180deg)' : 'rotate(0deg)', transition: 'transform 0.3s' }}>▼</span>
+        <span style={{ transform: isOpen ? 'rotate(180deg)' : 'rotate(0deg)', transition: 'transform 0.3s' }}>
+          <img src={arrow} alt="Arrow" style={{ width: '16px', height: '16px' }} />
+        </span>
+
       </button>
       <div style={{
         position: 'absolute',
