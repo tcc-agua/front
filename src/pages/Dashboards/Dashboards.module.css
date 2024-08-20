@@ -27,7 +27,7 @@
 }
 
 .title {
-    font-size: 1.5vh;
+    font-size: clamp(10px, 10px + 0.2vw, 15px);
     padding: 1.3vh;
 }
 
@@ -49,17 +49,17 @@
 }
 
 .point {
-    font-size: 2vh;
+    font-size: 15px;
 }
 
 .main_information {
     font-weight: bold;
-    font-size: 2.5vh;
+    font-size: 2.3vh;
 }
 
 .extra_information {
     display: flex;
-    font-size: 1.5vh;
+    font-size: 1.4vh;
     
 }
 
@@ -84,15 +84,18 @@
 }
 
 .content_weather { 
-    display: flex;
-    flex-direction: row;
+    display: inline-flex;
+    overflow-x: auto;
+    white-space: nowrap;
     width: 100%;
-    justify-content: space-between;
+    gap: 5px;
+    justify-content: center;
 }
 
 .weekday {
+    min-width: 6.5vw;
+    min-height: 6vw;
     border: 1px solid #eaeaea;
-    width: 19%;
     border-radius: 7px;
     box-sizing: border-box;
     height: 12vh;
@@ -113,18 +116,19 @@
 .sex { background-color: #007BC0; }
 
 .title_weekday {
-    font-size: 2vh;
+    font-size: 1vw;
 }
 
 .temperature {
     font-weight: bold;
     padding: 5px 0px;
-    font-size: 3vh;
+    font-size: 1.5vw;
 }
 
 .climate {
-    font-size: 1.5vh;
+    font-size: 0.8vw;
     text-align: end;
+    align-self: flex-end;
 }
 
 .last_activities {
@@ -223,7 +227,7 @@ hr {
     padding: 15px;
 }
 
-@media (max-width: 1080px) {
+@media (max-width: 1180px) {
     .container {
         display: flex;
         flex-direction: column;
@@ -232,12 +236,34 @@ hr {
         margin: 0px;
         align-items: center;
     }
+    .point { font-size: 13px; }
+    .main_information { font-size: 1.8vw; }
+    .extra_information { font-size: 1vw; }
 
     .left_side, .right_side { width: 100%; }
+    .left_side { margin-bottom: 15px; }
+    .weekly_weather { height: 200px;}
 
-    .left_side {
-        margin-bottom: 15px;
+    .content_weather { 
+        align-items: center;
+        width: 100%;
+        height: 100%;
+        gap: 5px;
+        justify-content: center;
     }
+    
+    .weekday {
+        min-width: 13vw;
+        border: 1px solid #eaeaea;
+        border-radius: 7px;
+        box-sizing: border-box;
+        height: 10vw;
+    }
+
+    .title_weekday { font-size: 1.5vw; }
+    .temperature { font-size: 2vw; }
+    .climate { font-size: 1.3vw; }
+
 }
 
 @media (max-width: 680px) {
@@ -246,18 +272,12 @@ hr {
         align-items: center;
     }
 
-    .left_side, .right_side {
-        width: 100%;
-    }
+    .left_side, .right_side { width: 100%;}
 
     .updates, .weekly_weather, .graphic, .last_activities, .mapview {
         width: 100%;
-        background-color:#F9F9F9;
+        background-color: #F9F9F9;
         border: none;
-    }
-
-    .uptades {
-        margin: 0px;
     }
 
     .content_updates {
@@ -267,21 +287,65 @@ hr {
         width: 100%;
     }
 
+    .point { font-size: 16px; }
+    .main_information { font-size: 19px; }
+    .extra_information { font-size: 13px; }
+
     .first_update, .second_update {
         width: 95%;
         background-color: white;
-        margin-bottom: 10px;
     }
-    
+
+    .first_update { margin-bottom: 15px; }
+    .weekly_weather { overflow-x: auto; }
+
+    .content_weather {
+        display: inline-flex;
+        white-space: nowrap;
+        width: 88vw;
+    }
+
     .weekday {
-        height: auto;
+        min-width: 25vw;
+        height: 100px;
     }
 
-    .temperature {
-        font-size: 2.5vh;
+    .title_weekday { font-size: 3.5vw; }
+    .temperature { font-size: 5vw; }
+    .climate { font-size: 3vw; }
+
+    .grafico {
+        display: flex;
+        flex-direction: column;
+        background-color: white;
+        border: 1px solid #eaeaea;
+        width: 95%;
+        border-radius: 10px;
+        padding: 15px;
+        margin-bottom: 15px;
     }
 
-    .climate {
-        font-size: 1.3vh;
+    .content_last_activities {
+        display: flex;
+        flex-direction: column;
+        background-color: white;
+        border: 1px solid #eaeaea;
+        width: 95%;
+        border-radius: 10px;
+        padding: 5px;
+        margin-bottom: 5px;
+    }
+
+    h4 {
+        font-size: 14px;
+    }
+
+    .icon_activity {
+        width: 13vw;
+        height: 11vw;
+    }
+
+    .days {
+        font-size: 12px;
     }
 }
