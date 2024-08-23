@@ -1,0 +1,119 @@
+.container {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.title {
+    padding: 20px 50px 0px;
+}
+
+.main_information {
+    display: flex;
+    width: 100%;
+    height: 100%;
+}
+
+.left_side {
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    padding: 20px 15px 0px 50px;
+}
+
+.select_point_container {
+    width: 100%;
+    height: 40vw;
+    background-color: white;
+    border: 1px solid #dcdcdc;
+    border-radius: 10px;
+    padding: 25px 30px;
+    transition: transform 0.3s ease, cursor 0.3s ease;
+}
+
+.select_point_title {
+    margin-bottom: 10px;
+}
+
+.select_point_grid {
+    display: flex;
+    flex-direction: column;
+    height: 90%;
+}
+
+.select_point {
+    width: 100%;
+    flex-grow: 1;
+    margin-top: 10px;
+    background-color: white;
+    border: 1px solid #dcdcdc;
+    border-radius: 6px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0px 20px;
+    transition: transform 0.3s ease, cursor 0.3s ease;
+    cursor: pointer;
+}
+
+.name_point {
+    font-weight: bold;
+    font-family: "SF pro";
+}
+
+.name_point_type {
+    color: #419E98
+}
+
+.status_point {
+    font-family: "SF pro";
+    font-size: 13px;
+    color: #949494;
+}
+
+.right_side {
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    padding: 20px 50px 0px 15px;
+}
+
+.point_information {
+    display: flex;
+    width: 100%;
+    height: 10%;
+    background-color: white;
+    border: 1px solid #dcdcdc;
+    align-items: center;
+    text-align: center;
+    border-radius: 7px;
+    justify-content: center;
+}
+
+.point_information_text {
+    font-size: 1.2vw;
+}
+
+.point_information_number {
+    font-weight: bold;
+    color: #D543CB;
+}
+
+.map_container {
+    background-color: white;
+    width: 100%;
+    height: 79%;
+    margin-top: 30px;
+    border: 1px solid #dcdcdc;
+    border-radius: 7px;
+    padding: 20px 30px;
+}
+
+.select_point:hover {
+    background-color: rgb(233, 233, 233);
+}
+
+.select_point_container:hover {
+    transform: scale(1.02);
+}
