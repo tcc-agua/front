@@ -33,7 +33,7 @@ const MapSpline = () => {
       camera.updateProjectionMatrix();
     };
 
-    handleResize(); // Call once to set the initial size
+    handleResize();
 
     window.addEventListener('resize', handleResize);
 

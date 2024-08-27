@@ -61,6 +61,20 @@
 
 }
 
+@media (min-width: 1500px) {
+    .top{
+        font-size: larger;
+    }
+
+    .left{
+        margin-left: auto;
+    }
+
+    .buttonTable{
+        margin-top: 0.5%;
+    }
+}
+
 /* Tabela */
 
 .table{
@@ -152,6 +166,26 @@
 
 }
 
+@media (min-width: 1500px) {
+    .modalContent {
+        width: 35%;
+        height: auto;
+    }
+
+    .modalTitle,
+    .modalImg,
+    .modalText {
+        text-align: center;
+        font-size: x-large;
+        margin-top: 8%;
+    }
+
+    .modalText{
+        font-size: larger;
+        margin-bottom: 10%;
+    }
+}
+
 /* Botão Exportar Arquivo */
 
 .export {
@@ -175,4 +209,10 @@
         padding: 3% 5%;
     }
 
+}
+
+@media (min-width: 1500px) {
+    .export{
+        margin-top: -20%;
+    }
 }

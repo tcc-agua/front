@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import arrow from '../../assets/images/arrow.svg';
+import styles from './DropdownButton.module.css';
 
 interface DropdownItem {
   id: string;
@@ -23,13 +24,12 @@ const DropdownButton: React.FC<DropdownButtonProps> = ({
   onSelect,
 }) => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
+  const dropdownRef = useRef<HTMLDivElement>(null);
 
   const handleChange = (option: DropdownItem) => {
     onSelect && onSelect(option);
     setIsOpen(false);
   };
-
-  const dropdownRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const handleOutsideClick = (e: MouseEvent) => {
@@ -43,62 +43,35 @@ const DropdownButton: React.FC<DropdownButtonProps> = ({
   }, []);
 
   return (
-    <div ref={dropdownRef} style={{ position: 'relative', marginBottom: '1rem', flexGrow: 1 }}>
+    <div ref={dropdownRef} className={styles.dropdownContainer}>
       <button
         id={id}
-        aria-label='Toggle dropdown'
-        aria-haspopup='true'
+        aria-label="Toggle dropdown"
+        aria-haspopup="true"
         aria-expanded={isOpen}
-        type='button'
+        type="button"
         onClick={() => setIsOpen(!isOpen)}
-        style={{
-          display: 'flex',
-          justifyContent: 'space-between',
-          alignItems: 'center',
-          width: '100%',
-          height: '100%',
-          minHeight: '40px',
-          fontSize: '1rem',
-          padding: '0.5rem',
-          backgroundColor: '#fff',
-          color: '#303030',
-          border: '1px solid #ccc',
-          borderRadius: '4px',
-          textAlign: 'center',
-          flexGrow: 1,
-        }}
+        className={styles.button}
       >
         <span>{selectedOption ? selectedOption.label : title}</span>
-        <span style={{ transform: isOpen ? 'rotate(180deg)' : 'rotate(0deg)', transition: 'transform 0.3s' }}>
-          <img src={arrow} alt="Arrow" style={{ width: '16px', height: '16px' }} />
+        <span
+          className={styles.arrow}
+          style={{
+            transform: isOpen ? 'rotate(180deg)' : 'rotate(0deg)',
+          }}
+        >
+          <img src={arrow} alt="Arrow" className={styles.arrowImage} />
         </span>
-
       </button>
-      <div style={{
-        position: 'absolute',
-        top: '100%',
-        left: '0',
-        right: '0',
-        backgroundColor: '#f8f9fa',
-        border: '1px solid #ccc',
-        borderRadius: '4px',
-        overflow: 'hidden',
-        zIndex: 10,
-        width: '100%',
-        maxHeight: isOpen ? '150px' : '0',
-        opacity: isOpen ? 1 : 0,
-        transition: 'max-height 1 ease, opacity 0.5s ease'
-      }}>
-        <ul style={{ listStyle: 'none', padding: '0', margin: '0' }}>
-          {options.map((option, index) => (
+      <div className={`${styles.options} ${isOpen ? styles.open : ''}`}>
+        <ul className={styles.optionList}>
+          {options.map((option) => (
             <li
               key={option.id}
               onClick={() => handleChange(option)}
-              style={{
-                padding: '0.5rem',
-                cursor: 'pointer',
-                backgroundColor: selectedOption?.id === option.id ? '#e9ecef' : 'transparent',
-              }}
+              className={`${styles.option} ${
+                selectedOption?.id === option.id ? styles.selected : ''
+              }`}
             >
               <span>{option.label}</span>
             </li>

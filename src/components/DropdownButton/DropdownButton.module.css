@@ -1,7 +1,15 @@
+.dropdownContainer {
+    position: relative;
+    margin-bottom: 1rem;
+    flex-grow: 1;
+}
+
 .button {
     display: flex;
     justify-content: space-between;
-    align-items: center;  
+    align-items: center;
+    width: 100%;
+    height: 100%;
     min-height: 40px;
     font-size: 1rem;
     padding: 0.5rem;
@@ -10,10 +18,16 @@
     border: 1px solid #ccc;
     border-radius: 4px;
     text-align: center;
+    cursor: pointer;
 }
 
-.button:hover {
-    background-color: #f0f0f0;
+.arrow {
+    transition: transform 0.3s;
+}
+
+.arrowImage {
+    width: 16px;
+    height: 16px;
 }
 
 .options {
@@ -24,10 +38,23 @@
     background-color: #f8f9fa;
     border: 1px solid #ccc;
     border-radius: 4px;
-    max-height: 200px;
+    max-height: 0;
     overflow-y: auto;
     z-index: 10;
     width: 100%;
+    opacity: 0;
+    transition: max-height 0.3s ease, opacity 0.3s ease;
+}
+
+.open {
+    max-height: 150px;
+    opacity: 1;
+}
+
+.optionList {
+    list-style: none;
+    padding: 0;
+    margin: 0;
 }
 
 .option {
@@ -39,6 +66,20 @@
     background-color: #e9ecef;
 }
 
-.option.selected {
+.selected {
     background-color: #e9ecef;
+}
+
+@media (max-width: 600px) {
+    .button {
+        font-size: 1.1rem;
+        flex-direction: column;
+        padding: 1.5rem;
+        border-radius: 10px;
+    }
+
+    .arrow {
+        margin-top: 40%;
+        transform: rotate(90deg);
+    }
 }
