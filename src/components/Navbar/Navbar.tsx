@@ -1,17 +1,26 @@
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
 import styles from './Navbar.module.css';
 import { Sidebar } from '../Sidebar/Sidebar';
 import logo from "../../../public/logo.svg"
-import user from '../../assets/images/user.svg'
 import config from "../../assets/images/config.svg"
 import HamburgerMenu from '../Hamburguer/HamburgerMenu';
+import Modal from '../Modal/Modal';
 
 export function Navbar() {
     const [sidebarVisible, setSidebarVisible] = useState(false);
 
     const toggleSidebar = () => {
         setSidebarVisible(!sidebarVisible);
+    };
+
+    const [isModalOpen, setIsModalOpen] = useState(false);
+
+    const handleOpenModal = () => {
+        setIsModalOpen(true);
+    };
+
+    const handleCloseModal = () => {
+        setIsModalOpen(false);
     };
 
     return (
@@ -24,14 +33,10 @@ export function Navbar() {
                     <img src={logo} alt="logo" />
                 </div>
                 <nav className={styles.nav_options}>
-                    <Link className={styles.nav_content_options} to={'/perfil'}>
-                        <img src={user} alt="user" className={styles.icons} />
-                        <p className={styles.text_options}>Perfil</p>
-                    </Link>
-                    <Link className={styles.nav_content_options} to={'/configuracoes'}>
+                    <button className={styles.nav_content_options} onClick={handleOpenModal}>
                         <img src={config} alt="config" className={styles.icons} />
-                        <p className={styles.text_options}>Configurações</p>
-                    </Link>
+                    </button>
+                    <Modal isOpen={isModalOpen} onClose={handleCloseModal} />
                 </nav>
             </header>
             <Sidebar className={sidebarVisible ? styles.showSidebar : styles.hideSidebar} />
