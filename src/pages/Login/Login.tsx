@@ -1,47 +1,12 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import styles from './Login.module.css';
-import axios from 'axios';
 
-
-const API_BASE_URL = "http://localhost:5173";
-
-interface UserAttributes {
-  [key: string]: string;
-}
 
 const Login: React.FC = () => {
 
   const handleLogin = () => {
     window.location.href = 'http://localhost:5173/oauth2/authorization/azure';
   };
-
-  interface UserInfo {
-    id_token: string;
-    access_token: string;
-    user_attributes: UserAttributes;
-  }
-
-  const [userInfo, setUserInfo] = useState<UserInfo | null>(null);
-  const [error, setError] = useState<string | null>(null);
-
-  useEffect(() => {
-    const fetchUserInfo = async () => {
-      try {
-        const response = await axios.get(`${API_BASE_URL}/userinfo`);
-        const userData: UserInfo = response.data;
-
-        setUserInfo(userData);
-        localStorage.setItem("id_token", userData.id_token);
-        
-        console.log(localStorage.getItem("id_token"))
-      } catch (error) {
-        console.error("Erro ao buscar informações do usuário:", error);
-        setError("Erro ao buscar informações do usuário.");
-      }
-    };
-
-    fetchUserInfo();
-  }, []);
 
   return (
     <div className={styles.container}>
