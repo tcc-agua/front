@@ -7,13 +7,13 @@ export function Map() {
             <div className={styles.main}>
 
                 <div className={styles.container}>
-                    <h1 className={styles.title}>Mapa de Curitiba</h1>
+                    <p className={styles.title}>Mapa de Curitiba</p>
 
                     <div className={styles.map}>
                         <MapSpline />
                     </div>
 
-                    <h1 className={styles.captitle}>Legenda</h1>
+                    <p className={styles.captitle}>Legenda</p>
                     <div className={styles.caption}>
 
                         <div className={styles.points}>

@@ -5,8 +5,8 @@
 }
 
 .title {
-    font-weight: normal;
-    font-size: 1.3em;
+    font-family: 'SF Pro Medium';
+    font-size: 1.4vw;
     margin-bottom: 2.5em;
 }
 
@@ -59,8 +59,8 @@
 
 
 .date {
-    font-size: 1.2rem;
-    font-weight: bold;
+    font-family: 'SF Pro Medium';
+    font-size: 1.4vw;
 }
 
 .details {
@@ -95,11 +95,13 @@
 }
 
 .modalContent {
+    font-family: 'SF Pro Semibold';
+    font-size: 1.4vw;
     background: white;
     padding: 3%;
     border-radius: 10px;
     width: 40%;
-    height: 6%;
+    height: 60%;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -117,7 +119,6 @@
 .pointName {
     margin-top: 5%;
     margin-bottom: 10%;
-    font-size: larger;
     text-align: center;
 }
 
@@ -135,7 +136,7 @@ main {
     align-items: center;
     justify-content: center;
     width: 45%;
-    height: 100%;
+    height: 80%;
 }
 
 .information {
@@ -143,8 +144,8 @@ main {
     justify-content: center;
     align-items: center;
     text-align: center;
-    font-size: large;
-    font-weight: bold;
+    font-family: 'SF Pro Semibold';
+    font-size: 1.4vw;
     border: 1px solid #ccc;
     border-radius: 10px;
     margin-top: 5%;

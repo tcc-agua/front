@@ -95,7 +95,7 @@ const Historic: React.FC = () => {
 
   return (
     <div className={styles.container}>
-      <h1 className={styles.title}>Selecione uma data:</h1>
+      <p className={styles.title}>Selecione uma data:</p>
 
       <div className={styles.buttons}>
         <div className={styles.dropdownContainer}>
@@ -123,7 +123,7 @@ const Historic: React.FC = () => {
         </div>
       </div>
 
-      <h1 className={styles.title}>Últimas coletas:</h1>
+      <p className={styles.title}>Últimas coletas:</p>
       <div className={styles.colects}>
         {coletas.map(coleta => (
           <ColetaItem
@@ -141,23 +141,23 @@ const Historic: React.FC = () => {
           <div className={styles.modalContent}>
 
             <button className={styles.close} onClick={handleCloseModal}>x</button>
-            <h2 className={styles.pointName}>Dados de coleta do ponto {selectedDetail.label}</h2>
+            <p className={styles.pointName}>Dados de coleta do ponto {selectedDetail.label}</p>
 
             <main>
 
               <div className={styles.infoContainer}>
-                <h3>pH</h3>
+                <p className={styles.pointName}>pH</p>
                 <div className={styles.information}>
-                  <p>01</p>
+                  <p className={styles.pointName}>01</p>
                 </div>
               </div>
 
               <div className={styles.separator}></div>
 
               <div className={styles.infoContainer}>
-                <h3>Pressão</h3>
+                <p className={styles.pointName}>Pressão</p>
                 <div className={styles.information}>
-                  <p>03</p>
+                  <p className={styles.pointName}>03</p>
                 </div>
               </div>
 

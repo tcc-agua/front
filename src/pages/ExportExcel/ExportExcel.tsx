@@ -32,10 +32,10 @@ const ExportExcel: React.FC = () => {
 
         <div className={styles.container}>
             <div className={styles.top}>
-                <h1 className={styles.title}>Exporte o arquivo Excel de suas coletas!</h1>
+                <p className={styles.title}>Exporte o arquivo Excel de suas coletas!</p>
 
                 <div className={styles.left}>
-                    <h1 className={styles.subtitle}>Tabela em visualização:</h1>
+                    <p className={styles.subtitle}>Tabela em visualização:</p>
                     <div className={styles.buttonTable}>
                         <DropdownButton
                             id="table"
@@ -59,7 +59,7 @@ const ExportExcel: React.FC = () => {
                     <div className={styles.modal}>
                         <div className={styles.modalContent}>
                             <span className={styles.close} onClick={closeModal}>&times;</span>
-                            <h2 className={styles.modalTitle}>Tabelas exportadas com sucesso!</h2>
+                            <p className={styles.modalTitle}>Tabelas exportadas com sucesso!</p>
                             <img className={styles.modalImg} src={success} alt="Success" />
                             <p className={styles.modalText}>O arquivo exportado contém todas as três tabelas em diferentes abas.</p>
                         </div>

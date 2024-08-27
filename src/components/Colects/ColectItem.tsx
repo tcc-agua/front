@@ -21,7 +21,7 @@ const ColetaItem: React.FC<ColetaItemProps> = ({ date, description, details, onO
   return (
     <div className={styles.coleta} onClick={() => setIsOpen(!isOpen)}>
       <div className={styles.title}>
-        <h1 className={styles.date}>{date}</h1>
+        <p className={styles.date}>{date}</p>
         <div className={styles.separator}></div>
         <p className={styles.description}>{description}</p>
         <span style={{ transform: isOpen ? 'rotate(180deg)' : 'rotate(0deg)', transition: 'transform 0.3s' }}>

@@ -1,4 +1,3 @@
-
 .container {
     display: flex;
     justify-content: center;
@@ -15,69 +14,70 @@
 .left {
     width: 30%;
     display: flex;
-    margin-left: 9%;
+    margin-left: auto;
+    margin-right: 2%;
 }
 
 .title {
     color: #303030;
-    font-weight: normal;
-    font-size: 1.3em;
+    font-family: 'SF Pro Medium';
+    font-size: 1.4vw;
     margin-left: 5%;
     margin-right: 15%;
 }
 
 .subtitle {
     color: #BEBEBE;
-    font-weight: normal;
-    font-size: 1.1em;
+    font-family: 'SF Pro Medium';
+    font-size: 1.4vw;
     margin-right: 3%;
     margin-top: 1%;
 }
 
-.buttonTable{
+.buttonTable {
     margin-top: -2%;
 }
 
 @media (max-width: 900px) {
-    .top{
+    .top {
         font-size: small;
         flex-direction: column;
     }
 
-    .left{
+    .left {
         margin-left: 5%;
         width: 80%;
         flex-direction: column;
     }
 
-    .buttonTable{
+    .buttonTable {
         width: 25%;
         margin-top: 2%;
     }
 
-    .title{
+    .title {
         margin-bottom: 5%;
     }
 
 }
 
 @media (min-width: 1500px) {
-    .top{
+    .top {
         font-size: larger;
     }
 
-    .left{
+    .left {
         margin-left: auto;
     }
 
-    .buttonTable{
+    .buttonTable {
         margin-top: 0.5%;
     }
 }
 
 /* Tabela */
 
-.table{
+.table {
     display: flex;
     justify-content: center;
     height: 60%;
@@ -87,7 +87,7 @@
 }
 
 @media (max-width: 900px) {
-    .table{
+    .table {
         margin-bottom: 7%;
     }
 }
@@ -138,11 +138,14 @@
 
 .modalTitle {
     color: #303030;
+    font-family: 'SF Pro Medium';
+    font-size: 1.6vw;
 }
 
 .modalText {
     color: #949494;
-    font-size: large;
+    font-family: 'SF Pro Medium';
+    font-size: 1.4vw;
 }
 
 @media (max-width: 600px) {
@@ -159,7 +162,7 @@
         margin-top: 8%;
     }
 
-    .modalText{
+    .modalText {
         font-size: medium;
         margin-bottom: 10%;
     }
@@ -180,7 +183,7 @@
         margin-top: 8%;
     }
 
-    .modalText{
+    .modalText {
         font-size: larger;
         margin-bottom: 10%;
     }
@@ -189,13 +192,13 @@
 /* Botão Exportar Arquivo */
 
 .export {
-    font-size: medium;
+    font-size: 1.2vw;
     color: #fff;
     background-color: #01A4FD;
     border-radius: 8px;
     border: none;
     cursor: pointer;
-    padding: 1% 4%; 
+    padding: 1% 4%;
     margin-left: 75%;
     margin-top: 3%;
 }
@@ -212,7 +215,7 @@
 }
 
 @media (min-width: 1500px) {
-    .export{
+    .export {
         margin-top: -20%;
     }
 }
