@@ -13,9 +13,8 @@ const mockData = {
   };
 
 export function Dashboards(){
-
-    const [weatherData, setWeatherData] = useState('');
-
+    const [forecastData, setForecastData] = useState(null);
+  
     const weatherDescriptions = {
       "clear sky": "céu limpo",
       "few clouds": "poucas nuvens",
@@ -31,11 +30,25 @@ export function Dashboards(){
     async function searchCity() {
       const city = "Curitiba";
       const key = "43690f4d63e7b31353de8212c8f43283";
-      const url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${key}`;
+      const url = `https://api.openweathermap.org/data/2.5/forecast?q=${city}&appid=${key}`;
   
       try {
         const { data } = await axios.get(url);
-        setWeatherData(data);
+        const dailyForecasts = [];
+        const usedDays = new Set();
+  
+        data.list.forEach(forecast => {
+          const date = new Date(forecast.dt_txt);
+          const dayOfWeek = date.getDay();
+  
+          if (dayOfWeek >= 1 && dayOfWeek <= 5 && !usedDays.has(dayOfWeek)) {
+            dailyForecasts.push(forecast);
+            usedDays.add(dayOfWeek);
+            console.log(dayOfWeek)
+          }
+        });
+  
+        setForecastData(dailyForecasts);
       } catch (error) {
         console.error("Erro ao buscar os dados:", error);
       }
@@ -44,6 +57,23 @@ export function Dashboards(){
     useEffect(() => {
       searchCity();
     }, []);
+  
+    const getDayOfWeek = (dateStr) => {
+      const date = new Date(dateStr);
+      console.log(date);
+      return date.toLocaleDateString('pt-BR', { weekday: 'short' }).replace('.', '');
+    };
+
+    const getDayClass = (dayOfWeek) => {
+        switch (dayOfWeek) {
+            case 1: return styles.seg;
+            case 2: return styles.ter;
+            case 3: return styles.qua;
+            case 4: return styles.qui;
+            case 5: return styles.sex;
+            default: return '';
+        }
+    };
 
     return(
         <>
@@ -65,45 +95,32 @@ export function Dashboards(){
                         </div>
                     </div>
                     <div className={styles.weekly_weather}>
-                        <p className={styles.title}>Clima semanal</p>
-                        <div className={styles.content_weather}>
-                            <div className={styles.weekday}>
-                                <div className={styles.seg}>
-                                    <p className={styles.title_weekday}>Seg</p>
-                                    <p className={styles.temperature}>32°C</p>
-                                    <p className={styles.climate}>Ensolarado</p>
-                                </div>
+                        {forecastData ? (
+                        <>
+                            <div className={styles.title}>
+                            <p>Clima Semanal</p>
                             </div>
-                            <div className={styles.weekday}>
-                                <div className={styles.ter}>
-                                    <p className={styles.title_weekday}>Ter</p>
-                                    <p className={styles.temperature}>26°C</p>
-                                    <p className={styles.climate}>Ensolarado</p>
+                            <div className={styles.content_weather}>
+                            {forecastData.map((forecast, index) => (
+                                <div className={styles.weekday} key={index}>
+                                <div>
+                                    <p className={styles.title_weekday}>{getDayOfWeek(forecast.dt_txt)}</p>
+                                    <p className={styles.temperature}>
+                                    {(forecast.main.temp - 273.15).toFixed(2)}°C
+                                    </p>
+                                    <p className={styles.climate}>
+                                    {weatherDescriptions[forecast.weather[0].description] || forecast.weather[0].description}
+                                    </p>
                                 </div>
-                            </div>
-                            <div className={styles.weekday}>
-                                <div className={styles.qua}>
-                                    <p className={styles.title_weekday}>Qua</p>
-                                    <p className={styles.temperature}>24°C</p>
-                                    <p className={styles.climate}>Nublado</p>
                                 </div>
+                            ))}
                             </div>
-                            <div className={styles.weekday}>
-                                <div className={styles.qui}>
-                                    <p className={styles.title_weekday}>Qui</p>
-                                    <p className={styles.temperature}>28°C</p>
-                                    <p className={styles.climate}>Nublado</p>
-                                </div>
-                            </div>
-                            <div className={styles.weekday}>
-                                <div className={styles.sex}>
-                                    <p className={styles.title_weekday}>Sex</p>
-                                    <p className={styles.temperature}>25°C</p>
-                                    <p className={styles.climate}>Chuvoso</p>
-                                </div>
-                            </div>
-                        </div>
+                        </>
+                        ) : (
+                        <p>Carregando...</p>
+                        )}
                     </div>
+
                     <div className={styles.graphic}>
                         <p className={styles.title}>Gráfico</p>
                         <div className={styles.grafico}>
