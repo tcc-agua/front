@@ -22,7 +22,7 @@ input::placeholder {
 
 .title, .text {
     font-size: 1.3vw;
-    font-weight: bold;
+    font-family: "SF Pro Medium";
 }
 
 .main_content {
@@ -99,7 +99,7 @@ input::placeholder {
 
 .title_data {
     font-size: 1.15vw;
-    font-weight: bold;
+    font-family: "SF Pro Semibold";
 }
 
 .data_etas_content .title_data, .data_etas_content .percentage, .data_etas_content .points{ color: #419E98; }
@@ -112,7 +112,7 @@ input::placeholder {
 
 .percentage, .points {
     font-size: 1.4vw;
-    font-weight: bold;
+    font-family: "SF Pro Semibold";
 }
 
 .complement {
@@ -131,7 +131,7 @@ input::placeholder {
 .title_historic_points {
     margin-bottom: 25px;
     font-size: 1.3vw;
-    font-weight: bold;
+    font-family: "SF Pro Medium";
 }
 
 .historic_point {
@@ -151,7 +151,8 @@ input::placeholder {
     margin-right: auto;
     display: flex;
     align-items: center;
-    font-weight: bold;
+    font-family: "SF Pro Semibold";
+    font-size: 1.2vw;
 }
 
 .arrow {
