@@ -90,12 +90,14 @@
 }
 
 .label {
+  font-size: 1rem;
   color: #01A4FD;
-  margin-left: 5%;
-  margin-right: 5%;
+  margin-left: 6%;
+  margin-right: 2%;
 }
 
 .number {
+  font-size: 1rem;
   color: #000;
   margin-right: 20%;
 }
