@@ -47,7 +47,6 @@ const MapSpline = () => {
 
     return () => {
       window.removeEventListener('resize', handleResize);
-      // Clean up resources if necessary
     };
   }, []);
 

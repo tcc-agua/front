@@ -24,8 +24,11 @@
     display: flex;
     padding: 10px;
     align-items: center;
-    text-decoration: none;
+    color: black;
+    background-color: white;
+    border: none;
     font-size: 14px;
+    cursor: pointer;
 }
 
 .icons {
