@@ -6,6 +6,7 @@
     margin: 20px 70px;
 }
 
+
 .data_color{ color: #D543CB; }
 
 .search_bar {
@@ -23,6 +24,7 @@ input::placeholder {
 .title, .text {
     font-size: 1.3vw;
     font-family: "SF Pro Medium";
+    text-align: start;
 }
 
 .main_content {
@@ -373,6 +375,10 @@ input::placeholder {
     .close {
         margin-left: 90%;
         margin-top: 0%;
+    }
+
+    .name_point {
+        font-size: 3vw;
     }
 }
 

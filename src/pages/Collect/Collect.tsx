@@ -22,7 +22,7 @@ export function Collect() {
     };
 
     return (
-        <main className={styles.container}>
+        <div className={styles.container}>
             <section className={styles.content_search}>
                 <p className={styles.title}>Insira os <span className={styles.data_color}>dados</span> atualizados do ponto que acabou de coletar!</p>
                 <input
@@ -142,6 +142,6 @@ export function Collect() {
             )}
 
             <Outlet />
-        </main>
+        </div>
     )
 }
