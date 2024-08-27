@@ -7,7 +7,7 @@
     height: 100%;
 }
 
-header {
+.top {
     width: 100%;
     display: flex;
 }
@@ -39,7 +39,7 @@ header {
 }
 
 @media (max-width: 900px) {
-    header{
+    .top{
         font-size: small;
         flex-direction: column;
     }
