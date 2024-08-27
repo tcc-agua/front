@@ -29,9 +29,9 @@ const ExportExcel: React.FC = () => {
     }
 
     return (
-        
+
         <div className={styles.container}>
-            <header>
+            <div className={styles.top}>
                 <h1 className={styles.title}>Exporte o arquivo Excel de suas coletas!</h1>
 
                 <div className={styles.left}>
@@ -47,7 +47,7 @@ const ExportExcel: React.FC = () => {
                     </div>
                 </div>
 
-            </header>
+            </div>
 
             <div className={styles.table}>
                 <ExcelTable />
