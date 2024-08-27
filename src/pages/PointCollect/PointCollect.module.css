@@ -36,6 +36,7 @@
 
 .select_point_title {
     margin-bottom: 10px;
+    font-size: 1.4vw;
 }
 
 .select_point_grid {
@@ -60,8 +61,8 @@
 }
 
 .name_point {
-    font-weight: bold;
-    font-family: "SF pro";
+    font-size: 1.3vw;
+    font-family: "SF pro Bold";
 }
 
 .name_point_type {
@@ -70,7 +71,7 @@
 
 .status_point {
     font-family: "SF pro";
-    font-size: 13px;
+    font-size: 1.05vw;
     color: #949494;
 }
 
@@ -252,4 +253,31 @@ input[type="number"] {
     .select_point_container {
         height: 45vw;
     }
+
+    .point_information_text {
+        font-size: 14px;
+    }
 } 
+
+@media (max-width: 680px) {
+    .main_information {
+        width: 100%;
+    }
+
+    .left_side, .right_side {
+        width: 100%;
+    }
+
+    .select_point_container {
+        height: 90vw;
+    }
+
+    .title {
+        padding: 10px;
+        font-size: 15px;
+    }
+
+    .point_information_text {
+        font-size: 13px;
+    }
+}

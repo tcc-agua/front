@@ -5,26 +5,33 @@
 }
 
 @font-face {
-  font-family: 'SF Pro';
-  src: url('/fonts/ios.ttf') format('truetype');
+  font-family: 'SF Pro Light';
+  src: url('/fonts/SF-Pro-Regular') format('truetype');
   font-weight: normal;
   font-style: normal;
 }
 
 @font-face {
-  font-family: 'SF Pro Bold';
-  src: url('/fonts/ios-bold.OTF') format('truetype');
+  font-family: 'SF Pro Regular';
+  src: url('/fonts/SF-Pro-Light') format('truetype');
   font-weight: normal;
   font-style: normal;
 }
 
 @font-face {
   font-family: 'SF Pro Semibold';
-  src: url('/fonts/ios-semibold.OTF') format('truetype');
+  src: url('/fonts/SF-Pro-Semibold') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'SF Pro Medium';
+  src: url('/fonts/SF-Pro-Medium') format('truetype');
   font-weight: normal;
   font-style: normal;
 }
 
 body {
-  font-family: 'SF Pro', sans-serif;
+  font-family: 'SF Pro Regular', sans-serif;
 }
