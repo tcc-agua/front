@@ -6,7 +6,7 @@ import { Map } from '../pages/Map/Map';
 import { Collect } from '../pages/Collect/Collect';
 import { PointCollect } from '../pages/PointCollect/PointCollect';
 import Historic  from '../pages/Historic/Historic';
-import { ExportExcel } from '../pages/ExportExcel/ExportExcel';
+import ExportExcel from '../pages/ExportExcel/ExportExcel';
 import Login from '../pages/Login/Login';
 import { NotFound } from '../pages/NotFound/NotFound';
 import SplashPage from '../pages/Splash/Splash';

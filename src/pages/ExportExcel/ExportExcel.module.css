@@ -1,0 +1,178 @@
+
+.container {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+}
+
+header {
+    width: 100%;
+    display: flex;
+}
+
+.left {
+    width: 30%;
+    display: flex;
+    margin-left: 9%;
+}
+
+.title {
+    color: #303030;
+    font-weight: normal;
+    font-size: 1.3em;
+    margin-left: 5%;
+    margin-right: 15%;
+}
+
+.subtitle {
+    color: #BEBEBE;
+    font-weight: normal;
+    font-size: 1.1em;
+    margin-right: 3%;
+    margin-top: 1%;
+}
+
+.buttonTable{
+    margin-top: -2%;
+}
+
+@media (max-width: 900px) {
+    header{
+        font-size: small;
+        flex-direction: column;
+    }
+
+    .left{
+        margin-left: 5%;
+        width: 80%;
+        flex-direction: column;
+    }
+
+    .buttonTable{
+        width: 25%;
+        margin-top: 2%;
+    }
+
+    .title{
+        margin-bottom: 5%;
+    }
+
+}
+
+/* Tabela */
+
+.table{
+    display: flex;
+    justify-content: center;
+    height: 60%;
+    width: 90%;
+    margin-left: 5%;
+    margin-top: 3%;
+}
+
+@media (max-width: 900px) {
+    .table{
+        margin-bottom: 7%;
+    }
+}
+
+/* Modal */
+
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #303030;
+}
+
+.close {
+    cursor: pointer;
+    margin-left: 95%;
+    margin-top: -3%;
+    font-size: x-large;
+    font-weight: normal;
+    background-color: #fff;
+    color: #cccccc;
+    border: none;
+}
+
+.modalContent {
+    background: white;
+    padding: 3%;
+    border-radius: 10px;
+    width: 40%;
+    height: 60%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.modalTitle,
+.modalImg,
+.modalText {
+    text-align: center;
+    margin-top: 6%;
+}
+
+.modalTitle {
+    color: #303030;
+}
+
+.modalText {
+    color: #949494;
+    font-size: large;
+}
+
+@media (max-width: 600px) {
+    .modalContent {
+        width: 78%;
+        height: auto;
+    }
+
+    .modalTitle,
+    .modalImg,
+    .modalText {
+        text-align: center;
+        font-size: large;
+        margin-top: 8%;
+    }
+
+    .modalText{
+        font-size: medium;
+        margin-bottom: 10%;
+    }
+
+}
+
+/* Botão Exportar Arquivo */
+
+.export {
+    font-size: medium;
+    color: #fff;
+    background-color: #01A4FD;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    padding: 1% 4%; 
+    margin-left: 75%;
+    margin-top: 3%;
+}
+
+@media (max-width: 900px) {
+    .export {
+        font-size: small;
+        margin-left: auto;
+        margin-right: auto;
+        display: block;
+        padding: 3% 5%;
+    }
+
+}

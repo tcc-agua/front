@@ -1,0 +1,15 @@
+.customHotTable {
+    font-size: 1rem;
+}
+
+.customHotTable .handsontable td,
+.customHotTable .handsontable th {
+    font-size: 1.2rem;
+}
+
+.customHotTable .lightGreen {
+    background-color: #A1DFDB;
+    color: white;
+    font-size: 1.1rem;
+}
+  
