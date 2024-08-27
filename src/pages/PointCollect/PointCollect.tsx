@@ -1,8 +1,39 @@
-import React from "react";
+import React, { useState } from "react";
 import styles from './PointCollect.module.css'
+import ArrowUp from '../../assets/images/arrow-up.svg'
+import ArrowDown from '../../assets/images/arrow-down.svg'
 
 
 export function PointCollect(){
+    const [isModalOpen, setModalOpen] = useState<boolean>(false);
+    const [selectedPoint, setSelectedPoint] = useState<string>('');
+    const [numberValue, setNumberValue] = useState<number>(1);
+
+    const openModal = (point: string) => {
+        setSelectedPoint(point);
+        setModalOpen(true);
+    };
+
+    const closeModal = () => {
+        setModalOpen(false);
+        setSelectedPoint('');
+    };
+
+    const incrementValue = () => {
+        setNumberValue(prev => Math.round((prev + 0.1) * 10) / 10);
+    };
+
+    const decrementValue = () => {
+        setNumberValue(prev => (prev > 0 ? Math.round((prev - 0.1) * 10) / 10 : 0));
+    };
+
+    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const value = parseFloat(e.target.value);
+        if (!isNaN(value)) {
+            setNumberValue(value);
+        }
+    };
+
     return(
         <>
         <main className={styles.container}>
@@ -12,31 +43,31 @@ export function PointCollect(){
                     <div className={styles.select_point_container}>
                         <p className={styles.select_point_title}>Selecione um ponto:</p>
                         <div className={styles.select_point_grid}>
-                            <button className={styles.select_point}>
+                            <button className={styles.select_point} onClick={() => openModal('AG - 02')} >
                                 <p className={styles.name_point}><span className={styles.name_point_type}>AG</span> - 02</p>
                                 <pre className={styles.status_point}>Não preenchido    ⟶</pre>
                             </button>
-                            <button className={styles.select_point}>
+                            <button className={styles.select_point} onClick={() => openModal('AG - 04')}>
                                 <p className={styles.name_point}><span className={styles.name_point_type}>AG</span> - 04</p>
                                 <pre className={styles.status_point}>Não preenchido    ⟶</pre>
                             </button>
-                            <button className={styles.select_point}>
+                            <button className={styles.select_point} onClick={() => openModal('AG - 05')}>
                                 <p className={styles.name_point}><span className={styles.name_point_type}>AG</span> - 05</p>
                                 <pre className={styles.status_point}>Não preenchido    ⟶</pre>
                             </button>
-                            <button className={styles.select_point}>
+                            <button className={styles.select_point} onClick={() => openModal('BC - 01')}>
                                 <p className={styles.name_point}><span className={styles.name_point_type}>BC</span> - 01</p>
                                 <pre className={styles.status_point}>preenchido    ⟶</pre>
                             </button>
-                            <button className={styles.select_point}>
+                            <button className={styles.select_point} onClick={() => openModal('BH - 02')}>
                                 <p className={styles.name_point}><span className={styles.name_point_type}>BH</span> - 02</p>
                                 <pre className={styles.status_point}>Não preenchido    ⟶</pre>
                             </button>
-                            <button className={styles.select_point}>
+                            <button className={styles.select_point} onClick={() => openModal('BS - 01')}>
                                 <p className={styles.name_point}><span className={styles.name_point_type}>BS</span> - 01</p>
                                 <pre className={styles.status_point}>preenchido    ⟶</pre>
                             </button>
-                            <button className={styles.select_point}>
+                            <button className={styles.select_point} onClick={() => openModal('BS - 01')}>
                                 <p className={styles.name_point}><span className={styles.name_point_type}>BS</span> - 01</p>
                                 <pre className={styles.status_point}>preenchido    ⟶</pre>
                             </button>
@@ -54,6 +85,34 @@ export function PointCollect(){
                 </div>
             </div>
         </main>
+
+        {isModalOpen && (
+            <div className={styles.modal}>
+                <div className={styles.modalContent}>
+                    <button className={styles.close} onClick={closeModal}>x</button>
+                    <h2 className={styles.pointName}>Dados de coleta do ponto {selectedPoint}</h2>
+                    <main className={styles.infoContainer}>
+                        <div className={styles.infoContent}>
+                            <h3>Pressão</h3>
+                            <div className={styles.information}>
+                                <button className={styles.arrow} onClick={incrementValue}><img src={ArrowUp} alt="Arrow Up"/></button>
+                                <input
+                                        type="number"
+                                        value={numberValue.toFixed(1)}
+                                        onChange={handleInputChange}
+                                        step="0.1"
+                                        min="0"
+                                        className={styles.numberInput}
+                                    />
+                                <button className={styles.arrow} onClick={decrementValue}><img src={ArrowDown} alt="Arrow Down" /></button>
+                            </div>
+                        </div>
+                    <button className={styles.buttonEnviar} onClick={() => console.log("Dados enviados")}>Enviar</button>
+                    </main>
+                </div>
+            </div>
+        )}
+
         </>
     )
 }
