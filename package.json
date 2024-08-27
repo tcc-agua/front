@@ -10,9 +10,11 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@handsontable/react": "^14.5.0",
     "@splinetool/loader": "^1.9.3",
     "@splinetool/runtime": "^1.9.3",
     "apexcharts": "^3.52.0",
+    "handsontable": "^14.5.0",
     "react": "^18.3.1",
     "react-apexcharts": "^1.4.1",
     "react-dom": "^18.3.1",
