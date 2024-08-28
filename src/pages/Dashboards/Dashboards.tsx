@@ -3,8 +3,7 @@ import icon_correct from "../../assets/images/correct.svg"
 import icon_export from "../../assets/images/export_activity.svg"
 import Graphic from "../../components/Graphic/Graphic"
 import MapSpline from "../../components/MapSpline/MapSpline"
-import { useState, useEffect } from 'react';
-import axios from 'axios';
+import Forecast from "../../components/Forecast/Forecast"
 
 const mockData = {
     months: ["Janeiro", "Fevereiro", "Março", "Abril", "Maio"],
@@ -13,37 +12,6 @@ const mockData = {
   };
 
 export function Dashboards(){
-
-    const [weatherData, setWeatherData] = useState('');
-
-    const weatherDescriptions = {
-      "clear sky": "céu limpo",
-      "few clouds": "poucas nuvens",
-      "scattered clouds": "nuvens dispersas",
-      "broken clouds": "nuvens quebradas",
-      "shower rain": "chuva de banho",
-      "rain": "chuva",
-      "thunderstorm": "tempestade",
-      "snow": "neve",
-      "mist": "névoa",
-    };
-  
-    async function searchCity() {
-      const city = "Curitiba";
-      const key = "43690f4d63e7b31353de8212c8f43283";
-      const url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${key}`;
-  
-      try {
-        const { data } = await axios.get(url);
-        setWeatherData(data);
-      } catch (error) {
-        console.error("Erro ao buscar os dados:", error);
-      }
-    }
-  
-    useEffect(() => {
-      searchCity();
-    }, []);
 
     return(
         <>
@@ -64,46 +32,11 @@ export function Dashboards(){
                             </div>
                         </div>
                     </div>
+                    
                     <div className={styles.weekly_weather}>
-                        <p className={styles.title}>Clima semanal</p>
-                        <div className={styles.content_weather}>
-                            <div className={styles.weekday}>
-                                <div className={styles.seg}>
-                                    <p className={styles.title_weekday}>Seg</p>
-                                    <p className={styles.temperature}>32°C</p>
-                                    <p className={styles.climate}>Ensolarado</p>
-                                </div>
-                            </div>
-                            <div className={styles.weekday}>
-                                <div className={styles.ter}>
-                                    <p className={styles.title_weekday}>Ter</p>
-                                    <p className={styles.temperature}>26°C</p>
-                                    <p className={styles.climate}>Ensolarado</p>
-                                </div>
-                            </div>
-                            <div className={styles.weekday}>
-                                <div className={styles.qua}>
-                                    <p className={styles.title_weekday}>Qua</p>
-                                    <p className={styles.temperature}>24°C</p>
-                                    <p className={styles.climate}>Nublado</p>
-                                </div>
-                            </div>
-                            <div className={styles.weekday}>
-                                <div className={styles.qui}>
-                                    <p className={styles.title_weekday}>Qui</p>
-                                    <p className={styles.temperature}>28°C</p>
-                                    <p className={styles.climate}>Nublado</p>
-                                </div>
-                            </div>
-                            <div className={styles.weekday}>
-                                <div className={styles.sex}>
-                                    <p className={styles.title_weekday}>Sex</p>
-                                    <p className={styles.temperature}>25°C</p>
-                                    <p className={styles.climate}>Chuvoso</p>
-                                </div>
-                            </div>
-                        </div>
+                        <Forecast />
                     </div>
+
                     <div className={styles.graphic}>
                         <p className={styles.title}>Gráfico</p>
                         <div className={styles.grafico}>

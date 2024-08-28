@@ -1,0 +1,59 @@
+.title {
+    font-size: clamp(10px, 10px + 0.2vw, 15px);
+    padding: 1.3vh;
+}
+
+.weekly_weather {
+    display: flex;
+    flex-direction: column;
+    background-color: white;
+    border: 1px solid #eaeaea;
+    border-radius: 10px;
+    padding: 15px;
+    margin-bottom: 15px;
+}
+
+.content_weather { 
+    display: inline-flex;
+    overflow-x: auto;
+    white-space: nowrap;
+    gap: 5px;
+    justify-content: center;
+}
+
+.weekday {
+    min-width: 7vw;
+    border: 1px solid #eaeaea;
+    border-radius: 7px;
+    box-sizing: border-box;
+    height: 12vh;
+}
+
+.seg, .ter, .qua, .qui, .sex {
+    height: 100%;
+    border-radius: 7px;
+    color: white;
+    padding: 10px;
+}
+
+.seg { background-color: #D543CB; }
+.ter { background-color: #00A4FD; }
+.qua { background-color: #419E98; }
+.qui { background-color: #37A264; }
+.sex { background-color: #007BC0; }
+
+.title_weekday {
+    font-size: 1vw;
+}
+
+.temperature {
+    font-weight: bold;
+    padding: 5px 0px;
+    font-size: 1.5vw;
+}
+
+.climate {
+    font-size: 0.8vw;
+    text-align: end;
+    align-self: flex-end;
+}
