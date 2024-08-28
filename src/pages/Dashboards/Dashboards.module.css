@@ -9,18 +9,15 @@
 .left_side, .right_side {
     display: flex;
     flex-direction: column;
+    padding: 15px;
 }
-
-.left_side { width: 50%; }
-.right_side { width: 50%; }
-
 
 .updates {
     display: flex;
     flex-direction: column;
     background-color: white;
     border: 1px solid #eaeaea;
-    width: 95%;
+    width: 100%;
     border-radius: 10px;
     padding: 15px;
     margin-bottom: 15px;
@@ -83,63 +80,10 @@ pre {
     flex-direction: column;
     background-color: white;
     border: 1px solid #eaeaea;
-    width: 95%;
     border-radius: 10px;
     padding: 15px;
     margin-bottom: 15px;
-}
-
-.content_weather { 
-    display: inline-flex;
-    overflow-x: auto;
-    white-space: nowrap;
-    width: 100%;
-    gap: 5px;
-    justify-content: center;
-}
-
-.weekday {
-    min-width: 6.5vw;
-    min-height: 6vw;
-    border: 1px solid #eaeaea;
-    border-radius: 7px;
-    box-sizing: border-box;
-    height: 12vh;
-}
-
-.seg, .ter, .qua, .qui, .sex {
-    width: 100%;
-    height: 100%;
-    border-radius: 7px;
-    color: white;
-    padding: 10px;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-}
-
-.seg { background-color: #D543CB; }
-.ter { background-color: #00A4FD; }
-.qua { background-color: #419E98; }
-.qui { background-color: #37A264; }
-.sex { background-color: #007BC0; }
-
-.title_weekday {
-    font-size: 1vw;
-    font-family: "SF Pro Regular";
-}
-
-.temperature {
-    font-family: "SF Pro Semibold";
-    padding: 5px 0px;
-    font-size: 1.5vw;
-}
-
-.climate {
-    font-size: 0.8vw;
-    text-align: end;
-    align-self: flex-end;
-    font-family: "SF Pro Light";
+    align-items: center;
 }
 
 .last_activities {
@@ -226,7 +170,7 @@ hr {
     flex-direction: column;
     background-color: white;
     border: 1px solid #eaeaea;
-    width: 95%;
+    width: 100%;
     border-radius: 10px;
     padding: 15px;
 }
