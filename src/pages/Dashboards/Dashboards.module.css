@@ -27,7 +27,8 @@
 }
 
 .title {
-    font-size: clamp(10px, 10px + 0.2vw, 15px);
+    font-size: 1.4vw;
+    font-family: "SF Pro Medium";
     padding: 1.3vh;
 }
 
@@ -43,24 +44,29 @@
     border-radius: 7px;
     width: 48.5%;
     box-sizing: border-box;
-    padding: 5px 10px;
+    padding: 10px 10px 5px 10px;
     height: 100%;
-    height: 100px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 }
 
 .point {
-    font-size: 15px;
+    font-size: 1.2vw;
 }
 
 .main_information {
-    font-weight: bold;
-    font-size: 2.3vh;
+    font-family: "SF Pro Semibold";
+    font-size: 1.5vw;
 }
 
 .extra_information {
     display: flex;
-    font-size: 1.4vh;
-    
+    font-size: 0.8vw;
+}
+
+pre {
+    font-family: "SF Pro Light";
 }
 
 .point, .main_information, .extra_information {
@@ -107,6 +113,9 @@
     border-radius: 7px;
     color: white;
     padding: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 }
 
 .seg { background-color: #D543CB; }
@@ -117,10 +126,11 @@
 
 .title_weekday {
     font-size: 1vw;
+    font-family: "SF Pro Regular";
 }
 
 .temperature {
-    font-weight: bold;
+    font-family: "SF Pro Semibold";
     padding: 5px 0px;
     font-size: 1.5vw;
 }
@@ -129,6 +139,7 @@
     font-size: 0.8vw;
     text-align: end;
     align-self: flex-end;
+    font-family: "SF Pro Light";
 }
 
 .last_activities {
@@ -176,6 +187,8 @@
 
 .text_activity {
     margin-left: 10px;
+    font-family: "SF Pro Semibold";
+    font-size: 1.2vw;
 }
 
 h4 {
@@ -185,6 +198,7 @@ h4 {
 .days {
     margin-top: 3px;
     font-size: 1.8vh;
+    font-family: "SF Pro Light";
 }
 
 

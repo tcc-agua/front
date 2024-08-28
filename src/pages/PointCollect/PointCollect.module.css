@@ -37,6 +37,7 @@
 .select_point_title {
     margin-bottom: 10px;
     font-size: 1.4vw;
+    font-family: "SF Pro Medium";
 }
 
 .select_point_grid {
@@ -62,7 +63,7 @@
 
 .name_point {
     font-size: 1.3vw;
-    font-family: "SF pro Bold";
+    font-family: "SF Pro Semibold";
 }
 
 .name_point_type {
@@ -70,7 +71,7 @@
 }
 
 .status_point {
-    font-family: "SF pro";
+    font-family: "SF Pro Light";
     font-size: 1.05vw;
     color: #949494;
 }
@@ -111,6 +112,11 @@
     border: 1px solid #dcdcdc;
     border-radius: 7px;
     padding: 20px 30px;
+}
+
+.map_title {
+    font-size: 1.4vw;
+    font-family: "SF Pro Semibold";
 }
 
 .select_point:hover {
@@ -217,6 +223,16 @@
     font-size: 1.2em;
 }
 
+.pointName {
+    font-size: 1.7vw;
+}
+
+
+.type {
+    font-size: 1.8vw;
+    font-family: "SF Pro Medium";
+}
+
 input[type="number"]::-webkit-inner-spin-button,
 input[type="number"]::-webkit-outer-spin-button {
     -webkit-appearance: none;
@@ -257,6 +273,10 @@ input[type="number"] {
     .point_information_text {
         font-size: 14px;
     }
+
+    .modalContent {
+        width: 45%;
+    }
 } 
 
 @media (max-width: 680px) {
@@ -279,5 +299,36 @@ input[type="number"] {
 
     .point_information_text {
         font-size: 13px;
+    }
+
+    .modalContent {
+        width: 80%;
+        height: 350px;
+    }
+
+    .pointName, .type {
+        font-size: 3.5vw;
+    }
+
+    .information {
+        width: 60%;
+        height: 110px;
+    }
+
+    input[type="number"] {
+        font-size: 5.5vw;
+        text-align: center;
+    }
+
+    .buttonEnviar {
+        width: 60%;
+        height: auto;
+        padding: 10px;
+        font-size: 4vw;
+    }
+
+    .close {
+        margin-left: 90%;
+        font-size: 1.5rem;
     }
 }

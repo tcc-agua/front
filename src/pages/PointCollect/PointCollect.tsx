@@ -90,10 +90,10 @@ export function PointCollect(){
             <div className={styles.modal}>
                 <div className={styles.modalContent}>
                     <button className={styles.close} onClick={closeModal}>x</button>
-                    <h2 className={styles.pointName}>Dados de coleta do ponto {selectedPoint}</h2>
+                    <p className={styles.pointName}>Dados de coleta do ponto {selectedPoint}</p>
                     <main className={styles.infoContainer}>
                         <div className={styles.infoContent}>
-                            <h3>Pressão</h3>
+                            <p className={styles.type}>Pressão</p>
                             <div className={styles.information}>
                                 <button className={styles.arrow} onClick={incrementValue}><img src={ArrowUp} alt="Arrow Up"/></button>
                                 <input
