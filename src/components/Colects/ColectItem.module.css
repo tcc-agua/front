@@ -73,7 +73,7 @@
   margin-top: 2%;
 }
 
-@media (max-width: 600px) {
+@media (max-width: 1000px) {
   .detailContainer {
     flex-basis: 100%;
     margin-bottom: 2%;
@@ -86,6 +86,11 @@
 
   .details {
     margin-left: 0;
+  }
+
+  .date{
+    font-family: 'SF Pro Medium';
+    font-size: 1rem;
   }
 }
 
@@ -116,8 +121,10 @@
   height: 100%;
 }
 
-@media (max-width: 600px) {
+
+
+@media (max-width: 1150px) {
   .viewButton{
-    font-size: medium;
+    margin-left: -15%;
   }
 }

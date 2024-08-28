@@ -6,7 +6,7 @@
 
 .title {
     font-family: 'SF Pro Medium';
-    font-size: 1.4vw;
+    font-size: 1rem;
     margin-bottom: 2.5em;
 }
 
@@ -32,6 +32,11 @@
 
     .dropdownContainer {
         gap: 0.5em;
+    }
+
+    .title {
+        font-family: 'SF Pro Medium';
+        font-size: 1.2rem;
     }
 }
 
@@ -60,7 +65,7 @@
 
 .date {
     font-family: 'SF Pro Medium';
-    font-size: 1.4vw;
+    font-size: 1rem;
 }
 
 .details {
@@ -96,7 +101,7 @@
 
 .modalContent {
     font-family: 'SF Pro Semibold';
-    font-size: 1.4vw;
+    font-size: 1rem;
     background: white;
     padding: 3%;
     border-radius: 10px;
@@ -109,9 +114,23 @@
 }
 
 @media (max-width: 600px) {
-    .modalContent{
+    .modalContent {
         width: 65%;
         height: 70%;
+    }
+}
+
+@media (max-width: 900px) {
+    .modalContent {
+        width: 50%;
+        height: 60%;
+    }
+}
+
+@media (max-width: 700px) {
+    .modalContent {
+        width: 60%;
+        height: 60%;
     }
 }
 
@@ -145,7 +164,7 @@ main {
     align-items: center;
     text-align: center;
     font-family: 'SF Pro Semibold';
-    font-size: 1.4vw;
+    font-size: 1rem;
     border: 1px solid #ccc;
     border-radius: 10px;
     margin-top: 5%;
@@ -160,24 +179,16 @@ main {
     margin-top: 7%;
 }
 
-@media (max-width: 600px) {
+@media (max-width: 500px) {
     .information {
         width: 35%;
         height: 55%;
     }
 
-    .pointName {
-        margin-top: 10%;
-        font-size: larger;
-    }
-
     main {
+        font-size: 0.8rem;
         flex-direction: column;
         align-items: center;
-    }
-
-    .infoContainer {
-        width: 100%;
     }
 
     .separator {
@@ -185,6 +196,6 @@ main {
         width: 50%;
         height: 1px;
         background-color: #ccc;
-        margin: 1rem 0; /* Espaço em torno do separador */
+        margin: 1rem 0;
     }
 }
