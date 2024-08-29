@@ -1,15 +1,13 @@
 import React, { useState } from 'react';
-import { Outlet, useNavigate, Link } from 'react-router-dom';
+import { Outlet, useNavigate } from 'react-router-dom';
 import styles from './Collect.module.css';
+import useUtilsStore from '../../store/utils';
 
 export function Collect() {
     const [isModalOpen, setModalOpen] = useState<boolean>(false);
     const [selectedPoint, setSelectedPoint] = useState<string>('');
     const navigate = useNavigate();
-
-    const handleNavigate = () => {
-        navigate('pontos_de_coleta');
-    }
+    const { setPlanilha } = useUtilsStore();
 
     const openModal = (point: string) => {
         setSelectedPoint(point);
@@ -19,6 +17,11 @@ export function Collect() {
     const closeModal = () => {
         setModalOpen(false);
         setSelectedPoint('');
+    };
+
+    const handlePoint = (planilha: string) => {
+        setPlanilha(planilha);
+        navigate('/inicial/pontos_de_coleta');
     };
 
     return (
@@ -35,53 +38,51 @@ export function Collect() {
             <div className={styles.main_content}>
                 <section className={styles.left_side}>
                     <div className={styles.options_data}>
-
-                        <Link to={'/inicial/pontos_de_coleta'} className={styles.data_etas_content}>
-                            <div className={styles.title_data_content_etas}>
+                        <button onClick={() => handlePoint("DADOS ETAS")} className={styles.data_etas_content}>
+                            <div className={styles.title_data_content}>
                                 <p className={styles.title_data}>Estações de Tratamento de Águas S.</p>
                             </div>
                             <div className={styles.percentage_and_points}>
-                                <div className={styles.percentage_content_etas}>
+                                <div className={styles.percentage_content}>
                                     <p className={styles.percentage}>40%</p>
                                     <p className={styles.complement}>Preenchido</p>
                                 </div>
-                                <div className={styles.points_content_etas}>
+                                <div className={styles.points_content}>
                                     <p className={styles.points}>24</p>
                                     <p className={styles.complement}>Pontos</p>
                                 </div>
                             </div>
-                        </Link>
-
-                        <Link to={'/inicial/pontos_de_coleta'} className={styles.data_na_content}>
-                            <div className={styles.title_data_content_na}>
+                        </button>
+                        <button onClick={() => handlePoint("NA")} className={styles.data_na_content}>
+                            <div className={styles.title_data_content}>
                                 <p className={styles.title_data}>Nível D'água</p>
                             </div>
                             <div className={styles.percentage_and_points}>
-                                <div className={styles.percentage_content_na}>
+                                <div className={styles.percentage_content}>
                                     <p className={styles.percentage}>10%</p>
                                     <p className={styles.complement}>Preenchido</p>
                                 </div>
-                                <div className={styles.points_content_na}>
+                                <div className={styles.points_content}>
                                     <p className={styles.points}>22</p>
                                     <p className={styles.complement}>Pontos</p>
                                 </div>
                             </div>
-                        </Link>
-                        <Link to={'/inicial/pontos_de_coleta'} className={styles.data_pb_content}>
-                            <div className={styles.title_data_content_pb}>
+                        </button>
+                        <button onClick={() => handlePoint("PB")} className={styles.data_pb_content}>
+                            <div className={styles.title_data_content}>
                                 <p className={styles.title_data}>Poços de Bombeamento</p>
                             </div>
                             <div className={styles.percentage_and_points}>
-                                <div className={styles.percentage_content_pb}>
+                                <div className={styles.percentage_content}>
                                     <p className={styles.percentage}>75%</p>
                                     <p className={styles.complement}>Preenchido</p>
                                 </div>
-                                <div className={styles.points_content_pb}>
+                                <div className={styles.points_content}>
                                     <p className={styles.points}>09</p>
                                     <p className={styles.complement}>Pontos</p>
                                 </div>
                             </div>
-                        </Link>
+                        </button>
                     </div>
                 </section>
                 <section className={styles.right_side}>
@@ -115,32 +116,26 @@ export function Collect() {
 
             {isModalOpen && (
                 <div className={styles.modal}>
-                <div className={styles.modalContent}>
-      
-                  <button className={styles.close} onClick={closeModal}>x</button>
-                  <h2 className={styles.pointName}>Dados de coleta do ponto {selectedPoint}</h2>
-      
-                  <main className={styles.mainModal}>
-      
-                    <div className={styles.infoContainer}>
-                      <h3>pH</h3>
-                      <div className={styles.information}>
-                        <p>01</p>
-                      </div>
+                    <div className={styles.modalContent}>
+                        <button className={styles.close} onClick={closeModal}>x</button>
+                        <h2 className={styles.pointName}>Dados de coleta do ponto {selectedPoint}</h2>
+                        <main className={styles.mainModal}>
+                            <div className={styles.infoContainer}>
+                                <h3>pH</h3>
+                                <div className={styles.information}>
+                                    <p>01</p>
+                                </div>
+                            </div>
+                            <div className={styles.separator}></div>
+                            <div className={styles.infoContainer}>
+                                <h3>Pressão</h3>
+                                <div className={styles.information}>
+                                    <p>03</p>
+                                </div>
+                            </div>
+                        </main>
                     </div>
-      
-                    <div className={styles.separator}></div>
-      
-                    <div className={styles.infoContainer}>
-                      <h3>Pressão</h3>
-                      <div className={styles.information}>
-                        <p>03</p>
-                      </div>
-                    </div>
-      
-                  </main>
                 </div>
-              </div>
             )}
 
             <Outlet />
