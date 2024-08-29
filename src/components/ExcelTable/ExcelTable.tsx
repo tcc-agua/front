@@ -3,7 +3,7 @@ import 'handsontable/dist/handsontable.full.min.css';
 import { registerAllModules } from 'handsontable/registry';
 import { HotTable } from '@handsontable/react';
 import styles from './ExcelTable.module.css';
-import axios from 'axios';
+import { fetchSheet } from '../../api/api';
 
 registerAllModules();
 
@@ -18,7 +18,6 @@ const ExcelTable: React.FC<ExcelTableProps> = ({ sheetName }) => {
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
   useEffect(() => {
-    // Verifica se o nome da planilha é válido
     if (sheetName !== 'DADOS ETAS' && sheetName !== 'NA' && sheetName !== 'PB') {
       setErrorMessage('Selecione uma das planilhas!');
       return;
@@ -26,16 +25,18 @@ const ExcelTable: React.FC<ExcelTableProps> = ({ sheetName }) => {
 
     async function fetchPontosExcel() {
       try {
+
         const token = localStorage.getItem('id_token');
-        const response = await axios.get(`http://localhost:5173/exportExcel/data/${sheetName}`, {
-          headers: {
-            'Authorization': `Bearer ${token}`
-          }
-        });
-        setHeaders(response.data[0]);
-        setSubHeaders(response.data[1]);
-        setDataPonto(response.data[2]);
-        setErrorMessage(null); // Limpa qualquer mensagem de erro anterior
+
+        if(token != null){
+          const response = await fetchSheet(token, sheetName);
+
+          setHeaders(response[0]);
+          setSubHeaders(response[1]);
+          setDataPonto(response[2]);
+          setErrorMessage(null); 
+        }
+
       } catch (e) {
         console.error(e);
         setErrorMessage('Erro ao buscar dados da planilha.');
@@ -46,7 +47,6 @@ const ExcelTable: React.FC<ExcelTableProps> = ({ sheetName }) => {
 
   }, [sheetName]);
 
-  // Se houver uma mensagem de erro, exibe-a em vez da tabela
   if (errorMessage) {
     return <div className={styles.errorMessage}>{errorMessage}</div>;
   }
@@ -74,7 +74,7 @@ const ExcelTable: React.FC<ExcelTableProps> = ({ sheetName }) => {
       width="100%"
       autoWrapRow={true}
       autoWrapCol={true}
-      cells={cells} // Aplica a função de renderização
+      cells={cells} 
       className={styles.customHotTable} 
       licenseKey="non-commercial-and-evaluation"
     />
