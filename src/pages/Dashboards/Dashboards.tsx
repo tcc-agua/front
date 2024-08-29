@@ -87,7 +87,6 @@ export function Dashboards(){
                     <div className={styles.mapview}>
                         <p className={styles.title}>Mapa de Curitiba</p>
                         <div className={styles.content_mapview}>
-                            <MapSpline />
                         </div>
                     </div>
                 </div>

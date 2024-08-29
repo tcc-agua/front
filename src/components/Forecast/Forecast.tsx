@@ -69,9 +69,7 @@ const Forecast = () => {
     <div>
       {forecastData ? (
         <>
-          <div className={styles.title}>
-            <h2>Clima Semanal</h2>
-          </div>
+          <p className={styles.title}>Clima Semanal</p>
           <div className={styles.content_weather}>
             {forecastData.map((forecast, index) => {
               const dayOfWeek = new Date(forecast.dt_txt).getDay();
