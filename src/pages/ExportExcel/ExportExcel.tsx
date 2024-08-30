@@ -15,7 +15,7 @@ const ExportExcel: React.FC = () => {
     const [isModalOpen, setIsModalOpen] = useState(false);
 
     const tables: DropdownItem[] = [
-        { id: '1', label: 'ETAS', value: 'ETAS' },
+        { id: '1', label: 'DADOS ETAS', value: 'DADOS ETAS' },
         { id: '2', label: 'NA', value: 'NA' },
         { id: '3', label: 'PB', value: 'PB' },
     ];
@@ -29,7 +29,6 @@ const ExportExcel: React.FC = () => {
     }
 
     return (
-
         <div className={styles.container}>
             <div className={styles.top}>
                 <p className={styles.title}>Exporte o arquivo Excel de suas coletas!</p>
@@ -46,11 +45,10 @@ const ExportExcel: React.FC = () => {
                         />
                     </div>
                 </div>
-
             </div>
 
             <div className={styles.table}>
-                <ExcelTable />
+                <ExcelTable sheetName={selectedTable?.value || ""} />
             </div>
 
             <div className="buttonContainer">
@@ -67,7 +65,6 @@ const ExportExcel: React.FC = () => {
                 )}
             </div>
         </div>
-
     )
 }
 
