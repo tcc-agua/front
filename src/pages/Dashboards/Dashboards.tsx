@@ -34,6 +34,7 @@ export function Dashboards(){
                     </div>
                     
                     <div className={styles.weekly_weather}>
+                        <p className={styles.title}>Clima Semanal</p>
                         <Forecast />
                     </div>
 
@@ -54,7 +55,7 @@ export function Dashboards(){
                                     <img className={styles.imgs_activity} src={icon_correct} alt="icon_correct" />
                                 </div>
                                 <div className={styles.text_activity}>
-                                    <p>Dados “ETAS” <span className={styles.gray}>preenchidos com</span><span className={styles.green}> sucesso!</span></p>
+                                    <p className={styles.data_activity}>Dados “ETAS” <span className={styles.gray}>preenchidos com</span><span className={styles.green}> sucesso!</span></p>
                                     <p className={styles.days}>1 dia atrás</p>
                                 </div>
                             </div>
@@ -66,7 +67,7 @@ export function Dashboards(){
                                     <img className={styles.imgs_activity} src={icon_correct} alt="icon_correct" />
                                 </div>
                                 <div className={styles.text_activity}>
-                                    <p>Dados “NA” <span className={styles.gray}>preenchidos com </span><span className={styles.green}>sucesso!</span></p>
+                                    <p className={styles.data_activity}>Dados “NA” <span className={styles.gray}>preenchidos com </span><span className={styles.green}>sucesso!</span></p>
                                     <p className={styles.days}>1 dia atrás</p>
                                 </div>
                             </div>
@@ -78,7 +79,7 @@ export function Dashboards(){
                                     <img className={styles.imgs_activity} src={icon_export} alt="icon_export" />
                                 </div>
                                 <div className={styles.text_activity}>
-                                    <p>Dados "NA" <span className={styles.gray}>exportados para Excel.</span></p>
+                                    <p className={styles.data_activity}>Dados "NA" <span className={styles.gray}>exportados para Excel.</span></p>
                                     <p className={styles.days}>7 dias atrás</p>
                                 </div>
                             </div>

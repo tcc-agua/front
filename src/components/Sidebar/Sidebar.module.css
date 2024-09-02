@@ -27,8 +27,9 @@
     padding: 10px;
     margin-left: 7px;
     text-decoration: none;
-    font-size: 14px;
+    font-size: 15px;
     align-items: center;
+    font-family: "SF Pro Light";
 }
 
 .content_options img {
@@ -44,7 +45,8 @@
 }
 
 .title_side {
-    font-size: 15px;
+    font-size: 20px;
+    font-family: "SF Pro regular";
 }
 
 .content_options:hover,

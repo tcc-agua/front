@@ -6,15 +6,16 @@ const Forecast = () => {
   const [forecastData, setForecastData] = useState(null);
 
   const weatherDescriptions = {
-    "clear sky": "céu limpo",
-    "few clouds": "poucas nuvens",
-    "scattered clouds": "nuvens dispersas",
-    "broken clouds": "nuvens quebradas",
-    "shower rain": "chuva de banho",
-    "rain": "chuva",
-    "thunderstorm": "tempestade",
-    "snow": "neve",
-    "mist": "névoa",
+    "clear sky": "Céu limpo",
+    "few clouds": "Poucas nuvens",
+    "scattered clouds": "Nuvens dispersas",
+    "broken clouds": "Nuvens quebradas",
+    "shower rain": "Chuva de banho",
+    "rain": "Chuva",
+    "thunderstorm": "Tempestade",
+    "snow": "Neve",
+    "mist": "Névoa",
+    "light rain": "Chuva fraca",
   };
 
   async function searchCity() {
@@ -69,7 +70,6 @@ const Forecast = () => {
     <div>
       {forecastData ? (
         <>
-          <p className={styles.title}>Clima Semanal</p>
           <div className={styles.content_weather}>
             {forecastData.map((forecast, index) => {
               const dayOfWeek = new Date(forecast.dt_txt).getDay();

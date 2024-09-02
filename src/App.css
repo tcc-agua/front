@@ -5,29 +5,29 @@
 }
 
 @font-face {
-  font-family: 'SF Pro Light';
-  src: url('/fonts/SF-Pro-Regular') format('truetype');
+  font-family: 'SF Pro Regular';
+  src: url('/fonts/SF-Pro-Regular.otf') format('truetype');
   font-weight: normal;
   font-style: normal;
 }
 
 @font-face {
-  font-family: 'SF Pro Regular';
-  src: url('/fonts/SF-Pro-Light') format('truetype');
+  font-family: 'SF Pro Light';
+  src: url('/fonts/SF-Pro-Light.otf') format('truetype');
   font-weight: normal;
   font-style: normal;
 }
 
 @font-face {
   font-family: 'SF Pro Semibold';
-  src: url('/fonts/SF-Pro-Semibold') format('truetype');
+  src: url('/fonts/SF-Pro-Semibold.otf') format('truetype');
   font-weight: normal;
   font-style: normal;
 }
 
 @font-face {
   font-family: 'SF Pro Medium';
-  src: url('/fonts/SF-Pro-Medium') format('truetype');
+  src: url('/fonts/SF-Pro-Medium.otf') format('truetype');
   font-weight: normal;
   font-style: normal;
 }

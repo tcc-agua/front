@@ -14,8 +14,8 @@ const Login: React.FC = () => {
         </div>
         <div className={styles.content_left_side}>
           <div className={styles.content_left_side_main}>
-            <h1>Seja bem_vindo(a)!</h1>
-            <p>Entre e explore nossos recursos de amostragem de água.</p>
+            <p className={styles.welcome}>Seja bem vindo(a)!</p>
+            <p className={styles.content_welcome}>Entre e explore nossos recursos de amostragem de água.</p>
             <Link className={styles.login_button} to={'/inicial'}>Entrar</Link>
           </div>
         </div>
@@ -28,7 +28,7 @@ const Login: React.FC = () => {
       <div className={styles.right_side}>
         <div className={styles.content_right_side}>
             <div className={styles.content_names_sector}>
-              <p>Engineering Technical School _ Ca</p>  
+              <p className={styles.upside_banner}>Engineering Technical School _ Ca</p>  
             </div>
             <div className={styles.content_img}>
               <img src="src/assets/images/celular.svg" alt="Celular" />

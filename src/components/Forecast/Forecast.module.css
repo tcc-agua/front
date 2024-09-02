@@ -1,12 +1,9 @@
-.title {
-    font-size: 1.4vw;
-    font-family: "SF Pro Medium";
-    padding: 1.3vh;
-}
+
 
 .content_weather { 
-    display: inline-flex;
+    display: flex;
     gap: 3px;
+    justify-content: center;
 }
 
 .weekday {
@@ -55,7 +52,7 @@
     }
 
     .content_weather { 
-        height: 85%;
+        height: 100%;
     }
 
     .title_weekday {
@@ -71,7 +68,8 @@
     }
 
     .title {
-        font-size: 20px;
+        font-size: calc(1.4vw + 0.5em);
+        text-align: start;
     }
 }
 
@@ -99,6 +97,6 @@
     }
 
     .title {
-        font-size: 20px;
+        font-size: calc(1.4vw + 1em);
     }
 }
