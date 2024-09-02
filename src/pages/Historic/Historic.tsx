@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import DropdownButton from '../../components/DropdownButton/DropdownButton';
 import ColetaItem from '../../components/Colects/ColectItem';
 import styles from './Historic.module.css';
+import axios from 'axios';
 
 interface DropdownItem {
   id: string;
@@ -64,6 +65,15 @@ const Historic: React.FC = () => {
     setModalOpen(false);
     setSelectedDetail(null);
   };
+
+  useEffect(() => {
+    async function fetchPontosPorData() {
+      try {
+          const token = localStorage.getItem('id_token');
+          const response = await axios.get(`http://localhost:5173/coleta/`)
+      }
+    }
+  })
 
   const coletas: Coleta[] = [
     {
