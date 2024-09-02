@@ -1,6 +1,6 @@
 import React from 'react';
+import Initial from '../pages/Initial/Initial';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import { Initial } from '../pages/Initial/Initial';
 import { Dashboards } from '../pages/Dashboards/Dashboards';
 import { Map } from '../pages/Map/Map';
 import { Collect } from '../pages/Collect/Collect';
