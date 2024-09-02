@@ -5,7 +5,8 @@
 }
 
 .content_weather { 
-    display: flex;
+    display: inline-flex;
+    gap: 3px;
 }
 
 .weekday {
@@ -16,11 +17,9 @@
 }
 
 .seg, .ter, .qua, .qui, .sex {
-    height: 100%;
     border-radius: 7px;
     color: white;
     padding: 10px;
-    height: 7vw;
 }
 
 .seg { background-color: #D543CB; }
@@ -31,16 +30,75 @@
 
 .title_weekday {
     font-size: 1vw;
+    font-family: "SF Pro Light";
 }
 
 .temperature {
     font-weight: bold;
     padding: 5px 0px;
     font-size: 1.5vw;
+    font-family: "SF Pro Medium";
 }
 
 .climate {
     font-size: 0.8vw;
     text-align: end;
     align-self: flex-end;
+}
+
+@media (max-width: 1180px) {
+    .weekday {
+        min-width: 10vw;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+    }
+
+    .content_weather { 
+        height: 85%;
+    }
+
+    .title_weekday {
+        font-size: 18px;
+    }
+
+    .temperature {
+        font-size: 23px;
+    }
+
+    .climate {
+        font-size: 10px;
+    }
+
+    .title {
+        font-size: 20px;
+    }
+}
+
+@media (max-width: 680px) {
+
+    .content_weather { 
+        display: flex;
+        flex-direction: row;
+        gap: 3px;
+        overflow-x: scroll;
+        width: 100vw;
+        scrollbar-width: none;
+    }
+
+    .content_weather::-webkit-scrollbar {
+        display: none;
+    }
+
+    .weekday {
+        flex: 0 0 auto;
+        width: 140px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+    }
+
+    .title {
+        font-size: 20px;
+    }
 }

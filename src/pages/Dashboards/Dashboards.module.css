@@ -93,7 +93,6 @@ pre {
     margin-bottom: 15px;
     align-items: center;
     width: 95%;
-    height: auto;
 }
 
 .last_activities {
@@ -212,7 +211,9 @@ hr {
 
     .left_side, .right_side { width: 100%; }
     .left_side { margin-bottom: 15px; }
-    .weekly_weather { height: 200px;}
+    .weekly_weather { 
+        height: 200px;
+    }
 
     .content_weather { 
         align-items: center;
@@ -220,6 +221,7 @@ hr {
         height: 100%;
         gap: 5px;
         justify-content: center;
+        padding: 0px;
     }
     
     .weekday {
@@ -273,11 +275,14 @@ hr {
         display: inline-flex;
         white-space: nowrap;
         width: 88vw;
+        overflow-x: auto;
+        padding-bottom: 10px;
     }
 
     .weekday {
         min-width: 25vw;
         height: 100px;
+        margin-right: 5px;
     }
 
     .title_weekday { font-size: 3.5vw; }

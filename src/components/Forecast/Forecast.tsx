@@ -76,7 +76,6 @@ const Forecast = () => {
               const dayClass = getDayClass(dayOfWeek);
               return (
                 <div className={`${styles.weekday} ${dayClass}`} key={index}>
-                  <div>
                     <p className={styles.title_weekday}>
                       {getDayOfWeek(forecast.dt_txt)}
                     </p>
@@ -87,7 +86,6 @@ const Forecast = () => {
                       {weatherDescriptions[forecast.weather[0].description] ||
                         forecast.weather[0].description}
                     </p>
-                  </div>
                 </div>
               );
             })}
