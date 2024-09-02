@@ -4,6 +4,7 @@ import ExcelTable from '../../components/ExcelTable/ExcelTable';
 import success from '../../assets/images/success.svg';
 import styles from './ExportExcel.module.css';
 import axios from 'axios';
+import { fetchExport } from '../../api/api';
 
 interface DropdownItem {
     id: string;
@@ -32,29 +33,29 @@ const ExportExcel: React.FC = () => {
     async function fetchExportExcel() {
         try {
             const token = localStorage.getItem('id_token');
-            const response = await axios.get('http://localhost:5173/exportExcel', {
-                headers: {
-                    "Authorization": `Bearer ${token}`
-                },
-                responseType: 'blob'
-            });
+            if (!token) {
+                throw new Error("Token não encontrado");
+            }
     
-            const url = window.URL.createObjectURL(new Blob([response.data]));
+            const response = await fetchExport(token);
+    
+            const blob = new Blob([response], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+            const url = window.URL.createObjectURL(blob);
+    
             const link = document.createElement('a');
             link.href = url;
-            link.setAttribute('download', 'coletas.xlsx'); // Nome do arquivo para download
+            link.setAttribute('download', 'coletas.xlsx');
             document.body.appendChild(link);
             link.click();
     
-            // Aguarda um pequeno delay antes de remover o link, para dar tempo ao download
             setTimeout(() => {
                 if (link.parentNode) {
                     link.parentNode.removeChild(link);
                 }
-                openModal(); // Abrir o modal após a remoção do link
-            }, 1000); // Atraso de 1 segundo para garantir que o download tenha começado
+                openModal(); 
+            }, 1000); 
         } catch (e) {
-            console.error(e);
+            console.error("Erro ao exportar o arquivo:", e);
         }
     }
 
