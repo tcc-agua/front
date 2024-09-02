@@ -3,6 +3,7 @@ import DropdownButton from '../../components/ExcelOptions/ExcelOptions';
 import ExcelTable from '../../components/ExcelTable/ExcelTable';
 import success from '../../assets/images/success.svg';
 import styles from './ExportExcel.module.css';
+import axios from 'axios';
 
 interface DropdownItem {
     id: string;
@@ -26,6 +27,35 @@ const ExportExcel: React.FC = () => {
 
     const closeModal = () => {
         setIsModalOpen(false);
+    }
+
+    async function fetchExportExcel() {
+        try {
+            const token = localStorage.getItem('id_token');
+            const response = await axios.get('http://localhost:5173/exportExcel', {
+                headers: {
+                    "Authorization": `Bearer ${token}`
+                },
+                responseType: 'blob'
+            });
+    
+            const url = window.URL.createObjectURL(new Blob([response.data]));
+            const link = document.createElement('a');
+            link.href = url;
+            link.setAttribute('download', 'coletas.xlsx'); // Nome do arquivo para download
+            document.body.appendChild(link);
+            link.click();
+    
+            // Aguarda um pequeno delay antes de remover o link, para dar tempo ao download
+            setTimeout(() => {
+                if (link.parentNode) {
+                    link.parentNode.removeChild(link);
+                }
+                openModal(); // Abrir o modal após a remoção do link
+            }, 1000); // Atraso de 1 segundo para garantir que o download tenha começado
+        } catch (e) {
+            console.error(e);
+        }
     }
 
     return (
@@ -52,7 +82,7 @@ const ExportExcel: React.FC = () => {
             </div>
 
             <div className="buttonContainer">
-                <button className={styles.export} onClick={openModal}>Exportar Arquivo</button>
+                <button className={styles.export} onClick={fetchExportExcel}>Exportar Arquivo</button>
                 {isModalOpen && (
                     <div className={styles.modal}>
                         <div className={styles.modalContent}>
