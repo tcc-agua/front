@@ -47,3 +47,20 @@ export const fetchSheet = async (token: string, sheetName: string) => {
         throw error;
     }
 };
+
+// Get point by Sheet
+
+export const fetchPointBySheet = async (token: string, sheetName: string) => {
+    try {
+        const response = await axios.get(`${API_BASE_URL}/ponto/excel/${sheetName}`, {
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+        });
+        return response.data;
+
+    } catch (error) {
+        console.error("Erro ao buscar os pontos", error);
+        throw error;
+    }
+};
