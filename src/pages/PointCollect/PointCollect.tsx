@@ -82,6 +82,10 @@ export function PointCollect(){
                         <p className={styles.map_title}>Localize seus pontos no mapa:</p>
                         <div className={styles.map}></div>
                     </div>
+                    <div className={styles.button_container}>
+                       <button className={styles.button_complete} onClick={() => console.log("Dados enviados")}>Salvar dados</button> 
+                    </div>
+                    
                 </div>
             </div>
         </main>

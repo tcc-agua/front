@@ -19,16 +19,24 @@
 }
 
 .options {
-    margin: 0 25px;
+    margin: 0px;
+    width: 100%;
+}
+
+.blue {
+    height: 50px;
+    width: 5px;
+    margin-right: 45px;
+    border-radius: 2px;
 }
 
 .content_options{
     display: flex;
-    padding: 10px;
-    margin-left: 7px;
     text-decoration: none;
-    font-size: 14px;
+    font-size: 15px;
     align-items: center;
+    font-family: "SF Pro Light";
+    color: inherit;
 }
 
 .content_options img {
@@ -41,15 +49,26 @@
     padding: 10px;
     justify-content: center;
     align-items: center;
+    color: inherit;
+}
+
+.content_options:visited {
+    color: inherit;
 }
 
 .title_side {
-    font-size: 15px;
+    font-size: 20px;
+    font-family: "SF Pro regular";
 }
 
-.content_options:hover,
-.imagem:hover{
+
+.active .content_options {
+    background-color: #f7f7f7;
     color: #01A4FD;
+}
+
+.active .blue {
+    background-color: #01A4FD;
 }
 
 .showSidebar {

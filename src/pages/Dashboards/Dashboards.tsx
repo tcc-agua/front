@@ -1,8 +1,9 @@
+import { Link } from "react-router-dom"
 import styles from "./Dashboards.module.css"
 import icon_correct from "../../assets/images/correct.svg"
 import icon_export from "../../assets/images/export_activity.svg"
 import Graphic from "../../components/Graphic/Graphic"
-import MapSpline from "../../components/MapSpline/MapSpline"
+import Map from "../../assets/images/mapa-panorama.svg"
 import Forecast from "../../components/Forecast/Forecast"
 
 const mockData = {
@@ -34,6 +35,7 @@ export function Dashboards(){
                     </div>
                     
                     <div className={styles.weekly_weather}>
+                        <p className={styles.title}>Clima Semanal</p>
                         <Forecast />
                     </div>
 
@@ -54,7 +56,7 @@ export function Dashboards(){
                                     <img className={styles.imgs_activity} src={icon_correct} alt="icon_correct" />
                                 </div>
                                 <div className={styles.text_activity}>
-                                    <p>Dados “ETAS” <span className={styles.gray}>preenchidos com</span><span className={styles.green}> sucesso!</span></p>
+                                    <p className={styles.data_activity}>Dados “ETAS” <span className={styles.gray}>preenchidos com</span><span className={styles.green}> sucesso!</span></p>
                                     <p className={styles.days}>1 dia atrás</p>
                                 </div>
                             </div>
@@ -66,7 +68,7 @@ export function Dashboards(){
                                     <img className={styles.imgs_activity} src={icon_correct} alt="icon_correct" />
                                 </div>
                                 <div className={styles.text_activity}>
-                                    <p>Dados “NA” <span className={styles.gray}>preenchidos com </span><span className={styles.green}>sucesso!</span></p>
+                                    <p className={styles.data_activity}>Dados “NA” <span className={styles.gray}>preenchidos com </span><span className={styles.green}>sucesso!</span></p>
                                     <p className={styles.days}>1 dia atrás</p>
                                 </div>
                             </div>
@@ -78,7 +80,7 @@ export function Dashboards(){
                                     <img className={styles.imgs_activity} src={icon_export} alt="icon_export" />
                                 </div>
                                 <div className={styles.text_activity}>
-                                    <p>Dados "NA" <span className={styles.gray}>exportados para Excel.</span></p>
+                                    <p className={styles.data_activity}>Dados "NA" <span className={styles.gray}>exportados para Excel.</span></p>
                                     <p className={styles.days}>7 dias atrás</p>
                                 </div>
                             </div>
@@ -87,7 +89,7 @@ export function Dashboards(){
                     <div className={styles.mapview}>
                         <p className={styles.title}>Mapa de Curitiba</p>
                         <div className={styles.content_mapview}>
-                            <MapSpline />
+                            <Link to={"/inicial/mapa"}><img src={Map}></img></Link>
                         </div>
                     </div>
                 </div>

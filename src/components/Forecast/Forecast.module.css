@@ -1,23 +1,8 @@
-.title {
-    font-size: clamp(10px, 10px + 0.2vw, 15px);
-    padding: 1.3vh;
-}
 
-.weekly_weather {
-    display: flex;
-    flex-direction: column;
-    background-color: white;
-    border: 1px solid #eaeaea;
-    border-radius: 10px;
-    padding: 15px;
-    margin-bottom: 15px;
-}
 
 .content_weather { 
-    display: inline-flex;
-    overflow-x: auto;
-    white-space: nowrap;
-    gap: 5px;
+    display: flex;
+    gap: 3px;
     justify-content: center;
 }
 
@@ -26,11 +11,9 @@
     border: 1px solid #eaeaea;
     border-radius: 7px;
     box-sizing: border-box;
-    height: 12vh;
 }
 
 .seg, .ter, .qua, .qui, .sex {
-    height: 100%;
     border-radius: 7px;
     color: white;
     padding: 10px;
@@ -44,16 +27,76 @@
 
 .title_weekday {
     font-size: 1vw;
+    font-family: "SF Pro Light";
 }
 
 .temperature {
     font-weight: bold;
     padding: 5px 0px;
     font-size: 1.5vw;
+    font-family: "SF Pro Medium";
 }
 
 .climate {
     font-size: 0.8vw;
     text-align: end;
     align-self: flex-end;
+}
+
+@media (max-width: 1180px) {
+    .weekday {
+        min-width: 10vw;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+    }
+
+    .content_weather { 
+        height: 100%;
+    }
+
+    .title_weekday {
+        font-size: 18px;
+    }
+
+    .temperature {
+        font-size: 23px;
+    }
+
+    .climate {
+        font-size: 10px;
+    }
+
+    .title {
+        font-size: calc(1.4vw + 0.5em);
+        text-align: start;
+    }
+}
+
+@media (max-width: 680px) {
+
+    .content_weather { 
+        display: flex;
+        flex-direction: row;
+        gap: 3px;
+        overflow-x: scroll;
+        width: 100vw;
+        scrollbar-width: none;
+    }
+
+    .content_weather::-webkit-scrollbar {
+        display: none;
+    }
+
+    .weekday {
+        flex: 0 0 auto;
+        width: 140px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+    }
+
+    .title {
+        font-size: calc(1.4vw + 1em);
+    }
 }

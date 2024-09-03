@@ -3,52 +3,18 @@
   justify-content: center;
   align-items: center;
   height: 100vh;
-  background-color: #01A4FD;
-  transition: opacity 1s ease-out;
-  overflow: hidden;
-}
-
-.fadeOut {
-  opacity: 0;
-  pointer-events: none;
 }
 
 .imageContainer {
-  position: relative;
   display: flex;
   justify-content: center;
-  align-items: flex-start;
-  height: 100vh;
+  align-items: center;
+  width: 100%;
+  height: 100%;
 }
 
 .image {
-  width: 80px;
+  width: 550px;
   height: auto;
-  position: absolute;
-  top: -100px;
-  animation: imageDropAnimation 2s ease-in-out forwards, fadeOut 1s ease-out 3s forwards;
-}
-
-@keyframes imageDropAnimation {
-  0% {
-    top: -100px;
-    transform: scale(1);
-  }
-  80% {
-    top: 50%;
-    transform: scale(1.2); 
-  }
-  100% {
-    top: 50%;
-    transform: scale(1);
-  }
-}
-
-@keyframes fadeOut {
-  0% {
-    opacity: 1;
-  }
-  100% {
-    opacity: 0;
-  }
+  animation: spin 2s linear infinite;
 }

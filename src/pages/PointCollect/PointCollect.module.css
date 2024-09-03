@@ -7,7 +7,7 @@
 
 .title {
     padding: 20px 50px 0px;
-    font-size: 2.5vh;
+    font-size: 1.4vw;
     font-family: "SF Pro Medium";
 }
 
@@ -107,7 +107,7 @@
 .map_container {
     background-color: white;
     width: 100%;
-    height: 79%;
+    height: 65%;
     margin-top: 30px;
     border: 1px solid #dcdcdc;
     border-radius: 7px;
@@ -246,11 +246,33 @@ input[type="number"] {
     width: 50%;
 }
 
-.buttonEnviar:hover {
+.buttonEnviar:hover, .button_complete:hover {
     background-color: #0079bb;
 }
 
+.button_container {
+    width: 100%;
+    height: 10%;
+    margin-top: 30px;
+    display: flex;
+    justify-content: end;
+}
+
+.button_complete {
+    width: 45%;
+    height: 80%;
+    background-color: #01A4FD;
+    border: none;
+    border-radius: 7px;
+    color: white;
+    cursor: pointer;
+}
+
 @media (max-width: 1080px) {
+    .title {
+        font-size: calc(1.4vw + 0.3em);
+    }
+
     .main_information {
         flex-direction: column;
         align-items: center;
@@ -258,7 +280,7 @@ input[type="number"] {
 
     .left_side, .right_side {
         padding: 15px;
-        width: 80%;
+        width: 90%;
     }
 
     .point_information {
@@ -267,7 +289,7 @@ input[type="number"] {
     }
 
     .select_point_container {
-        height: 45vw;
+        height: 55vw;
     }
 
     .point_information_text {
@@ -276,6 +298,35 @@ input[type="number"] {
 
     .modalContent {
         width: 45%;
+    }
+
+    .name_point {
+        font-size: calc(1.3vw + 0.2em);
+    }
+
+    .status_point {
+        font-size: calc(1.05vw + 0.2em);
+    }
+
+    .select_point_title, .map_title {
+        font-size: calc(1.4vw + 0.2em);
+    }
+
+    .button_container {
+        height: 15vh;
+        margin-top: 30px;
+        display: flex;
+        justify-content: end;
+    }
+    
+    .button_complete {
+        width: 45%;
+        height: 80%;
+        background-color: #01A4FD;
+        border: none;
+        border-radius: 7px;
+        color: white;
+        cursor: pointer;
     }
 } 
 
@@ -294,7 +345,19 @@ input[type="number"] {
 
     .title {
         padding: 10px;
-        font-size: 15px;
+        font-size: calc(1.4vw + 0.8em);
+    }
+
+    .select_point_title, .map_title {
+        font-size: calc(1.4vw + 0.5em);
+    }
+
+    .name_point {
+        font-size: calc(1.3vw + 0.5em);
+    }
+
+    .status_point {
+        font-size: calc(1.05vw + 0.5em);
     }
 
     .point_information_text {

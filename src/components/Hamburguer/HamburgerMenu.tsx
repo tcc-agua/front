@@ -4,8 +4,8 @@ import { Link } from 'react-router-dom';
 import homeIcon from '../../assets/images/home.svg'
 import mapIcon from '../../assets/images/mapa.svg';
 import plusIcon from '../../assets/images/mais.svg';
-import historyIcon from '../../assets/images/Group.svg';
-import exportIcon from '../../assets/images/export.svg';
+import historyIcon from '../../assets/images/historico.svg';
+import exportIcon from '../../assets/images/exportar.svg';
 
 const HamburgerMenu: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);

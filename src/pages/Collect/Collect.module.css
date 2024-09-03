@@ -22,7 +22,7 @@ input::placeholder {
   }
 
 .title, .text {
-    font-size: 1.3vw;
+    font-size: 1.4vw;
     font-family: "SF Pro Medium";
     text-align: start;
 }
@@ -205,7 +205,7 @@ input::placeholder {
         width: 75%;
         margin-bottom: 10px;
     }
-    .title_historic_points, .title, .text  { font-size: 1.6vw; }
+    .title_historic_points, .title, .text  { font-size: calc(1vw + 0.5em); }
 }
 
 .modal {

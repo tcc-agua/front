@@ -64,6 +64,14 @@
     margin-bottom: 2%;
 }
 
+@media (max-width: 680px) {
+    .title,
+    .captitle {
+        font-size: calc(1.4vw + 1em);
+        margin-left: 2%;
+    }
+}
+
 @media (max-width: 1700px) {
     .title,
     .captitle {
@@ -97,7 +105,7 @@
     .title,
     .captitle,
     .subtitle {
-        font-size: small;
+        font-size: calc(1.4vw + 0.5em);
         margin-left: 2%;
     }
 
