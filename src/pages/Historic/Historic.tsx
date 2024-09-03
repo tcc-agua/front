@@ -106,7 +106,6 @@ const Historic: React.FC = () => {
           year: Number(selectedYear.value)
         };
       } else {
-        // Busca pelos últimos 15 dias
         const endDate = dayjs();
         const startDate = dayjs().subtract(15, 'day').format('YYYY-MM-DD');
         
@@ -187,7 +186,7 @@ const Historic: React.FC = () => {
           <ColetaItem
             key={coleta.id}
             date={coleta.dataColeta}
-            description={formatDateTime(coleta.dataColeta, coleta.hora_inicio)}  // Atualizado para mostrar o técnico
+            description={formatDateTime(coleta.dataColeta, coleta.hora_inicio)} 
             details={coleta.details}
             onOpenDetail={handleOpenDetail}
           />
