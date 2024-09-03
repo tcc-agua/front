@@ -8,7 +8,7 @@ import { PointCollect } from '../pages/PointCollect/PointCollect';
 import Historic  from '../pages/Historic/Historic';
 import ExportExcel from '../pages/ExportExcel/ExportExcel';
 import Login from '../pages/Login/Login';
-import { NotFound } from '../pages/NotFound/NotFound';
+import NotFound from '../pages/NotFound/NotFound';
 import SplashPage from '../pages/Splash/Splash';
 
 const AppRoutes: React.FC = () => {

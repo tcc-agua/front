@@ -1,0 +1,74 @@
+.pagetotal {
+    display: flex;
+    flex-direction: row;
+    height: 100vh;
+}
+
+.image{
+    padding: 20px;
+}
+
+.image img{
+    height: 90vh;
+}
+
+.outrolado {
+    margin-left: 40px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.nav {
+    color: #B9B9B9;
+    padding-bottom: 10px;
+    position: absolute;
+    top: 20px;
+    right: 20px;
+}
+
+.cont {
+    display: flex;
+    flex-direction: column;
+}
+
+.erro {
+    background-color: #01a5fd28;
+    color: #56B0FF;
+    text-decoration: none;
+    padding: 10px;
+    width: 13.5vh;
+    border-radius: 12.5px;
+}
+
+.ops {
+    color: #626262;
+    font-size: 100px;
+    font-family: 'poppins' bold;
+    padding: px;
+}
+
+.not {
+    font-size: 19px;
+    font-family: 'poppins' bold;
+}
+
+.cont_button{
+    padding: 25px 0;
+}
+
+.buttonHome{
+    background-color: #01A4FD;
+    color: #ffffff;
+    text-decoration: none;
+    padding: 13px;
+    border-radius: 12.5px;
+}
+
+.logo_bsc img{
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+    height: 50px;
+}
