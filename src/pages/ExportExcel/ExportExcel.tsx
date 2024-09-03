@@ -3,7 +3,6 @@ import DropdownButton from '../../components/ExcelOptions/ExcelOptions';
 import ExcelTable from '../../components/ExcelTable/ExcelTable';
 import success from '../../assets/images/success.svg';
 import styles from './ExportExcel.module.css';
-import axios from 'axios';
 import { fetchExport } from '../../api/api';
 
 interface DropdownItem {
