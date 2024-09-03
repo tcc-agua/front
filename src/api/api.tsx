@@ -67,3 +67,19 @@ export const fetchPointBySheet = async (sheetName: string) => {
         throw error;
     }
 };
+
+// Get notificacoes
+
+export const fetchNotif = async (token: string ) => {
+    try {
+        const response = await axios.get(`${API_BASE_URL}/notificacoes/getNotif`, {
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+        });
+        return response.data;
+    } catch (error) {
+        console.error("Erro ao buscar notificações.");
+        throw error;
+    }
+};
