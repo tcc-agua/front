@@ -3,6 +3,11 @@ import DropdownButton from '../../components/DropdownButton/DropdownButton';
 import ColetaItem from '../../components/Colects/ColectItem';
 import styles from './Historic.module.css';
 import axios from 'axios';
+import dayjs from 'dayjs';
+import 'dayjs/locale/pt-br';  // Importa a localidade portuguesa
+
+// Configura o dayjs para usar a localidade portuguesa
+dayjs.locale('pt-br');
 
 interface DropdownItem {
   id: string;
@@ -17,10 +22,31 @@ interface Detail {
 
 interface Coleta {
   id: number;
-  date: string;
-  description: string;
+  tecnico: string;          // Novo atributo
+  dataColeta: string;       // Data no formato 'yyyy-MM-dd'
+  hora_inicio: string;      // Hora no formato 'HH:mm:ss'
+  hora_fim: string;         // Hora no formato 'HH:mm:ss'
   details: Detail[];
 }
+
+// Mapeamento dos nomes dos meses para números
+const monthToNumber: { [key: string]: number } = {
+  Janeiro: 1,
+  Fevereiro: 2,
+  Março: 3,
+  Abril: 4,
+  Maio: 5,
+  Junho: 6,
+  Julho: 7,
+  Agosto: 8,
+  Setembro: 9,
+  Outubro: 10,
+  Novembro: 11,
+  Dezembro: 12
+};
+
+// Função para obter o número do mês a partir do nome
+const getMonthNumber = (monthName: string) => monthToNumber[monthName] || 0;
 
 const Historic: React.FC = () => {
   const [selectedDay, setSelectedDay] = useState<DropdownItem | undefined>(undefined);
@@ -28,6 +54,7 @@ const Historic: React.FC = () => {
   const [selectedYear, setSelectedYear] = useState<DropdownItem | undefined>(undefined);
   const [modalOpen, setModalOpen] = useState(false);
   const [selectedDetail, setSelectedDetail] = useState<Detail | null>(null);
+  const [data, setData] = useState<Coleta[]>([]);
 
   const days: DropdownItem[] = Array.from({ length: 31 }, (_, i) => ({
     id: (i + 1).toString(),
@@ -68,40 +95,58 @@ const Historic: React.FC = () => {
 
   useEffect(() => {
     async function fetchPontosPorData() {
+      // Construir os parâmetros de consulta com base na seleção do usuário
+      let params: { day?: number; month?: number; year?: number; startDate?: string; endDate?: string } = {};
+
+      if (selectedDay && selectedMonth && selectedYear) {
+        // Busca por data específica
+        params = {
+          day: Number(selectedDay.value),
+          month: getMonthNumber(selectedMonth.value as string),
+          year: Number(selectedYear.value)
+        };
+      } else {
+        // Busca pelos últimos 15 dias
+        const endDate = dayjs();
+        const startDate = dayjs().subtract(15, 'day').format('YYYY-MM-DD');
+        
+        params = {
+          day: endDate.date(),
+          month: endDate.month() + 1,
+          year: endDate.year()
+        };
+      }
+
       try {
-          const token = localStorage.getItem('id_token');
-          const response = await axios.get(`http://localhost:5173/coleta/`)
+        const token = localStorage.getItem('id_token');
+        const response = await axios.get(`http://localhost:5173/coleta/get-by-date`, {
+          headers: {
+            'Authorization': `Bearer ${token}`
+          },
+          params: Object.keys(params).length ? params : undefined  // Envia apenas os parâmetros se existirem
+        });
+
+        if (response.data === undefined) {
+          console.log("ESTÁ UNDEFINED");
+        } else {
+          console.log("NÃO ESTÁ UNDEFINED");
+          setData(response.data);
+        }
+      } catch (e) {
+        console.log(e);
       }
     }
-  })
 
-  const coletas: Coleta[] = [
-    {
-      id: 1,
-      date: '26/07/2024',
-      description: 'Sexta-feira, 26 de Junho de 2024, 15:26 BRT',
-      details: [
-        { id: 1, label: 'PM - 15' },
-        { id: 2, label: 'PM - 55' },
-        { id: 3, label: 'PM - 60' },
-        { id: 4, label: 'PM - 65' },
-        { id: 5, label: 'PM - 70' },
-        { id: 6, label: 'PM - 80' },
-        { id: 7, label: 'PM - 90' },
-        { id: 8, label: 'PM - 63' },
-        { id: 6, label: 'PM - 61' }
-      ]
-    },
-    {
-      id: 2,
-      date: '27/07/2024',
-      description: 'Sábado, 27 de Junho de 2024, 12:00 BRT',
-      details: [
-        { id: 3, label: 'PM - 20' },
-        { id: 4, label: 'PM - 30' }
-      ]
-    },
-  ];
+    fetchPontosPorData();
+  }, [selectedDay, selectedMonth, selectedYear]);
+
+  // Função para formatar a data e hora
+  const formatDateTime = (dataColeta: string, hora_inicio: string) => {
+    const date = dayjs(`${dataColeta}T${hora_inicio}`);
+    return date.format('dddd, D [de] MMMM [de] YYYY, HH:mm [BRT]');
+  };
+
+  const coletas: Coleta[] = data;
 
   return (
     <div className={styles.container}>
@@ -141,8 +186,8 @@ const Historic: React.FC = () => {
         {coletas.map(coleta => (
           <ColetaItem
             key={coleta.id}
-            date={coleta.date}
-            description={coleta.description}
+            date={coleta.dataColeta}
+            description={formatDateTime(coleta.dataColeta, coleta.hora_inicio)}  // Atualizado para mostrar o técnico
             details={coleta.details}
             onOpenDetail={handleOpenDetail}
           />
@@ -157,7 +202,6 @@ const Historic: React.FC = () => {
             <p className={styles.pointName}>Dados de coleta do ponto {selectedDetail.label}</p>
 
             <main>
-
               <div className={styles.infoContainer}>
                 <p className={styles.pointName}>pH</p>
                 <div className={styles.information}>
@@ -178,7 +222,6 @@ const Historic: React.FC = () => {
           </div>
         </div>
       )}
-
     </div>
   );
 };
