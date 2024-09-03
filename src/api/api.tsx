@@ -21,6 +21,8 @@ export const fetchExport = async (token: string) => {
             headers: {
                 Authorization: `Bearer ${token}`,
             },
+            responseType: "blob"
+            
         });
         return response.data;
 
