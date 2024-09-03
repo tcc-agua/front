@@ -16,6 +16,7 @@ const Forecast = () => {
     "snow": "Neve",
     "mist": "Névoa",
     "light rain": "Chuva fraca",
+    "overcast clouds": "Nublado",
   };
 
   async function searchCity() {
