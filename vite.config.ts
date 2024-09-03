@@ -53,6 +53,12 @@ export default defineConfig({
         secure: false,
         rewrite: (path) => path.replace(/^\/gateway/, ''),
       } as ProxyOptions,
+      '/coleta/get-by-date': {
+        target: 'http://localhost:8000',
+        changeOrigin: true,
+        secure: false,
+        rewrite: (path) => path.replace(/^\/gateway/, ''),
+      } as ProxyOptions,
     }
   }
 });
