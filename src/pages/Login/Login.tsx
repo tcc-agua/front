@@ -16,7 +16,7 @@ const Login: React.FC = () => {
           <div className={styles.content_left_side_main}>
             <p className={styles.welcome}>Seja bem vindo(a)!</p>
             <p className={styles.content_welcome}>Entre e explore nossos recursos de amostragem de água.</p>
-            <Link className={styles.login_button} to={'/inicial'}>Entrar</Link>
+            <Link className={styles.login_button} to={'/inicial'} style={{ textDecoration: 'none' }}>Entrar</Link>
           </div>
         </div>
         <div className={styles.footer_left}>

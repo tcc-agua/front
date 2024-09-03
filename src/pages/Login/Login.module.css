@@ -92,6 +92,7 @@
   color: white;
   cursor: pointer;
   font-size: 16px;
+  padding: 9px;
 }
 
 .login_button:hover {

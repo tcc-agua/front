@@ -1,8 +1,9 @@
+import { Link } from "react-router-dom"
 import styles from "./Dashboards.module.css"
 import icon_correct from "../../assets/images/correct.svg"
 import icon_export from "../../assets/images/export_activity.svg"
 import Graphic from "../../components/Graphic/Graphic"
-import MapSpline from "../../components/MapSpline/MapSpline"
+import Map from "../../assets/images/mapa-panorama.svg"
 import Forecast from "../../components/Forecast/Forecast"
 
 const mockData = {
@@ -88,6 +89,7 @@ export function Dashboards(){
                     <div className={styles.mapview}>
                         <p className={styles.title}>Mapa de Curitiba</p>
                         <div className={styles.content_mapview}>
+                            <Link to={"/inicial/mapa"}><img src={Map}></img></Link>
                         </div>
                     </div>
                 </div>
