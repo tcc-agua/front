@@ -1,27 +1,33 @@
-.container{
+.container {
     display: flex;
     flex-direction: column;
     width: 100%;
-    height:100%;
+    height: 100%;
     margin: 20px 70px;
+    color: var(--font_color);
 }
 
 
-.data_color{ color: #D543CB; }
+.data_color {
+    color: #D543CB;
+}
 
 .search_bar {
     width: 100%;
     padding: 12px;
     margin: 10px 0;
-    border: 1px solid #DCDCDC;
+    border: 1px solid var(--border_color);
     border-radius: 8px;
+    background-color: var(--backgroud_color);
 }
-input::placeholder {
-    color: #DCDCDC; 
-    opacity: 1;
-  }
 
-.title, .text {
+input::placeholder {
+    color: var(--font_color3);
+    opacity: 1;
+}
+
+.title,
+.text {
     font-size: 1.4vw;
     font-family: "SF Pro Medium";
     text-align: start;
@@ -33,13 +39,18 @@ input::placeholder {
     height: 100%;
 }
 
-.left_side { 
+.left_side {
     width: 70%;
-    margin-right: 30px; 
+    margin-right: 30px;
 }
 
-.right_side { width: 35%; }
-.text { margin: 20px 0px 10px 0px; }
+.right_side {
+    width: 35%;
+}
+
+.text {
+    margin: 20px 0px 10px 0px;
+}
 
 .options_data {
     width: 100%;
@@ -48,11 +59,15 @@ input::placeholder {
 
 }
 
-.data_etas_content, .data_na_content, .data_pb_content {
+.data_etas_content,
+.data_na_content,
+.data_pb_content {
     text-decoration: none;
 }
 
-.data_etas_content, .data_na_content, .data_pb_content {
+.data_etas_content,
+.data_na_content,
+.data_pb_content {
     display: flex;
     height: 10vw;
     border-radius: 10px;
@@ -62,32 +77,63 @@ input::placeholder {
 }
 
 .data_etas_content {
-    background-color: #bcdad8;
-    border: 1px solid #6e9e9b;
+    background-color: var(--ETAS_color);
+    border: 1px solid var(--ETAS_border);
 }
 
 .data_na_content {
-    background-color: #aee3ff;
-    border: 1px solid #73b8dd;
+    background-color: var(--NA_color);
+    border: 1px solid var(--NA_border);
 }
 
 .data_pb_content {
-    background-color: #a1cae2;
-    border: 1px solid #5992b3;
+    background-color: var(--PB_color);
+    border: 1px solid var(--PB_border);
 }
 
-.title_data_content, .percentage_content, .points_content {
+.title_data_content_etas,
+.percentage_content_etas,
+.points_content_etas,
+
+.title_data_content_na,
+.percentage_content_na,
+.points_content_na,
+
+.title_data_content_pb,
+.percentage_content_pb,
+.points_content_pb {
     display: flex;
     flex-direction: column;
     height: 6vw;
-    background-color: white;
-    border: 1px solid #a8a8a8;
     border-radius: 5px;
     margin-right: 20px;
     align-items: center;
 }
 
-.title_data_content { 
+.title_data_content_etas,
+.percentage_content_etas,
+.points_content_etas {
+    background-color: var(--ETAS_content);
+    border: 1px solid var(--ETAS_content_border);
+}
+
+.title_data_content_na,
+.percentage_content_na,
+.points_content_na {
+    background-color: var(--NA_content);
+    border: 1px solid var(--NA_content_border);
+}
+
+.title_data_content_pb,
+.percentage_content_pb,
+.points_content_pb {
+    background-color: var(--PB_content);
+    border: 1px solid var(--PB_content_border);
+}
+
+.title_data_content_etas,
+.title_data_content_na,
+.title_data_content_pb {
     width: 100%;
     padding: 10px 20px;
 }
@@ -97,35 +143,59 @@ input::placeholder {
     display: flex;
 }
 
-.percentage_content, .points_content { width: 100%; }
+.percentage_content_etas,
+.points_content_etas,
+.percentage_content_na,
+.points_content_na,
+.percentage_content_pb,
+.points_content_pb {
+    width: 100%;
+}
 
 .title_data {
     font-size: 1.15vw;
     font-family: "SF Pro Semibold";
 }
 
-.data_etas_content .title_data, .data_etas_content .percentage, .data_etas_content .points{ color: #419E98; }
-.data_na_content .title_data, .data_na_content .percentage, .data_na_content .points{ color: #01A4FD; }
-.data_pb_content .title_data, .data_pb_content .percentage, .data_pb_content .points { color: #007BC0; }
+.data_etas_content .title_data,
+.data_etas_content .percentage,
+.data_etas_content .points {
+    color: var(--ETAS_title);
+}
 
-.percentage_content, .points_content {
+.data_na_content .title_data,
+.data_na_content .percentage,
+.data_na_content .points {
+    color: var(--NA_title);
+}
+
+.data_pb_content .title_data,
+.data_pb_content .percentage,
+.data_pb_content .points {
+    color: var(--PB_title);
+}
+
+.percentage_content,
+.points_content {
     justify-content: center;
 }
 
-.percentage, .points {
+.percentage,
+.points {
     font-size: 1.4vw;
     font-family: "SF Pro Semibold";
 }
 
 .complement {
     font-size: 0.8vw;
+    color: var(--font_color);
 }
 
 .recent_points_container {
     width: 100%;
     height: 32vw;
-    background-color: white;
-    border: 1px solid #dcdcdc;
+    background-color: var(--backgroud_color);
+    border: 1px solid var(--border_color);
     border-radius: 10px;
     padding: 20px
 }
@@ -143,10 +213,10 @@ input::placeholder {
     padding: 0px 20px;
     width: 100%;
     height: 3vw;
-    border: 1px solid #dcdcdc;
+    border: 1px solid var(--border_color);
     border-radius: 6px;
     margin-bottom: 20px;
-    background-color: white;
+    background-color: var(--backgroud_color);
 }
 
 .name_point {
@@ -155,13 +225,14 @@ input::placeholder {
     align-items: center;
     font-family: "SF Pro Semibold";
     font-size: 1.2vw;
+    color: var(--font_color);
 }
 
 .arrow {
     margin-left: auto;
     display: flex;
     align-items: center;
-    color: #b3b3b3;
+    color: var(--font_color2);
 }
 
 .name_color {
@@ -169,31 +240,60 @@ input::placeholder {
 }
 
 
-.data_etas_content, .data_na_content, .data_pb_content, .recent_points_container {
+.data_etas_content,
+.data_na_content,
+.data_pb_content,
+.recent_points_container {
     transition: transform 0.3s ease, cursor 0.3s ease;
     font-family: 'SF Pro';
 }
 
-.data_etas_content, .data_na_content, .data_pb_content, .historic_point {
+.data_etas_content,
+.data_na_content,
+.data_pb_content,
+.historic_point {
     cursor: pointer;
 }
 
-.data_etas_content:hover, .data_na_content:hover, .data_pb_content:hover, .recent_points_container:hover { transform: scale(1.03); }
-.historic_point:hover { background-color: #ebebeb; }
-.data_etas_content:hover { background-color: #9ecac7; }
-.data_na_content:hover { background-color: #98dbff; }
-.data_pb_content:hover { background-color: #89b3cc; }
+.data_etas_content:hover,
+.data_na_content:hover,
+.data_pb_content:hover,
+.recent_points_container:hover {
+    transform: scale(1.03);
+}
+
+.historic_point:hover {
+    background-color: var(--historic_point_hover);
+}
+
+.data_etas_content:hover {
+    background-color: var(--ETAS_hover);
+}
+
+.data_na_content:hover {
+    background-color: var(--NA_hover);
+}
+
+.data_pb_content:hover {
+    background-color: var(--PB_hover);
+}
 
 
 
 @media (max-width: 1180px) {
-    .main_content { flex-direction: column; }
-    .left_side, .right_side { width: 100%; }
+    .main_content {
+        flex-direction: column;
+    }
 
-    .recent_points_container { 
+    .left_side,
+    .right_side {
+        width: 100%;
+    }
+
+    .recent_points_container {
         display: flex;
         flex-direction: column;
-     }
+    }
 
     .historic_points_container {
         display: flex;
@@ -201,11 +301,16 @@ input::placeholder {
         align-items: center;
     }
 
-    .historic_point { 
+    .historic_point {
         width: 75%;
         margin-bottom: 10px;
     }
-    .title_historic_points, .title, .text  { font-size: calc(1vw + 0.5em); }
+
+    .title_historic_points,
+    .title,
+    .text {
+        font-size: calc(1vw + 0.5em);
+    }
 }
 
 .modal {
@@ -227,13 +332,14 @@ input::placeholder {
     margin-top: -3%;
     font-size: x-large;
     font-weight: normal;
-    background-color: #fff;
-    color: #cccccc;
+    background-color: var(--backgroud_color);
+    color: var(--font_color);
     border: none;
 }
 
 .modalContent {
-    background: white;
+    background: var(--backgroud_color);
+    color: var(--font_color);
     padding: 3%;
     border-radius: 10px;
     width: 40%;
@@ -267,7 +373,7 @@ input::placeholder {
     text-align: center;
     font-size: large;
     font-weight: bold;
-    border: 1px solid #ccc;
+    border: 1px solid var(--border_color);
     border-radius: 10px;
     margin-top: 5%;
     margin-bottom: 10%;
@@ -276,7 +382,7 @@ input::placeholder {
 }
 
 .separator {
-    border-left: 1px solid #ccc;
+    border-left: 1px solid var(--border_color);
     height: 55%;
     margin-top: 7%;
 }
@@ -293,7 +399,9 @@ input::placeholder {
         margin: 10px 20px;
     }
 
-    .data_etas_content, .data_na_content, .data_pb_content { 
+    .data_etas_content,
+    .data_na_content,
+    .data_pb_content {
         height: 35vw;
         display: flex;
         flex-direction: column;
@@ -301,28 +409,38 @@ input::placeholder {
         width: 100%;
     }
 
-    .title_data_content  { 
+    .title_data_content_etas, .title_data_content_na, .title_data_content_pb {
         height: 40%;
         width: 90%;
         margin: 10px;
-     }
+    }
 
-     .percentage_and_points {
+    .percentage_and_points {
         width: 90%;
         justify-content: space-between;
         height: 40%;
         margin-bottom: 10px;
-     }
+    }
 
-     .percentage_content, .points_content {
+    .percentage_content_etas, .percentage_content_na, .percentage_content_pb,
+    .points_content_etas, .points_content_na, .points_content_pb {
         width: 48%;
         height: 100%;
         margin: 0px;
-     }
+    }
 
-    .title_data { font-size: 3.5vw; }
-    .percentage, .points { font-size: 4vw; }
-    .complement { font-size: 2.5vw; }
+    .title_data {
+        font-size: 3.5vw;
+    }
+
+    .percentage,
+    .points {
+        font-size: 4vw;
+    }
+
+    .complement {
+        font-size: 2.5vw;
+    }
 
     .recent_points_container {
         height: 300px;
@@ -345,8 +463,14 @@ input::placeholder {
         height: 35px;
     }
 
-    .title, .text { font-size: 3.5vw; }
-    .title_historic_points { font-size: 3.5vw; }
+    .title,
+    .text {
+        font-size: 3.5vw;
+    }
+
+    .title_historic_points {
+        font-size: 3.5vw;
+    }
 
     .modalContent {
         width: 80%;
@@ -364,7 +488,8 @@ input::placeholder {
         flex-direction: row;
     }
 
-    .infoContainer, .information {
+    .infoContainer,
+    .information {
         width: 50%;
     }
 
@@ -381,4 +506,3 @@ input::placeholder {
         font-size: 3vw;
     }
 }
-

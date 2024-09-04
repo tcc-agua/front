@@ -9,6 +9,7 @@
     padding: 20px 50px 0px;
     font-size: 1.4vw;
     font-family: "SF Pro Medium";
+    color: var(--font_color);
 }
 
 .main_information {
@@ -27,8 +28,8 @@
 .select_point_container {
     width: 100%;
     height: 40vw;
-    background-color: white;
-    border: 1px solid #dcdcdc;
+    background-color: var(--backgroud_color);
+    border: 1px solid var( --border_color);
     border-radius: 10px;
     padding: 25px 30px;
     transition: transform 0.3s ease, cursor 0.3s ease;
@@ -38,6 +39,7 @@
     margin-bottom: 10px;
     font-size: 1.4vw;
     font-family: "SF Pro Medium";
+    color: var(--font_color);
 }
 
 .select_point_grid {
@@ -50,8 +52,9 @@
     width: 100%;
     flex-grow: 1;
     margin-top: 10px;
-    background-color: white;
-    border: 1px solid #dcdcdc;
+    color: var(--font_color);
+    background-color: var(--backgroud_color);
+    border: 1px solid var( --border_color);
     border-radius: 6px;
     display: flex;
     justify-content: space-between;
@@ -73,7 +76,7 @@
 .status_point {
     font-family: "SF Pro Light";
     font-size: 1.05vw;
-    color: #949494;
+    color: var(--font_color2);
 }
 
 .right_side {
@@ -87,8 +90,9 @@
     display: flex;
     width: 100%;
     height: 10%;
-    background-color: white;
-    border: 1px solid #dcdcdc;
+    color: var(--font_color);
+    background-color: var(--backgroud_color);
+    border: 1px solid var( --border_color);
     align-items: center;
     text-align: center;
     border-radius: 7px;
@@ -105,11 +109,12 @@
 }
 
 .map_container {
-    background-color: white;
+    background-color: var(--backgroud_color);
     width: 100%;
     height: 65%;
     margin-top: 30px;
-    border: 1px solid #dcdcdc;
+    border: 1px solid var( --border_color);
+    color: var(--font_color);
     border-radius: 7px;
     padding: 20px 30px;
 }
@@ -120,7 +125,7 @@
 }
 
 .select_point:hover {
-    background-color: rgb(233, 233, 233);
+    background-color: var(--historic_point_hover);
 }
 
 .select_point_container:hover {
@@ -146,13 +151,14 @@
     margin-top: -3%;
     font-size: x-large;
     font-weight: normal;
-    background-color: #fff;
-    color: #cccccc;
+    background-color: var(--backgroud_color);
+    color: var(--font_color);
     border: none;
 }
 
 .modalContent {
-    background: white;
+    background: var(--backgroud_color);
+    color: var(--font_color);
     padding: 3%;
     border-radius: 10px;
     width: 40%;
@@ -187,7 +193,7 @@
     text-align: center;
     font-size: large;
     font-weight: bold;
-    border: 1px solid #ccc;
+    border: 1px solid var( --border_color);
     border-radius: 10px;
     margin-top: 5%;
     height: 50%;
@@ -195,7 +201,7 @@
 }
 
 .separator {
-    border-left: 1px solid #ccc;
+    border-left: 1px solid var( --border_color);
     height: 55%;
     margin-top: 7%;
 }
@@ -243,6 +249,8 @@ input[type="number"] {
     -moz-appearance: textfield;
     border: none;
     font-size: 2vw;
+    background-color: var(--backgroud_color);
+    color: var(--font_color);
     width: 50%;
 }
 

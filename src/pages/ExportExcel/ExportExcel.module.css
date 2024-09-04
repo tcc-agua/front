@@ -19,7 +19,7 @@
 }
 
 .title {
-    color: #303030;
+    color: var(--font_color);
     font-family: 'SF Pro Medium';
     font-size: 1rem;
     margin-left: 5%;
@@ -108,13 +108,13 @@
     margin-top: -3%;
     font-size: x-large;
     font-weight: normal;
-    background-color: #fff;
-    color: #cccccc;
+    background-color: var(--backgroud_color);
+    color: var(--font_color);
     border: none;
 }
 
 .modalContent {
-    background: white;
+    background: var(--backgroud_color);
     padding: 3%;
     border-radius: 10px;
     width: 40%;
@@ -132,13 +132,13 @@
 }
 
 .modalTitle {
-    color: #303030;
+    color: var(--font_color);
     font-family: 'SF Pro Medium';
     font-size: 1.3rem;
 }
 
 .modalText {
-    color: #949494;
+    color: var(--font_color2);
     font-family: 'SF Pro Medium';
     font-size: 1rem;
 }

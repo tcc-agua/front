@@ -7,6 +7,26 @@ const Graphic = ({ chartDataProp }) => {
         },
         xaxis: {
             categories: chartDataProp ? chartDataProp.months : [],
+            labels: {
+                style: {
+                    colors: 'var(--font_color)',  // Cor dos meses (eixo X)
+                    fontFamily: 'SF Pro Regular', 
+                }
+            }
+        },
+        yaxis: {
+            labels: {
+                style: {
+                    colors: 'var(--font_color)',  // Cor dos números (eixo Y)
+                    fontFamily: 'SF Pro Regular',
+                }
+            }
+        },
+        legend: {
+            labels: {
+                colors: 'var(--font_color)',  // Cor do texto da legenda
+                fontFamily: 'SF Pro Regular', 
+            }
         },
         colors: ['#00A4FD', '#a1dfdb'], // define a onda
         dataLabels: {

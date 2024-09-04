@@ -2,6 +2,7 @@
   padding: 0;
   margin: 0;
   box-sizing: border-box;
+  transition: all 0.21s ease-in-out;
 }
 
 @font-face {
@@ -35,3 +36,86 @@
 body {
   font-family: 'SF Pro Regular', sans-serif;
 }
+
+:root{
+  --backgroud_color: #ffff;
+  --backgroud_color2: #F9F9F9;
+  --backgroud_color3: #f8f9fa;
+
+  --font_color: #303030;
+  --font_color2: #8d8d8d;
+  --font_color3: #DCDCDC;
+
+  --border_color: #DCDCDC;
+
+  --icon_correct: #DEF5F3;
+  --icon_export: #F7EEF6;
+
+  --ETAS_color: #bcdad8;
+  --ETAS_content: #ffff;
+  --ETAS_content_border: #ffff;
+  --ETAS_border: #6e9e9b;
+  --ETAS_title: #419E98;
+  --ETAS_hover: #9ecac7;
+
+  --NA_color: #aee3ff;
+  --NA_content: #ffff;
+  --NA_content_border: #ffff;
+  --NA_border: #73b8dd;
+  --NA_title: #01A4FD;
+  --NA_hover: #98dbff;
+
+  --PB_color: #a1cae2;
+  --PB_content: #ffff;
+  --PB_content_border: #ffff;
+  --PB_border: #5992b3;
+  --PB_title: #007BC0;
+  --PB_hover: #89b3cc;
+
+  --historic_point_hover: #ebebeb;
+
+  --table_header: #A1DFDB;
+  --table_grid: #ffff;
+}
+
+[data-theme="dark"]{
+  --backgroud_color: #012C48;
+  --backgroud_color2: #00243D;
+  --backgroud_color3: #073d61;
+
+  --font_color: #ffff;
+  --font_color2: #b5bac4;
+  --font_color3: #6e759c;
+
+  --border_color: #053C5A;
+
+  --icon_correct: #53ADA5;
+  --icon_export: #CA73C0;
+
+  --ETAS_color: #1A5562;
+  --ETAS_content: #216D7E;
+  --ETAS_content_border: #498F9E;
+  --ETAS_border: #28788A;
+  --ETAS_title: #ffff;
+  --ETAS_hover: #1A5562;
+
+  --NA_color: #00588A;
+  --NA_content: #0074B5;
+  --NA_content_border: #2195D7;
+  --NA_border: #2195D7;
+  --NA_title: #ffff;
+  --NA_hover: #00588A;
+
+  --PB_color: #054064;
+  --PB_content: #084e79;
+  --PB_content_border: #13679b;
+  --PB_border: #0b6094;
+  --PB_title: #ffff;
+  --PB_hover: #054064;
+
+  --historic_point_hover: #004b7c;
+
+  --table_header: #4ca8a2;
+  --table_grid: #ffff;
+}
+

@@ -1,6 +1,6 @@
 .container_main{
     display: flex;
     padding: 10px;
-    background-color: #F9F9F9;
+    background-color: var(--backgroud_color2);
     width: 100%;
 }

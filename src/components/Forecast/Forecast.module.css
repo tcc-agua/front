@@ -1,5 +1,3 @@
-
-
 .content_weather { 
     display: flex;
     gap: 3px;
@@ -8,7 +6,6 @@
 
 .weekday {
     min-width: 7vw;
-    border: 1px solid #eaeaea;
     border-radius: 7px;
     box-sizing: border-box;
 }
@@ -41,6 +38,10 @@
     font-size: 0.8vw;
     text-align: end;
     align-self: flex-end;
+}
+
+.carregando{
+    color: var(--font_color);
 }
 
 @media (max-width: 1180px) {

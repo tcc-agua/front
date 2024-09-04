@@ -1,9 +1,10 @@
 .coleta {
   height: auto;
   width: auto;
-  background-color: #fff;
+  background-color: var(--backgroud_color);
   padding: 1rem;
-  border: 1px solid #ccc;
+  border: 1px solid var(--border_color);
+  color: var(--font_color);
   border-radius: 4px;
   margin-bottom: 1rem;
   cursor: pointer;
@@ -32,7 +33,7 @@
 }
 
 .description {
-  color: #949494;
+  color: var(--font_color2);
   flex: 1;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -64,8 +65,8 @@
   justify-content: space-between;
   font-weight: bold;
   font-size: medium;
-  background-color: #fff;
-  border: 1px solid #ccc;
+  background-color: var(--backgroud_color);
+  border: 1px solid var(--border_color);
   border-radius: 10px;
   cursor: pointer;
   height: 100%;
@@ -103,12 +104,12 @@
 
 .number {
   font-size: 1rem;
-  color: #000;
+  color: var(--font_color);
   margin-right: 20%;
 }
 
 .viewButton {
-  color: #949494;
+  color: var(--font_color2);
   display: flex;
   align-items: center;
   justify-content: center;

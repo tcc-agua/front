@@ -12,7 +12,8 @@
 }
 
 .modalContainer {
-  background-color: white;
+  background-color: var(--backgroud_color);
+  color: var(--font_color);
   border-radius: 15px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   width: 30%;
@@ -32,7 +33,7 @@
   justify-content: space-between;
   align-items: center;
   padding: 16px;
-  border-bottom: 1px solid #ddd;
+  border-bottom: 1px solid var(--border_color);
 }
 
 .closeButton {
@@ -40,7 +41,7 @@
   border: none;
   font-size: 24px;
   cursor: pointer;
-  color: #6b7280;
+  color: var(--font_color);
 }
 
 .closeButton:hover {
@@ -50,6 +51,45 @@
 .content {
   display: flex;
   justify-content: center;
+  flex: 1;
+  overflow: hidden; /* Prevents overflow of content */
+}
+
+.sidebar {
+  width: 25vh;
+  border-right: 1px solid var(--border_color);
+  padding: 30px 0;
+  overflow-y: auto; /* Allows scrolling if content overflows */
+}
+
+.sidebar ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.menuItem {
+  position: relative;
+  display: flex;
+  align-items: center;
+  padding: 8px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: background-color 0.3s;
+}
+
+.activeItem {
+  background-color: #01a5fd1c;
+}
+
+.activeItem .blue {
+  display: block; 
+}
+
+.blue {
+  position: absolute;
+  left: 0;
+  top: 0;
   height: 100%;
 }
 

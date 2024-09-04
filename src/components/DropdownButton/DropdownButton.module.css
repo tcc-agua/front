@@ -13,9 +13,9 @@
     min-height: 40px;
     font-size: 1rem;
     padding: 0.5rem;
-    background-color: #fff;
-    color: #303030;
-    border: 1px solid #ccc;
+    background-color: var(--backgroud_color);
+    color: var(--font_color);
+    border: 1px solid var(--border_color);
     border-radius: 4px;
     text-align: center;
     cursor: pointer;
@@ -35,8 +35,9 @@
     top: 100%;
     left: 0;
     right: 0;
-    background-color: #f8f9fa;
-    border: 1px solid #ccc;
+    background-color: var(--backgroud_color3);
+    border: 1px solid var(--border_color);
+    color: var(--font_color);
     border-radius: 4px;
     max-height: 0;
     overflow-y: auto;
@@ -63,11 +64,11 @@
 }
 
 .option:hover {
-    background-color: #e9ecef;
+    background-color: var(--historic_point_hover);
 }
 
 .selected {
-    background-color: #e9ecef;
+    background-color: var(--historic_point_hover);
 }
 
 @media (max-width: 600px) {

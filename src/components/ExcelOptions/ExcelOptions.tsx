@@ -61,9 +61,9 @@ const DropdownButton: React.FC<DropdownButtonProps> = ({
           minHeight: '20px',
           fontSize: '1rem',
           padding: '0.5rem',
-          backgroundColor: '#fff',
-          color: '#303030',
-          border: '1px solid #ccc',
+          backgroundColor: 'var(--backgroud_color)',
+          color: 'var(--font_color)',
+          border: '1px solid var(--border_color)',
           borderRadius: '4px',
           textAlign: 'center',
           flexGrow: 1,
@@ -81,8 +81,9 @@ const DropdownButton: React.FC<DropdownButtonProps> = ({
         top: '100%',
         left: '0',
         right: '0',
-        backgroundColor: '#f8f9fa',
-        border: '1px solid #ccc',
+        backgroundColor: 'var(--backgroud_color3)',
+        border: '1px solid var(--border_color)',
+        color: 'var(--font_color)',
         borderRadius: '4px',
         overflow: 'hidden',
         zIndex: 10,
@@ -99,7 +100,7 @@ const DropdownButton: React.FC<DropdownButtonProps> = ({
               style={{
                 padding: '0.5rem',
                 cursor: 'pointer',
-                backgroundColor: selectedOption?.id === option.id ? '#e9ecef' : 'transparent',
+                backgroundColor: selectedOption?.id === option.id ? 'var(--historic_point_hover)' : 'transparent',
               }}
             >
               <span>{option.label}</span>
