@@ -70,8 +70,9 @@ export const fetchPointBySheet = async (sheetName: string) => {
 
 // Get notificacoes
 
-export const fetchNotif = async (token: string ) => {
+export const fetchNotif = async () => {
     try {
+        const token = localStorage.getItem("id_token")
         const response = await axios.get(`${API_BASE_URL}/notificacoes/getNotif`, {
             headers: {
                 Authorization: `Bearer ${token}`,
@@ -82,15 +83,17 @@ export const fetchNotif = async (token: string ) => {
         console.error("Erro ao buscar notificações.");
         throw error;
     }
-};
+}; // esse ainda nao funciona 
 
 // Post notificacoes
 
-export const postNotif = async (token: string ) => {
+export const postNotif = async (planilha: string | null) => {
     try {
+
+        const token = localStorage.getItem("id_token")
         const response = await axios.post(`${API_BASE_URL}/notificacoes/postNotif`,
             {
-                tabela: "ETAS",
+                tabela: planilha,
                 tipo: "SALVO"
             },
             {
@@ -105,4 +108,4 @@ export const postNotif = async (token: string ) => {
         throw error; 
     }
 
-};   // ta dando erro esse diabo
+};   // esse funciona
