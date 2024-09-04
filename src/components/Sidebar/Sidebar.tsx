@@ -1,8 +1,6 @@
 import { Link, useLocation } from "react-router-dom";
 import styles from './Sidebar.module.css';
-
-import DarkMode from "../ThemeButton/ThemeButton";
-
+import { useTheme } from '../ThemeContext/ThemeContext'; // Importa o contexto
 import HomeIMG from '../../assets/images/home.svg';
 import HomeBlueIMG from '../../assets/images/home-blue.svg';
 import MapaIMG from '../../assets/images/mapa.svg';
@@ -14,13 +12,12 @@ import HistoricoBlueIMG from '../../assets/images/historico-blue.svg';
 import ExportarIMG from '../../assets/images/exportar.svg';
 import ExportarBlueIMG from '../../assets/images/exportar-blue.svg';
 
-//dark mode
+//dark mode icons
 import HomeWhite from '../../assets/images/darkmode_icons/home_white.svg';
 import MapaWhite from '../../assets/images/darkmode_icons/map_white.svg';
 import MaisWhite from '../../assets/images/darkmode_icons/plus_white.svg';
 import HistoricoWhite from '../../assets/images/darkmode_icons/historic_white.svg';
-import ExportarWhite from '../../assets/images/darkmode_icons/export_white.svg'
-
+import ExportarWhite from '../../assets/images/darkmode_icons/export_white.svg';
 
 interface SidebarProps {
     className?: string;
@@ -28,10 +25,10 @@ interface SidebarProps {
 
 export function Sidebar({ className }: SidebarProps) {
     const location = useLocation();
+    const { isDarkMode } = useTheme(); // Consome o contexto
 
-    const isDarkMode = () => {
-        const selectedTheme = localStorage.getItem("selectedTheme");
-        return selectedTheme === "dark";
+    const getIcon = (defaultIcon: string, blueIcon: string, whiteIcon: string, path: string) => {
+        return location.pathname === path ? blueIcon : (isDarkMode ? whiteIcon : defaultIcon);
     };
 
     return (
@@ -45,7 +42,7 @@ export function Sidebar({ className }: SidebarProps) {
                     <Link className={styles.content_options} to={"/inicial"}>
                         <div className={styles.blue}></div>
                         <img
-                            src={location.pathname === '/inicial' ? HomeBlueIMG : HomeIMG}
+                            src={getIcon(HomeIMG, HomeBlueIMG, HomeWhite, '/inicial')}
                             alt="home"
                             className={styles.imagem}
                         />
@@ -57,7 +54,7 @@ export function Sidebar({ className }: SidebarProps) {
                     <Link className={styles.content_options} to={"/inicial/mapa"}>
                         <div className={styles.blue}></div>
                         <img
-                            src={location.pathname === '/inicial/mapa' ? MapaBlueIMG : MapaIMG}
+                            src={getIcon(MapaIMG, MapaBlueIMG, MapaWhite, '/inicial/mapa')}
                             alt="map"
                         />
                         <p>Mapa 3D</p>
@@ -68,7 +65,7 @@ export function Sidebar({ className }: SidebarProps) {
                     <Link className={styles.content_options} to={"/inicial/coleta_de_dados"}>
                         <div className={styles.blue}></div>
                         <img
-                            src={location.pathname === '/inicial/coleta_de_dados' ? MaisBlueIMG : MaisIMG}
+                            src={getIcon(MaisIMG, MaisBlueIMG, MaisWhite, '/inicial/coleta_de_dados')}
                             alt="mais"
                         />
                         <p>Coleta de Dados</p>
@@ -79,7 +76,7 @@ export function Sidebar({ className }: SidebarProps) {
                     <Link className={styles.content_options} to={"/inicial/historico"}>
                         <div className={styles.blue}></div>
                         <img
-                            src={location.pathname === '/inicial/historico' ? HistoricoBlueIMG : HistoricoIMG}
+                            src={getIcon(HistoricoIMG, HistoricoBlueIMG, HistoricoWhite, '/inicial/historico')}
                             alt="historic"
                         />
                         <p>Histórico</p>
@@ -90,14 +87,12 @@ export function Sidebar({ className }: SidebarProps) {
                     <Link className={styles.content_options} to={"/inicial/exportar_excel"}>
                         <div className={styles.blue}></div>
                         <img
-                            src={location.pathname === '/inicial/exportar_excel' ? ExportarBlueIMG : ExportarIMG}
+                            src={getIcon(ExportarIMG, ExportarBlueIMG, ExportarWhite, '/inicial/exportar_excel')}
                             alt="export"
                         />
                         <p>Exportar Excel</p>
                     </Link>
                 </div>
-
-                <DarkMode />
             </section>
         </aside>
     );

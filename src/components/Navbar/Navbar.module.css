@@ -3,7 +3,7 @@
     align-items: center;
     justify-content: space-between;
     border-bottom: 1px solid var(--border_color);
-    padding: 10px;
+    padding: 20px;
     background-color: var(--backgroud_color);
 }
 
@@ -23,13 +23,14 @@
 
 .nav_content_options {
     display: flex;
-    padding: 10px;
+    padding: 12px;
     align-items: center;
-    color: black;
+    color: var(--font_color);
     background-color: var(--backgroud_color);
     border: none;
     font-size: 14px;
     cursor: pointer;
+    
 }
 
 .icons {

@@ -1,0 +1,32 @@
+.dark_mode {
+    display: flex;
+    align-items: center;
+}
+
+.theme_button {
+    color: var(--font_color);
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    border: none;
+    background: none;
+    cursor: pointer;
+    font-size: 14px;
+    text-align: center;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    width: 140px;
+}
+
+.icon_lua {
+    width: 18px; 
+    height: 18px;
+    margin-right: 5%;
+}
+
+.icon_sol {
+    width: 20px; 
+    height: 20px;
+    margin-right: 5%;
+}

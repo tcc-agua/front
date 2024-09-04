@@ -119,3 +119,6 @@ body {
   --table_grid: #ffff;
 }
 
+[data-theme='dark'] .sidebar img {
+  filter: invert(1); 
+}
