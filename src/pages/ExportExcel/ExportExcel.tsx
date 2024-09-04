@@ -31,11 +31,6 @@ const ExportExcel: React.FC = () => {
 
     async function fetchExportExcel() {
         try {
-            const token = localStorage.getItem('id_token');
-            if (!token) {
-                throw new Error("Token não encontrado");
-            }
-    
             const response = await fetchExport();
     
             const blob = new Blob([response], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
