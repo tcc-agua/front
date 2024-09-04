@@ -51,13 +51,30 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose }) => {
             <div className={styles.mainContent}>
               {activeTab === "perfil" ? (
                 <div className={styles.profile}>
-                  <div className={styles.avatar}></div>
-                  <p>Fulano de tal</p>
+                  <div className={styles.avatar}>
+                      <img src="#" alt="" />
+                  </div>
+                  <p className={styles.family_name}>Felipe Ribas (FCM/Ct)</p>
+                  <p className={styles.email}>felipinho@rb.bosch.com</p>
                 </div>
               ) : (
-                <div>
-                  <p>Ajuste suas preferências aqui.</p>
-                  <button className={styles.saveButton}>Salvar Alterações</button>
+                <div className={styles.content_accessibility}>
+                  <p className={styles.subtitle}>Ajuste suas preferências aqui.</p>
+                  <div className={styles.dark_mode}>
+                    <p>Modo escuro</p>
+                    <p>-------</p>
+                  </div>
+                  <div className={styles.libras}>
+                    <p>Tradução em libras</p>
+                    <p>-------</p>
+                  </div>
+                  <div className={styles.narration}>
+                    <p>Narração das páginas</p>
+                    <p>-------</p>
+                  </div>
+                  <div className={styles.button_content}>
+                    <button className={styles.saveButton}>Salvar Alterações</button>
+                  </div>
                 </div>
               )}
             </div>
