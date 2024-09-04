@@ -36,7 +36,7 @@ const ExportExcel: React.FC = () => {
                 throw new Error("Token não encontrado");
             }
     
-            const response = await fetchExport(token);
+            const response = await fetchExport();
     
             const blob = new Blob([response], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
             const url = window.URL.createObjectURL(blob);
