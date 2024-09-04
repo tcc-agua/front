@@ -15,8 +15,9 @@ export const fetchUserInfo = async () => {
 
 // Exportar Excel
 
-export const fetchExport = async (token: string) => {
+export const fetchExport = async () => {
     try {
+        const token = localStorage.getItem("id_token")
         const response = await axios.get(`${API_BASE_URL}/exportExcel`, {
             headers: {
                 Authorization: `Bearer ${token}`,
@@ -34,8 +35,9 @@ export const fetchExport = async (token: string) => {
 
 // Get Planilhas
 
-export const fetchSheet = async (token: string, sheetName: string) => {
+export const fetchSheet = async (sheetName: string) => {
     try {
+        const token = localStorage.getItem("id_token")
         const response = await axios.get(`${API_BASE_URL}/exportExcel/data/${sheetName}`, {
             headers: {
                 Authorization: `Bearer ${token}`,
@@ -50,8 +52,9 @@ export const fetchSheet = async (token: string, sheetName: string) => {
 
 // Get point by Sheet
 
-export const fetchPointBySheet = async (token: string, sheetName: string) => {
+export const fetchPointBySheet = async (sheetName: string) => {
     try {
+        const token = localStorage.getItem("id_token")
         const response = await axios.get(`${API_BASE_URL}/ponto/excel/${sheetName}`, {
             headers: {
                 Authorization: `Bearer ${token}`,
