@@ -83,3 +83,26 @@ export const fetchNotif = async (token: string ) => {
         throw error;
     }
 };
+
+// Post notificacoes
+
+export const postNotif = async (token: string ) => {
+    try {
+        const response = await axios.post(`${API_BASE_URL}/notificacoes/postNotif`,
+            {
+                tabela: "ETAS",
+                tipo: "SALVO"
+            },
+            {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            });
+
+            return response.data;
+    } catch (error) {
+        console.error("Erro ao enviar o formulário.");
+        throw error; 
+    }
+
+};   // ta dando erro esse diabo
