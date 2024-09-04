@@ -5,10 +5,11 @@
 .customHotTable .handsontable td,
 .customHotTable .handsontable th {
     font-size: 1.2rem;
+    
 }
 
 .customHotTable .lightGreen {
-    background-color: #A1DFDB;
+    background-color: var(--table_header);
     color: white;
     font-size: 1.1rem;
 }

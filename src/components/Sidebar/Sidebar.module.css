@@ -1,9 +1,9 @@
 .container {
     display: flex;
     flex-direction: column;
-    background-color: white;
+    background-color: var(--backgroud_color);
     height: 100%;
-    border-right: 1px solid #EAEAEA;
+    border-right: 1px solid var(--border_color);
 }
 
 .logo {
@@ -12,6 +12,7 @@
 }
 
 .header_container {
+    color: var(--font_color);
     display: flex;
     padding: 30px;
     justify-content: center;
@@ -36,7 +37,7 @@
     font-size: 15px;
     align-items: center;
     font-family: "SF Pro Light";
-    color: inherit;
+    color: var(--font_color);
 }
 
 .content_options img {
@@ -63,7 +64,7 @@
 
 
 .active .content_options {
-    background-color: #f7f7f7;
+    background-color: var(--backgroud_color);
     color: #01A4FD;
 }
 
@@ -94,3 +95,7 @@
         display: none; 
     }
 }
+
+
+
+

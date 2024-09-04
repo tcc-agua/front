@@ -35,46 +35,48 @@ export function Collect() {
             <div className={styles.main_content}>
                 <section className={styles.left_side}>
                     <div className={styles.options_data}>
+
                         <Link to={'/inicial/pontos_de_coleta'} className={styles.data_etas_content}>
-                            <div className={styles.title_data_content}>
+                            <div className={styles.title_data_content_etas}>
                                 <p className={styles.title_data}>Estações de Tratamento de Águas S.</p>
                             </div>
                             <div className={styles.percentage_and_points}>
-                                <div className={styles.percentage_content}>
+                                <div className={styles.percentage_content_etas}>
                                     <p className={styles.percentage}>40%</p>
                                     <p className={styles.complement}>Preenchido</p>
                                 </div>
-                                <div className={styles.points_content}>
+                                <div className={styles.points_content_etas}>
                                     <p className={styles.points}>24</p>
                                     <p className={styles.complement}>Pontos</p>
                                 </div>
                             </div>
                         </Link>
+
                         <Link to={'/inicial/pontos_de_coleta'} className={styles.data_na_content}>
-                            <div className={styles.title_data_content}>
+                            <div className={styles.title_data_content_na}>
                                 <p className={styles.title_data}>Nível D'água</p>
                             </div>
                             <div className={styles.percentage_and_points}>
-                                <div className={styles.percentage_content}>
+                                <div className={styles.percentage_content_na}>
                                     <p className={styles.percentage}>10%</p>
                                     <p className={styles.complement}>Preenchido</p>
                                 </div>
-                                <div className={styles.points_content}>
+                                <div className={styles.points_content_na}>
                                     <p className={styles.points}>22</p>
                                     <p className={styles.complement}>Pontos</p>
                                 </div>
                             </div>
                         </Link>
                         <Link to={'/inicial/pontos_de_coleta'} className={styles.data_pb_content}>
-                            <div className={styles.title_data_content}>
+                            <div className={styles.title_data_content_pb}>
                                 <p className={styles.title_data}>Poços de Bombeamento</p>
                             </div>
                             <div className={styles.percentage_and_points}>
-                                <div className={styles.percentage_content}>
+                                <div className={styles.percentage_content_pb}>
                                     <p className={styles.percentage}>75%</p>
                                     <p className={styles.complement}>Preenchido</p>
                                 </div>
-                                <div className={styles.points_content}>
+                                <div className={styles.points_content_pb}>
                                     <p className={styles.points}>09</p>
                                     <p className={styles.complement}>Pontos</p>
                                 </div>

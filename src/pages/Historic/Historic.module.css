@@ -8,6 +8,7 @@
     font-family: 'SF Pro Medium';
     font-size: 1rem;
     margin-bottom: 2.5em;
+    color: var(--font_color);
 }
 
 .buttons {
@@ -55,8 +56,8 @@
 }
 
 .coleta {
-    background-color: #fff;
-    border: 1px solid #ccc;
+    background-color: var(--backgroud_color);
+    border: 1px solid var(--border_color);
     border-radius: 4px;
     margin-bottom: 1rem;
     cursor: pointer;
@@ -94,15 +95,16 @@
     margin-top: -3%;
     font-size: x-large;
     font-weight: normal;
-    background-color: #fff;
-    color: #cccccc;
+    background-color: var(--backgroud_color);
+    color: var(--font_color);
     border: none;
 }
 
 .modalContent {
     font-family: 'SF Pro Semibold';
     font-size: 1rem;
-    background: white;
+    background: var(--backgroud_color);
+    color: var(--font_color);
     padding: 3%;
     border-radius: 10px;
     width: 40%;
@@ -165,7 +167,7 @@ main {
     text-align: center;
     font-family: 'SF Pro Semibold';
     font-size: 1rem;
-    border: 1px solid #ccc;
+    border: 1px solid var(--border_color);
     border-radius: 10px;
     margin-top: 5%;
     margin-bottom: 10%;
@@ -174,7 +176,7 @@ main {
 }
 
 .separator {
-    border-left: 1px solid #ccc;
+    border-left: 1px solid var(--border_color);
     height: 55%;
     margin-top: 7%;
 }

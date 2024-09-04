@@ -5,6 +5,7 @@ import logo from "../../../public/logo.svg"
 import user from "../../assets/images/user.svg"
 import HamburgerMenu from '../Hamburguer/HamburgerMenu';
 import Modal from '../Modal/Modal';
+import configWhite from '../../assets/images/darkmode_icons/config_white.svg';
 
 export function Navbar() {
     const [sidebarVisible, setSidebarVisible] = useState(false);

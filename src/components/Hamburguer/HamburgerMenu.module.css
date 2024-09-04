@@ -62,7 +62,7 @@
   left: -250px; 
   width: 250px;
   height: 100vh;
-  background-color: #fff;
+  background-color: var(--backgroud_color2);
   box-shadow: 2px 0 5px rgba(0, 0, 0, 0.2);
   transition: left 0.3s ease-in-out;
   display: flex;
@@ -88,14 +88,14 @@
 }
 
 .options:hover {
-  background-color: #f0f0f0;
+  background-color: var(--backgroud_color);
 }
 
 .contentOptions {
   display: flex;
   align-items: center;
   text-decoration: none;
-  color: #333;
+  color: var(--font_color);
   transition: color 0.3s ease;
 }
 

@@ -93,7 +93,7 @@ const Forecast = () => {
           </div>
         </>
       ) : (
-        <p>Carregando...</p>
+        <p className={styles.carregando}>Carregando...</p>
       )}
     </div>
   );
