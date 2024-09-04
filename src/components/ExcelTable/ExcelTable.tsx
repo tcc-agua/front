@@ -29,7 +29,7 @@ const ExcelTable: React.FC<ExcelTableProps> = ({ sheetName }) => {
         const token = localStorage.getItem('id_token');
 
         if(token != null){
-          const response = await fetchSheet(token, sheetName);
+          const response = await fetchSheet(sheetName);
 
           setHeaders(response[0]);
           setSubHeaders(response[1]);
