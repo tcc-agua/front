@@ -1,7 +1,6 @@
 .dropdownContainer {
     position: relative;
-    margin-bottom: 1rem;
-    flex-grow: 1;
+    width: 25%;
 }
 
 .button {
@@ -12,7 +11,7 @@
     height: 100%;
     min-height: 40px;
     font-size: 1rem;
-    padding: 0.5rem;
+    padding: 0rem 1.5rem;
     background-color: var(--backgroud_color);
     color: var(--font_color);
     border: 1px solid var(--border_color);
@@ -26,8 +25,8 @@
 }
 
 .arrowImage {
-    width: 16px;
-    height: 16px;
+    width: 12px;
+    height: 12px;
 }
 
 .options {

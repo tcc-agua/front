@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import arrow from '../../assets/images/arrow.svg';
+import dropdown_arrow from '../../assets/images/dropdown_arrow.svg';
 import styles from './DropdownButton.module.css';
 
 interface DropdownItem {
@@ -60,7 +60,7 @@ const DropdownButton: React.FC<DropdownButtonProps> = ({
             transform: isOpen ? 'rotate(180deg)' : 'rotate(0deg)',
           }}
         >
-          <img src={arrow} alt="Arrow" className={styles.arrowImage} />
+          <img src={dropdown_arrow} alt="Arrow" className={styles.arrowImage} />
         </span>
       </button>
       <div className={`${styles.options} ${isOpen ? styles.open : ''}`}>

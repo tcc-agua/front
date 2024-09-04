@@ -1,6 +1,6 @@
 .container_main{
     display: flex;
-    padding: 10px;
+    padding: 25px;
     background-color: var(--backgroud_color2);
     width: 100%;
 }

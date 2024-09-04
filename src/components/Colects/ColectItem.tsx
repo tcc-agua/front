@@ -44,8 +44,7 @@ const ColetaItem: React.FC<ColetaItemProps> = ({ date, description, details, onO
                   onClick={(e) => { e.stopPropagation(); onOpenDetail(detail); }}
                   className={styles.viewButton}
                 >
-                  Visualizar
-                  <img src={arrowlong} alt="Arrow" style={{ marginLeft: '10%'}} />
+                  <pre className={styles.arrow}>Visualizar   ⟶</pre>
                 </button>
               </button>
 

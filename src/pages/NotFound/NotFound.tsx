@@ -18,12 +18,12 @@ const NotFound: React.FC = () => {
                 <div className={styles.cont}>
                     <p className={styles.erro}>ERRO 404</p>
                     <p className={styles.ops}>Oops!</p>
-                    <p className={styles.not}>Não encontramos a página que você estava procurando.</p>
+                    <p className={styles.not}>Não encontramos a página que <p></p>você estava procurando.</p>
                 </div>
 
                 <div className={styles.cont_button}>
                     <Link to={'/inicial'} className={styles.buttonHome}>
-                        Voltar para página inicial
+                        Voltar para Home
                     </Link>
                 </div>
                 

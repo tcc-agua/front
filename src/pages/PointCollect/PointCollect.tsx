@@ -39,7 +39,7 @@ export function PointCollect(){
 
     const handleEnviar = () => {
         if (numberValue > 3.0) {
-            setErrorMessage('O dado é discrepante e não pode ser salvo.');
+            setErrorMessage('Este dado não corresponde ');
         } else {
             console.log("Dados enviados");
             closeModal();

@@ -76,6 +76,7 @@ body {
 
   --table_header: #A1DFDB;
   --table_grid: #ffff;
+  --dropdown_button: #ddf3ff;
 }
 
 [data-theme="dark"]{

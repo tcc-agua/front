@@ -150,6 +150,8 @@ input::placeholder {
 .percentage_content_pb,
 .points_content_pb {
     width: 100%;
+    display: flex;
+    justify-content: center;
 }
 
 .title_data {
@@ -190,6 +192,7 @@ input::placeholder {
     font-size: 0.8vw;
     color: var(--font_color);
 }
+
 
 .recent_points_container {
     width: 100%;
@@ -244,7 +247,7 @@ input::placeholder {
 .data_na_content,
 .data_pb_content,
 .recent_points_container {
-    transition: transform 0.3s ease, cursor 0.3s ease;
+    transition: transform 0.3s ease, cursor 0.3s ease, background-color 0.5s ease;
     font-family: 'SF Pro';
 }
 

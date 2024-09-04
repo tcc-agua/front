@@ -24,7 +24,7 @@
     flex-direction: column;
     background-color: var( --backgroud_color);
     border: 1px solid var(--border_color);
-    width: 95%;
+    width: 97%;
     border-radius: 10px;
     padding: 10px;
     margin-bottom: 15px;
@@ -94,7 +94,7 @@ pre {
     border-radius: 10px;
     padding: 15px;
     margin-bottom: 15px;
-    width: 95%;
+    width: 97%;
     height: 28%;
 }
 
@@ -103,10 +103,10 @@ pre {
     flex-direction: column;
     background-color: var( --backgroud_color);
     border: 1px solid var(--border_color);
-    width: 95%;
+    width: 97%;
     border-radius: 10px;
     padding: 15px;
-    height: 48.5%;
+    height: 49.5%;
 }
 
 .content_last_activities {
@@ -183,7 +183,7 @@ hr {
     flex-direction: column;
     background-color: var( --backgroud_color);
     border: 1px solid var(--border_color);
-    width: 95%;
+    width: 97%;
     border-radius: 10px;
     padding: 15px;
     height: auto;
@@ -203,6 +203,16 @@ hr {
 .content_mapview img{
     width: 100%;
     height: 100%;
+}
+
+
+.updates, .weekly_weather, .last_activities, .graphic, .mapview {
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+}
+
+.updates:hover, .weekly_weather:hover, .last_activities:hover, .graphic:hover, .mapview:hover {
+    transform: scale(1.025);
+    box-shadow: 0px 1px 10px rgba(0, 0, 0, 0.05);
 }
 
 @media (max-width: 1180px) {

@@ -1,11 +1,11 @@
 .coleta {
   height: auto;
-  width: auto;
+  width: 95%;
   background-color: var(--backgroud_color);
   padding: 1rem;
   border: 1px solid var(--border_color);
   color: var(--font_color);
-  border-radius: 4px;
+  border-radius: 7px;
   margin-bottom: 1rem;
   cursor: pointer;
   transition: background-color 0.3s;
@@ -33,11 +33,12 @@
 }
 
 .description {
-  color: var(--font_color2);
+  color: #c2c2c2;
   flex: 1;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+  font-family: "SF Pro Light";
 }
 
 .details {
@@ -100,6 +101,7 @@
   color: #01A4FD;
   margin-left: 6%;
   margin-right: 2%;
+  font-family: "SF Pro Regular";
 }
 
 .number {
@@ -113,7 +115,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 1rem;
+  padding: 7px;
   font-size: small;
   background: none;
   border: none;
@@ -122,6 +124,9 @@
   height: 100%;
 }
 
+.arrow {
+  font-family: "SF Pro Regular";
+}
 
 
 @media (max-width: 1150px) {

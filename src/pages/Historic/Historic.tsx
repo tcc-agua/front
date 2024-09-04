@@ -95,9 +95,10 @@ const Historic: React.FC = () => {
 
   return (
     <div className={styles.container}>
-      <p className={styles.title}>Selecione uma data:</p>
-
-      <div className={styles.buttons}>
+      <p className={styles.title_filter}>Selecione uma data:</p>
+      <div className={styles.content_buttons}>
+        <button className={styles.filtrar}>Filtrar</button>
+        <div className={styles.buttons}>
         <div className={styles.dropdownContainer}>
           <DropdownButton
             id="day-dropdown"
@@ -122,7 +123,9 @@ const Historic: React.FC = () => {
           />
         </div>
       </div>
-
+      </div>
+      
+  
       <p className={styles.title}>Últimas coletas:</p>
       <div className={styles.colects}>
         {coletas.map(coleta => (
