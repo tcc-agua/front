@@ -8,15 +8,18 @@ export function PointCollect(){
     const [isModalOpen, setModalOpen] = useState<boolean>(false);
     const [selectedPoint, setSelectedPoint] = useState<string>('');
     const [numberValue, setNumberValue] = useState<number>(1);
+    const [errorMessage, setErrorMessage] = useState<string>('');
 
     const openModal = (point: string) => {
         setSelectedPoint(point);
         setModalOpen(true);
+        setErrorMessage('');
     };
 
     const closeModal = () => {
         setModalOpen(false);
         setSelectedPoint('');
+        setErrorMessage('');
     };
 
     const incrementValue = () => {
@@ -31,6 +34,15 @@ export function PointCollect(){
         const value = parseFloat(e.target.value);
         if (!isNaN(value)) {
             setNumberValue(value);
+        }
+    };
+
+    const handleEnviar = () => {
+        if (numberValue > 3.0) {
+            setErrorMessage('O dado é discrepante e não pode ser salvo.');
+        } else {
+            console.log("Dados enviados");
+            closeModal();
         }
     };
 
@@ -92,29 +104,30 @@ export function PointCollect(){
 
         {isModalOpen && (
             <div className={styles.modal}>
-                <div className={styles.modalContent}>
-                    <button className={styles.close} onClick={closeModal}>x</button>
-                    <p className={styles.pointName}>Dados de coleta do ponto {selectedPoint}</p>
-                    <main className={styles.infoContainer}>
-                        <div className={styles.infoContent}>
-                            <p className={styles.type}>Pressão</p>
-                            <div className={styles.information}>
-                                <button className={styles.arrow} onClick={incrementValue}><img src={ArrowUp} alt="Arrow Up"/></button>
-                                <input
-                                        type="number"
-                                        value={numberValue.toFixed(1)}
-                                        onChange={handleInputChange}
-                                        step="0.1"
-                                        min="0"
-                                        className={styles.numberInput}
-                                    />
-                                <button className={styles.arrow} onClick={decrementValue}><img src={ArrowDown} alt="Arrow Down" /></button>
-                            </div>
+            <div className={styles.modalContent}>
+                <button className={styles.close} onClick={closeModal}>x</button>
+                <p className={styles.pointName}>Dados de coleta do ponto {selectedPoint}</p>
+                <main className={styles.infoContainer}>
+                    <div className={styles.infoContent}>
+                        <p className={styles.type}>Pressão</p>
+                        <div className={styles.information}>
+                            <button className={styles.arrow} onClick={incrementValue}><img src={ArrowUp} alt="Arrow Up" /></button>
+                            <input
+                                type="number"
+                                value={numberValue.toFixed(1)}
+                                onChange={handleInputChange}
+                                step="0.1"
+                                min="0"
+                                className={styles.numberInput}
+                            />
+                            <button className={styles.arrow} onClick={decrementValue}><img src={ArrowDown} alt="Arrow Down" /></button>
                         </div>
-                    <button className={styles.buttonEnviar} onClick={() => console.log("Dados enviados")}>Enviar</button>
-                    </main>
-                </div>
+                    </div>
+                    {errorMessage && <p className={styles.error}>{errorMessage}</p>}
+                    <button className={styles.buttonEnviar} onClick={handleEnviar}>Enviar</button>
+                </main>
             </div>
+        </div>
         )}
 
         </>
