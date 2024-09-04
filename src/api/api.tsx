@@ -87,14 +87,14 @@ export const fetchNotif = async () => {
 
 // Post notificacoes
 
-export const postNotif = async (planilha: string | null) => {
+export const postNotif = async (planilha: string | null, tipo: string) => {
     try {
 
         const token = localStorage.getItem("id_token")
         const response = await axios.post(`${API_BASE_URL}/notificacoes/postNotif`,
             {
                 tabela: planilha,
-                tipo: "SALVO"
+                tipo: tipo
             },
             {
                 headers: {
