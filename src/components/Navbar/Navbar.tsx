@@ -2,7 +2,7 @@ import { useState } from 'react';
 import styles from './Navbar.module.css';
 import { Sidebar } from '../Sidebar/Sidebar';
 import logo from "../../../public/logo.svg"
-import config from "../../assets/images/config.svg"
+import user from "../../assets/images/user.svg"
 import HamburgerMenu from '../Hamburguer/HamburgerMenu';
 import Modal from '../Modal/Modal';
 
@@ -34,7 +34,7 @@ export function Navbar() {
                 </div>
                 <nav className={styles.nav_options}>
                     <button className={styles.nav_content_options} onClick={handleOpenModal}>
-                        <img src={config} alt="config" className={styles.icons} />
+                        <img src={user} alt="user" className={styles.icons} />
                     </button>
                     <Modal isOpen={isModalOpen} onClose={handleCloseModal} />
                 </nav>

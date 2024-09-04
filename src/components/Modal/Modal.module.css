@@ -15,11 +15,11 @@
   background-color: white;
   border-radius: 15px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-  width: 40%;
-  height: 50%;
+  width: 30%;
+  height: 40%;
   display: flex;
   flex-direction: column;
-  overflow: hidden; /* Ensures content does not overflow the modal */
+  overflow: hidden;
 }
 
 .letra {
@@ -47,66 +47,10 @@
   color: #374151;
 }
 
-.contentWrapper {
-  display: flex;
-  flex: 1;
-  overflow: hidden;
-}
-
-.sidebar {
-  width: 25vh;
-  border-right: 1px solid #ddd;
-  padding: 30px 0;
-  overflow-y: auto;
-}
-
-.sidebar ul {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-}
-
-.menuItem {
-  position: relative;
-  display: flex;
-  align-items: center;
-  padding: 8px;
-  cursor: pointer;
-  font-size: 14px;
-  transition: background-color 0.3s;
-}
-
-.activeItem {
-  background-color: #01a5fd1c;
-}
-
-.activeItem .blue {
-  display: block; 
-}
-
-.blue {
-  position: absolute;
-  left: 0;
-  top: 0;
-  height: 100%;
-  width: 4px;
-  background-color: #01A4FD;
-  display: none;
-  border-radius: 1px;
-}
-
-.menuItem img.icone {
-  width: 22px;
-  height: 22px; 
-  margin-right: 8px;
-}
-
 .content {
-  flex-grow: 1;
-  padding: 16px;
   display: flex;
-  flex-direction: column;
-  overflow-y: auto;
+  justify-content: center;
+  height: 100%;
 }
 
 .mainContent {
@@ -128,24 +72,6 @@
   margin-bottom: 15px;
 }
 
-.content_accessibility {
-  margin: 0px 10px
-}
-
-.saveButton {
-  margin-top: 20px;
-  background-color: #01A4FD;
-  color: white;
-  padding: 8px 16px;
-  border-radius: 4px;
-  border: none;
-  cursor: pointer;
-}
-
-.saveButton:hover {
-  background-color: #2563eb;
-}
-
 .family_name {
   font-family: "SF Pro Semibold";
   margin-bottom: 3px;
@@ -155,20 +81,9 @@
   color: #8a8a8a;
 }
 
-.dark_mode, .libras, .narration {
-  display: flex;
-  justify-content: space-between;
-  margin-bottom: 10px;
-}
-
 .subtitle {
   margin-bottom: 25px;
   font-family: "SF Pro Semibold";
-}
-
-.button_content {
-  display: flex;
-  justify-content: flex-end;
 }
 
 @media (max-width: 1024px) {
