@@ -50,6 +50,22 @@ export const fetchSheet = async (sheetName: string) => {
     }
 };
 
+// Get coletas by data (historico)
+export const fetchColetasByData = async (token: string, paramsData: { startDate?: string; endDate?: string }) => {
+    try {
+        const response = await axios.get("http://localhost:5173/coleta/get-by-date", {
+            headers: {
+              Authorization: `Bearer ${token}`
+            },
+            params: paramsData
+          });
+          return response.data;
+         
+    } catch (e) {
+    console.log(e);
+  }
+}
+
 // Get point by Sheet
 
 export const fetchPointBySheet = async (sheetName: string) => {
