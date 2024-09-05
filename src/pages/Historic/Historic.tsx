@@ -81,7 +81,7 @@ const Historic: React.FC = () => {
             const startDate = dayjs().subtract(15, 'day').format('YYYY-MM-DD');
             paramsData = { startDate, endDate };
           }
-          const response = await fetchColetasByData(token, paramsData)
+          const response = await fetchColetasByData(paramsData)
           setColetasPonto(response);
         }
       } catch (e) {

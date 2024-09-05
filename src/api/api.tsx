@@ -51,8 +51,9 @@ export const fetchSheet = async (sheetName: string) => {
 };
 
 // Get coletas by data (historico)
-export const fetchColetasByData = async (token: string, paramsData: { startDate?: string; endDate?: string }) => {
+export const fetchColetasByData = async (paramsData: { startDate?: string; endDate?: string }) => {
     try {
+        const token = localStorage.getItem("id_token")
         const response = await axios.get("http://localhost:5173/coleta/get-by-date", {
             headers: {
               Authorization: `Bearer ${token}`
