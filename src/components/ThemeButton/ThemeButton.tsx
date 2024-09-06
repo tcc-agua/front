@@ -18,7 +18,7 @@ const ThemeButton: React.FC = () => {
                     alt={isDarkMode ? 'Ícone do sol' : 'Ícone da lua'}
                     className={isDarkMode ? styles.icon_sol : styles.icon_lua}
                 />
-                {isDarkMode ? 'Modo Claro' : 'Modo Escuro'}
+                <span>{isDarkMode ? 'Modo Claro' : 'Modo Escuro'}</span>
             </button>
         </div>
     );

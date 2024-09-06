@@ -77,6 +77,8 @@ body {
   --table_header: #A1DFDB;
   --table_grid: #ffff;
   --dropdown_button: #ddf3ff;
+
+  --hover_hamburger: #c6e4f55b;
 }
 
 [data-theme="dark"]{
@@ -118,6 +120,8 @@ body {
 
   --table_header: #4ca8a2;
   --table_grid: #ffff;
+
+  --hover_hamburger: #004974;
 }
 
 [data-theme='dark'] .sidebar img {

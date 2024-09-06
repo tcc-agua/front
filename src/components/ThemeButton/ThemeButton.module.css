@@ -30,3 +30,13 @@
     height: 20px;
     margin-right: 5%;
 }
+
+@media (max-width: 680px) {
+    .theme_button span {
+        display: none;
+    }
+
+    .theme_button {
+        width: 50px;
+    }
+}

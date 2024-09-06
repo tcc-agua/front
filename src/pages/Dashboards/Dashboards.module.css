@@ -279,7 +279,7 @@ hr {
 
     .updates, .weekly_weather, .graphic, .last_activities, .mapview {
         width: 100%;
-        background-color: var(--backgroud_color);
+        background-color: var(--backgroud_color2);
         border: none;
     }
 

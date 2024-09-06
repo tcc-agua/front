@@ -1,14 +1,37 @@
 import React, { useState } from 'react';
 import styles from './HamburgerMenu.module.css';
 import { Link } from 'react-router-dom';
-import homeIcon from '../../assets/images/home.svg'
-import mapIcon from '../../assets/images/mapa.svg';
-import plusIcon from '../../assets/images/mais.svg';
-import historyIcon from '../../assets/images/historico.svg';
-import exportIcon from '../../assets/images/exportar.svg';
+
+import { useTheme } from '../ThemeContext/ThemeContext';
+
+//black icons
+import HomeIMG from '../../assets/images/home.svg';
+import MapaIMG from '../../assets/images/mapa.svg';
+import MaisIMG from '../../assets/images/mais.svg';
+import HistoricoIMG from '../../assets/images/historico.svg';
+import ExportarIMG from '../../assets/images/exportar.svg';
+
+//blue icons
+import HomeBlueIMG from '../../assets/images/home-blue.svg';
+import MapaBlueIMG from '../../assets/images/mapa-blue.svg';
+import MaisBlueIMG from '../../assets/images/mais-blue.svg';
+import HistoricoBlueIMG from '../../assets/images/historico-blue.svg';
+import ExportarBlueIMG from '../../assets/images/exportar-blue.svg';
+
+//white icons
+import HomeWhite from '../../assets/images/darkmode_icons/home_white.svg';
+import MapaWhite from '../../assets/images/darkmode_icons/map_white.svg';
+import MaisWhite from '../../assets/images/darkmode_icons/plus_white.svg';
+import HistoricoWhite from '../../assets/images/darkmode_icons/historic_white.svg';
+import ExportarWhite from '../../assets/images/darkmode_icons/export_white.svg';
 
 const HamburgerMenu: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const { isDarkMode } = useTheme();
+
+  const getIcon = (defaultIcon: string, blueIcon: string, whiteIcon: string, path: string) => {
+    return location.pathname === path ? blueIcon : (isDarkMode ? whiteIcon : defaultIcon);
+  };
 
   const toggleMenu = () => {
     setIsOpen(!isOpen);
@@ -30,38 +53,63 @@ const HamburgerMenu: React.FC = () => {
         className={`${styles.menu} ${isOpen ? styles.open : ''}`}
         aria-hidden={!isOpen}
       >
-        <ul className={styles.menuList}>
-          <li className={styles.options}>
-            <Link className={styles.contentOptions} to="/inicial">
-              <img src={homeIcon} alt="Página Inicial" className={styles.imagem} />
+        <section>
+          <div className={`${styles.options} ${location.pathname === '/inicial' ? styles.active : ''}`}>
+            <Link className={styles.content_options} to={"/inicial"}>
+              <div className={styles.blue}></div>
+              <img
+                src={getIcon(HomeIMG, HomeBlueIMG, HomeWhite, '/inicial')}
+                alt="home"
+                className={styles.imagem}
+              />
               <p>Página Inicial</p>
             </Link>
-          </li>
-          <li className={styles.options}>
-            <Link className={styles.contentOptions} to="/inicial/mapa">
-              <img src={mapIcon} alt="Mapa 3D" className={styles.imagem} />
+          </div>
+
+          <div className={`${styles.options} ${location.pathname === '/inicial/mapa' ? styles.active : ''}`}>
+            <Link className={styles.content_options} to={"/inicial/mapa"}>
+              <div className={styles.blue}></div>
+              <img
+                src={getIcon(MapaIMG, MapaBlueIMG, MapaWhite, '/inicial/mapa')}
+                alt="map"
+              />
               <p>Mapa 3D</p>
             </Link>
-          </li>
-          <li className={styles.options}>
-            <Link className={styles.contentOptions} to="/inicial/coleta_de_dados">
-              <img src={plusIcon} alt="Coleta de Dados" className={styles.imagem} />
+          </div>
+
+          <div className={`${styles.options} ${location.pathname === '/inicial/coleta_de_dados' ? styles.active : ''}`}>
+            <Link className={styles.content_options} to={"/inicial/coleta_de_dados"}>
+              <div className={styles.blue}></div>
+              <img
+                src={getIcon(MaisIMG, MaisBlueIMG, MaisWhite, '/inicial/coleta_de_dados')}
+                alt="mais"
+              />
               <p>Coleta de Dados</p>
             </Link>
-          </li>
-          <li className={styles.options}>
-            <Link className={styles.contentOptions} to="/inicial/historico">
-              <img src={historyIcon} alt="Histórico" className={styles.imagem} />
+          </div>
+
+          <div className={`${styles.options} ${location.pathname === '/inicial/historico' ? styles.active : ''}`}>
+            <Link className={styles.content_options} to={"/inicial/historico"}>
+              <div className={styles.blue}></div>
+              <img
+                src={getIcon(HistoricoIMG, HistoricoBlueIMG, HistoricoWhite, '/inicial/historico')}
+                alt="historic"
+              />
               <p>Histórico</p>
             </Link>
-          </li>
-          <li className={styles.options}>
-            <Link className={styles.contentOptions} to="/inicial/exportar_excel">
-              <img src={exportIcon} alt="Exportar Excel" className={styles.imagem} />
+          </div>
+
+          <div className={`${styles.options} ${location.pathname === '/inicial/exportar_excel' ? styles.active : ''}`}>
+            <Link className={styles.content_options} to={"/inicial/exportar_excel"}>
+              <div className={styles.blue}></div>
+              <img
+                src={getIcon(ExportarIMG, ExportarBlueIMG, ExportarWhite, '/inicial/exportar_excel')}
+                alt="export"
+              />
               <p>Exportar Excel</p>
             </Link>
-          </li>
-        </ul>
+          </div>
+        </section>
       </nav>
     </div>
   );

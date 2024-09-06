@@ -83,7 +83,6 @@
     .logo_container img{
         display: flex;
         width: 40px;
-        margin: 20px;
     }
 
     .logo_container {
@@ -96,7 +95,6 @@
     .nav_options {
         display: flex;
         justify-content: flex-end;
-        margin-right: 15px;
     }
 
     .text_options {
@@ -104,7 +102,14 @@
     }
 
     .nav_content_options {
-        margin-right: -20%;
+        justify-content: center;
+    }
+
+    .nav_content_options::after {
+        content: '';
+    }
+
+    .nav_content_options span {
+        display: none;
     }
 }
-

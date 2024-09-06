@@ -11,7 +11,7 @@
   flex-direction: column;
   justify-content: space-around;
   width: 24px;
-  height: 24px;
+  height: 22px;
   padding: 0;
   transition: transform 0.3s ease;
   position: fixed;
@@ -27,13 +27,13 @@
 .bar {
   width: 100%;
   height: 3px;
-  background-color: #333;
+  background-color: var(--font_color);
   border-radius: 2px;
   transition: transform 0.3s ease, opacity 0.3s ease, background-color 0.3s ease;
 }
 
 .hamburgerIcon:hover .bar {
-  background-color: #555;
+  background-color: var(--font_color);
 }
 
 .bar:nth-of-type(1) {
@@ -82,13 +82,10 @@
   margin: 0;
 }
 
-.options {
-  padding: 15px 20px;
-  transition: background-color 0.3s ease;
-}
 
-.options:hover {
-  background-color: var(--backgroud_color);
+
+.options {
+  padding-bottom: 5%;
 }
 
 .contentOptions {
@@ -112,4 +109,102 @@
 .contentOptions p {
   margin: 0;
   font-size: 18px;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  background-color: var(--backgroud_color);
+  height: 100%;
+  border-right: 1px solid var(--border_color);
+}
+
+.logo {
+  width: 50px;
+  margin-right: 10px; 
+}
+
+.header_container {
+  color: var(--font_color);
+  display: flex;
+  padding: 30px;
+  justify-content: center;
+  align-items: center;
+}
+
+.options {
+  margin: 0px;
+  width: 100%;
+}
+
+.blue {
+  height: 50px;
+  width: 5px;
+  margin-right: 45px;
+  border-radius: 2px;
+}
+
+.content_options{
+  display: flex;
+  text-decoration: none;
+  font-size: 15px;
+  align-items: center;
+  font-family: "SF Pro Light";
+  color: var(--font_color);
+}
+
+.content_options img {
+  height: 23px;
+  width: 23px;
+}
+
+.content_options p{
+  display: flex;
+  padding: 10px;
+  justify-content: center;
+  align-items: center;
+  color: inherit;
+}
+
+.content_options:visited {
+  color: inherit;
+}
+
+.title_side {
+  font-size: 20px;
+  font-family: "SF Pro regular";
+}
+
+
+.active .content_options {
+  background-color: var(--hover_hamburger);
+  color: #01A4FD;
+}
+
+.active .blue {
+  background-color: #01A4FD;
+}
+
+.showSidebar {
+  display: flex;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 230px;
+  height: 100%;
+  z-index: 1000; 
+  transition: transform 0.3s ease-in-out;
+  transform: translateX(0);
+  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+}
+
+.hideSidebar {
+  transform: translateX(-100%);
+}
+
+
+@media (max-width: 680px) {
+  .container {
+      display: none; 
+  }
 }
