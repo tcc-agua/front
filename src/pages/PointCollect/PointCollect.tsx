@@ -5,6 +5,7 @@ import ArrowDown from '../../assets/images/arrow-down.svg';
 import { fetchPointBySheet } from "../../api/api";
 import useUtilsStore from "../../store/utils";
 import { postNotif } from "../../api/api";
+import { PointModal } from "../../components/PointModal";
 
 
 
@@ -47,7 +48,10 @@ export function PointNames({ onSelectPoint }: PointNamesProps) {
                 <button
                     key={point.id}
                     className={styles.select_point}
-                    onClick={() => onSelectPoint(point)}
+                    onClick={() => {
+                        onSelectPoint(point)
+                        console.log("Points :" + point.nome)
+                    }}
                 >
                     <p className={styles.name_point}>
                         <span className={styles.name_point_type}>{point.nome.split(' ')[0]}</span>
@@ -76,20 +80,7 @@ export function PointCollect() {
         setSelectedPoint(null);
     };
 
-    const incrementValue = () => {
-        setNumberValue(prev => Math.round((prev + 0.1) * 10) / 10);
-    };
 
-    const decrementValue = () => {
-        setNumberValue(prev => (prev > 0 ? Math.round((prev - 0.1) * 10) / 10 : 0));
-    };
-
-    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const value = parseFloat(e.target.value);
-        if (!isNaN(value)) {
-            setNumberValue(value);
-        }
-    };
 
     const notify = async () => {
         try {
@@ -99,6 +90,16 @@ export function PointCollect() {
             console.error("Erro ao salvar os dados:", error);
         }
     };
+
+ function renderCardInfo(name: string){
+    switch(name){
+        case "BC01": 
+            return <PointModal.BC01/>
+
+        case "BC06":
+            return <PointModal.BC06/>
+    }
+ }
 
     return (
         <>
@@ -127,30 +128,9 @@ export function PointCollect() {
             </main>
 
             {isModalOpen && selectedPoint && (
-                <div className={styles.modal}>
-                    <div className={styles.modalContent}>
-                        <button className={styles.close} onClick={closeModal}>x</button>
-                        <p className={styles.pointName}>Dados de coleta do ponto {selectedPoint.nome}</p>
-                        <main className={styles.infoContainer}>
-                            <div className={styles.infoContent}>
-                                <p className={styles.type}>Pressão</p>
-                                <div className={styles.information}>
-                                    <button className={styles.arrow} onClick={incrementValue}><img src={ArrowUp} alt="Arrow Up" /></button>
-                                    <input
-                                        type="number"
-                                        value={numberValue.toFixed(1)}
-                                        onChange={handleInputChange}
-                                        step="0.1"
-                                        min="0"
-                                        className={styles.numberInput}
-                                    />
-                                    <button className={styles.arrow} onClick={decrementValue}><img src={ArrowDown} alt="Arrow Down" /></button>
-                                </div>
-                            </div>
-                            <button className={styles.buttonEnviar} onClick={() => console.log("Dados enviados")}>Enviar</button>
-                        </main>
-                    </div>
-                </div>
+                <PointModal.Container closeModal={closeModal}>
+                    {renderCardInfo(selectedPoint.nome)}
+                </PointModal.Container>
             )}
         </>
     );
