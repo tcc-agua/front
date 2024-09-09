@@ -10,6 +10,7 @@ import ExportExcel from '../pages/ExportExcel/ExportExcel';
 import Login from '../pages/Login/Login';
 import NotFound from '../pages/NotFound/NotFound';
 import SplashPage from '../pages/Splash/Splash';
+import { LastActivities } from '../pages/LastActivities/LastActivities';
 
 const AppRoutes: React.FC = () => {
   return (
@@ -24,6 +25,7 @@ const AppRoutes: React.FC = () => {
           <Route path='pontos_de_coleta' element={<PointCollect />} />
           <Route path='historico' element={<Historic />} />
           <Route path='exportar_excel' element={<ExportExcel />} />
+          <Route path='ultimas_atividades' element={<LastActivities />}/>
         </Route>
         <Route path="*" element={<NotFound />} />
       </Routes>

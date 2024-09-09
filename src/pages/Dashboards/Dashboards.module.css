@@ -109,6 +109,22 @@ pre {
     height: 49.5%;
 }
 
+.title_more {
+    display: flex;
+    justify-content: space-between;
+}
+
+.more {
+    font-size: 1.2vw;
+    padding: 7.6px;
+    text-decoration: none;
+    color: var(--NA_title);
+}
+
+.more:hover {
+    color: var(--PB_title);
+}
+
 .content_last_activities {
     width: 100%;
     display: flex;
@@ -174,8 +190,8 @@ pre {
     justify-content: center;
 }
 
-hr {
-    width: 70%;
+.hr_dash {
+    width: 80%;
 }
 
 .graphic {

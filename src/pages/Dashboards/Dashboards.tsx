@@ -49,7 +49,10 @@ export function Dashboards(){
                 </div>
                 <div className={styles.right_side}>
                     <div className={styles.last_activities}>
-                        <p className={styles.title}>Últimas atividades</p>
+                        <div className={styles.title_more}>
+                          <p className={styles.title}>Últimas atividades</p>
+                          <Link to={'/inicial/ultimas_atividades'} className={styles.more}>Mais</Link>
+                        </div>
                         <div className={styles.content_last_activities}>
                             <div className={styles.activity}>
                                 <div className={`${styles.icon_activity} ${styles.icon_correct}`}>
@@ -61,7 +64,7 @@ export function Dashboards(){
                                 </div>
                             </div>
                             <div className={styles.linha_hr}>
-                              <hr />  
+                              <hr className={styles.hr_dash} />  
                             </div>
                             <div className={styles.activity}>
                                 <div className={`${styles.icon_activity} ${styles.icon_correct}`}>
@@ -73,7 +76,7 @@ export function Dashboards(){
                                 </div>
                             </div>
                             <div className={styles.linha_hr}>
-                              <hr />  
+                              <hr className={styles.hr_dash}/>  
                             </div>
                             <div className={styles.activity}>
                                 <div className={`${styles.icon_activity} ${styles.icon_export}`}>
