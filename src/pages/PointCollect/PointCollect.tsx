@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import styles from './PointCollect.module.css';
-import ArrowUp from '../../assets/images/arrow-up.svg';
-import ArrowDown from '../../assets/images/arrow-down.svg';
+
 import { fetchPointBySheet } from "../../api/api";
 import useUtilsStore from "../../store/utils";
 import { postNotif } from "../../api/api";
