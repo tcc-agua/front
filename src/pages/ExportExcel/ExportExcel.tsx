@@ -3,7 +3,7 @@ import DropdownButton from '../../components/ExcelOptions/ExcelOptions';
 import ExcelTable from '../../components/ExcelTable/ExcelTable';
 import success from '../../assets/images/success.svg';
 import styles from './ExportExcel.module.css';
-import { fetchExport } from '../../api/api';
+import { fetchExport, postNotif } from '../../api/api';
 
 interface DropdownItem {
     id: string;
@@ -53,6 +53,20 @@ const ExportExcel: React.FC = () => {
         }
     }
 
+    const notify = async () => {
+        try {
+            const result = await postNotif("EXCEL", "EXPORTADO");
+            console.log("Dados salvos com sucesso:", result);
+        } catch (error) {
+            console.error("Erro ao salvar os dados:", error);
+        }
+    };
+
+    const handleExportClick = () => {
+        fetchExportExcel();
+        notify(); // Chama a função notify após a exportação
+    };
+
     return (
         <div className={styles.container}>
             <div className={styles.top}>
@@ -77,7 +91,7 @@ const ExportExcel: React.FC = () => {
             </div>
 
             <div className="buttonContainer">
-                <button className={styles.export} onClick={fetchExportExcel}>Exportar Arquivo</button>
+                <button className={styles.export} onClick={handleExportClick}>Exportar Arquivo</button>
                 {isModalOpen && (
                     <div className={styles.modal}>
                         <div className={styles.modalContent}>
@@ -95,4 +109,3 @@ const ExportExcel: React.FC = () => {
 
 export default ExportExcel;
 
-//  CAIO TOP
