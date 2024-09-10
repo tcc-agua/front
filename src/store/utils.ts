@@ -27,10 +27,11 @@ const useUtilsStore = create<UtilState>((set) => ({
             localStorage.setItem("id_token", response.id_token);
             localStorage.setItem("access_token", response.access_token);
 
-            set({
-                token: response.id_token,
-            })
-
+            if(localStorage.getItem("id_token") != null){
+                set({
+                    token: response.id_token,
+                })
+            }
         } catch (error) {
             throw new Error("Erro");
         }
