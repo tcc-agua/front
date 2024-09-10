@@ -5,6 +5,9 @@ import { InputPoint } from "./InputPoint";
 function Bc01Card() {
     const [pressure, setPressure] = useState<number>(1);
     const [frequency, setFrequency] = useState<number>(1);
+    const [horimeter, setHorimeter] = useState<number>(1);
+    const [leak, setLeak] = useState<number>(1);
+    const [volume, setVolume] = useState<number>(1);
 
     const increment = (setter: React.Dispatch<React.SetStateAction<number>>) => {
         setter(prev => Math.round((prev + 0.1) * 10) / 10);
@@ -38,6 +41,27 @@ function Bc01Card() {
                     handleChange={(e) => handleChange(e, setFrequency)}
                     valor={frequency}
                     titulo="Frequência"
+                />
+                <InputPoint
+                    decrement={() => decrement(setHorimeter) }
+                    increment={() => increment(setHorimeter)}
+                    handleChange={(e) => handleChange(e, setHorimeter)}
+                    valor={horimeter}
+                    titulo="Horimetro"
+                />
+                <InputPoint
+                    decrement={() => decrement(setLeak)}
+                    increment={()=> increment(setLeak)}
+                    handleChange={(e)=> handleChange(e, setLeak)}
+                    valor={leak}
+                    titulo="Vazão"
+                />
+                <InputPoint
+                    decrement={()=> decrement(setVolume)}
+                    increment={()=> increment(setVolume)}
+                    handleChange={(e)=> handleChange(e, setVolume)}
+                    valor={volume}
+                    titulo="Volume"                
                 />
             </main>
         </>
