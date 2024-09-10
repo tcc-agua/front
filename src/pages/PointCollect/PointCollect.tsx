@@ -53,7 +53,7 @@ export function PointNames({ onSelectPoint }: PointNamesProps) {
                     }}
                 >
                     <p className={styles.name_point}>
-                        <span className={styles.name_point_type}>{point.nome.split(' ')[0]}</span>
+                        <span className={styles.name_point_type}>{point.nome}</span>
                     </p>
                     <pre className={styles.status_point}>{point.status} ⟶</pre>
                 </button>
@@ -97,6 +97,12 @@ export function PointCollect() {
 
         case "BC06":
             return <PointModal.BC06/>
+        
+        case "BH02":
+            return <PointModal.BH02/>
+        
+        case "BOMBA BC03":
+            return <PointModal.BOMBA_BC03/>
     }
  }
 
