@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import DropdownButton from '../../components/DropdownButton/DropdownButton';
 import ColetaItem from '../../components/Colects/ColectItem';
 import styles from './Historic.module.css';
-import axios from 'axios';
 import dayjs from 'dayjs';
 import { fetchColetasByData } from '../../api/api';
 
