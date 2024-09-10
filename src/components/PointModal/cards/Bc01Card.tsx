@@ -1,6 +1,6 @@
-import styles from "../../pages/PointCollect/PointCollect.module.css"
+import styles from "../../../pages/PointCollect/PointCollect.module.css"
 import { useState } from "react";
-import { InputPoint } from "./InputPoint";
+import { InputPoint } from "../InputPoint";
 
 function Bc01Card() {
     const [pressure, setPressure] = useState<number>(1);
