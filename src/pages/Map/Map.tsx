@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import MapSpline from '../../components/MapSpline/MapSpline';
 import Loading from '../../components/LoadingMap/LoadingMap';
 import styles from './Map.module.css';

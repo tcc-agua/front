@@ -93,7 +93,7 @@ const DropdownButton: React.FC<DropdownButtonProps> = ({
         transition: 'max-height 1 ease, opacity 0.5s ease'
       }}>
         <ul style={{ listStyle: 'none', padding: '0', margin: '0' }}>
-          {options.map((option, index) => (
+          {options.map((option) => (
             <li
               key={option.id}
               onClick={() => handleChange(option)}
