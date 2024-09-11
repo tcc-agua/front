@@ -44,19 +44,15 @@
 
 .details {
   display: flex;
+  justify-content: center;
+  align-items: center;
   flex-wrap: wrap;
-  height: 100%;
-  width: 100%;
-  justify-content: space-between;
-  margin-bottom: 1%;
-  margin-top: 4%;
-  margin-left: 5%;
-  gap: 0.5%;
+  gap: 1%;
+  margin-top: 20px;
 }
 
 .detailContainer {
-  flex-grow: 1;
-  flex-basis: calc(33.33% - 1%);
+  flex-basis: 80%; 
   margin-bottom: 4%;
 }
 
@@ -64,16 +60,42 @@
   padding: 1%;
   display: flex;
   align-items: center;
-  justify-content: space-between;
   font-weight: bold;
   font-size: medium;
   background-color: var(--backgroud_color);
   border: 1px solid var(--border_color);
   border-radius: 10px;
   cursor: pointer;
-  height: 100%;
-  width: 80%;
+  height: 60px; 
+  width: 100%;
   margin-top: 2%;
+}
+
+.texts {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  width: 100%;
+}
+
+.detailsWrapper {
+  width: 100%;
+  height: 0;
+  overflow: hidden;
+  transition: height 0.5s ease-in-out;
+}
+
+.detailsWrapper.open {
+  max-height: 500px;
+}
+
+.details > .detailContainer:nth-child(2n),
+.details > .detailContainer:nth-child(2n-1) {
+  flex-basis: 39.5%;
+}
+
+.details > .detailContainer:last-child:nth-child(2n+1) {
+  flex-basis: 80%;
 }
 
 @media (max-width: 1000px) {
@@ -83,7 +105,6 @@
   }
 
   .detailButton {
-    width: 100%;
     font-size: large;
   }
 
@@ -121,8 +142,8 @@
   background: none;
   border: none;
   cursor: pointer;
-  width: 100%;
   height: 100%;
+  margin-right: 2%;
 }
 
 .arrow {
