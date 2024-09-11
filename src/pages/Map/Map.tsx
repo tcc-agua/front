@@ -9,7 +9,7 @@ export function Map() {
     useEffect(() => {
         const timer = setTimeout(() => {
             setIsLoading(false);
-        }, 5000); 
+        }, 1000); 
 
         return () => clearTimeout(timer);
     }, []);
@@ -46,12 +46,8 @@ export function Map() {
                                 <p className={styles.subtitle}>Poços de Monitoramento (PM)</p>
                             </div>
                             <div className={styles.pointsContent}>
-                                <div className={styles.verde}></div>
-                                <p className={styles.subtitle}>Poços de Tratamento (PT)</p>
-                            </div>
-                            <div className={styles.pointsContent}>
                                 <div className={styles.roxo}></div>
-                                <p className={styles.subtitle}>Tanque (TQ)</p>
+                                <p className={styles.subtitle}>Poços de Tratamento (PT)</p>
                             </div>
                         </div>
                     )}
