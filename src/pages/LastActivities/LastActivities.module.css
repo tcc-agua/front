@@ -5,8 +5,7 @@
 }
 
 .last_activities_container {
-    width: 100%;
-    height: 33vh;
+   background-color: pink;
 }
 
 .title, .title_history_activity {
@@ -18,70 +17,62 @@
 
 .last_activities_content {
     display: flex;
-    width: 80%;
-    height: 100%;
+    background-color: red;
+    padding: 20px;
 }
 
-.first_activity, .second_activity {
+.first_activity {
     background-color: var(--backgroud_color);
-    width: 50%;
-    height: 80%;
     border: 1px solid var(--border_color);
     border-radius: 7px;
-    margin-right: 15px;
+    width: 90%;
     padding: 15px;
+    display: flex;
+    flex-direction: row;
 }
 
 .upside_content {
     display: flex;
     justify-content: space-between;
     width: 100%;
-    height: auto;
 }
 
-.icon_correct, .icon_correct_history {
+.icon_correct,
+.icon_correct img {
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
     box-sizing: border-box;
     background-color: var(--icon_correct);
-}
-
-.icon_correct {
-    width: 7vh;
-    height: 7vh;
-}
-
-.img_correct {
-    width: 50%;
-    height: 50%;
+    height: 6vh;    
+    width: 6vh;
+    padding: 6px;
 }
 
 .day {
     font-size: 1.1vw;
+    padding: 10px;
     color: var(--font_color);
 }
 
 .main_information_content {
-    width: 80%;
+    width: 50%;
 }
 
 .main_information {
     font-family: "SF Pro Semibold";
     color: var(--font_color);
     font-size: 1.3vw;
+    padding: 10px;
 }
 
 .button_to_excel {
-    width: auto;
     color: white;
     text-decoration: none;
     background-color: #01A4FD;
     text-align: center;
-    padding: 3% 30%;
-    display: inline-block;
-    margin-top: 10px;
+    padding: 3% 10%;
     border-radius: 5px;
     font-size: 1.2vw;
 }
@@ -107,9 +98,12 @@
 .data_activity {
     display: flex;
     align-items: center;
-    width: 100%;
-    height: 14%;
     justify-content: space-between;
+    padding-top: 10px;
+}
+
+.left_side img{
+    height: 6vh;
 }
 
 .left_side, .right_side {
@@ -144,6 +138,7 @@ hr {
 .text_history {
     color: var(--font_color);
     font-size: 1.3vw;
+    padding-left: 20px;
 }
 
 @media (max-width: 1170px) {
