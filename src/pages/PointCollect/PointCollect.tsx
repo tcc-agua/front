@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import styles from './PointCollect.module.css';
 
 import { fetchPointBySheet } from "../../api/api";
@@ -65,7 +65,6 @@ export function PointNames({ onSelectPoint }: PointNamesProps) {
 export function PointCollect() {
     const [isModalOpen, setModalOpen] = useState<boolean>(false);
     const [selectedPoint, setSelectedPoint] = useState<Point | null>(null);
-    const [numberValue, setNumberValue] = useState<number>(1);
     const { planilha } = useUtilsStore(); 
     
 

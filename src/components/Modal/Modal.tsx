@@ -1,7 +1,5 @@
-import React, { useState } from "react";
+import React from "react";
 import styles from "./Modal.module.css";
-import perfil from '../../assets/images/perfil.svg'
-import acessibilidade from '../../assets/images/acessibilidade.svg'
 
 interface ModalProps {
   isOpen: boolean;
@@ -9,8 +7,6 @@ interface ModalProps {
 }
 
 const Modal: React.FC<ModalProps> = ({ isOpen, onClose }) => {
-  const [activeTab, setActiveTab] = useState("perfil");
-
   if (!isOpen) return null;
 
   return (

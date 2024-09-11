@@ -2,7 +2,6 @@
 import React, { useState } from 'react';
 import styles from './ColectItem.module.css';
 import arrow from '../../assets/images/arrow.svg';
-import arrowlong from '../../assets/images/arrow-right-long-solid.svg';
 
 interface Detail {
   id: number;
