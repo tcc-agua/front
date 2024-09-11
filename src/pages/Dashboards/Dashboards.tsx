@@ -59,15 +59,13 @@ export const SensorPH: React.FC = () => {
                 const sortedPH = data.sort((a, b) => b.id - a.id);
                 setPh(sortedPH);
 
-                // Verifica se há pelo menos dois valores para comparar (atual e da última semana)
+                
                 if (sortedPH.length >= 2) {
-                    const lastPH = sortedPH[0].ph; // Último pH registrado
-                    const previousPH = sortedPH[1].ph; // Penúltimo pH (ex: semana passada)
+                    const lastPH = sortedPH[0].ph; 
+                    const previousPH = sortedPH[1].ph; 
 
                     const percentageDifference = ((lastPH - previousPH) / previousPH) * 100;
                     setDifferencePercentage(Math.abs(percentageDifference));
-
-                    // Define se é um aumento ou uma queda no pH
                     setIsIncrease(percentageDifference > 0);
                 }
             } catch (error) {
@@ -173,7 +171,10 @@ export function Dashboards() {
                             <div className={styles.extra_information}>
                                 <pre><span className={styles.extra}>↗ 03%</span> maior que o esperado</pre>
                             </div>
-                        </div> */}
+                        </div> */} 
+
+                        {/* NAO APAGUEM */}
+
                     </div>
                 </div>
 
