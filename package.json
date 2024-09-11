@@ -14,13 +14,16 @@
     "@splinetool/loader": "^1.9.3",
     "@splinetool/runtime": "^1.9.3",
     "apexcharts": "^3.52.0",
-    "axios": "^1.7.4",
+    "axios": "^1.7.5",
+    "dayjs": "^1.11.13",
     "handsontable": "^14.5.0",
     "react": "^18.3.1",
     "react-apexcharts": "^1.4.1",
     "react-dom": "^18.3.1",
+    "react-loading-skeleton": "^3.4.0",
     "react-router-dom": "^6.26.0",
-    "three": "^0.154.0"
+    "three": "^0.154.0",
+    "zustand": "^4.5.5"
   },
   "devDependencies": {
     "@types/react": "^18.3.3",

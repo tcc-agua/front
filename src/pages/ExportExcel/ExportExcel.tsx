@@ -3,6 +3,7 @@ import DropdownButton from '../../components/ExcelOptions/ExcelOptions';
 import ExcelTable from '../../components/ExcelTable/ExcelTable';
 import success from '../../assets/images/success.svg';
 import styles from './ExportExcel.module.css';
+import { fetchExport, postNotif } from '../../api/api';
 
 interface DropdownItem {
     id: string;
@@ -15,7 +16,7 @@ const ExportExcel: React.FC = () => {
     const [isModalOpen, setIsModalOpen] = useState(false);
 
     const tables: DropdownItem[] = [
-        { id: '1', label: 'ETAS', value: 'ETAS' },
+        { id: '1', label: 'DADOS ETAS', value: 'DADOS ETAS' },
         { id: '2', label: 'NA', value: 'NA' },
         { id: '3', label: 'PB', value: 'PB' },
     ];
@@ -28,8 +29,45 @@ const ExportExcel: React.FC = () => {
         setIsModalOpen(false);
     }
 
-    return (
+    async function fetchExportExcel() {
+        try {
+            const response = await fetchExport();
+    
+            const blob = new Blob([response], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+            const url = window.URL.createObjectURL(blob);
+    
+            const link = document.createElement('a');
+            link.href = url;
+            link.setAttribute('download', 'coletas.xlsx');
+            document.body.appendChild(link);
+            link.click();
+    
+            setTimeout(() => {
+                if (link.parentNode) {
+                    link.parentNode.removeChild(link);
+                }
+                openModal(); 
+            }, 1000); 
+        } catch (e) {
+            console.error("Erro ao exportar o arquivo:", e);
+        }
+    }
 
+    const notify = async () => {
+        try {
+            const result = await postNotif("EXCEL", "EXPORTADO");
+            console.log("Dados salvos com sucesso:", result);
+        } catch (error) {
+            console.error("Erro ao salvar os dados:", error);
+        }
+    };
+
+    const handleExportClick = () => {
+        fetchExportExcel();
+        notify(); // Chama a função notify após a exportação
+    };
+
+    return (
         <div className={styles.container}>
             <div className={styles.top}>
                 <p className={styles.title}>Exporte o arquivo Excel de suas coletas!</p>
@@ -46,15 +84,14 @@ const ExportExcel: React.FC = () => {
                         />
                     </div>
                 </div>
-
             </div>
 
             <div className={styles.table}>
-                <ExcelTable />
+                <ExcelTable sheetName={selectedTable?.value || ""} />
             </div>
 
             <div className="buttonContainer">
-                <button className={styles.export} onClick={openModal}>Exportar Arquivo</button>
+                <button className={styles.export} onClick={handleExportClick}>Exportar Arquivo</button>
                 {isModalOpen && (
                     <div className={styles.modal}>
                         <div className={styles.modalContent}>
@@ -67,8 +104,8 @@ const ExportExcel: React.FC = () => {
                 )}
             </div>
         </div>
-
     )
 }
 
 export default ExportExcel;
+

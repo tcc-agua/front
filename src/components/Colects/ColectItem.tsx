@@ -1,3 +1,4 @@
+// ColetaItem.tsx
 import React, { useState } from 'react';
 import styles from './ColectItem.module.css';
 import arrow from '../../assets/images/arrow.svg';
@@ -5,7 +6,9 @@ import arrowlong from '../../assets/images/arrow-right-long-solid.svg';
 
 interface Detail {
   id: number;
-  label: string;
+  tipo: string;
+  ponto: string;
+  dados: any; // Ajuste o tipo de acordo com os dados que você espera
 }
 
 interface ColetaItemProps {
@@ -37,17 +40,16 @@ const ColetaItem: React.FC<ColetaItemProps> = ({ date, description, details, onO
                 onClick={(e) => { e.stopPropagation(); onOpenDetail(detail); }}
                 className={styles.detailButton}
               >
-                <span className={styles.label}>PM</span>
-                <span className={styles.number}>{detail.label.split('-')[1].trim()}</span>
+                <span className={styles.label}>{detail.tipo}</span>
+                <span className={styles.number}>{detail.ponto}</span>
 
                 <button
                   onClick={(e) => { e.stopPropagation(); onOpenDetail(detail); }}
                   className={styles.viewButton}
                 >
-                  <pre className={styles.arrow}>Visualizar   ⟶</pre>
+                  <pre className={styles.arrow}>Visualizar ⟶</pre>
                 </button>
               </button>
-
             </div>
           ))}
         </div>

@@ -165,14 +165,13 @@
     height: 60%;
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: space-between;
     align-items: center;
     padding-bottom: 5%;
 }
 
 .infoContainer {
     display: flex;
-    flex-direction: column;
     justify-content: center;
 }
 
