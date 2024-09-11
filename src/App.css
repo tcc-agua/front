@@ -79,6 +79,10 @@ body {
   --dropdown_button: #ddf3ff;
 
   --hover_hamburger: #c6e4f55b;
+
+  --sky: #a2d6ff;
+
+  --loading: rgba(255, 255, 255, 0.658); 
 }
 
 [data-theme="dark"]{
@@ -122,6 +126,10 @@ body {
   --table_grid: #ffff;
 
   --hover_hamburger: #004974;
+
+  --sky: #07416d;
+
+  --loading: rgba(50, 55, 83, 0.692); 
 }
 
 [data-theme='dark'] .sidebar img {

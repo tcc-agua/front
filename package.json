@@ -11,8 +11,8 @@
   },
   "dependencies": {
     "@handsontable/react": "^14.5.0",
-    "@splinetool/loader": "^1.9.3",
-    "@splinetool/runtime": "^1.9.3",
+    "@react-three/drei": "^9.112.0",
+    "@react-three/fiber": "^8.17.7",
     "apexcharts": "^3.52.0",
     "axios": "^1.7.4",
     "handsontable": "^14.5.0",
@@ -20,12 +20,11 @@
     "react-apexcharts": "^1.4.1",
     "react-dom": "^18.3.1",
     "react-router-dom": "^6.26.0",
-    "three": "^0.154.0"
+    "three": "^0.168.0"
   },
   "devDependencies": {
     "@types/react": "^18.3.3",
     "@types/react-dom": "^18.3.0",
-    "@types/three": "^0.167.1",
     "@typescript-eslint/eslint-plugin": "^7.15.0",
     "@typescript-eslint/parser": "^7.15.0",
     "@vitejs/plugin-react": "^4.3.1",
