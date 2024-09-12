@@ -2,9 +2,8 @@ import styles from "../../../pages/PointCollect/PointCollect.module.css"
 import { useState } from "react";
 import { InputPoint } from "../InputPoint";
 
-function Bc06Card() {
-    const [pressure, setPressure] = useState<number>(1);
-    const [horimeter, setHorimeter] = useState<number>(1);
+function Bs01HidrometroCard() {
+    const [volume, setVolume] = useState<number>(1);
 
     const increment = (setter: React.Dispatch<React.SetStateAction<number>>) => {
         setter(prev => Math.round((prev + 0.1) * 10) / 10);
@@ -23,27 +22,18 @@ function Bc06Card() {
 
     return (
         <>
-            <p className={styles.pointName}>Dados de coleta do ponto BC06</p>
+            <p className={styles.pointName}>Dados de coleta do ponto BS01 Hidrometro</p>
             <main className={styles.infoContainer}>
                 <InputPoint
-                    decrement={() => decrement(setPressure)}
-                    increment={() => increment(setPressure)}
-                    handleChange={(e) => handleChange(e, setPressure)}
-                    valor={pressure}
-                    titulo="Pressão"
-                    isInteger={false}
-                />
-
-                <InputPoint
-                    decrement={() => decrement(setHorimeter) }
-                    increment={() => increment(setHorimeter)}
-                    handleChange={(e) => handleChange(e, setHorimeter)}
-                    valor={horimeter}
-                    titulo="Horimetro"
+                    decrement={()=> decrement(setVolume)}
+                    increment={()=> increment(setVolume)}
+                    handleChange={(e)=> handleChange(e, setVolume)}
+                    valor={volume}
+                    titulo="Volume"                
                 />
             </main>
         </>
     );
 }
 
-export default Bc06Card;
+export default Bs01HidrometroCard;
