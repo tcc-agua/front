@@ -102,6 +102,15 @@ export function PointCollect() {
         
         case "BOMBA BC03":
             return <PointModal.BOMBA_BC03/>
+        
+        case "BS01 HIDROMETRO":
+            return <PointModal.BS01_HIDROMETRO/>
+        
+        case "BS01 PRESSAO":
+            return <PointModal.BS01_PRESSAO/>
+        
+        case "CD":
+            return <PointModal.CD/>
     }
  }
 
