@@ -6,12 +6,12 @@ function Bc06Card() {
     const [pressure, setPressure] = useState<number>(1);
     const [horimeter, setHorimeter] = useState<number>(1);
 
-    const increment = (setter: React.Dispatch<React.SetStateAction<number>>) => {
-        setter(prev => Math.round((prev + 0.1) * 10) / 10);
+    const increment = (setter: React.Dispatch<React.SetStateAction<number>>, isInteger?: boolean) => {
+        setter(prev => isInteger ? prev + 1 : Math.round((prev + 0.1) * 10) / 10);
     };
-
-    const decrement = (setter: React.Dispatch<React.SetStateAction<number>>) => {
-        setter(prev => (prev > 0 ? Math.round((prev - 0.1) * 10) / 10 : 0));
+    
+    const decrement = (setter: React.Dispatch<React.SetStateAction<number>>, isInteger?: boolean) => {
+        setter(prev => isInteger ? Math.max(prev - 1, 0) : Math.max(Math.round((prev - 0.1) * 10) / 10, 0));
     };
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>, setter: React.Dispatch<React.SetStateAction<number>>) => {
