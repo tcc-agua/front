@@ -34,6 +34,7 @@ function Bc01Card() {
                     handleChange={(e) => handleChange(e, setPressure)}
                     valor={pressure}
                     titulo="Pressão"
+                    isInteger={false}
                 />
                 <InputPoint
                     decrement={() => decrement(setFrequency)}
@@ -41,6 +42,7 @@ function Bc01Card() {
                     handleChange={(e) => handleChange(e, setFrequency)}
                     valor={frequency}
                     titulo="Frequência"
+                    isInteger={true}
                 />
                 <InputPoint
                     decrement={() => decrement(setHorimeter) }
@@ -48,6 +50,7 @@ function Bc01Card() {
                     handleChange={(e) => handleChange(e, setHorimeter)}
                     valor={horimeter}
                     titulo="Horimetro"
+                    isInteger={true}
                 />
                 <InputPoint
                     decrement={() => decrement(setLeak)}
@@ -55,13 +58,15 @@ function Bc01Card() {
                     handleChange={(e)=> handleChange(e, setLeak)}
                     valor={leak}
                     titulo="Vazão"
+                    isInteger={false}
                 />
                 <InputPoint
                     decrement={()=> decrement(setVolume)}
                     increment={()=> increment(setVolume)}
                     handleChange={(e)=> handleChange(e, setVolume)}
                     valor={volume}
-                    titulo="Volume"                
+                    titulo="Volume"
+                    isInteger={true}         
                 />
             </main>
         </>

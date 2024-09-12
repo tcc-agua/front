@@ -2,10 +2,8 @@ import styles from "../../../pages/PointCollect/PointCollect.module.css"
 import { useState } from "react";
 import { InputPoint } from "../InputPoint";
 
-function Bh02Card() {
+function Bs01PressaoCard() {
     const [pressure, setPressure] = useState<number>(1);
-    const [horimeter, setHorimeter] = useState<number>(1);
-    const [frequency, setFrequency] = useState<number>(1);
 
     const increment = (setter: React.Dispatch<React.SetStateAction<number>>) => {
         setter(prev => Math.round((prev + 0.1) * 10) / 10);
@@ -24,7 +22,7 @@ function Bh02Card() {
 
     return (
         <>
-            <p className={styles.pointName}>Dados de coleta do ponto BH02</p>
+            <p className={styles.pointName}>Dados de coleta do ponto BS01 Pressão</p>
             <main className={styles.infoContainer}>
                 <InputPoint
                     decrement={() => decrement(setPressure)}
@@ -32,27 +30,10 @@ function Bh02Card() {
                     handleChange={(e) => handleChange(e, setPressure)}
                     valor={pressure}
                     titulo="Pressão"
-                    isInteger={true}
-                />
-                <InputPoint
-                    decrement={() => decrement(setHorimeter) }
-                    increment={() => increment(setHorimeter)}
-                    handleChange={(e) => handleChange(e, setHorimeter)}
-                    valor={horimeter}
-                    titulo="Horimetro"
-                    isInteger={true}
-                />
-                <InputPoint
-                    decrement={() => decrement(setFrequency)}
-                    increment={() => increment(setFrequency)}
-                    handleChange={(e) => handleChange(e, setFrequency)}
-                    valor={frequency}
-                    titulo="Frequência"
-                    isInteger={true}
                 />
             </main>
         </>
     );
 }
 
-export default Bh02Card;
+export default Bs01PressaoCard;
