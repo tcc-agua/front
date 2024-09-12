@@ -106,6 +106,9 @@ export function PointCollect() {
         case "BS01 HIDROMETRO":
             return <PointModal.BS01_HIDROMETRO/>
         
+        case "BS01 PRESSAO":
+            return <PointModal.BS01_PRESSAO/>
+        
         case "CD":
             return <PointModal.CD/>
     }

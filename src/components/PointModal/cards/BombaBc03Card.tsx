@@ -27,28 +27,28 @@ function BombaBc03Card() {
             <p className={styles.pointName}>Dados de coleta do ponto Bomba BC03</p>
             <main className={styles.infoContainer}>
                     <InputPoint
-                        decrement={() => decrement(setPressure, false)}  // Para valores flutuantes
-                        increment={() => increment(setPressure, false)}  // Para valores flutuantes
+                        decrement={() => decrement(setPressure, false)} 
+                        increment={() => increment(setPressure, false)}  
                         handleChange={(e) => handleChange(e, setPressure)}
                         valor={pressure}
                         titulo="Pressão"
                         isInteger={false}
                     />
                     <InputPoint
-                        decrement={() => decrement(setHorimeter, false)}  // Para valores flutuantes
-                        increment={() => increment(setHorimeter, false)}  // Para valores flutuantes
+                        decrement={() => decrement(setHorimeter, false)} 
+                        increment={() => increment(setHorimeter, false)}  
                         handleChange={(e) => handleChange(e, setHorimeter)}
                         valor={horimeter}
                         titulo="Horimetro"
                         isInteger={false}
                     />
                     <InputPoint
-                        decrement={() => decrement(setFrequency, true)}  // Para valores inteiros
-                        increment={() => increment(setFrequency, true)}  // Para valores inteiros
+                        decrement={() => decrement(setFrequency, false)}
+                        increment={() => increment(setFrequency, false)} 
                         handleChange={(e) => handleChange(e, setFrequency)}
                         valor={frequency}
                         titulo="Frequência"
-                        isInteger={true}
+                        isInteger={false}
                     />
 
             </main>
