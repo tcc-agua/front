@@ -23,6 +23,8 @@ const useUtilsStore = create<UtilState>((set) => ({
     getTokenInfo: async () => {
         try {
             const response: GlobalState = await fetchUserInfo();
+
+            console.log(response.id_token)
             
             localStorage.setItem("id_token", response.id_token);
             localStorage.setItem("access_token", response.access_token);
