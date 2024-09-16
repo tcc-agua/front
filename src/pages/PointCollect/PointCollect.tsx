@@ -121,6 +121,12 @@ export function PointCollect() {
         
         case "COLUNAS CARVAO":
             return <PointModal.COLUNAS_CARVAO/>
+
+        case "FASE LIVRE":
+            return <PointModal.FASE_LIVRE/>
+
+        case "FILTRO CARTUCHO":
+            return <PointModal.FILTRO_CARTUCHO/>
     }
  }
 
