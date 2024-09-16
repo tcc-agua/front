@@ -124,6 +124,9 @@ export function PointCollect() {
 
         case "FASE LIVRE":
             return <PointModal.FASE_LIVRE/>
+
+        case "FILTRO CARTUCHO":
+            return <PointModal.FILTRO_CARTUCHO/>
     }
  }
 
