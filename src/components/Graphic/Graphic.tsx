@@ -1,7 +1,18 @@
-import Chart from 'react-apexcharts'
+import { ApexOptions } from 'apexcharts';
+import Chart from 'react-apexcharts';
 
-const Graphic = ({ chartDataProp }) => {
-    const options = {
+interface ChartDataProp {
+    months: string[];
+    expense: number[];
+    income: number[];
+}
+
+interface GraphicProps {
+    chartDataProp?: ChartDataProp;
+}
+
+const Graphic = ({ chartDataProp }: GraphicProps) => {
+    const options: ApexOptions = {
         chart: {
             id: "basic-bar"
         },
@@ -10,7 +21,7 @@ const Graphic = ({ chartDataProp }) => {
             labels: {
                 style: {
                     colors: 'var(--font_color)',  // Cor dos meses (eixo X)
-                    fontFamily: 'SF Pro Regular', 
+                    fontSize: '12px', // Adicione o tamanho da fonte
                 }
             }
         },
@@ -18,14 +29,13 @@ const Graphic = ({ chartDataProp }) => {
             labels: {
                 style: {
                     colors: 'var(--font_color)',  // Cor dos números (eixo Y)
-                    fontFamily: 'SF Pro Regular',
+                    fontSize: '12px', // Adicione o tamanho da fonte
                 }
             }
         },
         legend: {
             labels: {
                 colors: 'var(--font_color)',  // Cor do texto da legenda
-                fontFamily: 'SF Pro Regular', 
             }
         },
         colors: ['#00A4FD', '#a1dfdb'], // define a onda
@@ -35,7 +45,7 @@ const Graphic = ({ chartDataProp }) => {
             }
         },
         stroke: {
-            curve: 'smooth',
+            curve: 'smooth', // Use um valor válido como 'smooth', 'straight', etc.
             width: [2, 2], 
             colors: [ '#00A4FD', '#66b8b2'] // cor da linha 
         }

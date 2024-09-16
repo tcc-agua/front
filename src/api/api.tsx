@@ -61,7 +61,7 @@ export const fetchColetasByData = async (paramsData: { startDate?: string; endDa
             params: paramsData
           });
           return response.data;
-         
+          
     } catch (e) {
     console.log(e);
   }
@@ -100,7 +100,7 @@ export const fetchNotif = async () => {
         console.error("Erro ao buscar notificações.");
         throw error;
     }
-}; // esse ainda nao funciona 
+}; // esse funciona 
 
 // Post notificacoes
 
@@ -126,3 +126,24 @@ export const postNotif = async (planilha: string | null, tipo: string) => {
     }
 
 };   // esse funciona
+
+// get PH
+export const fetchPH = async () => {
+    try {
+        const token = localStorage.getItem("id_token")
+        const response = await axios.get(`${API_BASE_URL}/sensor-ph/get-ph`, 
+            {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                },
+            });
+
+            return response.data;
+    } catch (error) {
+        console.error("Erro ao encontrar os dados de 'Sensor PH'");
+        throw error
+
+    }
+};
+
+

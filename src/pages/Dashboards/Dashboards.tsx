@@ -6,7 +6,7 @@ import Graphic from "../../components/Graphic/Graphic";
 import Map from "../../assets/images/mapa-panorama.svg";
 import Forecast from "../../components/Forecast/Forecast";
 import { useEffect, useState } from "react";
-import { fetchNotif } from "../../api/api";
+import { fetchNotif, fetchPH } from "../../api/api";
 
 const mockData = {
     months: ["Janeiro", "Fevereiro", "Março", "Abril", "Maio"],
@@ -19,6 +19,11 @@ interface Notification {
     tabela: 'DADOS ETAS' | 'NA' | 'PB' | 'EXCEL';
     tipo: 'SALVO' | 'EXPORTADO';
     data: string;  
+}
+
+interface PH {
+    id: number;
+    ph: number;
 }
 
 
@@ -41,6 +46,55 @@ const getDateDifference = (notifDate: string): string => {
         return `${dayDiff} dias atrás`;
     }
 };
+
+export const SensorPH: React.FC = () => {
+    const [, setPh] = useState<PH[]>([]);
+    const [differencePercentage, setDifferencePercentage] = useState<number>(0);
+    const [isIncrease, setIsIncrease] = useState<boolean>(true);
+
+    useEffect(() => {
+        const getPH = async () => {
+            try {
+                const data: PH[] = await fetchPH();
+                const sortedPH = data.sort((a, b) => b.id - a.id);
+                setPh(sortedPH);
+
+                
+                if (sortedPH.length >= 2) {
+                    const lastPH = sortedPH[0].ph; 
+                    const previousPH = sortedPH[1].ph; 
+
+                    const percentageDifference = ((lastPH - previousPH) / previousPH) * 100;
+                    setDifferencePercentage(Math.abs(percentageDifference));
+                    setIsIncrease(percentageDifference > 0);
+                }
+            } catch (error) {
+                console.error("Erro ao buscar informações de 'sensorPH.");
+                console.log(error);
+            }
+        };
+
+        getPH();
+    }, []);
+
+    return (
+        <div className={styles.first_update}>
+            <p className={styles.point}>Dados ETAS - Sensor PH</p>
+            <p className={styles.main_information}>
+                {isIncrease ? 'PH mais ácido' : 'PH menos ácido'}
+            </p>
+            <div className={styles.extra_information}>
+                <pre>
+                    <span className={styles.extra}>
+                        {isIncrease ? '↗' : '↘'} {differencePercentage.toFixed(0)}%
+                    </span>{' '}
+                    {isIncrease ? 'maior' : 'menor'} que na última semana
+                </pre>
+            </div>
+        </div>
+    );
+};
+
 
 export const Notifications: React.FC = () => {
     const [notifications, setNotifications] = useState<Notification[]>([]);
@@ -108,20 +162,19 @@ export function Dashboards() {
                 <div className={styles.updates}>
                     <p className={styles.title}>Atualizações</p>
                     <div className={styles.content_updates}>
-                        <div className={styles.first_update}>
-                            <p className={styles.point}>Poço PM 36</p>
-                            <p className={styles.main_information}>PH menos ácido</p>
-                            <div className={styles.extra_information}>
-                                <pre><span className={styles.extra}>↘ 13%</span> menor que na última semana</pre>
-                            </div>
-                        </div>
-                        <div className={styles.second_update}>
+                        
+                        <SensorPH/>
+
+                        {/* <div className={styles.second_update}>
                             <p className={styles.point}>CD 24</p>
                             <p className={styles.main_information}>Volume superior</p>
                             <div className={styles.extra_information}>
                                 <pre><span className={styles.extra}>↗ 03%</span> maior que o esperado</pre>
                             </div>
-                        </div>
+                        </div> */} 
+
+                        {/* NAO APAGUEM */}
+
                     </div>
                 </div>
 

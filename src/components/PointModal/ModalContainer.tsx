@@ -8,7 +8,6 @@ interface ModalContainerProps{
 
 }
 
-
 export default function ModalContainer({children, closeModal}:ModalContainerProps){
     return (
         <div className={styles.modal}>

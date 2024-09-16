@@ -59,6 +59,12 @@ export default defineConfig({
         secure: false,
         rewrite: (path) => path.replace(/^\/gateway/, ''),
       } as ProxyOptions,
+      '/sensor-ph/get-ph': {
+        target: 'http://localhost:8000',
+        changeOrigin: true,
+        secure: false,
+        rewrite: (path) => path.replace(/^\/gateway/, ''),
+      } as ProxyOptions,
     }
   }
 });
