@@ -61,7 +61,7 @@ export const fetchColetasByData = async (paramsData: { startDate?: string; endDa
             params: paramsData
           });
           return response.data;
-         
+          
     } catch (e) {
     console.log(e);
   }

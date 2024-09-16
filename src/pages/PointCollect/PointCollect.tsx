@@ -20,9 +20,11 @@ interface PointNamesProps {
 }
 
 export function PointNames({ onSelectPoint }: PointNamesProps) {
-    const [points, setPoints] = useState<Point[] | null>(null);
+    const [points, setPoints] = useState<Point[]>([]); // Inicialize como array vazio
     const id_token = localStorage.getItem("id_token");
     const { planilha } = useUtilsStore();
+
+    console.log(planilha)
 
     useEffect(() => {
 
@@ -30,9 +32,14 @@ export function PointNames({ onSelectPoint }: PointNamesProps) {
             if (planilha) {
                 try {
                     const response = await fetchPointBySheet(planilha);
-                    setPoints(response);
+                    if (Array.isArray(response)) {
+                        setPoints(response);
+                    } else {
+                        setPoints([]); // Caso não seja um array, define um array vazio
+                    }
                 } catch (error) {
                     console.error("Erro ao buscar pontos:", error);
+                    setPoints([]); // Em caso de erro, define um array vazio
                 }
             }
         };
@@ -40,16 +47,15 @@ export function PointNames({ onSelectPoint }: PointNamesProps) {
         fetchPoints();
     }, [id_token, planilha]);
 
-    
     return (
         <div className={styles.select_point_grid}>
-            {points?.map((point) => (
+            {points.map((point) => (
                 <button
                     key={point.id}
                     className={styles.select_point}
                     onClick={() => {
-                        onSelectPoint(point)
-                        console.log("Points :" + point.nome)
+                        onSelectPoint(point);
+                        console.log("Points :" + point.nome);
                     }}
                 >
                     <p className={styles.name_point}>
@@ -61,6 +67,7 @@ export function PointNames({ onSelectPoint }: PointNamesProps) {
         </div>
     );
 }
+
 
 export function PointCollect() {
     const [isModalOpen, setModalOpen] = useState<boolean>(false);
