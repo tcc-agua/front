@@ -8,6 +8,7 @@ import CdCard from "./cards/CdCard";
 import ColunasCarvaoCard from "./cards/ColunasCarvaoCard";
 import FaseLivreCard from "./cards/FaseLivreCard";
 import FiltroCartuchoCard from "./cards/FiltroCartuchoCard";
+import PbsCard from "./cards/PbsCard";
 import ModalContainer from "./ModalContainer";
 
 export const PointModal = {
@@ -22,5 +23,6 @@ export const PointModal = {
     CD: CdCard,
     COLUNAS_CARVAO: ColunasCarvaoCard,
     FASE_LIVRE: FaseLivreCard,
-    FILTRO_CARTUCHO: FiltroCartuchoCard
+    FILTRO_CARTUCHO: FiltroCartuchoCard,
+    PBS: PbsCard
 }

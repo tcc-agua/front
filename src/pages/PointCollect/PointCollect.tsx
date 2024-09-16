@@ -127,6 +127,9 @@ export function PointCollect() {
 
         case "FILTRO CARTUCHO":
             return <PointModal.FILTRO_CARTUCHO/>
+        
+        case "PBS":
+            return <PointModal.PBS/>
     }
  }
 
