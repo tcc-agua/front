@@ -9,6 +9,7 @@ export interface DropdownProps {
     valor: string;
     opcoes: string[];
   }
+
   interface InputPointProps{
     titulo: string;
     valor: number;
@@ -17,6 +18,31 @@ export interface DropdownProps {
     handleChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
     isInteger?: boolean;  
 }
+
+interface BooleanInputProps {
+  titulo: string;
+  valor: boolean;
+  handleChange: (event: React.ChangeEvent<HTMLSelectElement>) => void;
+}
+
+export function BooleanInput({ titulo, valor, handleChange }: BooleanInputProps) {
+  return (
+      <div className={styles.infoContent}>
+          <p className={styles.type}>{titulo}</p>
+          <div className={styles.information}>
+              <select
+                  value={valor ? "Sim" : "Não"}
+                  onChange={handleChange}
+                  className={styles.dropdownInput}
+              >
+                  <option value="Sim">Sim</option>
+                  <option value="Não">Não</option>
+              </select>
+          </div>
+      </div>
+  );
+}
+
 
 export function InputPoint({ decrement, handleChange, increment, titulo, valor, isInteger }: InputPointProps) {
 

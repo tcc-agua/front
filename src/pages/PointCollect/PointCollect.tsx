@@ -118,6 +118,9 @@ export function PointCollect() {
         
         case "CD":
             return <PointModal.CD/>
+        
+        case "COLUNAS CARVAO":
+            return <PointModal.COLUNAS_CARVAO/>
     }
  }
 
