@@ -6,6 +6,7 @@ import Bs01HidrometroCard from "./cards/Bs01HidrometroCard";
 import Bs01PressaoCard from "./cards/Bs01PressaoCard";
 import CdCard from "./cards/CdCard";
 import ColunasCarvaoCard from "./cards/ColunasCarvaoCard";
+import FaseLivreCard from "./cards/FaseLivreCard";
 import ModalContainer from "./ModalContainer";
 
 export const PointModal = {
@@ -18,5 +19,6 @@ export const PointModal = {
     BS01_HIDROMETRO: Bs01HidrometroCard,
     BS01_PRESSAO: Bs01PressaoCard,
     CD: CdCard,
-    COLUNAS_CARVAO: ColunasCarvaoCard
+    COLUNAS_CARVAO: ColunasCarvaoCard,
+    FASE_LIVRE: FaseLivreCard
 }
