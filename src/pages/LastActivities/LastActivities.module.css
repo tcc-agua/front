@@ -25,16 +25,48 @@
     background-color: var(--backgroud_color);
     border: 1px solid var(--border_color);
     border-radius: 7px;
-    width: 90%;
+    /* width: 100%; */
     padding: 15px;
     display: flex;
-    flex-direction: row;
 }
 
 .upside_content {
     display: flex;
     justify-content: space-between;
     width: 100%;
+}
+
+.day {
+    font-size: 1.1vw;
+    padding: 10px;
+    color: var(--font_color);
+}
+
+.main_information {
+    font-family: "SF Pro Semibold";
+    color: var(--font_color);
+    /* font-size: 1.3vw; */
+    /* padding: 10px; */
+}
+
+.botaozinho{
+    
+}
+
+.button_to_excel {
+    color: white;
+    text-decoration: none;
+    background-color: #01A4FD;
+    text-align: center;
+    /* padding: 3% 10%; */
+    border-radius: 5px;
+    /* font-size: 1.2vw; */
+}
+
+.icon_export img {
+    height: 7vh;    
+    width: 7vh;
+    padding: 6px;
 }
 
 .icon_correct,
@@ -48,33 +80,6 @@
     height: 6vh;    
     width: 6vh;
     padding: 6px;
-}
-
-.day {
-    font-size: 1.1vw;
-    padding: 10px;
-    color: var(--font_color);
-}
-
-.main_information_content {
-    width: 50%;
-}
-
-.main_information {
-    font-family: "SF Pro Semibold";
-    color: var(--font_color);
-    font-size: 1.3vw;
-    padding: 10px;
-}
-
-.button_to_excel {
-    color: white;
-    text-decoration: none;
-    background-color: #01A4FD;
-    text-align: center;
-    padding: 3% 10%;
-    border-radius: 5px;
-    font-size: 1.2vw;
 }
 
 .history_activity_container {
@@ -99,7 +104,7 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding-top: 10px;
+    padding: 10px 0;
 }
 
 .left_side img{

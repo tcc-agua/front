@@ -64,6 +64,7 @@ export const Notifications: React.FC = () => {
         }
 
         return (
+            <>
             <div key={`${tabela}-${tipo}-${index}`} className={styles.data_activity}>
                 <div className={styles.left_side}>
                     <div className={`${styles.icon_activity} ${isExport ? styles.icon_export : styles.icon_correct}`}>
@@ -80,6 +81,12 @@ export const Notifications: React.FC = () => {
                     <Link className={styles.button_history} to='/inicial/historico'>Veja</Link>
                 </div>
             </div>
+            <div className={styles.hr}>
+                <hr  />
+            </div>
+                
+            </>
+            
         );
     };
 
@@ -138,7 +145,9 @@ export const LastNotifications: React.FC = () => {
                         <div className={styles.main_information_content}>
                             <p className={styles.main_information}>{message}</p>
                         </div>
-                        <Link to='/inicial/exportar_excel' className={styles.button_to_excel}>Analisar os dados</Link>
+                        <div className={styles.botaozinho}>
+                            <Link to='/inicial/exportar_excel' className={styles.button_to_excel}>Analisar os dados</Link>
+                        </div>
                     </div>
                 </div>
             </div>
