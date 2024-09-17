@@ -38,7 +38,7 @@ export const fetchExport = async () => {
 export const fetchSheet = async (sheetName: string) => {
     try {
         const token = localStorage.getItem("id_token")
-        const response = await axios.get(`${API_BASE_URL}/exportExcel/data/${sheetName}`, {
+        const response = await axios.get(`${API_BASE_URL}/excel/${sheetName}`, {
             headers: {
                 Authorization: `Bearer ${token}`,
             },
