@@ -13,7 +13,7 @@ interface ExcelTableProps {
 
 const ExcelTable: React.FC<ExcelTableProps> = ({ sheetName }) => {
   const [headers, setHeaders] = useState<string[]>([]);
-  const [, setSubHeaders] = useState<string[]>([]);
+  // const [, setSubHeaders] = useState<string[]>([]);
   const [dataPonto, setDataPonto] = useState<string[][]>([]);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
@@ -30,10 +30,11 @@ const ExcelTable: React.FC<ExcelTableProps> = ({ sheetName }) => {
 
         if(token != null){
           const response = await fetchSheet(sheetName);
-
+          
+          console.log(response)
           setHeaders(response[0]);
-          setSubHeaders(response[1]);
-          setDataPonto(response[2]);
+          // setSubHeaders(response[1]);
+          setDataPonto(response[1]);
           setErrorMessage(null); 
         }
 
