@@ -7,7 +7,6 @@ import { postNotif } from "../../api/api";
 import { PointModal } from "../../components/PointModal";
 
 
-
 interface Point {
     id: string;
     nome: string;
@@ -68,12 +67,10 @@ export function PointNames({ onSelectPoint }: PointNamesProps) {
     );
 }
 
-
 export function PointCollect() {
     const [isModalOpen, setModalOpen] = useState<boolean>(false);
     const [selectedPoint, setSelectedPoint] = useState<Point | null>(null);
     const { planilha } = useUtilsStore(); 
-    
 
     const openModal = (point: Point) => {
         setSelectedPoint(point);
@@ -84,8 +81,6 @@ export function PointCollect() {
         setModalOpen(false);
         setSelectedPoint(null);
     };
-
-
 
     const notify = async () => {
         try {
@@ -130,6 +125,15 @@ export function PointCollect() {
         
         case "PBS":
             return <PointModal.PBS/>
+        
+        case "PMPT":
+            return <PointModal.PMPT/>
+
+        case "SENSOR PH":
+            return <PointModal.SENSOR_PH/>
+
+        case "TQ04 TQ05":
+            return <PointModal.TQ04_TQ05/>
     }
  }
 

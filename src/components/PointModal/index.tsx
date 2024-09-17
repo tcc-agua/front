@@ -9,6 +9,9 @@ import ColunasCarvaoCard from "./cards/ColunasCarvaoCard";
 import FaseLivreCard from "./cards/FaseLivreCard";
 import FiltroCartuchoCard from "./cards/FiltroCartuchoCard";
 import PbsCard from "./cards/PbsCard";
+import PmPtCard from "./cards/PmPtCard";
+import SensorPHCard from "./cards/SensorPHCard";
+import Tq04Tq05Card from "./cards/Tq04Tq05Card";
 import ModalContainer from "./ModalContainer";
 
 export const PointModal = {
@@ -24,5 +27,8 @@ export const PointModal = {
     COLUNAS_CARVAO: ColunasCarvaoCard,
     FASE_LIVRE: FaseLivreCard,
     FILTRO_CARTUCHO: FiltroCartuchoCard,
-    PBS: PbsCard
+    PBS: PbsCard,
+    PMPT: PmPtCard,
+    SENSOR_PH: SensorPHCard,
+    TQ04_TQ05:Tq04Tq05Card
 }
