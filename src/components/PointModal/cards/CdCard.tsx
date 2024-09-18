@@ -28,7 +28,7 @@ function CdCard() {
 
     return (
         <>
-            <p className={styles.pointName}>Dados de coleta do ponto Bomba BC03</p>
+            <p className={styles.pointName}>Dados de coleta do ponto CD</p>
             <main className={styles.infoContainer}>
                 <InputPoint
                     decrement={() => decrement(setPressure, false)}
