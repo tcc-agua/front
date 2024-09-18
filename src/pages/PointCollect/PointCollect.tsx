@@ -21,7 +21,7 @@ interface PointNamesProps {
 export function PointNames({ onSelectPoint }: PointNamesProps) {
     const [points, setPoints] = useState<Point[]>([]); // Inicialize como array vazio
     const id_token = localStorage.getItem("id_token");
-    const { planilha } = useUtilsStore();
+    const { planilha,  setQtdPontos } = useUtilsStore();
 
     console.log(planilha)
 
@@ -33,18 +33,20 @@ export function PointNames({ onSelectPoint }: PointNamesProps) {
                     const response = await fetchPointBySheet(planilha);
                     if (Array.isArray(response)) {
                         setPoints(response);
+                        setQtdPontos(response.length)
                     } else {
-                        setPoints([]); // Caso não seja um array, define um array vazio
+                        setPoints([]);
                     }
                 } catch (error) {
                     console.error("Erro ao buscar pontos:", error);
-                    setPoints([]); // Em caso de erro, define um array vazio
+                    setPoints([]); 
+                    setQtdPontos(0);
                 }
             }
         };
 
         fetchPoints();
-    }, [id_token, planilha]);
+    }, [id_token, planilha, setQtdPontos, points]);
 
     return (
         <div className={styles.select_point_grid}>
@@ -70,7 +72,7 @@ export function PointNames({ onSelectPoint }: PointNamesProps) {
 export function PointCollect() {
     const [isModalOpen, setModalOpen] = useState<boolean>(false);
     const [selectedPoint, setSelectedPoint] = useState<Point | null>(null);
-    const { planilha } = useUtilsStore(); 
+    const { planilha,  qtdPontos } = useUtilsStore(); 
 
     const openModal = (point: Point) => {
         setSelectedPoint(point);
@@ -140,8 +142,17 @@ export function PointCollect() {
     return (
         <>
             <main className={styles.container}>
-                <p className={styles.title}>Estações de Tratamento de Águas Subterrâneas</p>
-                <div className={styles.main_information}>
+            <p className={styles.title}>
+                {
+                planilha === "DADOS ETAS" 
+                    ? "Estações de Tratamento de Águas Subterrâneas" 
+                    : planilha === "PB"
+                    ? "Poços de Bombeamento"
+                    : planilha === "NA"
+                    ? "Nível de Água"
+                    : "Planilha não encontrada!"
+                    }
+            </p>                <div className={styles.main_information}>
                     <div className={styles.left_side}>
                         <div className={styles.select_point_container}>
                             <p className={styles.select_point_title}>Selecione um ponto:</p>
@@ -150,7 +161,15 @@ export function PointCollect() {
                     </div>
                     <div className={styles.right_side}>
                         <div className={styles.point_information}>
-                            <p className={styles.point_information_text}>Ainda restam <span className={styles.point_information_number}>22</span> pontos para completar o arquivo ETAS</p>
+                            <p className={styles.point_information_text}>Existem <span className={styles.point_information_number}>{qtdPontos}</span> pontos para preencher o arquivo   {
+                planilha === "DADOS ETAS" 
+                    ? "'ETAS'" 
+                    : planilha === "PB"
+                    ? "'Poços de Bombeamento'"
+                    : planilha === "NA"
+                    ? "'Nível de Água'"
+                    : "'Planilha não encontrada!'"
+                    }</p>
                         </div>
                         <div className={styles.map_container}>
                             <p className={styles.map_title}>Localize seus pontos no mapa:</p>

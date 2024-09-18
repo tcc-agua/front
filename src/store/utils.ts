@@ -7,16 +7,26 @@ interface UtilState{
     planilha: string | null;
     setPlanilha: (value: string) => void;
 
+    qtdPontos: number | 0;
+    setQtdPontos: (value: number) => void;
+
     getTokenInfo: () => Promise <void>;
 }
 
 const useUtilsStore = create<UtilState>((set) => ({
+    qtdPontos: 0,
     planilha: null,
     token: null,
 
     setPlanilha: (value) => {
         set({
             planilha: value 
+        })
+    },
+
+    setQtdPontos: (value) => {
+        set({
+            qtdPontos: value
         })
     },
 
@@ -39,5 +49,7 @@ const useUtilsStore = create<UtilState>((set) => ({
         }
     }
 }));
+
+
 
 export default useUtilsStore;
