@@ -30,7 +30,7 @@ function Tq04Tq05Card() {
 
     return (
         <>
-            <p className={styles.pointName}>Dados de coleta do ponto Fase Livre</p>
+            <p className={styles.pointName}>Dados de coleta do ponto TQ04 TQ05 </p>
             <main className={styles.infoContainer}>
                 <InputPoint
                     decrement={() => decrement(setQtdBombonas, true)}
