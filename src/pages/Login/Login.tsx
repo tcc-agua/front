@@ -19,29 +19,28 @@ const Login: React.FC = () => {
         </div>
         <div className={styles.content_left_side}>
           <div className={styles.content_left_side_main}>
-            <h1>Seja bem_vindo(a)!</h1>
-            <p>Entre e explore nossos recursos de amostragem de água.</p>
-
+            <p className={styles.title_welcome}>Seja bem-vindo(a)!</p>
+            <p className={styles.subtitle_welcome}>Entre e explore nossos recursos de amostragem de água.</p>
             <button className={styles.login_button} onClick={handleLogin} >Entrar</button>
 
           </div>
         </div>
         <div className={styles.footer_left}>
           <div className={styles.bosch_logo}>
-            <img className={styles.bosch} src="src\assets\images\logo_bosch.svg" alt="logo_bosch" />
+            <img className={styles.bosch} src="src\assets\images\logo-bosch.svg" alt="logo_bosch" />
           </div>
         </div>
       </div>
       <div className={styles.right_side}>
         <div className={styles.content_right_side}>
             <div className={styles.content_names_sector}>
-              <p>Engineering Technical School _ Ca</p>  
+              <p>Engineering Technical School - Ca</p>  
             </div>
             <div className={styles.content_img}>
               <img src="src/assets/images/celular.svg" alt="Celular" />
             </div>
             <div className={styles.content_names_sector}>
-              <p className={styles.footer_right_side}>Facility Management _ Ct</p>  
+              <p className={styles.footer_right_side}>Facility Management - Ct</p>  
             </div>
         </div>
       </div>

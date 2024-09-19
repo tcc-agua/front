@@ -22,15 +22,18 @@ const MapSpline = ({ selectedCategory }) => {
 
     const controls = new OrbitControls(camera, canvas);
     controls.enableDamping = true;
-    controls.minPolarAngle = Math.PI / 3; // Limitar para cima
+    controls.minPolarAngle = Math.PI / 2.8; // Limitar para cima
     controls.maxPolarAngle = Math.PI / 2; // Limitar para baixo
     controls.minDistance = 10; // Zoom mínimo
-    controls.maxDistance = 180; // Zoom máximo
+    controls.maxDistance = 170; // Zoom máximo
 
+    //luz ambiente
     const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
     scene.add(ambientLight);
-    const directionalLight = new THREE.DirectionalLight(0xffffff, 8);
-    directionalLight.position.set(20, 20, 20);
+
+    //luz direcional
+    const directionalLight = new THREE.DirectionalLight(0xffffff, 2.1);
+    directionalLight.position.set(20, 20, 20); //Posição
     scene.add(directionalLight);
 
     const loader = new GLTFLoader();
