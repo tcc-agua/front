@@ -160,4 +160,22 @@ export const fetchPH = async () => {
     }
 };
 
+//GET nivel tq01
+export const fetchTQ01 = async () => {
+    const token = await waitForToken();
+    try {
+        const response = await axios.get(`${API_BASE_URL}/TQ01/get`, 
+            {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                },
+            });
+
+            return response.data;
+    } catch (error) {
+        console.error("Erro ao encontrar os dados de 'TQ01'");
+        throw error
+
+    }
+};
 
