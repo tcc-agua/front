@@ -124,6 +124,9 @@ export function PointCollect() {
 
         case "FILTRO CARTUCHO":
             return <PointModal.FILTRO_CARTUCHO/>
+
+        case "HORIMETRO":
+            return <PointModal.HORIMETRO/>
         
         case "PBS":
             return <PointModal.PBS/>
@@ -133,6 +136,12 @@ export function PointCollect() {
 
         case "SENSOR PH":
             return <PointModal.SENSOR_PH/>
+
+        case "TQ01":
+            return <PointModal.TQ01/>
+
+        case "TQ02":
+            return <PointModal.TQ02/>
 
         case "TQ04 TQ05":
             return <PointModal.TQ04_TQ05/>

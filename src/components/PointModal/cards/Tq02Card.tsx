@@ -2,8 +2,9 @@ import styles from "../../../pages/PointCollect/PointCollect.module.css";
 import { useState } from "react";
 import { InputPoint } from "../InputPoint";
 
-function HorimetroCard() {
-    const [horimeter, setHorimeter] = useState<number>(1);
+function Tq02Card() {
+    const [ph, setPh] = useState<number>(1);
+    const [lt_02_1, setLt_02_1] = useState<number>(1);
 
     const increment = (setter: React.Dispatch<React.SetStateAction<number>>, isInteger?: boolean) => {
         setter(prev => isInteger ? prev + 1 : Math.round((prev + 0.1) * 10) / 10);
@@ -22,14 +23,22 @@ function HorimetroCard() {
 
     return (
         <>
-            <p className={styles.pointName}>Dados de coleta do ponto Horimetro</p>
+            <p className={styles.pointName}>Dados de coleta do ponto TQ02</p>
             <main className={styles.infoContainer}>
                 <InputPoint
-                    decrement={() => decrement(setHorimeter, false)}
-                    increment={() => increment(setHorimeter, false)}
-                    handleChange={(e) => handleChangeNumber(e, setHorimeter)}
-                    valor={horimeter}
-                    titulo="Horimetro"
+                    decrement={() => decrement(setPh, false)}
+                    increment={() => increment(setPh, false)}
+                    handleChange={(e) => handleChangeNumber(e, setPh)}
+                    valor={ph}
+                    titulo="Sensor PH"
+                    isInteger={false}
+                />
+                <InputPoint
+                    decrement={() => decrement(setLt_02_1, false)}
+                    increment={() => increment(setLt_02_1, false)}
+                    handleChange={(e) => handleChangeNumber(e, setLt_02_1)}
+                    valor={lt_02_1}
+                    titulo="Lt 02 1"
                     isInteger={false}
                 />
             </main>
@@ -37,4 +46,4 @@ function HorimetroCard() {
     );
 }
 
-export default HorimetroCard;
+export default Tq02Card;
