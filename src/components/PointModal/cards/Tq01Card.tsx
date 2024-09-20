@@ -2,8 +2,8 @@ import styles from "../../../pages/PointCollect/PointCollect.module.css";
 import { useState } from "react";
 import { InputPoint } from "../InputPoint";
 
-function HorimetroCard() {
-    const [horimeter, setHorimeter] = useState<number>(1);
+function Tq01Card() {
+    const [nivel, setNivel] = useState<number>(1);
 
     const increment = (setter: React.Dispatch<React.SetStateAction<number>>, isInteger?: boolean) => {
         setter(prev => isInteger ? prev + 1 : Math.round((prev + 0.1) * 10) / 10);
@@ -22,14 +22,14 @@ function HorimetroCard() {
 
     return (
         <>
-            <p className={styles.pointName}>Dados de coleta do ponto Horimetro</p>
+            <p className={styles.pointName}>Dados de coleta do ponto TQ01</p>
             <main className={styles.infoContainer}>
                 <InputPoint
-                    decrement={() => decrement(setHorimeter, false)}
-                    increment={() => increment(setHorimeter, false)}
-                    handleChange={(e) => handleChangeNumber(e, setHorimeter)}
-                    valor={horimeter}
-                    titulo="Horimetro"
+                    decrement={() => decrement(setNivel, false)}
+                    increment={() => increment(setNivel, false)}
+                    handleChange={(e) => handleChangeNumber(e, setNivel)}
+                    valor={nivel}
+                    titulo="Nivel"
                     isInteger={false}
                 />
             </main>
@@ -37,4 +37,4 @@ function HorimetroCard() {
     );
 }
 
-export default HorimetroCard;
+export default Tq01Card;
