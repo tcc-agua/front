@@ -1,6 +1,21 @@
 import axios from 'axios';
 import { API_BASE_URL } from './config';
 
+const waitForToken = (): Promise<string> => {
+    return new Promise((resolve) => {
+        const checkToken = () => {
+            const token = localStorage.getItem("id_token");
+            if (token) {
+                resolve(token); 
+            } else {
+                setTimeout(checkToken, 100); 
+            }
+        };
+        checkToken(); 
+    });
+};
+
+
 // Get userInfo
 
 export const fetchUserInfo = async () => {
@@ -88,8 +103,8 @@ export const fetchPointBySheet = async (sheetName: string) => {
 // Get notificacoes
 
 export const fetchNotif = async () => {
+    const token = await waitForToken();
     try {
-        const token = localStorage.getItem("id_token")
         const response = await axios.get(`${API_BASE_URL}/notificacoes/getNotif`, {
             headers: {
                 Authorization: `Bearer ${token}`,
@@ -106,7 +121,6 @@ export const fetchNotif = async () => {
 
 export const postNotif = async (planilha: string | null, tipo: string) => {
     try {
-
         const token = localStorage.getItem("id_token")
         const response = await axios.post(`${API_BASE_URL}/notificacoes/postNotif`,
             {
@@ -129,8 +143,8 @@ export const postNotif = async (planilha: string | null, tipo: string) => {
 
 // get PH
 export const fetchPH = async () => {
+    const token = await waitForToken();
     try {
-        const token = localStorage.getItem("id_token")
         const response = await axios.get(`${API_BASE_URL}/sensor-ph/get-ph`, 
             {
                 headers: {

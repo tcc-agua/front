@@ -61,6 +61,7 @@ export const SensorPH: React.FC = () => {
     useEffect(() => {
         const getPH = async () => {
             try {
+                await new Promise((resolve) => setTimeout(resolve, 3000));
                 const data: PH[] = await fetchPH();
                 const sortedPH = data.sort((a, b) => b.id - a.id);
                 setPh(sortedPH);
@@ -108,6 +109,7 @@ export const Notifications: React.FC = () => {
     useEffect(() => {
         const getNotifications = async () => {
             try {
+                await new Promise((resolve) => setTimeout(resolve, 3000));
                 const data: Notification[] = await fetchNotif();
                 const sortedNotifications = data.sort((a, b) => b.id - a.id);
 
