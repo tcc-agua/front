@@ -46,7 +46,7 @@ export function PointNames({ onSelectPoint }: PointNamesProps) {
         };
 
         fetchPoints();
-    }, [id_token, planilha, setQtdPontos, points]);
+    }, [id_token, planilha, setQtdPontos]);
 
     return (
         <div className={styles.select_point_grid}>
