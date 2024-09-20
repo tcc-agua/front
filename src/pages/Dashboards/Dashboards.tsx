@@ -6,7 +6,7 @@ import Graphic from "../../components/Graphic/Graphic";
 import Map from "../../assets/images/mapa-panorama.svg";
 import MapDarkmode from "../../assets/images/foto_mapa_dark.svg";
 import Forecast from "../../components/Forecast/Forecast";
-import { useEffect, useState, useContext } from "react";
+import { useEffect, useState } from "react";
 import { fetchNotif, fetchPH } from "../../api/api";
 import { useTheme } from '../../components/ThemeContext/ThemeContext';
 
