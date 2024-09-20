@@ -94,6 +94,20 @@ export function PointCollect() {
     };
 
  function renderCardInfo(name: string){
+
+    if(name.startsWith("PM") || name.startsWith("PT")){
+        return <PointModal.PMPT/>
+    }
+    if(name.startsWith("PB")){
+        return <PointModal.PBS/>
+    }
+    if(name.startsWith("CD")){
+        return <PointModal.CD/>
+    }
+    if(name == "TQ04" || name == "TQ05"){
+        return <PointModal.TQ04_TQ05/>
+    }
+
     switch(name){
         case "BC01": 
             return <PointModal.BC01/>
@@ -113,9 +127,6 @@ export function PointCollect() {
         case "BS01 PRESSAO":
             return <PointModal.BS01_PRESSAO/>
         
-        case "CD":
-            return <PointModal.CD/>
-        
         case "COLUNAS CARVAO":
             return <PointModal.COLUNAS_CARVAO/>
 
@@ -128,12 +139,6 @@ export function PointCollect() {
         case "HORIMETRO":
             return <PointModal.HORIMETRO/>
         
-        case "PBS":
-            return <PointModal.PBS/>
-        
-        case "PMPT":
-            return <PointModal.PMPT/>
-
         case "SENSOR PH":
             return <PointModal.SENSOR_PH/>
 
@@ -148,19 +153,25 @@ export function PointCollect() {
     }
  }
 
+ function getPlanilhaTitle(planilha: string | null) {
+    switch (planilha) {
+        case "DADOS ETAS":
+            return "Estações de Tratamento de Águas Subterrâneas";
+        case "PB":
+            return "Poços de Bombeamento";
+        case "NA":
+            return "Nível de Água";
+        default:
+            return "Planilha não encontrada!";
+    }
+}
+
+
     return (
         <>
             <main className={styles.container}>
             <p className={styles.title}>
-                {
-                planilha === "DADOS ETAS" 
-                    ? "Estações de Tratamento de Águas Subterrâneas" 
-                    : planilha === "PB"
-                    ? "Poços de Bombeamento"
-                    : planilha === "NA"
-                    ? "Nível de Água"
-                    : "Planilha não encontrada!"
-                    }
+                {getPlanilhaTitle(planilha)}
             </p>                <div className={styles.main_information}>
                     <div className={styles.left_side}>
                         <div className={styles.select_point_container}>
