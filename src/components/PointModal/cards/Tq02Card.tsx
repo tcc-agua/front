@@ -29,6 +29,7 @@ function Tq02Card({ name }: PointNameProps) {
         <>
             <p className={styles.pointName}>Dados de coleta do ponto '{name}'</p>
             <main className={styles.infoContainer}>
+                <div>
                 <InputPoint
                     decrement={() => decrement(setPh, false)}
                     increment={() => increment(setPh, false)}
@@ -45,6 +46,8 @@ function Tq02Card({ name }: PointNameProps) {
                     titulo="Lt 02 1"
                     isInteger={false}
                 />
+                </div>
+                <button className={styles.buttonEnviar} onClick={() => console.log("Dados enviados")}>Enviar</button>
             </main>
         </>
     );

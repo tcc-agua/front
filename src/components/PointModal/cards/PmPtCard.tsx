@@ -30,6 +30,7 @@ function PmPtCard({ name }: PointNameProps) {
         <>
             <p className={styles.pointName}>Dados de coleta do ponto '{name}'</p>
             <main className={styles.infoContainer}>
+                <div>
                 <InputPoint
                     decrement={() => decrement(setOilLevel, false)}
                     increment={() => increment(setOilLevel, false)}
@@ -54,6 +55,9 @@ function PmPtCard({ name }: PointNameProps) {
                     titulo="Vol Rem Óleo"
                     isInteger={false}
                 />
+                </div>
+            
+                <button className={styles.buttonEnviar} onClick={() => console.log("Dados enviados")}>Enviar</button>
             </main>
         </>
     );

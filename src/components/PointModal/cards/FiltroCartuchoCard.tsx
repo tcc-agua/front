@@ -29,22 +29,25 @@ function FiltroCartuchoCard({ name }:PointNameProps) {
         <>
             <p className={styles.pointName}>Dados de coleta do ponto '{name}'</p>
             <main className={styles.infoContainer}>
-                <InputPoint
-                    decrement={() => decrement(setInletPressure, false)}
-                    increment={() => increment(setInletPressure, false)}
-                    handleChange={(e) => handleChange(e, setInletPressure)}
-                    valor={inletPressure}
-                    titulo="Pressão de entrada"
-                    isInteger={false}
-                />
-                <InputPoint
-                    decrement={() => decrement(setOutletPressure, false)}
-                    increment={() => increment(setOutletPressure, false)}
-                    handleChange={(e) => handleChange(e, setOutletPressure)}
-                    valor={outletPressure}
-                    titulo="Pressão de Saída"
-                    isInteger={false}
-                />
+                <div>
+                    <InputPoint
+                        decrement={() => decrement(setInletPressure, false)}
+                        increment={() => increment(setInletPressure, false)}
+                        handleChange={(e) => handleChange(e, setInletPressure)}
+                        valor={inletPressure}
+                        titulo="Pressão de entrada"
+                        isInteger={false}
+                    />
+                    <InputPoint
+                        decrement={() => decrement(setOutletPressure, false)}
+                        increment={() => increment(setOutletPressure, false)}
+                        handleChange={(e) => handleChange(e, setOutletPressure)}
+                        valor={outletPressure}
+                        titulo="Pressão de Saída"
+                        isInteger={false}
+                    />
+                </div>
+                <button className={styles.buttonEnviar} onClick={() => console.log("Dados enviados")}>Enviar</button>
             </main>
         </>
     );

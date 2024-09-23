@@ -32,46 +32,50 @@ function Bc01Card({ name }: PointNameProps) {
         <>
             <p className={styles.pointName}>Dados de coleta do ponto '{name}'</p>
             <main className={styles.infoContainer}>
-                <InputPoint
-                    decrement={() => decrement(setPressure, false)} 
-                    increment={() => increment(setPressure, false)}  
-                    handleChange={(e) => handleChange(e, setPressure)}
-                    valor={pressure}
-                    titulo="Pressão"
-                    isInteger={false}
-                />
-                <InputPoint
-                    decrement={() => decrement(setFrequency, true)}
-                    increment={() => increment(setFrequency, true)}
-                    handleChange={(e) => handleChange(e, setFrequency)}
-                    valor={frequency}
-                    titulo="Frequência"
-                    isInteger={true}
-                />
-                <InputPoint
-                    decrement={() => decrement(setHorimeter, true) }
-                    increment={() => increment(setHorimeter, true)}
-                    handleChange={(e) => handleChange(e, setHorimeter)}
-                    valor={horimeter}
-                    titulo="Horimetro"
-                    isInteger={true}
-                />
-                <InputPoint
-                    decrement={() => decrement(setLeak, false)}
-                    increment={()=> increment(setLeak, false)}
-                    handleChange={(e)=> handleChange(e, setLeak)}
-                    valor={leak}
-                    titulo="Vazão"
-                    isInteger={false}
-                />
-                <InputPoint
-                    decrement={()=> decrement(setVolume, true)}
-                    increment={()=> increment(setVolume, true)}
-                    handleChange={(e)=> handleChange(e, setVolume)}
-                    valor={volume}
-                    titulo="Volume"
-                    isInteger={true}
-                />
+                <div>
+                    <InputPoint
+                        decrement={() => decrement(setPressure, false)} 
+                        increment={() => increment(setPressure, false)}  
+                        handleChange={(e) => handleChange(e, setPressure)}
+                        valor={pressure}
+                        titulo="Pressão"
+                        isInteger={false}
+                    />
+                    <InputPoint
+                        decrement={() => decrement(setFrequency, true)}
+                        increment={() => increment(setFrequency, true)}
+                        handleChange={(e) => handleChange(e, setFrequency)}
+                        valor={frequency}
+                        titulo="Frequência"
+                        isInteger={true}
+                    />
+                    <InputPoint
+                        decrement={() => decrement(setHorimeter, true) }
+                        increment={() => increment(setHorimeter, true)}
+                        handleChange={(e) => handleChange(e, setHorimeter)}
+                        valor={horimeter}
+                        titulo="Horimetro"
+                        isInteger={true}
+                    />
+                    <InputPoint
+                        decrement={() => decrement(setLeak, false)}
+                        increment={()=> increment(setLeak, false)}
+                        handleChange={(e)=> handleChange(e, setLeak)}
+                        valor={leak}
+                        titulo="Vazão"
+                        isInteger={false}
+                    />
+                    <InputPoint
+                        decrement={()=> decrement(setVolume, true)}
+                        increment={()=> increment(setVolume, true)}
+                        handleChange={(e)=> handleChange(e, setVolume)}
+                        valor={volume}
+                        titulo="Volume"
+                        isInteger={true}
+                    />
+                </div>
+                <button className={styles.buttonEnviar} onClick={() => console.log("Dados enviados")}>Enviar</button>
+
             </main>
         </>
     );

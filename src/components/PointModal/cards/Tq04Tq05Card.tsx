@@ -36,6 +36,7 @@ function Tq04Tq05Card({ name }: PointNameProps) {
         <>
             <p className={styles.pointName}>Dados de coleta do ponto '{name}'</p>
             <main className={styles.infoContainer}>
+                <div>
                 <InputPoint
                     decrement={() => decrement(setQtdBombonas, true)}
                     increment={() => increment(setQtdBombonas, true)}
@@ -73,6 +74,9 @@ function Tq04Tq05Card({ name }: PointNameProps) {
                     valor={preparoSolucao}
                     titulo="Houve Preparo Solucao?"
                 />
+                </div>
+            
+                <button className={styles.buttonEnviar} onClick={() => console.log("Dados enviados")}>Enviar</button>
             </main>
         </>
     );

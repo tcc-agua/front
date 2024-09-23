@@ -28,6 +28,7 @@ function SensorPHCard({ name }: PointNameProps) {
         <>
             <p className={styles.pointName}>Dados de coleta do Ponto '{name}'</p>
             <main className={styles.infoContainer}>
+                <div>
                 <InputPoint
                     decrement={() => decrement(setPh, false)}
                     increment={() => increment(setPh, false)}
@@ -36,6 +37,9 @@ function SensorPHCard({ name }: PointNameProps) {
                     titulo="Ph"
                     isInteger={false}
                 />
+                </div>
+
+                <button className={styles.buttonEnviar} onClick={() => console.log("Dados enviados")}>Enviar</button>
             </main>
         </>
     );

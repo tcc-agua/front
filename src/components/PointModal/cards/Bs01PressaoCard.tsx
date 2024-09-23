@@ -28,14 +28,17 @@ function Bs01PressaoCard({ name }: PointNameProps) {
         <>
             <p className={styles.pointName}>Dados de coleta do ponto '{name}'</p>
             <main className={styles.infoContainer}>
-                <InputPoint
-                    decrement={() => decrement(setPressure, false)}
-                    increment={() => increment(setPressure, false)}
-                    handleChange={(e) => handleChange(e, setPressure)}
-                    valor={pressure}
-                    titulo="Pressão"
-                    isInteger={false}
-                />
+                <div>
+                    <InputPoint
+                        decrement={() => decrement(setPressure, false)}
+                        increment={() => increment(setPressure, false)}
+                        handleChange={(e) => handleChange(e, setPressure)}
+                        valor={pressure}
+                        titulo="Pressão"
+                        isInteger={false}
+                    />
+                    </div>
+                <button className={styles.buttonEnviar} onClick={() => console.log("Dados enviados")}>Enviar</button>
             </main>
         </>
     );

@@ -30,31 +30,33 @@ function BombaBc03Card({ name }: PointNameProps ) {
         <>
             <p className={styles.pointName}>Dados de coleta do ponto '{name}'</p>
             <main className={styles.infoContainer}>
-                    <InputPoint
-                        decrement={() => decrement(setPressure, false)} 
-                        increment={() => increment(setPressure, false)}  
-                        handleChange={(e) => handleChange(e, setPressure)}
-                        valor={pressure}
-                        titulo="Pressão"
-                        isInteger={false}
-                    />
-                    <InputPoint
-                        decrement={() => decrement(setHorimeter, false)} 
-                        increment={() => increment(setHorimeter, false)}  
-                        handleChange={(e) => handleChange(e, setHorimeter)}
-                        valor={horimeter}
-                        titulo="Horimetro"
-                        isInteger={false}
-                    />
-                    <InputPoint
-                        decrement={() => decrement(setFrequency, false)}
-                        increment={() => increment(setFrequency, false)} 
-                        handleChange={(e) => handleChange(e, setFrequency)}
-                        valor={frequency}
-                        titulo="Frequência"
-                        isInteger={false}
-                    />
-
+                    <div>
+                        <InputPoint
+                                decrement={() => decrement(setPressure, false)} 
+                                increment={() => increment(setPressure, false)}  
+                                handleChange={(e) => handleChange(e, setPressure)}
+                                valor={pressure}
+                                titulo="Pressão"
+                                isInteger={false}
+                            />
+                            <InputPoint
+                                decrement={() => decrement(setHorimeter, false)} 
+                                increment={() => increment(setHorimeter, false)}  
+                                handleChange={(e) => handleChange(e, setHorimeter)}
+                                valor={horimeter}
+                                titulo="Horimetro"
+                                isInteger={false}
+                            />
+                            <InputPoint
+                                decrement={() => decrement(setFrequency, false)}
+                                increment={() => increment(setFrequency, false)} 
+                                handleChange={(e) => handleChange(e, setFrequency)}
+                                valor={frequency}
+                                titulo="Frequência"
+                                isInteger={false}
+                            />
+                    </div>
+                <button className={styles.buttonEnviar} onClick={() => console.log("Dados enviados")}>Enviar</button>
             </main>
         </>
     );

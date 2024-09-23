@@ -28,14 +28,17 @@ function Bs01HidrometroCard({ name }:PointNameProps ) {
         <>
             <p className={styles.pointName}>Dados de coleta do ponto '{name}'</p>
             <main className={styles.infoContainer}>
-                <InputPoint
-                    decrement={()=> decrement(setVolume, true)}
-                    increment={()=> increment(setVolume, true)}
-                    handleChange={(e)=> handleChange(e, setVolume)}
-                    valor={volume}
-                    titulo="Volume"
-                    isInteger={true}
-                />
+                <div>
+                    <InputPoint
+                        decrement={()=> decrement(setVolume, true)}
+                        increment={()=> increment(setVolume, true)}
+                        handleChange={(e)=> handleChange(e, setVolume)}
+                        valor={volume}
+                        titulo="Volume"
+                        isInteger={true}
+                    />
+                </div>
+                <button className={styles.buttonEnviar} onClick={() => console.log("Dados enviados")}>Enviar</button>
             </main>
         </>
     );

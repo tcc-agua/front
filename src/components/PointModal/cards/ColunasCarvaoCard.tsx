@@ -37,48 +37,51 @@ function ColunasCarvaoCard({ name }: PointNameProps) {
         <>
             <p className={styles.pointName}>Dados de coleta do ponto '{name}'</p>
             <main className={styles.infoContainer}>
-                <InputPoint
-                    decrement={() => decrement(setPressure_c01, false)}
-                    increment={() => increment(setPressure_c01, false)}
-                    handleChange={(e) => handleChangeNumber(e, setPressure_c01)}
-                    valor={pressure_c01}
-                    titulo="Pressão C01"
-                    isInteger={false}
-                />
-                <InputPoint
-                    decrement={() => decrement(setPressure_c02, false)}
-                    increment={() => increment(setPressure_c02, false)}
-                    handleChange={(e) => handleChangeNumber(e, setPressure_c02)}
-                    valor={pressure_c02}
-                    titulo="Pressão C02"
-                    isInteger={false}
-                />
-                <InputPoint
-                    decrement={() => decrement(setPressure_c03, false)}
-                    increment={() => increment(setPressure_c03, false)}
-                    handleChange={(e) => handleChangeNumber(e, setPressure_c03)}
-                    valor={pressure_c03}
-                    titulo="Pressão C03"
-                    isInteger={false}
-                />
-                <InputPoint
-                    decrement={() => decrement(setOutletPressure, false)}
-                    increment={() => increment(setOutletPressure, false)}
-                    handleChange={(e) => handleChangeNumber(e, setOutletPressure)}
-                    valor={outletPressure}
-                    titulo="Pressão de Saída"
-                    isInteger={false}
-                />
-                <BooleanInput
-                    handleChange={(e) => handleBooleanChange(e, setTrocaCarvao)}
-                    valor={trocaCarvao}
-                    titulo="Houve troca de carvão?"
-                />
-                <BooleanInput
-                    handleChange={(e) => handleBooleanChange(e, setRetroLavagem)}
-                    valor={retroLavagem }
-                    titulo="Houve retrolavagem?"
-                />
+                <div>
+                    <InputPoint
+                        decrement={() => decrement(setPressure_c01, false)}
+                        increment={() => increment(setPressure_c01, false)}
+                        handleChange={(e) => handleChangeNumber(e, setPressure_c01)}
+                        valor={pressure_c01}
+                        titulo="Pressão C01"
+                        isInteger={false}
+                    />
+                    <InputPoint
+                        decrement={() => decrement(setPressure_c02, false)}
+                        increment={() => increment(setPressure_c02, false)}
+                        handleChange={(e) => handleChangeNumber(e, setPressure_c02)}
+                        valor={pressure_c02}
+                        titulo="Pressão C02"
+                        isInteger={false}
+                    />
+                    <InputPoint
+                        decrement={() => decrement(setPressure_c03, false)}
+                        increment={() => increment(setPressure_c03, false)}
+                        handleChange={(e) => handleChangeNumber(e, setPressure_c03)}
+                        valor={pressure_c03}
+                        titulo="Pressão C03"
+                        isInteger={false}
+                    />
+                    <InputPoint
+                        decrement={() => decrement(setOutletPressure, false)}
+                        increment={() => increment(setOutletPressure, false)}
+                        handleChange={(e) => handleChangeNumber(e, setOutletPressure)}
+                        valor={outletPressure}
+                        titulo="Pressão de Saída"
+                        isInteger={false}
+                    />
+                    <BooleanInput
+                        handleChange={(e) => handleBooleanChange(e, setTrocaCarvao)}
+                        valor={trocaCarvao}
+                        titulo="Houve troca de carvão?"
+                    />
+                    <BooleanInput
+                        handleChange={(e) => handleBooleanChange(e, setRetroLavagem)}
+                        valor={retroLavagem }
+                        titulo="Houve retrolavagem?"
+                    />
+                </div>
+                <button className={styles.buttonEnviar} onClick={() => console.log("Dados enviados")}>Enviar</button>
             </main>
         </>
     );
