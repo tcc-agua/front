@@ -4,6 +4,7 @@ import icon_export from "../../assets/images/export_activity.svg";
 import { Link } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { fetchNotif } from '../../api/api';
+import ReactPaginate from 'react-paginate';
 
 interface Notification {
     id: number;
@@ -32,23 +33,27 @@ const getDateDifference = (notifDate: string): string => {
     }
 };
 
-export const Notifications: React.FC = () => {
+export const Notifications: React.FC<{ 
+    onFetchNotifications: (notifications: Notification[]) => void; 
+    currentPage: number;
+}> = ({ onFetchNotifications, currentPage }) => {
     const [notifications, setNotifications] = useState<Notification[]>([]);
+    const activitiesPerPage = 8;
 
     useEffect(() => {
         const getNotifications = async () => {
             try {
                 const data: Notification[] = await fetchNotif();
                 const sortedNotifications = data.sort((a, b) => b.id - a.id);
-
                 setNotifications(sortedNotifications);
+                onFetchNotifications(sortedNotifications);
             } catch (error) {
                 console.error("Erro ao buscar notificações.");
             }
         };
-
+    
         getNotifications();
-    }, []);
+    }, [onFetchNotifications, currentPage]);
 
     const renderNotif = (notification: Notification, index: number) => {
         const { tabela, tipo, data } = notification;
@@ -65,36 +70,35 @@ export const Notifications: React.FC = () => {
 
         return (
             <>
-            <div key={`${tabela}-${tipo}-${index}`} className={styles.data_activity}>
-                <div className={styles.left_side}>
-                    <div className={`${styles.icon_activity} ${isExport ? styles.icon_export : styles.icon_correct}`}>
-                        <img
-                            className={styles.imgs_activity}
-                            src={isExport ? icon_export : icon_correct}
-                            alt={isExport ? "icon_export" : "icon_correct"}
-                        />
+                <div key={`${tabela}-${tipo}-${index}`} className={styles.data_activity}>
+                    <div className={styles.left_side}>
+                        <div className={`${styles.icon_activity} ${isExport ? styles.icon_export : styles.icon_correct}`}>
+                            <img
+                                className={styles.imgs_activity}
+                                src={isExport ? icon_export : icon_correct}
+                                alt={isExport ? "icon_export" : "icon_correct"}
+                            />
+                        </div>
+                        <p className={styles.text_history}>{message}</p>
                     </div>
-                    <p className={styles.text_history}>{message}</p>
+                    <div className={styles.right_side}>
+                        <p className={styles.day_history}>{getDateDifference(data)}</p>
+                        <Link className={styles.button_history} to='/inicial/historico'>Veja</Link>
+                    </div>
                 </div>
-                <div className={styles.right_side}>
-                    <p className={styles.day_history}>{getDateDifference(data)}</p>
-                    <Link className={styles.button_history} to='/inicial/historico'>Veja</Link>
+                <div className={styles.hr}>
+                    <hr />
                 </div>
-            </div>
-            <div className={styles.hr}>
-                <hr  />
-            </div>
-                
             </>
-            
         );
     };
 
+    const offset = currentPage * activitiesPerPage;
+    const currentNotifications = notifications.slice(offset, offset + activitiesPerPage);
+
     return (
         <div>
-            {notifications.map((notification, index) => (
-                renderNotif(notification, index)
-            ))}
+            {currentNotifications.map((notification, index) => renderNotif(notification, index))}
         </div>
     );
 };
@@ -107,7 +111,6 @@ export const LastNotifications: React.FC = () => {
             try {
                 const data: Notification[] = await fetchNotif();
                 const sortedNotifications = data.sort((a, b) => b.id - a.id);
-
                 setNotifications(sortedNotifications);
             } catch (error) {
                 console.error("Erro ao buscar notificações.");
@@ -131,20 +134,19 @@ export const LastNotifications: React.FC = () => {
         }
 
         return (
-            <div key={`${tabela}-${tipo}-${index}`} className={styles.data_activity}>
-                <div className={styles.first_activity}>
-                    <div className={styles.upside_content}>
-                        <p className={styles.day}>{getDateDifference(data)}</p>
-                        <div className={`${styles.icon_activity} ${isExport ? styles.icon_export : styles.icon_correct}`}>
-                            <img
-                                className={styles.imgs_activity}
-                                src={isExport ? icon_export : icon_correct}
-                                alt={isExport ? "icon_export" : "icon_correct"}
-                            />
-                        </div>
-                        <div className={styles.main_information_content}>
-                            <p className={styles.main_information}>{message}</p>
-                        </div>
+            <div key={`${tabela}-${tipo}-${index}`} className={styles.last_data_activity}>
+                <div className={styles.upside_content}>
+                    <p className={styles.day}>{getDateDifference(data)}</p>
+
+                    <div className={`${styles.icon_activity_last} ${isExport ? styles.icon_export : styles.icon_correct}`}>
+                        <img
+                            src={isExport ? icon_export : icon_correct}
+                            alt={isExport ? "icon_export" : "icon_correct"}
+                        />
+                    </div>
+
+                    <div className={styles.main_information_content}>
+                        <p className={styles.main_information}>{message}</p>
                         <div className={styles.botaozinho}>
                             <Link to='/inicial/exportar_excel' className={styles.button_to_excel}>Analisar os dados</Link>
                         </div>
@@ -162,6 +164,14 @@ export const LastNotifications: React.FC = () => {
 };
 
 export const LastActivities: React.FC = () => {
+    const [currentPage, setCurrentPage] = useState(0);
+    const [notifications, setNotifications] = useState<Notification[]>([]);
+    const activitiesPerPage = 8;
+
+    const handlePageClick = (data: { selected: number }) => {
+        setCurrentPage(data.selected);
+    };
+
     return (
         <div className={styles.container}>
             <div className={styles.last_activities_container}>
@@ -170,12 +180,28 @@ export const LastActivities: React.FC = () => {
                     <LastNotifications />
                 </div>
             </div>
+
             <div className={styles.history_activity_container}>
                 <p className={styles.title_history_activity}>Histórico de atividades</p>
                 <div className={styles.history_activity_content}>
-                    <Notifications />
+                    <Notifications 
+                        currentPage={currentPage}
+                        onFetchNotifications={setNotifications}
+                    />
                 </div>
             </div>
+
+            <ReactPaginate
+                previousLabel={'<'}
+                nextLabel={'>'}
+                breakLabel={'...'}
+                pageCount={Math.ceil(notifications.length / activitiesPerPage)}
+                marginPagesDisplayed={2}
+                pageRangeDisplayed={3}
+                onPageChange={handlePageClick}
+                containerClassName={styles.pagination}
+                activeClassName={styles.active}
+            />
         </div>
     );
 };
