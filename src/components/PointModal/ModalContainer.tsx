@@ -14,7 +14,6 @@ export default function ModalContainer({children, closeModal}:ModalContainerProp
             <div className={styles.modalContent}>
                 <button className={styles.close} onClick={closeModal}>x</button>
                     {children}
-                <button className={styles.buttonEnviar} onClick={() => console.log("Dados enviados")}>Enviar</button>
             </div>
         </div>
     )

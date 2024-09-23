@@ -30,6 +30,7 @@ function Bh02Card({ name }: PointNameProps) {
         <>
             <p className={styles.pointName}>Dados de coleta do ponto '{name}'</p>
             <main className={styles.infoContainer}>
+                <div style={{display: "flex"}}>
                 <InputPoint
                     decrement={() => decrement(setPressure, true)}
                     increment={() => increment(setPressure, true)}
@@ -54,6 +55,9 @@ function Bh02Card({ name }: PointNameProps) {
                     titulo="Frequência"
                     isInteger={true}
                 />
+                </div>
+                
+                <button className={styles.buttonEnviar} onClick={() => console.log("Dados enviados")}>Enviar</button>
             </main>
         </>
     );
