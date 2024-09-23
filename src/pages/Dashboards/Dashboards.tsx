@@ -1,13 +1,13 @@
-import { Link } from "react-router-dom";
-import styles from "./Dashboards.module.css";
-import icon_correct from "../../assets/images/correct.svg";
-import icon_export from "../../assets/images/export_activity.svg";
-import Graphic from "../../components/Graphic/Graphic";
-import Map from "../../assets/images/mapa-panorama.svg";
+import { Link } from "react-router-dom"
+import styles from "./Dashboards.module.css"
+import icon_correct from "../../assets/images/correct.svg"
+import icon_export from "../../assets/images/export_activity.svg"
+import Graphic from "../../components/Graphic/Graphic"
+import Map from "../../assets/images/mapa-panorama.svg"
 import MapDarkmode from "../../assets/images/foto_mapa_dark.svg";
-import Forecast from "../../components/Forecast/Forecast";
+import Forecast from "../../components/Forecast/Forecast"
 import { useEffect, useState } from "react";
-import { fetchNotif, fetchPH } from "../../api/api";
+import { fetchNotif, fetchPH, fetchTQ01 } from "../../api/api";
 import { useTheme } from '../../components/ThemeContext/ThemeContext';
 
 const mockData = {
@@ -26,6 +26,11 @@ interface Notification {
 interface PH {
     id: number;
     ph: number;
+}
+
+interface Nivel {
+    id: number,
+    nivel: number
 }
 
 const MapDark = () => {
@@ -102,6 +107,53 @@ export const SensorPH: React.FC = () => {
     );
 };
 
+export const Niveltq01: React.FC = () => {
+    const [, setNivel] = useState<Nivel[]>([]);
+    const [differencePercentage, setDifferencePercentage] = useState<number>(0);
+    const [isIncrease, setIsIncrease] = useState<boolean>(true);
+    
+    useEffect(() => {
+        const getNivel = async () => {
+            try {
+                await new Promise((resolve) => setTimeout(resolve, 3000));
+                const data: Nivel[] = await fetchTQ01();
+                const sortedNivel = data.sort((a, b) => b.id - a.id);
+                setNivel(sortedNivel);
+
+                if(sortedNivel.length >= 2) {
+                    const lastNivel = sortedNivel[0].nivel;
+                    const previousNivel = sortedNivel[1].nivel;
+                    if ( previousNivel !== 0 ) {
+                        const percentageDiff = ((lastNivel - previousNivel) / previousNivel) * 100;
+                        setDifferencePercentage(Math.abs(percentageDiff));
+                        setIsIncrease(percentageDiff > 0);
+                    }
+                }
+            } catch (error) {
+                console.error("Erro ao buscar informações de 'Nivel TQ01.");
+                console.log(error)
+            }
+        };
+        getNivel();
+    }, []);
+
+    return (
+        <div className={styles.second_update}>
+            <p className={styles.point}>Dados ETAS - TQ01 Nível</p>
+            <p className={styles.main_information}>{isIncrease ? 'Nível mais alto' : 'Nível mais baixo'}</p>
+            <div className={styles.extra_information}>
+                <pre>
+                    <span className={styles.extra}>
+                        {isIncrease ? '↗' : '↘'} {differencePercentage.toFixed(0)}%
+                        </span> {' '}
+                        {isIncrease ? 'maior' : 'menor'} que na última semana
+                    </pre>
+            </div>
+        </div>
+    )
+
+};
+
 
 export const Notifications: React.FC = () => {
     const [notifications, setNotifications] = useState<Notification[]>([]);
@@ -175,15 +227,7 @@ export function Dashboards() {
 
                         <SensorPH />
 
-                        {/* <div className={styles.second_update}>
-                            <p className={styles.point}>CD 24</p>
-                            <p className={styles.main_information}>Volume superior</p>
-                            <div className={styles.extra_information}>
-                                <pre><span className={styles.extra}>↗ 03%</span> maior que o esperado</pre>
-                            </div>
-                        </div> */}
-
-                        {/* NAO APAGUEM */}
+                        <Niveltq01/>
 
                     </div>
                 </div>
