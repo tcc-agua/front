@@ -2,7 +2,11 @@ import styles from "../../../pages/PointCollect/PointCollect.module.css";
 import { useState } from "react";
 import { InputPoint } from "../InputPoint";
 
-function Tq02Card() {
+interface PointNameProps{
+    name: string
+}
+
+function Tq02Card({ name }: PointNameProps) {
     const [ph, setPh] = useState<number>(1);
     const [lt_02_1, setLt_02_1] = useState<number>(1);
 
@@ -23,7 +27,7 @@ function Tq02Card() {
 
     return (
         <>
-            <p className={styles.pointName}>Dados de coleta do ponto TQ02</p>
+            <p className={styles.pointName}>Dados de coleta do ponto {name}</p>
             <main className={styles.infoContainer}>
                 <InputPoint
                     decrement={() => decrement(setPh, false)}

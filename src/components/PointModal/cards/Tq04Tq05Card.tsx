@@ -2,7 +2,11 @@ import styles from "../../../pages/PointCollect/PointCollect.module.css"
 import { useState } from "react";
 import { BooleanInput, InputPoint } from "../InputPoint";
 
-function Tq04Tq05Card() {
+interface PointNameProps{
+    name: string
+}
+
+function Tq04Tq05Card({ name }: PointNameProps) {
     const [kgBombonas, setKgBombonas] = useState<number>(1);
     const [qtdBombonas, setQtdBombonas] = useState<number>(1);
     const [horimeter, setHorimeter] = useState<number>(1);
@@ -30,7 +34,7 @@ function Tq04Tq05Card() {
 
     return (
         <>
-            <p className={styles.pointName}>Dados de coleta do ponto TQ04 TQ05 </p>
+            <p className={styles.pointName}>Dados de coleta do ponto {name}</p>
             <main className={styles.infoContainer}>
                 <InputPoint
                     decrement={() => decrement(setQtdBombonas, true)}

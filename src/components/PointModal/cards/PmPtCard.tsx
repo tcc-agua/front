@@ -2,7 +2,11 @@ import styles from "../../../pages/PointCollect/PointCollect.module.css"
 import { useState } from "react";
 import { InputPoint } from "../InputPoint";
 
-function PmPtCard() {
+interface PointNameProps{
+    name: string
+}
+
+function PmPtCard({ name }: PointNameProps) {
     const [oilLevel, setOilLevel] = useState<number>(1);
     const [waterLevel, setWaterLevel] = useState<number>(1);
     const [volRemOleo, setVolRemOleo] = useState<number>(1);
@@ -24,7 +28,7 @@ function PmPtCard() {
 
     return (
         <>
-            <p className={styles.pointName}>Dados de coleta do ponto PM PT</p>
+            <p className={styles.pointName}>Dados de coleta do ponto {name}</p>
             <main className={styles.infoContainer}>
                 <InputPoint
                     decrement={() => decrement(setOilLevel, false)}

@@ -2,7 +2,11 @@ import styles from "../../../pages/PointCollect/PointCollect.module.css"
 import { useState } from "react";
 import { BooleanInput, InputPoint } from "../InputPoint";
 
-function FaseLivreCard() {
+interface PointNameProps{
+    name: string
+}
+
+function FaseLivreCard({ name }: PointNameProps) {
     const [volume, setVolume] = useState<number>(1);
     const [houveTroca, setHouveTroca] = useState<boolean>(false);
 
@@ -27,7 +31,7 @@ function FaseLivreCard() {
 
     return (
         <>
-            <p className={styles.pointName}>Dados de coleta do ponto Fase Livre</p>
+            <p className={styles.pointName}>Dados de coleta do ponto {name}</p>
             <main className={styles.infoContainer}>
                 <InputPoint
                     decrement={() => decrement(setVolume, false)}

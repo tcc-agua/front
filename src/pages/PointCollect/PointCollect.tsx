@@ -96,60 +96,96 @@ export function PointCollect() {
  function renderCardInfo(name: string){
 
     if(name.startsWith("PM") || name.startsWith("PT")){
-        return <PointModal.PMPT/>
+        return <PointModal.PMPT
+        name={name}
+        />
     }
     if(name.startsWith("PB")){
-        return <PointModal.PBS/>
+        return <PointModal.PBS
+        name={name}
+        />
     }
     if(name.startsWith("CD")){
-        return <PointModal.CD/>
+        return <PointModal.CD
+        name={name}
+        />
     }
     if(name == "TQ04" || name == "TQ05"){
-        return <PointModal.TQ04_TQ05/>
+        return <PointModal.TQ04_TQ05
+        name={name}
+        />
     }
 
     switch(name){
         case "BC01": 
-            return <PointModal.BC01/>
+            return <PointModal.BC01
+            name={name}
+            />
 
         case "BC06":
-            return <PointModal.BC06/>
+            return <PointModal.BC06  
+            name={name}
+            />
         
         case "BH02":
-            return <PointModal.BH02/>
+            return <PointModal.BH02  
+            name={name}
+            />
         
         case "BOMBA BC03":
-            return <PointModal.BOMBA_BC03/>
+            return <PointModal.BOMBA_BC03
+            name={name}
+            />
         
         case "BS01 HIDROMETRO":
-            return <PointModal.BS01_HIDROMETRO/>
+            return <PointModal.BS01_HIDROMETRO
+            name={name}
+            />
         
         case "BS01 PRESSAO":
-            return <PointModal.BS01_PRESSAO/>
+            return <PointModal.BS01_PRESSAO
+            name={name}
+            />
         
         case "COLUNAS CARVAO":
-            return <PointModal.COLUNAS_CARVAO/>
+            return <PointModal.COLUNAS_CARVAO
+            name={name}
+            />
 
         case "FASE LIVRE":
-            return <PointModal.FASE_LIVRE/>
+            return <PointModal.FASE_LIVRE
+            name={name}
+            />
 
         case "FILTRO CARTUCHO":
-            return <PointModal.FILTRO_CARTUCHO/>
+            return <PointModal.FILTRO_CARTUCHO
+            name={name}
+            />
 
         case "HORIMETRO":
-            return <PointModal.HORIMETRO/>
+            return <PointModal.HORIMETRO
+            name={name}
+            />
         
         case "SENSOR PH":
-            return <PointModal.SENSOR_PH/>
+            return <PointModal.SENSOR_PH
+            name={name}
+            />
 
         case "TQ01":
-            return <PointModal.TQ01/>
+            return <PointModal.TQ01
+            name={name}
+            />
 
         case "TQ02":
-            return <PointModal.TQ02/>
+            return <PointModal.TQ02
+            name={name}
+            />
 
         case "TQ04 TQ05":
-            return <PointModal.TQ04_TQ05/>
+            return <PointModal.TQ04_TQ05
+            name={name}
+            />
     }
  }
 
@@ -184,7 +220,7 @@ export function PointCollect() {
                             <p className={styles.point_information_text}>Existem <span className={styles.point_information_number}>{qtdPontos}</span> pontos para preencher o arquivo   {
                 planilha === "DADOS ETAS" 
                     ? "'ETAS'" 
-                    : planilha === "PB"
+                    : planilha === "PBS"
                     ? "'Poços de Bombeamento'"
                     : planilha === "NA"
                     ? "'Nível de Água'"

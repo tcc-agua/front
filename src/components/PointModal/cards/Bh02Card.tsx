@@ -2,7 +2,11 @@ import styles from "../../../pages/PointCollect/PointCollect.module.css"
 import { useState } from "react";
 import { InputPoint } from "../InputPoint";
 
-function Bh02Card() {
+interface PointNameProps{
+    name: string
+}
+
+function Bh02Card({ name }: PointNameProps) {
     const [pressure, setPressure] = useState<number>(1);
     const [horimeter, setHorimeter] = useState<number>(1);
     const [frequency, setFrequency] = useState<number>(1);
@@ -24,7 +28,7 @@ function Bh02Card() {
 
     return (
         <>
-            <p className={styles.pointName}>Dados de coleta do ponto BH02</p>
+            <p className={styles.pointName}>Dados de coleta do ponto {name}</p>
             <main className={styles.infoContainer}>
                 <InputPoint
                     decrement={() => decrement(setPressure, true)}

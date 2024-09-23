@@ -2,7 +2,11 @@ import styles from "../../../pages/PointCollect/PointCollect.module.css"
 import { useState } from "react";
 import { InputPoint } from "../InputPoint";
 
-function FiltroCartuchoCard() {
+interface PointNameProps{
+    name: string
+}
+
+function FiltroCartuchoCard({ name }:PointNameProps) {
     const [outletPressure, setOutletPressure] = useState<number>(1);
     const [inletPressure, setInletPressure] = useState<number>(1);
 
@@ -23,7 +27,7 @@ function FiltroCartuchoCard() {
 
     return (
         <>
-            <p className={styles.pointName}>Dados de coleta do ponto Filtro Cartucho</p>
+            <p className={styles.pointName}>Dados de coleta do ponto {name}</p>
             <main className={styles.infoContainer}>
                 <InputPoint
                     decrement={() => decrement(setInletPressure, false)}

@@ -2,7 +2,11 @@ import styles from "../../../pages/PointCollect/PointCollect.module.css";
 import { useState } from "react";
 import { DropdownInput, InputPoint } from "../InputPoint";
 
-function CdCard() {
+interface PointNameProps{
+    name: string
+}
+
+function CdCard({ name }: PointNameProps) {
     const [pressure, setPressure] = useState<number>(1);
     const [hidrometer, setHidrometer] = useState<number>(1);
     const [tipoRede, setTipoRede] = useState<string>("ETAS");
@@ -28,7 +32,7 @@ function CdCard() {
 
     return (
         <>
-            <p className={styles.pointName}>Dados de coleta do ponto CD</p>
+            <p className={styles.pointName}>Dados de coleta do ponto {name}</p>
             <main className={styles.infoContainer}>
                 <InputPoint
                     decrement={() => decrement(setPressure, false)}

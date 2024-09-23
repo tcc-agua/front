@@ -2,7 +2,11 @@ import styles from "../../../pages/PointCollect/PointCollect.module.css";
 import { useState } from "react";
 import { InputPoint } from "../InputPoint";
 
-function HorimetroCard() {
+interface PointNameProps{
+    name: string
+}
+
+function HorimetroCard({ name }: PointNameProps) {
     const [horimeter, setHorimeter] = useState<number>(1);
 
     const increment = (setter: React.Dispatch<React.SetStateAction<number>>, isInteger?: boolean) => {
@@ -22,7 +26,7 @@ function HorimetroCard() {
 
     return (
         <>
-            <p className={styles.pointName}>Dados de coleta do ponto Horimetro</p>
+            <p className={styles.pointName}>Dados de coleta do ponto {name}</p>
             <main className={styles.infoContainer}>
                 <InputPoint
                     decrement={() => decrement(setHorimeter, false)}

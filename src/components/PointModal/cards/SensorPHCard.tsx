@@ -2,7 +2,11 @@ import styles from "../../../pages/PointCollect/PointCollect.module.css"
 import { useState } from "react";
 import { InputPoint } from "../InputPoint";
 
-function SensorPHCard() {
+interface PointNameProps{
+    name: string
+}
+
+function SensorPHCard({ name }: PointNameProps) {
     const [ph, setPh] = useState<number>(1);
 
     const increment = (setter: React.Dispatch<React.SetStateAction<number>>, isInteger?: boolean) => {
@@ -22,7 +26,7 @@ function SensorPHCard() {
 
     return (
         <>
-            <p className={styles.pointName}>Dados de coleta do Sensor PH</p>
+            <p className={styles.pointName}>Dados de coleta do Ponto {name} </p>
             <main className={styles.infoContainer}>
                 <InputPoint
                     decrement={() => decrement(setPh, false)}
