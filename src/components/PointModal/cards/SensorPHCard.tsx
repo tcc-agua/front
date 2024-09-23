@@ -26,7 +26,7 @@ function SensorPHCard({ name }: PointNameProps) {
 
     return (
         <>
-            <p className={styles.pointName}>Dados de coleta do Ponto {name} </p>
+            <p className={styles.pointName}>Dados de coleta do Ponto '{name}'</p>
             <main className={styles.infoContainer}>
                 <InputPoint
                     decrement={() => decrement(setPh, false)}

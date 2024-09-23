@@ -115,6 +115,11 @@ export function PointCollect() {
         name={name}
         />
     }
+    if(name.startsWith("AG") || name == "BS01 HORIMETRO"){
+        return <PointModal.HORIMETRO
+        name={name}
+        />
+    }
 
     switch(name){
         case "BC01": 
@@ -193,7 +198,7 @@ export function PointCollect() {
     switch (planilha) {
         case "DADOS ETAS":
             return "Estações de Tratamento de Águas Subterrâneas";
-        case "PB":
+        case "PBS":
             return "Poços de Bombeamento";
         case "NA":
             return "Nível de Água";
