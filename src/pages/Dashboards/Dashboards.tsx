@@ -123,10 +123,11 @@ export const Niveltq01: React.FC = () => {
                 if(sortedNivel.length >= 2) {
                     const lastNivel = sortedNivel[0].nivel;
                     const previousNivel = sortedNivel[1].nivel;
-
-                    const percentageDiff = ((lastNivel - previousNivel) / previousNivel) * 100;
-                    setDifferencePercentage(Math.abs(percentageDiff));
-                    setIsIncrease(percentageDiff > 0);
+                    if ( previousNivel !== 0 ) {
+                        const percentageDiff = ((lastNivel - previousNivel) / previousNivel) * 100;
+                        setDifferencePercentage(Math.abs(percentageDiff));
+                        setIsIncrease(percentageDiff > 0);
+                    }
                 }
             } catch (error) {
                 console.error("Erro ao buscar informações de 'Nivel TQ01.");
