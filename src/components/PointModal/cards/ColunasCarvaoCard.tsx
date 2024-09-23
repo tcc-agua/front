@@ -35,7 +35,7 @@ function ColunasCarvaoCard({ name }: PointNameProps) {
 
     return (
         <>
-            <p className={styles.pointName}>Dados de coleta do ponto {name}</p>
+            <p className={styles.pointName}>Dados de coleta do ponto '{name}'</p>
             <main className={styles.infoContainer}>
                 <InputPoint
                     decrement={() => decrement(setPressure_c01, false)}

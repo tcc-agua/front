@@ -115,6 +115,11 @@ export function PointCollect() {
         name={name}
         />
     }
+    if(name.startsWith("AG") || name == "BS01 HORIMETRO"){
+        return <PointModal.HORIMETRO
+        name={name}
+        />
+    }
 
     switch(name){
         case "BC01": 
