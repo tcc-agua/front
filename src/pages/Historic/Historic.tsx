@@ -126,7 +126,9 @@ const Historic: React.FC = () => {
     <div className={styles.container}>
       <p className={styles.title_filter}>Selecione uma data:</p>
       <div className={styles.content_buttons}>
-        <button className={styles.filtrar}>Filtrar</button>
+        <div className={styles.filterContainer}>
+          <button className={styles.filtrar}>Filtrar</button>
+        </div>
         <div className={styles.buttons}>
           <div className={styles.dropdownContainer}>
             <DropdownButton

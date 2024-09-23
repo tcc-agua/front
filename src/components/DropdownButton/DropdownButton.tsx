@@ -53,7 +53,7 @@ const DropdownButton: React.FC<DropdownButtonProps> = ({
         onClick={() => setIsOpen(!isOpen)}
         className={styles.button}
       >
-        <span>{selectedOption ? selectedOption.label : title}</span>
+        <span className={styles.dia_mes_ano}>{selectedOption ? selectedOption.label : title}</span>
         <span
           className={styles.arrow}
           style={{

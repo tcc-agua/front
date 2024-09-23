@@ -25,13 +25,28 @@ const ColetaItem: React.FC<ColetaItemProps> = ({ date, description, details, onO
     setIsOpen(!isOpen);
   };
 
+  const filterLetters = (text: string) => {
+    return text.replace(/[^a-zA-Z]/g, '');
+  };
+
+  const filterNumbers = (text: string) => {
+    return text.replace(/[^0-9]/g, '');
+  };
+
   return (
     <div className={styles.coleta} onClick={toggleOpen}>
       <div className={styles.title}>
         <p className={styles.date}>{date}</p>
         <div className={styles.separator}></div>
         <p className={styles.description}>{description}</p>
-        <span style={{ transform: isOpen ? 'rotate(180deg)' : 'rotate(0deg)', transition: 'transform 1s' }}>
+        <span
+          className={styles.rotateArrow}
+          onClick={(e) => {
+            e.stopPropagation();
+            toggleOpen();
+          }}
+          style={{ transform: isOpen ? 'rotate(180deg)' : 'rotate(0deg)' }}
+        >
           <img src={arrow} alt="Arrow" style={{ width: '16px', height: '16px' }} />
         </span>
       </div>
@@ -49,14 +64,15 @@ const ColetaItem: React.FC<ColetaItemProps> = ({ date, description, details, onO
                 className={styles.detailButton}
               >
                 <div className={styles.texts}>
-                  <span className={styles.label}>{detail.tipo}</span>
-                  <span className={styles.number}>{detail.ponto}</span>
+                  <span className={styles.label}>{filterLetters(detail.tipo)}</span>
+                  <pre>–</pre>
+                  <span className={styles.number}>{filterNumbers(detail.ponto)}</span>
                 </div>
                 <button
                   onClick={(e) => { e.stopPropagation(); onOpenDetail(detail); }}
                   className={styles.viewButton}
                 >
-                  <pre className={styles.arrow}>Visualizar   ⟶</pre>
+                  <pre className={styles.arrow}>⟶</pre>
                 </button>
               </button>
             </div>
