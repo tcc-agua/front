@@ -198,7 +198,7 @@ export function PointCollect() {
     switch (planilha) {
         case "DADOS ETAS":
             return "Estações de Tratamento de Águas Subterrâneas";
-        case "PB":
+        case "PBS":
             return "Poços de Bombeamento";
         case "NA":
             return "Nível de Água";
