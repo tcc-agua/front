@@ -144,7 +144,7 @@ const ExportExcel: React.FC = () => {
             </div>
 
             <div className={styles.table}>
-            <ExcelTable sheetName={String(selectedTable?.value || "")} />
+            <ExcelTable sheetName={String(selectedTable?.value || "")} monthProps={String(selectedMonth?.id)} yearProps={String(selectedYear?.label)}/>
             </div>
 
             <div className="buttonContainer">

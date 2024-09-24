@@ -55,13 +55,17 @@ export const fetchExport = async (startDate: string, endDate: string) => {
 
 // Get Planilhas
 
-export const fetchSheet = async (sheetName: string) => {
+export const fetchSheet = async (sheetName: string, startDate: string, endDate: string) => {
     try {
         const token = localStorage.getItem("id_token")
+        const formattedStartDate = dayjs(startDate).format('YYYY-MM-DD');
+        const formattedEndDate = dayjs(endDate).format('YYYY-MM-DD');
+
         const response = await axios.get(`${API_BASE_URL}/excel/${sheetName}`, {
             headers: {
                 Authorization: `Bearer ${token}`,
             },
+            params: { startDate: formattedStartDate, endDate: formattedEndDate },
         });
         return response.data;
     } catch (error) {
