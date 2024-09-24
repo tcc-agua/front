@@ -1,13 +1,13 @@
-// ColetaItem.tsx
 import React, { useState, useRef } from 'react';
 import styles from './ColectItem.module.css';
 import arrow from '../../assets/images/arrow.svg';
+import ReactPaginate from 'react-paginate';
 
 interface Detail {
   id: number;
   tipo: string;
   ponto: string;
-  dados: any; 
+  dados: Record<string, any>; 
 }
 
 interface ColetaItemProps {
@@ -21,16 +21,28 @@ const ColetaItem: React.FC<ColetaItemProps> = ({ date, description, details, onO
   const [isOpen, setIsOpen] = useState(false);
   const detailsRef = useRef<HTMLDivElement>(null);
 
+  const [currentPage, setCurrentPage] = useState(0);
+  const itemsPerPage = 6;
+
+  const offset = currentPage * itemsPerPage;
+  const currentItems = details.slice(offset, offset + itemsPerPage);
+  const pageCount = Math.ceil(details.length / itemsPerPage);
+
+  const handlePageClick = (data: { selected: number }) => {
+    setCurrentPage(data.selected);
+    toggleOpen();
+  };
+
   const toggleOpen = () => {
-    setIsOpen(!isOpen);
+    setIsOpen(prev => !prev);
   };
 
   const filterLetters = (text: string) => {
-    return text.replace(/[^a-zA-Z]/g, '');
+    return text.match(/[a-zA-Z]+/g)?.join('') || '';
   };
 
   const filterNumbers = (text: string) => {
-    return text.replace(/[^0-9]/g, '');
+    return text.match(/[0-9]+/g)?.join('') || '';
   };
 
   return (
@@ -57,9 +69,9 @@ const ColetaItem: React.FC<ColetaItemProps> = ({ date, description, details, onO
         style={{ height: isOpen ? `${detailsRef.current?.scrollHeight}px` : '0' }}
       >
         <div className={styles.details}>
-          {details.map(detail => (
+          {currentItems.map(detail => (
             <div key={detail.id} className={styles.detailContainer}>
-              <button
+              <div
                 onClick={(e) => { e.stopPropagation(); onOpenDetail(detail); }}
                 className={styles.detailButton}
               >
@@ -68,15 +80,31 @@ const ColetaItem: React.FC<ColetaItemProps> = ({ date, description, details, onO
                   <pre>–</pre>
                   <span className={styles.number}>{filterNumbers(detail.ponto)}</span>
                 </div>
-                <button
+                <span
                   onClick={(e) => { e.stopPropagation(); onOpenDetail(detail); }}
                   className={styles.viewButton}
                 >
                   <pre className={styles.arrow}>⟶</pre>
-                </button>
-              </button>
+                </span>
+              </div>
             </div>
           ))}
+
+          <div className={styles.paginationContainer}>
+            {details.length > itemsPerPage && (
+              <ReactPaginate
+                previousLabel={'<'}
+                nextLabel={'>'}
+                breakLabel={'...'}
+                pageCount={pageCount}
+                marginPagesDisplayed={2}
+                pageRangeDisplayed={3}
+                onPageChange={handlePageClick}
+                containerClassName={styles.pagination}
+                activeClassName={styles.active}
+              />
+            )}
+          </div>
         </div>
       </div>
     </div>

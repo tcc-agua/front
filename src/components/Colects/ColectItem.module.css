@@ -88,7 +88,7 @@
 }
 
 .detailsWrapper.open {
-  max-height: 500px; 
+  max-height: 900px; 
 }
 
 .details > .detailContainer:nth-child(2n),
@@ -159,6 +159,49 @@ pre {
 
 .arrow {
   font-family: "SF Pro Regular";
+}
+
+/* paginação */
+.paginationContainer {
+
+}
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  list-style: none;
+  padding: 0;
+  margin: 20px 0;
+}
+
+.pagination li {
+  margin: 0 5px;
+}
+
+.pagination a {
+  text-decoration: none;
+  padding: 10px 15px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  color: #000000;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.pagination a:hover {
+  background-color: #01A4FD;
+  color: white;
+}
+
+.pagination .active a {
+  background-color: #01A4FD;
+  color: white;
+  border: 1px solid #01A4FD;
+}
+
+.pagination .disabled {
+  pointer-events: none;
+  opacity: 0.5;
 }
 
 
