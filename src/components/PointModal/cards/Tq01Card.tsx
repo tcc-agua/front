@@ -28,6 +28,7 @@ function Tq01Card({ name }: PointNameProps) {
         <>
             <p className={styles.pointName}>Dados de coleta do ponto '{name}'</p>
             <main className={styles.infoContainer}>
+                <div>
                 <InputPoint
                     decrement={() => decrement(setNivel, false)}
                     increment={() => increment(setNivel, false)}
@@ -36,6 +37,9 @@ function Tq01Card({ name }: PointNameProps) {
                     titulo="Nivel"
                     isInteger={false}
                 />
+                </div>
+                
+                <button className={styles.buttonEnviar} onClick={() => console.log("Dados enviados")}>Enviar</button>
             </main>
         </>
     );

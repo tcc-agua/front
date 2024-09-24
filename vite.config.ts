@@ -81,13 +81,25 @@ export default defineConfig({
         secure: false,
         rewrite: (path) => path.replace(/^\/gateway/, ''),
       } as ProxyOptions,
-      '/TQ01/': {
+      '/tq01/': {
         target: URL,
         changeOrigin: true,
         secure: false,
         rewrite: (path) => path.replace(/^\/gateway/, ''),
       } as ProxyOptions,
-      '/TQ01/get': {
+      '/tq01/get': {
+        target: URL,
+        changeOrigin: true,
+        secure: false,
+        rewrite: (path) => path.replace(/^\/gateway/, ''),
+      } as ProxyOptions,
+      '/bh02': {
+        target: URL,
+        changeOrigin: true,
+        secure: false,
+        rewrite: (path) => path.replace(/^\/gateway/, ''),
+      } as ProxyOptions,
+      '/bc01': {
         target: URL,
         changeOrigin: true,
         secure: false,

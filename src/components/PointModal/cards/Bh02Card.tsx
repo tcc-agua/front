@@ -1,6 +1,8 @@
 import styles from "../../../pages/PointCollect/PointCollect.module.css"
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { InputPoint } from "../InputPoint";
+import { BH02 } from "../../../interfaces/postParams";
+import useBh02Store from "../../../store/Bh02Store";
 
 interface PointNameProps{
     name: string
@@ -10,6 +12,8 @@ function Bh02Card({ name }: PointNameProps) {
     const [pressure, setPressure] = useState<number>(1);
     const [horimeter, setHorimeter] = useState<number>(1);
     const [frequency, setFrequency] = useState<number>(1);
+    const { createBh02Measure, isCreated, resetState, isError } = useBh02Store();
+
 
     const increment = (setter: React.Dispatch<React.SetStateAction<number>>, isInteger?: boolean) => {
         setter(prev => isInteger ? prev + 1 : Math.round((prev + 0.1) * 10) / 10);
@@ -25,6 +29,31 @@ function Bh02Card({ name }: PointNameProps) {
             setter(value);
         }
     };
+
+    const sendInformation = () => {
+
+        const obj: BH02 = {
+            frequencia: frequency,
+            horimetro: horimeter,
+            pressao: pressure,
+            nomePonto: name,
+            idColeta: 1
+        }
+
+        createBh02Measure(obj);
+
+    };
+
+    useEffect (() =>{
+        if(isCreated){
+            alert("Criado")
+            resetState()
+        }
+        if(isError){
+            alert("ERRO")
+        }
+
+    }, [isCreated, resetState, isError])
 
     return (
         <>
@@ -57,7 +86,7 @@ function Bh02Card({ name }: PointNameProps) {
                 />
                 </div>
                 
-                <button className={styles.buttonEnviar} onClick={() => console.log("Dados enviados")}>Enviar</button>
+                <button className={styles.buttonEnviar} onClick={sendInformation}>Enviar</button>
             </main>
         </>
     );

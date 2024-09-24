@@ -33,19 +33,22 @@ function FaseLivreCard({ name }: PointNameProps) {
         <>
             <p className={styles.pointName}>Dados de coleta do ponto '{name}'</p>
             <main className={styles.infoContainer}>
-                <InputPoint
-                    decrement={() => decrement(setVolume, false)}
-                    increment={() => increment(setVolume, false)}
-                    handleChange={(e) => handleChange(e, setVolume)}
-                    valor={volume}
-                    titulo="Volume"
-                    isInteger={false}
-                />
-                <BooleanInput
-                    handleChange={(e) => handleBooleanChange(e, setHouveTroca)}
-                    valor={houveTroca}
-                    titulo="Houve Troca?"
-                />
+                <div>
+                    <InputPoint
+                        decrement={() => decrement(setVolume, false)}
+                        increment={() => increment(setVolume, false)}
+                        handleChange={(e) => handleChange(e, setVolume)}
+                        valor={volume}
+                        titulo="Volume"
+                        isInteger={false}
+                    />
+                    <BooleanInput
+                        handleChange={(e) => handleBooleanChange(e, setHouveTroca)}
+                        valor={houveTroca}
+                        titulo="Houve Troca?"
+                    />
+                </div>
+                <button className={styles.buttonEnviar} onClick={() => console.log("Dados enviados")}>Enviar</button>
             </main>
         </>
     );

@@ -29,22 +29,26 @@ function Bc06Card({ name }: PointNameProps) {
         <>
             <p className={styles.pointName}>Dados de coleta do ponto '{name}'</p>
             <main className={styles.infoContainer}>
-                <InputPoint
-                    decrement={() => decrement(setPressure)}
-                    increment={() => increment(setPressure)}
-                    handleChange={(e) => handleChange(e, setPressure)}
-                    valor={pressure}
-                    titulo="Pressão"
-                    isInteger={false}
-                />
+                <div>
+                    <InputPoint
+                        decrement={() => decrement(setPressure)}
+                        increment={() => increment(setPressure)}
+                        handleChange={(e) => handleChange(e, setPressure)}
+                        valor={pressure}
+                        titulo="Pressão"
+                        isInteger={false}
+                    />
 
-                <InputPoint
-                    decrement={() => decrement(setHorimeter) }
-                    increment={() => increment(setHorimeter)}
-                    handleChange={(e) => handleChange(e, setHorimeter)}
-                    valor={horimeter}
-                    titulo="Horimetro"
-                />
+                    <InputPoint
+                        decrement={() => decrement(setHorimeter) }
+                        increment={() => increment(setHorimeter)}
+                        handleChange={(e) => handleChange(e, setHorimeter)}
+                        valor={horimeter}
+                        titulo="Horimetro"
+                    />
+                </div>
+                
+                <button className={styles.buttonEnviar} onClick={() => console.log("Dados enviados")}>Enviar</button>
             </main>
         </>
     );

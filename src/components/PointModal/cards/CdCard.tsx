@@ -34,28 +34,31 @@ function CdCard({ name }: PointNameProps) {
         <>
             <p className={styles.pointName}>Dados de coleta do ponto '{name}'</p>
             <main className={styles.infoContainer}>
-                <InputPoint
-                    decrement={() => decrement(setPressure, false)}
-                    increment={() => increment(setPressure, false)}
-                    handleChange={(e) => handleChangeNumber(e, setPressure)}
-                    valor={pressure}
-                    titulo="Pressão"
-                    isInteger={false}
-                />
-                <InputPoint
-                    decrement={() => decrement(setHidrometer, true)}
-                    increment={() => increment(setHidrometer, true)}
-                    handleChange={(e) => handleChangeNumber(e, setHidrometer)}
-                    valor={hidrometer}
-                    titulo="Hidrometro"
-                    isInteger={true}
-                />
-                <DropdownInput
-                    handleChange={handleChangeDropdown}
-                    opcoes={["ETAS", "NA"]}
-                    titulo="Tipo de Rede"
-                    valor={tipoRede}
-                />
+                    <div>
+                        <InputPoint
+                            decrement={() => decrement(setPressure, false)}
+                            increment={() => increment(setPressure, false)}
+                            handleChange={(e) => handleChangeNumber(e, setPressure)}
+                            valor={pressure}
+                            titulo="Pressão"
+                            isInteger={false}
+                        />
+                        <InputPoint
+                            decrement={() => decrement(setHidrometer, true)}
+                            increment={() => increment(setHidrometer, true)}
+                            handleChange={(e) => handleChangeNumber(e, setHidrometer)}
+                            valor={hidrometer}
+                            titulo="Hidrometro"
+                            isInteger={true}
+                        />
+                        <DropdownInput
+                            handleChange={handleChangeDropdown}
+                            opcoes={["ETAS", "NA"]}
+                            titulo="Tipo de Rede"
+                            valor={tipoRede}
+                        />
+                    </div>
+                <button className={styles.buttonEnviar} onClick={() => console.log("Dados enviados")}>Enviar</button>
             </main>
         </>
     );
