@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { API_BASE_URL } from './config';
+import dayjs from 'dayjs';
 
 const waitForToken = (): Promise<string> => {
     return new Promise((resolve) => {
@@ -30,18 +31,22 @@ export const fetchUserInfo = async () => {
 
 // Exportar Excel
 
-export const fetchExport = async () => {
+export const fetchExport = async (startDate: string, endDate: string) => {
     try {
-        const token = localStorage.getItem("id_token")
+        const token = localStorage.getItem("id_token");
+
+        const formattedStartDate = dayjs(startDate).format('YYYY-MM-DD');
+        const formattedEndDate = dayjs(endDate).format('YYYY-MM-DD');
+
         const response = await axios.get(`${API_BASE_URL}/exportExcel`, {
             headers: {
                 Authorization: `Bearer ${token}`,
+                'Accept': 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
             },
-            responseType: "blob"
-            
+            params: { startDate: formattedStartDate, endDate: formattedEndDate }, // Adiciona os parâmetros
+            responseType: "blob" // Define o tipo de resposta como blob
         });
-        return response.data;
-
+        return response.data; // Retorna o Blob
     } catch (error) {
         console.error("Erro ao buscar informações do usuário:", error);
         throw error;
