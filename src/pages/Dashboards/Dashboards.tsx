@@ -9,6 +9,8 @@ import Forecast from "../../components/Forecast/Forecast"
 import { useEffect, useState } from "react";
 import { fetchNotif, fetchPH, fetchTQ01 } from "../../api/api";
 import { useTheme } from '../../components/ThemeContext/ThemeContext';
+import MapSpline from '../../components/MapSpline/MapSpline';
+import Loading from '../../components/LoadingMap/LoadingMap';
 
 const mockData = {
     months: ["Janeiro", "Fevereiro", "Março", "Abril", "Maio"],
@@ -34,7 +36,7 @@ interface Nivel {
 }
 
 const MapDark = () => {
-    const { isDarkMode } = useTheme(); 
+    const { isDarkMode } = useTheme();
     return isDarkMode ? MapDarkmode : Map;
 }
 
@@ -254,11 +256,15 @@ export function Dashboards() {
                     <Notifications />
                 </div>
                 <div className={styles.mapview}>
+
                     <p className={styles.title}>Mapa de Curitiba</p>
                     <div className={styles.content_mapview}>
-                        <Link to={"/inicial/mapa"}><img src={mapSrc} alt="Mapa de Curitiba" /></Link>
+                        <div className={styles.map}>
+                            <MapSpline />
+                        </div>
                     </div>
                 </div>
+
             </div>
         </div>
     );

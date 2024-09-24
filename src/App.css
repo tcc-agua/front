@@ -2,7 +2,7 @@
   padding: 0;
   margin: 0;
   box-sizing: border-box;
-  transition: all 0.21s ease-in-out;
+  transition: all 0.20s ease-in-out;
 }
 
 @font-face {
@@ -41,6 +41,7 @@ body {
   --backgroud_color: #ffff;
   --backgroud_color2: #F9F9F9;
   --backgroud_color3: #f8f9fa;
+  --background_color4: #eff7fc;
 
   --font_color: #303030;
   --font_color2: #8d8d8d;
@@ -90,6 +91,7 @@ body {
   --backgroud_color: #012C48;
   --backgroud_color2: #00243D;
   --backgroud_color3: #073d61;
+  --background_color4: #012C48;
 
   --font_color: #ffff;
   --font_color2: #b5bac4;
@@ -134,6 +136,6 @@ body {
   --loading: rgba(50, 55, 83, 0.692); 
 }
 
-[data-theme='dark'] .sidebar img {
+[data-theme='dark'] .sidebar img{
   filter: invert(1); 
 }

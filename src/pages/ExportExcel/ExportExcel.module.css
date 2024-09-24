@@ -12,7 +12,7 @@
 }
 
 .left {
-    width: 30%;
+    width: 35%;
     display: flex;
     margin-left: auto;
     margin-right: 2%;
@@ -23,15 +23,14 @@
     font-family: 'SF Pro Medium';
     font-size: 1rem;
     margin-left: 5%;
-    margin-right: 15%;
 }
 
 .subtitle {
     color: #BEBEBE;
     font-family: 'SF Pro Medium';
     font-size: 1rem;
-    margin-right: 3%;
     margin-top: 1%;
+    margin-right: 5%;
 }
 
 .buttonTable {

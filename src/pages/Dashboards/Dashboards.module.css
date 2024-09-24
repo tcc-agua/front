@@ -1,11 +1,12 @@
 .container {
     width: 100%;
-    height:100%;
+    height: 100%;
     display: flex;
     justify-content: center;
 }
 
-.left_side, .right_side {
+.left_side,
+.right_side {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -22,7 +23,7 @@
 .updates {
     display: flex;
     flex-direction: column;
-    background-color: var( --backgroud_color);
+    background-color: var(--backgroud_color);
     border: 1px solid var(--border_color);
     width: 97%;
     border-radius: 10px;
@@ -39,7 +40,7 @@
     color: var(--font_color);
 }
 
-.content_updates { 
+.content_updates {
     display: flex;
     flex-direction: row;
     width: 100%;
@@ -47,7 +48,8 @@
     color: var(--font_color);
 }
 
-.first_update, .second_update {
+.first_update,
+.second_update {
     border: 1px solid var(--border_color);
     border-radius: 7px;
     width: 48.5%;
@@ -77,19 +79,21 @@ pre {
     font-family: "SF Pro Light";
 }
 
-.point, .main_information, .extra_information {
+.point,
+.main_information,
+.extra_information {
     padding: 3px;
 }
 
 .extra {
-  color: #00A4FD;
-  font-weight: bold;
+    color: #00A4FD;
+    font-weight: bold;
 }
 
 .weekly_weather {
     display: flex;
     flex-direction: column;
-    background-color: var( --backgroud_color);
+    background-color: var(--backgroud_color);
     border: 1px solid var(--border_color);
     border-radius: 10px;
     padding: 15px;
@@ -101,12 +105,12 @@ pre {
 .last_activities {
     display: flex;
     flex-direction: column;
-    background-color: var( --backgroud_color);
+    background-color: var(--backgroud_color);
     border: 1px solid var(--border_color);
     width: 97%;
     border-radius: 10px;
     padding: 15px;
-    height: 49.5%;
+    height: 47%;
 }
 
 .title_more {
@@ -148,8 +152,13 @@ pre {
 }
 
 
-.icon_correct { background-color: var(--icon_correct); }
-.icon_export { background-color: var(--icon_export); }
+.icon_correct {
+    background-color: var(--icon_correct);
+}
+
+.icon_export {
+    background-color: var(--icon_export);
+}
 
 
 .imgs_activity {
@@ -197,7 +206,7 @@ pre {
 .graphic {
     display: flex;
     flex-direction: column;
-    background-color: var( --backgroud_color);
+    background-color: var(--backgroud_color);
     border: 1px solid var(--border_color);
     width: 97%;
     border-radius: 10px;
@@ -208,28 +217,46 @@ pre {
 .mapview {
     display: flex;
     flex-direction: column;
-    background-color: var( --backgroud_color);
+    background-color: var(--backgroud_color);
     border: 1px solid var(--border_color);
-    width: 95%;
-    height: 48.5%;
+    width: 97.5%;
+    height: 50.4%;
     border-radius: 10px;
-    padding: 15px;
+    padding: 10px;
 }
 
-.content_mapview img{
+.content_mapview {
+    margin-top: 2%;
+    height: 100%;
+    width: 100%;
+}
+
+.map {
     width: 100%;
     height: 100%;
 }
 
+canvas {
+    border-radius: 6px;
+}
 
-.updates, .weekly_weather, .last_activities, .graphic, .mapview {
+.updates,
+.weekly_weather,
+.last_activities,
+.graphic,
+.mapview {
     transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
 }
 
-.updates:hover, .weekly_weather:hover, .last_activities:hover, .graphic:hover, .mapview:hover {
+.updates:hover,
+.weekly_weather:hover,
+.last_activities:hover,
+.graphic:hover,
+.mapview:hover {
     transform: scale(1.025);
     box-shadow: 0px 1px 10px rgba(0, 0, 0, 0.05);
 }
+
 
 @media (max-width: 1180px) {
     .container {
@@ -241,18 +268,36 @@ pre {
         align-items: center;
     }
 
-    .title { font-size: calc(1vw + 0.5em); }
-    .point { font-size: 13px; }
-    .main_information { font-size: 1.8vw; }
-    .extra_information { font-size: 1vw; }
+    .title {
+        font-size: calc(1vw + 0.5em);
+    }
 
-    .left_side, .right_side { width: 100%; }
-    .left_side { margin-bottom: 15px; }
-    .weekly_weather { 
+    .point {
+        font-size: 13px;
+    }
+
+    .main_information {
+        font-size: 1.8vw;
+    }
+
+    .extra_information {
+        font-size: 1vw;
+    }
+
+    .left_side,
+    .right_side {
+        width: 100%;
+    }
+
+    .left_side {
+        margin-bottom: 15px;
+    }
+
+    .weekly_weather {
         height: 200px;
     }
 
-    .content_weather { 
+    .content_weather {
         align-items: center;
         width: 100%;
         height: 100%;
@@ -260,7 +305,7 @@ pre {
         justify-content: center;
         padding: 0px;
     }
-    
+
     .weekday {
         min-width: 13vw;
         border-radius: 7px;
@@ -268,17 +313,30 @@ pre {
         height: 10vw;
     }
 
-    .title_weekday { font-size: 1.5vw; }
-    .temperature { font-size: 2vw; }
-    .climate { font-size: 1.3vw; }
+    .title_weekday {
+        font-size: 1.5vw;
+    }
+
+    .temperature {
+        font-size: 2vw;
+    }
+
+    .climate {
+        font-size: 1.3vw;
+    }
 
     .last_activities {
         height: 100%;
         margin-bottom: 15px;
     }
 
-    .data_activity { font-size: calc(1.2vw + 0.5em);}
-    .days { font-size: calc(1vw + 0.5em); }
+    .data_activity {
+        font-size: calc(1.2vw + 0.5em);
+    }
+
+    .days {
+        font-size: calc(1vw + 0.5em);
+    }
 
 }
 
@@ -289,11 +347,20 @@ pre {
         align-items: center;
     }
 
-    .title { font-size: calc(1.4vw + 1em); }
+    .title {
+        font-size: calc(1.4vw + 1em);
+    }
 
-    .left_side, .right_side { width: 100%;}
+    .left_side,
+    .right_side {
+        width: 100%;
+    }
 
-    .updates, .weekly_weather, .graphic, .last_activities, .mapview {
+    .updates,
+    .weekly_weather,
+    .graphic,
+    .last_activities,
+    .mapview {
         width: 100%;
         background-color: var(--backgroud_color2);
         border: none;
@@ -306,17 +373,31 @@ pre {
         width: 100%;
     }
 
-    .point { font-size: 16px; }
-    .main_information { font-size: 19px; }
-    .extra_information { font-size: 13px; }
+    .point {
+        font-size: 16px;
+    }
 
-    .first_update, .second_update {
+    .main_information {
+        font-size: 19px;
+    }
+
+    .extra_information {
+        font-size: 13px;
+    }
+
+    .first_update,
+    .second_update {
         width: 95%;
         background-color: var(--backgroud_color);
     }
 
-    .first_update { margin-bottom: 15px; }
-    .weekly_weather { overflow-x: auto; }
+    .first_update {
+        margin-bottom: 15px;
+    }
+
+    .weekly_weather {
+        overflow-x: auto;
+    }
 
     .content_weather {
         display: inline-flex;
@@ -332,8 +413,13 @@ pre {
         margin-right: 5px;
     }
 
-    .temperature { font-size: 5vw; }
-    .climate { font-size: 3vw; }
+    .temperature {
+        font-size: 5vw;
+    }
+
+    .climate {
+        font-size: 3vw;
+    }
 
     .grafico {
         display: flex;
@@ -362,13 +448,18 @@ pre {
     .activity {
         margin-bottom: 15px;
     }
-    
+
 
     .icon_activity {
         width: 11vw;
         height: 11vw;
     }
 
-    .data_activity { font-size: calc(1.9vw + 1em);}
-    .days { font-size: calc(1.5vw + 1em); }
+    .data_activity {
+        font-size: calc(1.9vw + 1em);
+    }
+
+    .days {
+        font-size: calc(1.5vw + 1em);
+    }
 }

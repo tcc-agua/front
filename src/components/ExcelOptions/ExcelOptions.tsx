@@ -56,7 +56,7 @@ const DropdownButton: React.FC<DropdownButtonProps> = ({
           justifyContent: 'space-between',
           alignItems: 'center',
           width: '100%',
-          minWidth: '100px',
+          minWidth: '150px',
           height: '100%',
           minHeight: '20px',
           fontSize: '1rem',

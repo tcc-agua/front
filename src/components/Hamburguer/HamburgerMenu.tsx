@@ -10,6 +10,7 @@ import MapaIMG from '../../assets/images/mapa.svg';
 import MaisIMG from '../../assets/images/mais.svg';
 import HistoricoIMG from '../../assets/images/historico.svg';
 import ExportarIMG from '../../assets/images/exportar.svg';
+import MenuIMG from '../../assets/images/menu.svg';
 
 //blue icons
 import HomeBlueIMG from '../../assets/images/home-blue.svg';
@@ -24,6 +25,7 @@ import MapaWhite from '../../assets/images/darkmode_icons/map_white.svg';
 import MaisWhite from '../../assets/images/darkmode_icons/plus_white.svg';
 import HistoricoWhite from '../../assets/images/darkmode_icons/historic_white.svg';
 import ExportarWhite from '../../assets/images/darkmode_icons/export_white.svg';
+import MenuWhite from '../../assets/images/menuWhite.svg';
 
 const HamburgerMenu: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -45,15 +47,24 @@ const HamburgerMenu: React.FC = () => {
         aria-label="Menu"
         aria-expanded={isOpen}
       >
-        <div className={`${styles.bar} ${isOpen ? styles.open : ''}`}></div>
-        <div className={`${styles.bar} ${isOpen ? styles.open : ''}`}></div>
-        <div className={`${styles.bar} ${isOpen ? styles.open : ''}`}></div>
+        <img src={isDarkMode ? MenuWhite : MenuIMG}></img>
       </button>
+
+      {/* Overlay Escuro */}
+      {isOpen && <div className={styles.overlay} onClick={toggleMenu}></div>}
+
       <nav
         className={`${styles.menu} ${isOpen ? styles.open : ''}`}
         aria-hidden={!isOpen}
       >
-        <section>
+        <button 
+          className={styles.voltar}
+          onClick={toggleMenu}
+          aria-label="Menu"
+          aria-expanded={isOpen}>
+            <pre>←     Voltar</pre>
+        </button>
+        <section className={styles.container}>
           <div className={`${styles.options} ${location.pathname === '/inicial' ? styles.active : ''}`}>
             <Link className={styles.content_options} to={"/inicial"}>
               <div className={styles.blue}></div>
@@ -62,7 +73,7 @@ const HamburgerMenu: React.FC = () => {
                 alt="home"
                 className={styles.imagem}
               />
-              <p>Página Inicial</p>
+              <p className={styles.pages}>Página Inicial</p>
             </Link>
           </div>
 
@@ -73,7 +84,7 @@ const HamburgerMenu: React.FC = () => {
                 src={getIcon(MapaIMG, MapaBlueIMG, MapaWhite, '/inicial/mapa')}
                 alt="map"
               />
-              <p>Mapa 3D</p>
+              <p className={styles.pages}>Mapa 3D</p>
             </Link>
           </div>
 
@@ -84,7 +95,7 @@ const HamburgerMenu: React.FC = () => {
                 src={getIcon(MaisIMG, MaisBlueIMG, MaisWhite, '/inicial/coleta_de_dados')}
                 alt="mais"
               />
-              <p>Coleta de Dados</p>
+              <p className={styles.pages}>Coleta de Dados</p>
             </Link>
           </div>
 
@@ -95,7 +106,7 @@ const HamburgerMenu: React.FC = () => {
                 src={getIcon(HistoricoIMG, HistoricoBlueIMG, HistoricoWhite, '/inicial/historico')}
                 alt="historic"
               />
-              <p>Histórico</p>
+              <p className={styles.pages}>Histórico</p>
             </Link>
           </div>
 
@@ -106,7 +117,7 @@ const HamburgerMenu: React.FC = () => {
                 src={getIcon(ExportarIMG, ExportarBlueIMG, ExportarWhite, '/inicial/exportar_excel')}
                 alt="export"
               />
-              <p>Exportar Excel</p>
+              <p className={styles.pages}>Exportar Excel</p>
             </Link>
           </div>
         </section>
