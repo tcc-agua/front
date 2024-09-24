@@ -15,7 +15,7 @@ interface Detail {
   id: number;
   tipo: string;
   ponto: string;
-  dados: any; 
+  dados: any;
 }
 
 interface Coleta {
@@ -32,6 +32,7 @@ const Historic: React.FC = () => {
   const [modalOpen, setModalOpen] = useState(false);
   const [selectedDetail, setSelectedDetail] = useState<Detail | null>(null);
   const [coletasPonto, setColetasPonto] = useState<Coleta[]>([]);
+  const [carouselIndex, setCarouselIndex] = useState(0);
 
   const days: DropdownItem[] = Array.from({ length: 31 }, (_, i) => ({
     id: (i + 1).toString(),
@@ -80,7 +81,7 @@ const Historic: React.FC = () => {
             const startDate = dayjs().subtract(15, 'day').format('YYYY-MM-DD');
             paramsData = { startDate, endDate };
           }
-          const response = await fetchColetasByData(paramsData)
+          const response = await fetchColetasByData(paramsData);
           setColetasPonto(response);
         }
       } catch (e) {
@@ -90,6 +91,8 @@ const Historic: React.FC = () => {
     fetchPontosPorColeta();
   }, [selectedDay, selectedMonth, selectedYear]);
 
+  console.log(coletasPonto)
+
   const handleOpenDetail = (detail: Detail) => {
     setSelectedDetail(detail);
     setModalOpen(true);
@@ -98,13 +101,34 @@ const Historic: React.FC = () => {
   const handleCloseModal = () => {
     setModalOpen(false);
     setSelectedDetail(null);
+    setCarouselIndex(0);
   };
+
+  const handleNext = () => {
+    if (selectedDetail && carouselIndex + 2 < Object.keys(selectedDetail.dados).length) {
+      setCarouselIndex(prevIndex => prevIndex + 2);
+    }
+  };
+
+  const handlePrevious = () => {
+    if (carouselIndex > 0) {
+      setCarouselIndex(prevIndex => prevIndex - 2);
+    }
+  };
+
+  const visibleInfoContainers = selectedDetail
+  ? Object.entries(selectedDetail.dados)
+    .filter(([key]) => key !== 'id' && key !== '')
+    .slice(carouselIndex, carouselIndex + 2)
+  : [];
 
   return (
     <div className={styles.container}>
       <p className={styles.title_filter}>Selecione uma data:</p>
       <div className={styles.content_buttons}>
-        <button className={styles.filtrar}>Filtrar</button>
+        <div className={styles.filterContainer}>
+          <button className={styles.filtrar}>Filtrar</button>
+        </div>
         <div className={styles.buttons}>
           <div className={styles.dropdownContainer}>
             <DropdownButton
@@ -135,13 +159,13 @@ const Historic: React.FC = () => {
       <p className={styles.title}>Últimas coletas:</p>
       <div className={styles.colects}>
         {coletasPonto
-          .filter(coleta => coleta.details.length > 0) // Filtra coletas que possuem detalhes
+          .filter(coleta => coleta.details.length > 0)
           .map(coleta => (
             <ColetaItem
               key={coleta.id}
               date={coleta.date}
               description={coleta.description}
-              details={coleta.details.filter(detail => Object.keys(detail.dados).length > 0)} // Filtra detalhes que possuem dados
+              details={coleta.details.filter(detail => Object.keys(detail.dados).length > 0)}
               onOpenDetail={handleOpenDetail}
             />
           ))}
@@ -149,26 +173,43 @@ const Historic: React.FC = () => {
 
       {modalOpen && selectedDetail && (
         <div className={styles.modal}>
-          <div className={styles.modalContent}>
-            <button className={styles.close} onClick={handleCloseModal}>x</button>
-            <p className={styles.pointName}>Dados de coleta do ponto {selectedDetail.ponto}</p>
+        <div className={styles.modalContent}>
+          <button className={styles.close} onClick={handleCloseModal}>x</button>
+          <p className={styles.pointName}>Dados de coleta do ponto {selectedDetail.ponto}</p>
 
-            <main>
-              {Object.entries(selectedDetail.dados).map(([key, value]) => (
-                <div key={key} className={styles.infoContainer}>
-                  <p className={styles.pointName}>{key}</p>
-                  <div className={styles.information}>
-                    <p className={styles.pointName}>{String(value)}</p>
-                  </div>
+          <main className={styles.carousel}>
+            <button 
+              className={`${styles.carousel_button} ${carouselIndex === 0 ? styles.carousel_button_invisible : ''}`} 
+              onClick={handlePrevious}
+              disabled={carouselIndex === 0}
+            >
+              ‹
+            </button>
+
+            {visibleInfoContainers.map(([key, value]) => (
+              <div 
+                key={key} 
+                className={`${styles.infoContainer} ${key === "*" ? styles.hidden : ''}`}
+              >
+                <p className={styles.pointName}>{key}</p>
+                <div className={styles.information}>
+                  <p className={styles.pointName}>{String(value)}</p>
                 </div>
-              ))}
-              <div className={styles.separator}></div>
-            </main>
+              </div>
+            ))}
 
-          </div>
+            <button 
+              className={`${styles.carousel_button} ${carouselIndex + 2 >= Object.keys(selectedDetail.dados).length ? styles.carousel_button_invisible : ''}`} 
+              onClick={handleNext}
+              disabled={carouselIndex + 2 >= Object.keys(selectedDetail.dados).length}
+            >
+              ›
+            </button>
+          </main>
         </div>
-      )}
-    </div>
+      </div>
+    )}
+  </div>
   );
 };
 

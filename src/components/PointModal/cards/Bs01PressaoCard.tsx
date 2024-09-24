@@ -2,7 +2,11 @@ import styles from "../../../pages/PointCollect/PointCollect.module.css"
 import { useState } from "react";
 import { InputPoint } from "../InputPoint";
 
-function Bs01PressaoCard() {
+interface PointNameProps{
+    name: string
+}
+
+function Bs01PressaoCard({ name }: PointNameProps) {
     const [pressure, setPressure] = useState<number>(1);
 
     const increment = (setter: React.Dispatch<React.SetStateAction<number>>, isInteger?: boolean) => {
@@ -22,7 +26,7 @@ function Bs01PressaoCard() {
 
     return (
         <>
-            <p className={styles.pointName}>Dados de coleta do ponto BS01 Pressão</p>
+            <p className={styles.pointName}>Dados de coleta do ponto '{name}'</p>
             <main className={styles.infoContainer}>
                 <InputPoint
                     decrement={() => decrement(setPressure, false)}

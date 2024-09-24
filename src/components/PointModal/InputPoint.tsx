@@ -43,7 +43,6 @@ export function BooleanInput({ titulo, valor, handleChange }: BooleanInputProps)
   );
 }
 
-
 export function InputPoint({ decrement, handleChange, increment, titulo, valor, isInteger }: InputPointProps) {
 
     return (

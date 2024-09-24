@@ -45,6 +45,7 @@ body {
   --font_color: #303030;
   --font_color2: #8d8d8d;
   --font_color3: #DCDCDC;
+  --font_color4: #afafaf;
 
   --border_color: #DCDCDC;
 
@@ -79,6 +80,10 @@ body {
   --dropdown_button: #ddf3ff;
 
   --hover_hamburger: #c6e4f55b;
+
+  --sky: #a2d6ff;
+
+  --loading: rgba(255, 255, 255, 0.658); 
 }
 
 [data-theme="dark"]{
@@ -89,6 +94,7 @@ body {
   --font_color: #ffff;
   --font_color2: #b5bac4;
   --font_color3: #6e759c;
+  --font_color4: #cecece;
 
   --border_color: #053C5A;
 
@@ -122,6 +128,10 @@ body {
   --table_grid: #ffff;
 
   --hover_hamburger: #004974;
+
+  --sky: #07416d;
+
+  --loading: rgba(50, 55, 83, 0.692); 
 }
 
 [data-theme='dark'] .sidebar img {

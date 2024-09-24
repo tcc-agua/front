@@ -2,7 +2,11 @@ import styles from "../../../pages/PointCollect/PointCollect.module.css"
 import { useState } from "react";
 import { InputPoint } from "../InputPoint";
 
-function Bs01HidrometroCard() {
+interface PointNameProps{
+    name: string
+}
+
+function Bs01HidrometroCard({ name }:PointNameProps ) {
     const [volume, setVolume] = useState<number>(1);
 
     const increment = (setter: React.Dispatch<React.SetStateAction<number>>, isInteger?: boolean) => {
@@ -22,7 +26,7 @@ function Bs01HidrometroCard() {
 
     return (
         <>
-            <p className={styles.pointName}>Dados de coleta do ponto BS01 Hidrometro</p>
+            <p className={styles.pointName}>Dados de coleta do ponto '{name}'</p>
             <main className={styles.infoContainer}>
                 <InputPoint
                     decrement={()=> decrement(setVolume, true)}

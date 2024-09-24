@@ -2,7 +2,11 @@ import styles from "../../../pages/PointCollect/PointCollect.module.css";
 import React, { useState } from "react";
 import { BooleanInput, InputPoint } from "../InputPoint";
 
-function ColunasCarvaoCard() {
+interface PointNameProps{
+    name: string
+}
+
+function ColunasCarvaoCard({ name }: PointNameProps) {
     const [pressure_c01, setPressure_c01] = useState<number>(1);
     const [pressure_c02, setPressure_c02] = useState<number>(1);
     const [pressure_c03, setPressure_c03] = useState<number>(1);
@@ -31,7 +35,7 @@ function ColunasCarvaoCard() {
 
     return (
         <>
-            <p className={styles.pointName}>Dados de coleta do ponto Colunas Carvão</p>
+            <p className={styles.pointName}>Dados de coleta do ponto '{name}'</p>
             <main className={styles.infoContainer}>
                 <InputPoint
                     decrement={() => decrement(setPressure_c01, false)}

@@ -35,15 +35,17 @@
   justify-content: center;
 }
 
-.welcome {
+.title_welcome {
   margin-bottom: 7px;
-  font-size: 2.4vw;
+  font-size: 2vw;
   font-family: "SF Pro Semibold";
+  margin-bottom: 3%;
 }
 
-.content_welcome {
+.subtitle_welcome {
   font-size: 1.3vw;
   font-family: "SF Pro Regular";
+  color: #7e7e7e;
 }
 
 .content_right_side {
@@ -73,6 +75,7 @@
   margin-right: 30px;
   margin-top: 10px;
   height: 10%;
+  font-size: 1vw;
 }
 
 .content_img {
@@ -83,8 +86,8 @@
 }
 
 .login_button {
-  margin-top: 20px;
-  width: 90%;
+  margin-top: 25px;
+  width: 80%;
   height: 40px;
   border-radius: 10px;
   border: none;

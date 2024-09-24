@@ -7,7 +7,6 @@ import { postNotif } from "../../api/api";
 import { PointModal } from "../../components/PointModal";
 
 
-
 interface Point {
     id: string;
     nome: string;
@@ -22,7 +21,7 @@ interface PointNamesProps {
 export function PointNames({ onSelectPoint }: PointNamesProps) {
     const [points, setPoints] = useState<Point[]>([]); // Inicialize como array vazio
     const id_token = localStorage.getItem("id_token");
-    const { planilha } = useUtilsStore();
+    const { planilha,  setQtdPontos } = useUtilsStore();
 
     console.log(planilha)
 
@@ -34,18 +33,20 @@ export function PointNames({ onSelectPoint }: PointNamesProps) {
                     const response = await fetchPointBySheet(planilha);
                     if (Array.isArray(response)) {
                         setPoints(response);
+                        setQtdPontos(response.length)
                     } else {
-                        setPoints([]); // Caso não seja um array, define um array vazio
+                        setPoints([]);
                     }
                 } catch (error) {
                     console.error("Erro ao buscar pontos:", error);
-                    setPoints([]); // Em caso de erro, define um array vazio
+                    setPoints([]); 
+                    setQtdPontos(0);
                 }
             }
         };
 
         fetchPoints();
-    }, [id_token, planilha]);
+    }, [id_token, planilha, setQtdPontos]);
 
     return (
         <div className={styles.select_point_grid}>
@@ -68,12 +69,10 @@ export function PointNames({ onSelectPoint }: PointNamesProps) {
     );
 }
 
-
 export function PointCollect() {
     const [isModalOpen, setModalOpen] = useState<boolean>(false);
     const [selectedPoint, setSelectedPoint] = useState<Point | null>(null);
-    const { planilha } = useUtilsStore(); 
-    
+    const { planilha,  qtdPontos } = useUtilsStore(); 
 
     const openModal = (point: Point) => {
         setSelectedPoint(point);
@@ -85,8 +84,6 @@ export function PointCollect() {
         setSelectedPoint(null);
     };
 
-
-
     const notify = async () => {
         try {
             const result = await postNotif(planilha, "SALVO");
@@ -97,38 +94,126 @@ export function PointCollect() {
     };
 
  function renderCardInfo(name: string){
+
+    if(name.startsWith("PM") || name.startsWith("PT")){
+        return <PointModal.PMPT
+        name={name}
+        />
+    }
+    if(name.startsWith("PB")){
+        return <PointModal.PBS
+        name={name}
+        />
+    }
+    if(name.startsWith("CD")){
+        return <PointModal.CD
+        name={name}
+        />
+    }
+    if(name == "TQ04" || name == "TQ05"){
+        return <PointModal.TQ04_TQ05
+        name={name}
+        />
+    }
+    if(name.startsWith("AG") || name == "BS01 HORIMETRO"){
+        return <PointModal.HORIMETRO
+        name={name}
+        />
+    }
+
     switch(name){
         case "BC01": 
-            return <PointModal.BC01/>
+            return <PointModal.BC01
+            name={name}
+            />
 
         case "BC06":
-            return <PointModal.BC06/>
+            return <PointModal.BC06  
+            name={name}
+            />
         
         case "BH02":
-            return <PointModal.BH02/>
+            return <PointModal.BH02  
+            name={name}
+            />
         
         case "BOMBA BC03":
-            return <PointModal.BOMBA_BC03/>
+            return <PointModal.BOMBA_BC03
+            name={name}
+            />
         
         case "BS01 HIDROMETRO":
-            return <PointModal.BS01_HIDROMETRO/>
+            return <PointModal.BS01_HIDROMETRO
+            name={name}
+            />
         
         case "BS01 PRESSAO":
-            return <PointModal.BS01_PRESSAO/>
-        
-        case "CD":
-            return <PointModal.CD/>
+            return <PointModal.BS01_PRESSAO
+            name={name}
+            />
         
         case "COLUNAS CARVAO":
-            return <PointModal.COLUNAS_CARVAO/>
+            return <PointModal.COLUNAS_CARVAO
+            name={name}
+            />
+
+        case "FASE LIVRE":
+            return <PointModal.FASE_LIVRE
+            name={name}
+            />
+
+        case "FILTRO CARTUCHO":
+            return <PointModal.FILTRO_CARTUCHO
+            name={name}
+            />
+
+        case "HORIMETRO":
+            return <PointModal.HORIMETRO
+            name={name}
+            />
+        
+        case "SENSOR PH":
+            return <PointModal.SENSOR_PH
+            name={name}
+            />
+
+        case "TQ01":
+            return <PointModal.TQ01
+            name={name}
+            />
+
+        case "TQ02":
+            return <PointModal.TQ02
+            name={name}
+            />
+
+        case "TQ04 TQ05":
+            return <PointModal.TQ04_TQ05
+            name={name}
+            />
     }
  }
+
+ function getPlanilhaTitle(planilha: string | null) {
+    switch (planilha) {
+        case "DADOS ETAS":
+            return "Estações de Tratamento de Águas Subterrâneas";
+        case "PBS":
+            return "Poços de Bombeamento";
+        case "NA":
+            return "Nível de Água";
+        default:
+            return "Planilha não encontrada!";
+    }
+}
+
 
     return (
         <>
             <main className={styles.container}>
-                <p className={styles.title}>Estações de Tratamento de Águas Subterrâneas</p>
-                <div className={styles.main_information}>
+            <p className={styles.title}>
+                {getPlanilhaTitle(planilha)}
+            </p>                <div className={styles.main_information}>
                     <div className={styles.left_side}>
                         <div className={styles.select_point_container}>
                             <p className={styles.select_point_title}>Selecione um ponto:</p>
@@ -137,7 +222,15 @@ export function PointCollect() {
                     </div>
                     <div className={styles.right_side}>
                         <div className={styles.point_information}>
-                            <p className={styles.point_information_text}>Ainda restam <span className={styles.point_information_number}>22</span> pontos para completar o arquivo ETAS</p>
+                            <p className={styles.point_information_text}>Existem <span className={styles.point_information_number}>{qtdPontos}</span> pontos para preencher o arquivo   {
+                planilha === "DADOS ETAS" 
+                    ? "'ETAS'" 
+                    : planilha === "PBS"
+                    ? "'Poços de Bombeamento'"
+                    : planilha === "NA"
+                    ? "'Nível de Água'"
+                    : "'Planilha não encontrada!'"
+                    }</p>
                         </div>
                         <div className={styles.map_container}>
                             <p className={styles.map_title}>Localize seus pontos no mapa:</p>

@@ -6,10 +6,11 @@
 .content_buttons {
     width: 100%;
     display: flex;
-    height: 15%;
-    justify-content: end;
-    align-items: center;
+    height: 100px;
+    justify-content: flex-end;
+    align-items: center; 
 }
+
 
 .title, .title_filter{
     font-family: 'SF Pro Medium';
@@ -26,11 +27,27 @@
     margin-right: 5%;
 }
 
+
+.filtrar {
+    padding: 10px 7%;
+    background-color: #01A4FD;
+    border: none;
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+    height: 50%; 
+    display: flex;
+    justify-content: center;
+    align-items: center; 
+    width: 40%;
+}
+
 .buttons {
     display: flex;
-    justify-content: end;
-    height: 50%;
-    width: 60%;
+    justify-content: flex-end;
+    align-items: center;
+    height: 100%;
+    width: 70%; 
     margin-left: 20px;
 }
 
@@ -38,44 +55,12 @@
     display: flex;
     gap: 1.5em;
     width: 100%;
-    justify-content: end;
+    justify-content: flex-end;
 }
 
-.filtrar {
-    padding: 10px 7%;
-    background-color: var(--NA_title);
-    border: none;
-    color: var(--backgroud_color);
-    border-radius: 5px;
-    cursor: pointer;
-}
 
 .filtrar:hover {
     background-color: var(--PB_title);
-}
-
-
-
-@media (max-width: 600px) {
-    .buttons {
-        margin-left: 0;
-    }
-
-    .dropdownContainer {
-        gap: 0.5em;
-    }
-
-    .title {
-        font-family: 'SF Pro Medium';
-        font-size: 1.2rem;
-    }
-}
-
-@media (min-width: 601px) {
-    .dropdownContainer {
-        flex-direction: row;
-        justify-content: center;
-    }
 }
 
 .colects {
@@ -141,35 +126,47 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-}
+  }
 
-@media (max-width: 600px) {
-    .modalContent {
-        width: 65%;
-        height: 70%;
-    }
-}
-
-@media (max-width: 900px) {
-    .modalContent {
-        width: 50%;
-        height: 60%;
-    }
-}
-
-@media (max-width: 700px) {
-    .modalContent {
-        width: 60%;
-        height: 60%;
-    }
-}
+  .carousel {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+  }
 
 
 .pointName {
     margin-top: 5%;
     margin-bottom: 10%;
     text-align: center;
+    font-size: 1.4vw;
 }
+
+.carousel_button {
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    cursor: pointer;
+    border: none;
+    background-color: white;
+    transition: opacity 0.3s;
+}
+  
+  .carousel_button:disabled {          
+    cursor: auto;        
+  }
+
+  .carousel_button_invisible {
+    opacity: 0; 
+    background-color: transparent; 
+    visibility: visible;
+}
+  
 
 main {
     display: flex;
@@ -186,7 +183,7 @@ main {
     justify-content: center;
     width: 45%;
     height: 80%;
-}
+  }
 
 .information {
     display: flex;
@@ -206,8 +203,25 @@ main {
 .separator {
     border-left: 1px solid var(--border_color);
     height: 55%;
-    margin-top: 7%;
-}
+  }
+
+  .nextButton {
+    font-size: 2rem;
+    background: none;
+    border: none;
+    cursor: pointer;
+  }
+
+  .transparentContainer {
+    opacity: 0;
+    visibility: hidden;
+  }
+
+  .filterContainer {
+    display: flex;
+    justify-content: flex-end; /* Alinha o botão à esquerda */
+    width: 50%; /* Garante que ocupe a largura total */
+  }
 
 @media (max-width: 500px) {
     .information {
@@ -221,11 +235,181 @@ main {
         align-items: center;
     }
 
-    .separator {
-        display: block;
-        width: 50%;
-        height: 1px;
-        background-color: #ccc;
-        margin: 1rem 0;
+    .modalContent {
+        width: 65%;
+        height: 70%;
+      }
+      
+      .infoContainer {
+        width: 90%;
+      }
+      
+      .separator {
+        display: none;
+      }
+    
+      .nextButton {
+        font-size: 1.5rem;
+      }
+}
+
+@media (max-width: 600px) {
+    .modalContent {
+        width: 65%;
+        height: 70%;
     }
+    .content_buttons {
+        justify-content: center;
+        align-items: center;
+    }
+
+    .buttons {
+        width: 100%;
+        flex-direction: column;
+        align-items: center;
+        margin-left: 0;
+        margin-top: 5px;
+    }
+
+    .dropdownContainer {
+        width: 100%;
+        justify-content: center;
+        gap: 0.5em; 
+    }
+
+    .filtrar {
+        width: 90%;
+        padding: 12px;
+        font-size: 1rem; 
+    }
+
+    .title_filter {
+        font-size: 1.1rem; 
+        margin-right: 0; 
+        text-align: center; 
+    }
+
+    .title {
+        font-size: 1rem; 
+    }
+
+    
+}
+
+@media (max-width: 900px) {
+    .modalContent {
+        width: 100%;
+        height: 60%;
+    }
+    .content_buttons {
+        flex-direction: column-reverse; 
+        justify-content: center;
+        align-items: flex-end;
+        height: auto;
+        margin-bottom: 25px;
+        width: 100%;
+    }
+
+    .buttons {
+        width: 100%;
+        margin-left: 0; 
+        justify-content: center;
+        margin-top: 10px; 
+    }
+
+    .dropdownContainer {
+        flex-direction: column;
+        gap: 0.8em; 
+        width: 100%; 
+        justify-content: center;
+        margin-right: 25px;
+    }
+
+    .filtrar {
+        width: 23.5%; 
+        padding: 10px 0; 
+        margin-top: 10px;
+        margin-right: 25px;
+        width: 47%;
+    }
+
+    .title, .title_filter {
+        font-size: calc(1.4vw + 0.3em);
+    }
+    
+}
+
+@media (max-width: 700px) {
+    .modalContent {
+        width: 60%;
+        height: 60%;
+    }
+}
+
+@media (max-width: 600px) {
+    .buttons {
+        margin-left: 0;
+    }
+
+    .dropdownContainer {
+        gap: 0.5em;
+    }
+
+    .title {
+        font-family: 'SF Pro Medium';
+        font-size: 1.2rem;
+    }
+}
+
+@media (min-width: 300px) {
+    .dropdownContainer {
+        flex-direction: row;
+        justify-content: center;
+    }
+}
+
+@media (max-width: 1080px) {
+    .content_buttons {
+        justify-content: center;
+    }
+
+    .buttons {
+        width: 80%;
+    }
+}
+
+@media (max-width: 680px) {
+    .title, .title_filter {
+        font-size: calc(1.4vw + 0.7em);
+    }
+
+    .title_filter {
+        text-align: start;
+    }
+
+    .content_buttons {
+        justify-content: center;
+        align-items: center;
+        padding: 0px 7px;
+    }
+
+    .buttons {
+        width: 95%;
+        flex-direction: column;
+        align-items: center;
+        margin-left: 0;
+        margin-top: 5px;
+      }
+
+    .filterContainer {
+        justify-content: flex-start;
+        margin-left: 0;
+        width: 100%;
+      }
+
+      .filtrar {
+        width: 30%;
+      }
+
+    
 }

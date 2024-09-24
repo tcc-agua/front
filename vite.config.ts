@@ -69,6 +69,30 @@ export default defineConfig({
         secure: false,
         rewrite: (path) => path.replace(/^\/gateway/, ''),
       } as ProxyOptions,
+      '/notificacoes/getNotif': {
+        target: URL,
+        changeOrigin: true,
+        secure: false,
+        rewrite: (path) => path.replace(/^\/gateway/, ''),
+      } as ProxyOptions,
+      '/excel/': {
+        target: URL,
+        changeOrigin: true,
+        secure: false,
+        rewrite: (path) => path.replace(/^\/gateway/, ''),
+      } as ProxyOptions,
+      '/TQ01/': {
+        target: URL,
+        changeOrigin: true,
+        secure: false,
+        rewrite: (path) => path.replace(/^\/gateway/, ''),
+      } as ProxyOptions,
+      '/TQ01/get': {
+        target: URL,
+        changeOrigin: true,
+        secure: false,
+        rewrite: (path) => path.replace(/^\/gateway/, ''),
+      } as ProxyOptions,
     }
   }
 });

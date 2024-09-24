@@ -1,12 +1,14 @@
-import { Link } from "react-router-dom";
-import styles from "./Dashboards.module.css";
-import icon_correct from "../../assets/images/correct.svg";
-import icon_export from "../../assets/images/export_activity.svg";
-import Graphic from "../../components/Graphic/Graphic";
-import Map from "../../assets/images/mapa-panorama.svg";
-import Forecast from "../../components/Forecast/Forecast";
+import { Link } from "react-router-dom"
+import styles from "./Dashboards.module.css"
+import icon_correct from "../../assets/images/correct.svg"
+import icon_export from "../../assets/images/export_activity.svg"
+import Graphic from "../../components/Graphic/Graphic"
+import Map from "../../assets/images/mapa-panorama.svg"
+import MapDarkmode from "../../assets/images/foto_mapa_dark.svg";
+import Forecast from "../../components/Forecast/Forecast"
 import { useEffect, useState } from "react";
-import { fetchNotif, fetchPH } from "../../api/api";
+import { fetchNotif, fetchPH, fetchTQ01 } from "../../api/api";
+import { useTheme } from '../../components/ThemeContext/ThemeContext';
 
 const mockData = {
     months: ["Janeiro", "Fevereiro", "Março", "Abril", "Maio"],
@@ -15,10 +17,10 @@ const mockData = {
 };
 
 interface Notification {
-    id: number; 
+    id: number;
     tabela: 'DADOS ETAS' | 'NA' | 'PB' | 'EXCEL';
     tipo: 'SALVO' | 'EXPORTADO';
-    data: string;  
+    data: string;
 }
 
 interface PH {
@@ -26,10 +28,19 @@ interface PH {
     ph: number;
 }
 
+interface Nivel {
+    id: number,
+    nivel: number
+}
+
+const MapDark = () => {
+    const { isDarkMode } = useTheme(); 
+    return isDarkMode ? MapDarkmode : Map;
+}
 
 const getDateDifference = (notifDate: string): string => {
     const [notifYear, notifMonth, notifDay] = notifDate.split('-').map(Number);
-    const notifDateObj = new Date(notifYear, notifMonth - 1, notifDay); 
+    const notifDateObj = new Date(notifYear, notifMonth - 1, notifDay);
 
     const today = new Date();
     const todayYear = today.getFullYear();
@@ -55,14 +66,15 @@ export const SensorPH: React.FC = () => {
     useEffect(() => {
         const getPH = async () => {
             try {
+                await new Promise((resolve) => setTimeout(resolve, 3000));
                 const data: PH[] = await fetchPH();
                 const sortedPH = data.sort((a, b) => b.id - a.id);
                 setPh(sortedPH);
 
-                
+
                 if (sortedPH.length >= 2) {
-                    const lastPH = sortedPH[0].ph; 
-                    const previousPH = sortedPH[1].ph; 
+                    const lastPH = sortedPH[0].ph;
+                    const previousPH = sortedPH[1].ph;
 
                     const percentageDifference = ((lastPH - previousPH) / previousPH) * 100;
                     setDifferencePercentage(Math.abs(percentageDifference));
@@ -95,6 +107,53 @@ export const SensorPH: React.FC = () => {
     );
 };
 
+export const Niveltq01: React.FC = () => {
+    const [, setNivel] = useState<Nivel[]>([]);
+    const [differencePercentage, setDifferencePercentage] = useState<number>(0);
+    const [isIncrease, setIsIncrease] = useState<boolean>(true);
+    
+    useEffect(() => {
+        const getNivel = async () => {
+            try {
+                await new Promise((resolve) => setTimeout(resolve, 3000));
+                const data: Nivel[] = await fetchTQ01();
+                const sortedNivel = data.sort((a, b) => b.id - a.id);
+                setNivel(sortedNivel);
+
+                if(sortedNivel.length >= 2) {
+                    const lastNivel = sortedNivel[0].nivel;
+                    const previousNivel = sortedNivel[1].nivel;
+                    if ( previousNivel !== 0 ) {
+                        const percentageDiff = ((lastNivel - previousNivel) / previousNivel) * 100;
+                        setDifferencePercentage(Math.abs(percentageDiff));
+                        setIsIncrease(percentageDiff > 0);
+                    }
+                }
+            } catch (error) {
+                console.error("Erro ao buscar informações de 'Nivel TQ01.");
+                console.log(error)
+            }
+        };
+        getNivel();
+    }, []);
+
+    return (
+        <div className={styles.second_update}>
+            <p className={styles.point}>Dados ETAS - TQ01 Nível</p>
+            <p className={styles.main_information}>{isIncrease ? 'Nível mais alto' : 'Nível mais baixo'}</p>
+            <div className={styles.extra_information}>
+                <pre>
+                    <span className={styles.extra}>
+                        {isIncrease ? '↗' : '↘'} {differencePercentage.toFixed(0)}%
+                        </span> {' '}
+                        {isIncrease ? 'maior' : 'menor'} que na última semana
+                    </pre>
+            </div>
+        </div>
+    )
+
+};
+
 
 export const Notifications: React.FC = () => {
     const [notifications, setNotifications] = useState<Notification[]>([]);
@@ -102,9 +161,10 @@ export const Notifications: React.FC = () => {
     useEffect(() => {
         const getNotifications = async () => {
             try {
+                await new Promise((resolve) => setTimeout(resolve, 3000));
                 const data: Notification[] = await fetchNotif();
                 const sortedNotifications = data.sort((a, b) => b.id - a.id);
-                
+
                 setNotifications(sortedNotifications);
             } catch (error) {
                 console.error("Erro ao buscar notificações.");
@@ -156,24 +216,18 @@ export const Notifications: React.FC = () => {
 };
 
 export function Dashboards() {
+    const mapSrc = MapDark();
+
     return (
         <div className={styles.container}>
             <div className={styles.left_side}>
                 <div className={styles.updates}>
                     <p className={styles.title}>Atualizações</p>
                     <div className={styles.content_updates}>
-                        
-                        <SensorPH/>
 
-                        {/* <div className={styles.second_update}>
-                            <p className={styles.point}>CD 24</p>
-                            <p className={styles.main_information}>Volume superior</p>
-                            <div className={styles.extra_information}>
-                                <pre><span className={styles.extra}>↗ 03%</span> maior que o esperado</pre>
-                            </div>
-                        </div> */} 
+                        <SensorPH />
 
-                        {/* NAO APAGUEM */}
+                        <Niveltq01/>
 
                     </div>
                 </div>
@@ -202,7 +256,7 @@ export function Dashboards() {
                 <div className={styles.mapview}>
                     <p className={styles.title}>Mapa de Curitiba</p>
                     <div className={styles.content_mapview}>
-                        <Link to={"/inicial/mapa"}><img src={Map} alt="Mapa de Curitiba" /></Link>
+                        <Link to={"/inicial/mapa"}><img src={mapSrc} alt="Mapa de Curitiba" /></Link>
                     </div>
                 </div>
             </div>

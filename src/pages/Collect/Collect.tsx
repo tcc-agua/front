@@ -91,7 +91,7 @@ export function Collect() {
             </button>
 
             <button
-              onClick={() => handlePoint("PB")}
+              onClick={() => handlePoint("PBS")}
               className={styles.data_pb_content}
             >
               <div className={styles.title_data_content_pb}>
