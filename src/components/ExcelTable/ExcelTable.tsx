@@ -12,9 +12,7 @@ interface ExcelTableProps {
 }
 
 const ExcelTable: React.FC<ExcelTableProps> = ({ sheetName }) => {
-  const [headers, setHeaders] = useState<string[]>([]);
-  // const [, setSubHeaders] = useState<string[]>([]);
-  const [dataPonto, setDataPonto] = useState<string[][]>([]);
+  const [dataPonto, setDataPonto] = useState<any[][]>([]);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
   useEffect(() => {
@@ -25,58 +23,36 @@ const ExcelTable: React.FC<ExcelTableProps> = ({ sheetName }) => {
 
     async function fetchPontosExcel() {
       try {
-
         const token = localStorage.getItem('id_token');
 
-        if(token != null){
+        if (token) {
           const response = await fetchSheet(sheetName);
-          
           console.log(response)
-          setHeaders(response[0]);
-          // setSubHeaders(response[1]);
-          setDataPonto(response[1]);
-          setErrorMessage(null); 
-        }
 
+        }
       } catch (e) {
         console.error(e);
         setErrorMessage('Erro ao buscar dados da planilha.');
       }
     }
-    
-    fetchPontosExcel();
 
+    fetchPontosExcel();
   }, [sheetName]);
 
   if (errorMessage) {
     return <div className={styles.errorMessage}>{errorMessage}</div>;
   }
 
-  const data = [
-    headers,
-    dataPonto,
-  ];
-
-  const cells = (row: number): any => {
-    const cellProperties: any = {};
-
-    if (row === 0) {
-      cellProperties.className = `${styles.lightGreen}`;
-    } 
-    return cellProperties;
-  };
-
   return (
     <HotTable
-      data={data}
+      data={dataPonto}
       rowHeaders={false}
       colHeaders={false}
       height="100%"
       width="100%"
       autoWrapRow={true}
       autoWrapCol={true}
-      cells={cells} 
-      className={styles.customHotTable} 
+      className={styles.customHotTable}
       licenseKey="non-commercial-and-evaluation"
     />
   );
