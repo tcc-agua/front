@@ -3,7 +3,7 @@ import DropdownButton from '../../components/DropdownButton/DropdownButton';
 import ExcelTable from '../../components/ExcelTable/ExcelTable';
 import success from '../../assets/images/success.svg';
 import styles from './ExportExcel.module.css';
-import { fetchExport, fetchSheet, postNotif } from '../../api/api';
+import { fetchExport, postNotif } from '../../api/api';
 
 interface DropdownItem {
     id: string;
