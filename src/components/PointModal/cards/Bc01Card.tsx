@@ -1,6 +1,8 @@
 import styles from "../../../pages/PointCollect/PointCollect.module.css"
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { InputPoint } from "../InputPoint";
+import { BC01 } from "../../../interfaces/postParams";
+import useBc01Store from "../../../store/Bc01Store";
 
 interface PointNameProps{
     name: string
@@ -12,6 +14,7 @@ function Bc01Card({ name }: PointNameProps) {
     const [horimeter, setHorimeter] = useState<number>(1);
     const [leak, setLeak] = useState<number>(1);
     const [volume, setVolume] = useState<number>(1);
+    const { createBc01Measure,  isCreated, isError, resetState } = useBc01Store();
 
     const increment = (setter: React.Dispatch<React.SetStateAction<number>>, isInteger?: boolean) => {
         setter(prev => isInteger ? prev + 1 : Math.round((prev + 0.1) * 10) / 10);
@@ -28,11 +31,38 @@ function Bc01Card({ name }: PointNameProps) {
         }
     };
 
+    const sendInformation = () => {
+
+        const obj: BC01 = {
+            horimetro: horimeter,
+            pressao: pressure,
+            frequencia: frequency,
+            vazao: leak,
+            volume: volume,
+            nomePonto: name,
+            idColeta: 1
+        }
+
+        createBc01Measure(obj);
+
+    };
+
+    useEffect (() =>{
+        if(isCreated){
+            alert("Criado")
+            resetState()
+        }
+        if(isError){
+            alert("ERRO")
+        }
+
+    }, [isCreated, resetState, isError])
+
     return (
         <>
             <p className={styles.pointName}>Dados de coleta do ponto '{name}'</p>
             <main className={styles.infoContainer}>
-                <div>
+                <div style={{display: "flex"}}>
                     <InputPoint
                         decrement={() => decrement(setPressure, false)} 
                         increment={() => increment(setPressure, false)}  
@@ -74,7 +104,7 @@ function Bc01Card({ name }: PointNameProps) {
                         isInteger={true}
                     />
                 </div>
-                <button className={styles.buttonEnviar} onClick={() => console.log("Dados enviados")}>Enviar</button>
+                <button className={styles.buttonEnviar} onClick={sendInformation}>Enviar</button>
 
             </main>
         </>
