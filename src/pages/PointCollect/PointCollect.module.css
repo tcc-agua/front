@@ -59,13 +59,37 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 0px 20px;
+    padding: 0em 20px;
     transition: transform 0.3s ease, cursor 0.3s ease;
     cursor: pointer;
 }
 
+.pagination_buttons {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 10px;
+    width: 100%;
+}
+
+.arrow {
+    background: none;
+    border: none;
+    font-size: 1.5em;
+    cursor: pointer;
+    padding: 5px;
+    margin: 0 10px;
+    color: var(--font_color3);
+    justify-content: space-between;
+    transition: color 0.5s ease;
+}
+
+.disabled {
+    cursor: not-allowed;
+    opacity: 50%;
+}
+
 .name_point {
-    font-size: 1.3vw;
+    font-size: 1.15vw;
     font-family: "SF Pro Semibold";
 }
 
