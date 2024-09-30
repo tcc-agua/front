@@ -31,6 +31,7 @@ const DropdownButton: React.FC<DropdownButtonProps> = ({
     setIsOpen(false);
   };
 
+  // Handle clicks outside the dropdown
   useEffect(() => {
     const handleOutsideClick = (e: MouseEvent) => {
       if (dropdownRef.current && !dropdownRef.current.contains(e.target as Node)) {
@@ -38,9 +39,29 @@ const DropdownButton: React.FC<DropdownButtonProps> = ({
       }
     };
 
+    // Handle "Esc" key to close the dropdown
+    const handleEscapeKey = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        setIsOpen(false);
+      }
+    };
+
     window.addEventListener('mousedown', handleOutsideClick);
-    return () => window.removeEventListener('mousedown', handleOutsideClick);
+    window.addEventListener('keydown', handleEscapeKey);
+
+    return () => {
+      window.removeEventListener('mousedown', handleOutsideClick);
+      window.removeEventListener('keydown', handleEscapeKey);
+    };
   }, []);
+
+  // Auto-focus first option when dropdown opens
+  useEffect(() => {
+    if (isOpen && dropdownRef.current) {
+      const firstOption = dropdownRef.current.querySelector('li');
+      firstOption && (firstOption as HTMLElement).focus();
+    }
+  }, [isOpen]);
 
   return (
     <div ref={dropdownRef} className={styles.dropdownContainer}>
@@ -72,6 +93,8 @@ const DropdownButton: React.FC<DropdownButtonProps> = ({
               className={`${styles.option} ${
                 selectedOption?.id === option.id ? styles.selected : ''
               }`}
+              aria-selected={selectedOption?.id === option.id}
+              tabIndex={0} // Make items focusable
             >
               <span>{option.label}</span>
             </li>

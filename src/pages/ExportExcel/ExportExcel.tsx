@@ -56,14 +56,14 @@ const ExportExcel: React.FC = () => {
         try {
             const response = await fetchExport(startDate, endDate); // Chama a função para buscar o Excel
             console.log(response);
-    
+
             const url = window.URL.createObjectURL(response); // Cria o URL do Blob
             const link = document.createElement('a');
             link.href = url;
             link.setAttribute('download', 'coletas.xlsx'); // Nome do arquivo para download
             document.body.appendChild(link);
             link.click(); // Simula o clique para iniciar o download
-    
+
             setTimeout(() => {
                 window.URL.revokeObjectURL(url); // Libera a URL do Blob
                 link.remove(); // Remove o link
@@ -107,11 +107,13 @@ const ExportExcel: React.FC = () => {
 
     return (
         <div className={styles.container}>
-            <div className={styles.top}>
-                <p className={styles.title}>Exporte o arquivo Excel de suas coletas!</p>
-                <div className={styles.content_buttons}>
-                    <div className={styles.buttons}>
-                        <div className={styles.dropdownContainer}>
+            <div className={styles.container_top}>
+
+                <div className={styles.filter}>
+                    <p className={styles.title}>Exporte o arquivo Excel de suas coletas!</p>
+                    <div className={styles.dropdownContainer}>
+
+                        <div className={styles.month}>
                             <DropdownButton
                                 id="month-dropdown"
                                 title="Mês"
@@ -119,6 +121,9 @@ const ExportExcel: React.FC = () => {
                                 selectedOption={selectedMonth}
                                 onSelect={setSelectedMonth}
                             />
+                        </div>
+
+                        <div className={styles.year}>
                             <DropdownButton
                                 id="year-dropdown"
                                 title="Ano"
@@ -127,24 +132,21 @@ const ExportExcel: React.FC = () => {
                                 onSelect={setSelectedYear}
                             />
                         </div>
-                    </div>
-                </div>
-                <div className={styles.left}>
-                    <p className={styles.subtitle}>Tabela em visualização:</p>
-                    <div className={styles.buttonTable}>
-                        <DropdownButton
-                            id="table"
-                            title="--"
-                            options={tables}
-                            selectedOption={selectedTable}
-                            onSelect={setSelectedTable}
-                        />
+                        <div className={styles.tabelas}>
+                            <DropdownButton
+                                id="table"
+                                title="Tabelas"
+                                options={tables}
+                                selectedOption={selectedTable}
+                                onSelect={setSelectedTable}
+                            />
+                        </div>
                     </div>
                 </div>
             </div>
 
             <div className={styles.table}>
-            <ExcelTable sheetName={String(selectedTable?.value || "")} monthProps={String(selectedMonth?.id)} yearProps={String(selectedYear?.label)}/>
+                <ExcelTable sheetName={String(selectedTable?.value || "")} monthProps={String(selectedMonth?.id)} yearProps={String(selectedYear?.label)} />
             </div>
 
             <div className="buttonContainer">
