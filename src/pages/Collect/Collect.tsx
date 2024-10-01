@@ -1,10 +1,101 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import { Outlet, useNavigate } from "react-router-dom";
 
 import styles from "./Collect.module.css";
 
 import useUtilsStore from "../../store/utils";
+import { fetchNotif } from "../../api/api";
+import { getDateDifference } from "../Dashboards/Dashboards";
+
+interface Coleta {
+  id: number;
+  tabela: 'DADOS ETAS' | 'NA' | 'PBS' | 'EXCEL';
+  tipo: 'SALVO' | 'EXPORTADO';
+  data: string;
+}
+
+export const NextCollects: React.FC = () => {
+  const [coleta, setColeta] = useState<Coleta[]>([]);
+
+  useEffect(() => {
+    const getColeta = async () => {
+      try {
+        const data: Coleta[] = await fetchNotif();
+        const sortedColeta = data.sort((a, b) => b.id - a.id); // Ordenar por id decrescente
+
+        setColeta(sortedColeta);
+      } catch (error) {
+        console.error("Erro ao buscar as últimas coletas finalizadas");
+      }
+    };
+    getColeta();
+  }, []);
+
+  // Função para verificar se a coleta foi feita hoje
+  const coletaFeitaHoje = (data: string) => getDateDifference(data) === "hoje";
+
+  // Filtrar para manter apenas a última coleta de cada ponto (NA, PB, DADOS ETAS)
+  const filtrarUltimasColetas = (coletas: Coleta[]) => {
+    const ultimasColetas: { [key: string]: Coleta } = {};
+
+    coletas.forEach((coleta) => {
+      const { tabela } = coleta;
+      // Apenas adicionar se for "NA", "PB", ou "DADOS ETAS"
+      if (['NA', 'PBS', 'DADOS ETAS'].includes(tabela)) {
+        // Como a lista já está ordenada por id decrescente, a primeira vez que encontramos uma tabela é a mais recente
+        if (!ultimasColetas[tabela]) {
+          ultimasColetas[tabela] = coleta;
+        }
+      }
+    });
+
+    return Object.values(ultimasColetas); // Retorna apenas as últimas coletas filtradas
+  };
+
+  const renderUltimasColetas = (coleta: Coleta) => {
+    const { tabela, tipo, data } = coleta;
+    let message = '';
+
+    // Verificação da coleta quinzenal para tabela "NA"
+    if (tabela === 'NA' && tipo === 'SALVO') {
+      if (getDateDifference(data) !== "hoje") {
+        const diasDesdeUltimaColeta = parseInt(getDateDifference(data));
+        const diasParaProximaColeta = 15 - diasDesdeUltimaColeta;
+
+        if (diasParaProximaColeta > 0) {
+          message = `Dados "${tabela}" coletados há ${diasDesdeUltimaColeta} dias, uma nova coleta deve ser feita em ${diasParaProximaColeta} dias.`;
+        } else {
+          message = `Já passou o prazo para coletar os dados "${tabela}".`;
+        }
+      }
+    } 
+    // Verificação da coleta diária para tabela "ETAS"
+    else if (tabela === 'DADOS ETAS' && tipo === 'SALVO') {
+      if (coletaFeitaHoje(data)) {
+        message = `Dados "ETAS" já foram coletados hoje, a próxima coleta deve ser feita amanhã!`;
+      } else {
+        message = `Dados "ETAS" ainda não foram coletados hoje.`;
+      }
+    } 
+    // Verificação da coleta diária para tabela "PB"
+    else if (tabela === 'PBS' && tipo === 'SALVO') {
+      if (coletaFeitaHoje(data)) {
+        message = `Dados "${tabela}" já foram coletados hoje, a próxima coleta deve ser feita amanhã!`;
+      } else {
+        message = `Os dados "${tabela}" ainda não foram coletados hoje.`;
+      }
+    }
+
+    return <div key={coleta.id}>{message}</div>;
+  };
+
+  return (
+    <section className={styles.right_side}>
+      {filtrarUltimasColetas(coleta).map((c) => renderUltimasColetas(c))}
+    </section>
+  );
+};
 
 export function Collect() {
   const [isModalOpen, setModalOpen] = useState<boolean>(false);
@@ -110,8 +201,11 @@ export function Collect() {
             </button>
           </div>
         </section>
+
+
         <section className={styles.right_side}>
           <div className={styles.recent_points_container}>
+          <NextCollects/>
             <p className={styles.title_historic_points}>Pontos recentes:</p>
             <div className={styles.historic_points_container}>
               <button
@@ -162,6 +256,9 @@ export function Collect() {
             </div>
           </div>
         </section>
+
+
+
       </div>
 
       {isModalOpen && (

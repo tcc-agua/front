@@ -173,7 +173,7 @@ export const fetchPH = async () => {
 export const fetchTQ01 = async () => {
     const token = await waitForToken();
     try {
-        const response = await axios.get(`${API_BASE_URL}/TQ01/get`, 
+        const response = await axios.get(`${API_BASE_URL}/tq01/get`, 
             {
                 headers: {
                     Authorization: `Bearer ${token}`

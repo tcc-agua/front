@@ -10,7 +10,6 @@ import { useEffect, useState } from "react";
 import { fetchNotif, fetchPH, fetchTQ01 } from "../../api/api";
 import { useTheme } from '../../components/ThemeContext/ThemeContext';
 import MapSpline from '../../components/MapSpline/MapSpline';
-import Loading from '../../components/LoadingMap/LoadingMap';
 
 const mockData = {
     months: ["Janeiro", "Fevereiro", "Março", "Abril", "Maio"],
@@ -35,12 +34,14 @@ interface Nivel {
     nivel: number
 }
 
-const MapDark = () => {
-    const { isDarkMode } = useTheme();
-    return isDarkMode ? MapDarkmode : Map;
-}
+// const MapDark = () => {
+//     const { isDarkMode } = useTheme();
+//     return isDarkMode ? MapDarkmode : Map;
+// }
 
-const getDateDifference = (notifDate: string): string => {
+// Uma função feita para verificar a diferença de dias entre o dia em que a coleta
+// foi salva e o dia atual, mostrando aquela frase "7 dias atrás"
+export const getDateDifference = (notifDate: string): string => {
     const [notifYear, notifMonth, notifDay] = notifDate.split('-').map(Number);
     const notifDateObj = new Date(notifYear, notifMonth - 1, notifDay);
 
@@ -56,10 +57,12 @@ const getDateDifference = (notifDate: string): string => {
     if (notifDateObj.toDateString() === todayDateObj.toDateString()) {
         return "hoje";
     } else {
-        return `${dayDiff} dias atrás`;
+        return `${dayDiff}`;
     }
 };
 
+// Pega os dados do sensor PH e compara o último dado coletado com o antepenúltimo
+// mostrando se o PH subiu ou desceu
 export const SensorPH: React.FC = () => {
     const [, setPh] = useState<PH[]>([]);
     const [differencePercentage, setDifferencePercentage] = useState<number>(0);
@@ -109,6 +112,8 @@ export const SensorPH: React.FC = () => {
     );
 };
 
+
+// Faz o mesmo da função de cima, só que com a informação nível do ponto TQ01
 export const Niveltq01: React.FC = () => {
     const [, setNivel] = useState<Nivel[]>([]);
     const [differencePercentage, setDifferencePercentage] = useState<number>(0);
@@ -117,11 +122,10 @@ export const Niveltq01: React.FC = () => {
     useEffect(() => {
         const getNivel = async () => {
             try {
-                await new Promise((resolve) => setTimeout(resolve, 3000));
                 const data: Nivel[] = await fetchTQ01();
-                const sortedNivel = data.sort((a, b) => b.id - a.id);
-                setNivel(sortedNivel);
-
+                if (Array.isArray(data)) {
+                    const sortedNivel = data.sort((a, b) => b.id - a.id);
+                    setNivel(sortedNivel);
                 if(sortedNivel.length >= 2) {
                     const lastNivel = sortedNivel[0].nivel;
                     const previousNivel = sortedNivel[1].nivel;
@@ -130,6 +134,7 @@ export const Niveltq01: React.FC = () => {
                         setDifferencePercentage(Math.abs(percentageDiff));
                         setIsIncrease(percentageDiff > 0);
                     }
+                }
                 }
             } catch (error) {
                 console.error("Erro ao buscar informações de 'Nivel TQ01.");
@@ -156,14 +161,13 @@ export const Niveltq01: React.FC = () => {
 
 };
 
-
+// Resgata todas as notificações salvas no banco de dados e configura como serão exibidas
 export const Notifications: React.FC = () => {
     const [notifications, setNotifications] = useState<Notification[]>([]);
 
     useEffect(() => {
         const getNotifications = async () => {
             try {
-                await new Promise((resolve) => setTimeout(resolve, 3000));
                 const data: Notification[] = await fetchNotif();
                 const sortedNotifications = data.sort((a, b) => b.id - a.id);
 
@@ -182,10 +186,15 @@ export const Notifications: React.FC = () => {
 
         if (tabela === 'EXCEL' && isExport) {
             message = "Excel exportado com sucesso!";
-        } else if (['NA', 'PB'].includes(tabela) && tipo === 'SALVO') {
+        } else if (['NA', 'PBS'].includes(tabela) && tipo === 'SALVO') {
             message = `Dados "${tabela}" salvo com sucesso!`;
         } else if (['DADOS ETAS'].includes(tabela) && tipo === 'SALVO') {
             message = `Dados "ETAS" salvo com sucesso!`;
+        }
+
+        let dayDiff = getDateDifference(data)
+        if (dayDiff !== "hoje") {
+            dayDiff = `${dayDiff} dias atrás`
         }
 
         return (
@@ -200,7 +209,7 @@ export const Notifications: React.FC = () => {
                     </div>
                     <div className={styles.text_activity}>
                         <p className={styles.data_activity}>{message}</p>
-                        <p className={styles.days}>{getDateDifference(data)}</p>
+                        <p className={styles.days}>{dayDiff}</p>
                     </div>
                 </div>
                 <div className={styles.linha_hr}>
@@ -218,7 +227,7 @@ export const Notifications: React.FC = () => {
 };
 
 export function Dashboards() {
-    const mapSrc = MapDark();
+    // const mapSrc = MapDark();
 
     return (
         <div className={styles.container}>
