@@ -68,12 +68,14 @@ export const NextCollects: React.FC = () => {
         } else {
           message = `Já passou o prazo para coletar os dados "${tabela}".`;
         }
+      } else {
+        message = `Dados ${tabela} foram coletados hoje, a próxima coleta deve ser feita em 15 dias.`
       }
     } 
     // Verificação da coleta diária para tabela "ETAS"
     else if (tabela === 'DADOS ETAS' && tipo === 'SALVO') {
       if (coletaFeitaHoje(data)) {
-        message = `Dados "ETAS" já foram coletados hoje, a próxima coleta deve ser feita amanhã!`;
+        message = `Dados "ETAS" já foram coletados hoje, a próxima coleta deve ser feita amanhã.`;
       } else {
         message = `Dados "ETAS" ainda não foram coletados hoje.`;
       }
@@ -81,7 +83,7 @@ export const NextCollects: React.FC = () => {
     // Verificação da coleta diária para tabela "PB"
     else if (tabela === 'PBS' && tipo === 'SALVO') {
       if (coletaFeitaHoje(data)) {
-        message = `Dados "${tabela}" já foram coletados hoje, a próxima coleta deve ser feita amanhã!`;
+        message = `Dados "${tabela}" já foram coletados hoje, a próxima coleta deve ser feita amanhã.`;
       } else {
         message = `Os dados "${tabela}" ainda não foram coletados hoje.`;
       }
