@@ -15,6 +15,8 @@ interface ExcelTableProps {
 
 const ExcelTable: React.FC<ExcelTableProps> = ({ sheetName, monthProps, yearProps }) => {
   const [dataPonto, setDataPonto] = useState<any[][]>([]);
+  const [tableData, setTableData] = useState<any[][]>([]);  // Dados processados para a tabela
+  const [columnHeaders, setColumnHeaders] = useState<string[]>([]);  // Cabeçalhos das colunas
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
   const month = parseInt(monthProps); // Mês como número
@@ -26,11 +28,9 @@ const ExcelTable: React.FC<ExcelTableProps> = ({ sheetName, monthProps, yearProp
       return;
     }
 
-    // Cria as datas de início e fim apenas aqui
-    const startDate = new Date(year, month - 1, 1); // Primeiro dia do mês
-    const endDate = new Date(year, month, 0); // Último dia do mês
+    const startDate = new Date(year, month - 1, 1);
+    const endDate = new Date(year, month, 0);
 
-    // Converte para o formato 'YYYY-MM-DD'
     const startDateString = startDate.toISOString().split('T')[0];
     const endDateString = endDate.toISOString().split('T')[0];
 
@@ -40,9 +40,7 @@ const ExcelTable: React.FC<ExcelTableProps> = ({ sheetName, monthProps, yearProp
 
         if (token) {
           const response = await fetchSheet(sheetName, startDateString, endDateString);
-          console.log(response);
-          // Atualiza os dados no estado se a resposta for válida
-          setDataPonto(response.data); // Supondo que a resposta tenha um atributo data
+          setDataPonto(response);
         }
       } catch (e) {
         console.error(e);
@@ -53,15 +51,42 @@ const ExcelTable: React.FC<ExcelTableProps> = ({ sheetName, monthProps, yearProp
     fetchPontosExcel();
   }, [sheetName, monthProps, yearProps]);
 
+  // Processar os dados recebidos para estruturar a tabela
+  useEffect(() => {
+    if (dataPonto.length > 0) {
+      // Obter os cabeçalhos (nomes dos pontos)
+      const headers = dataPonto.map((item: any) => item[0]);
+      setColumnHeaders(headers);
+
+      // Obter todas as propriedades únicas para definir as linhas
+      const allKeys = new Set<string>();
+      dataPonto.forEach((item: any) => {
+        const dataKeys = Object.keys(item[1]);
+        dataKeys.forEach(key => allKeys.add(key));
+      });
+
+      // Converter o Set de chaves em um array para a tabela
+      const rowKeys = Array.from(allKeys);
+
+      // Criar as linhas da tabela, onde cada linha corresponde a uma propriedade (volume, vazão, etc.)
+      const rows = rowKeys.map((key) => {
+        return dataPonto.map((item: any) => item[1][key] || '');  // Preencher com os valores ou vazio se não existir
+      });
+
+      // Atualizar os dados da tabela
+      setTableData([rowKeys, ...rows]);
+    }
+  }, [dataPonto]);
+
   if (errorMessage) {
     return <div className={styles.errorMessage}>{errorMessage}</div>;
   }
 
   return (
     <HotTable
-      data={dataPonto}
+      data={tableData}
       rowHeaders={false}
-      colHeaders={false}
+      colHeaders={columnHeaders}
       height="100%"
       width="100%"
       autoWrapRow={true}
