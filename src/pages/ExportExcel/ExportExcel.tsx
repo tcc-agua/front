@@ -8,7 +8,7 @@ import { fetchExport, postNotif } from '../../api/api';
 interface DropdownItem {
     id: string;
     label: string;
-    value: string | number;
+    value: string | number; // O valor pode ser string ou number
 }
 
 const ExportExcel: React.FC = () => {
@@ -35,7 +35,7 @@ const ExportExcel: React.FC = () => {
     const years: DropdownItem[] = ['2024', '2025', '2026', '2027'].map(year => ({
         id: year,
         label: year,
-        value: year
+        value: year,
     }));
 
     const tables: DropdownItem[] = [
@@ -46,11 +46,11 @@ const ExportExcel: React.FC = () => {
 
     const openModal = () => {
         setIsModalOpen(true);
-    }
+    };
 
     const closeModal = () => {
         setIsModalOpen(false);
-    }
+    };
 
     async function fetchExportExcel(startDate: string, endDate: string) {
         try {
@@ -96,6 +96,11 @@ const ExportExcel: React.FC = () => {
             const startDateString = startDate.toISOString().split('T')[0];
             const endDateString = endDate.toISOString().split('T')[0];
 
+            // Log para verificar os valores
+            console.log("Selected Table: ", selectedTable);
+            console.log("Month: ", selectedMonth);
+            console.log("Year: ", selectedYear);
+
             // Chama a função fetchExportExcel com as datas
             console.log(startDateString, endDateString);
             fetchExportExcel(startDateString, endDateString);
@@ -108,62 +113,61 @@ const ExportExcel: React.FC = () => {
     return (
         <div className={styles.container}>
             <div className={styles.container_top}>
-
                 <div className={styles.filter}>
                     <p className={styles.title}>Exporte o arquivo Excel de suas coletas!</p>
                     <div className={styles.dropdownContainer}>
-
                         <div className={styles.month}>
                             <DropdownButton
-                                id="month-dropdown"
-                                title="Mês"
-                                options={months}
-                                selectedOption={selectedMonth}
-                                onSelect={setSelectedMonth}
+                                id="monthDropdown"
+                                title="Selecione o Mês"
+                                options={months} // Alterado para 'options'
+                                selectedOption={selectedMonth} // Passa a opção selecionada
+                                onSelect={setSelectedMonth} // Passa a função correta
                             />
                         </div>
-
                         <div className={styles.year}>
                             <DropdownButton
-                                id="year-dropdown"
-                                title="Ano"
-                                options={years}
-                                selectedOption={selectedYear}
-                                onSelect={setSelectedYear}
+                                id="yearDropdown"
+                                title="Selecione o Ano"
+                                options={years} // Alterado para 'options'
+                                selectedOption={selectedYear} // Passa a opção selecionada
+                                onSelect={setSelectedYear} // Passa a função correta
                             />
                         </div>
-                        <div className={styles.tabelas}>
+                        <div className={styles.table}>
                             <DropdownButton
-                                id="table"
-                                title="Tabelas"
-                                options={tables}
-                                selectedOption={selectedTable}
-                                onSelect={setSelectedTable}
+                                id="tableDropdown"
+                                title="Selecione a Tabela"
+                                options={tables} // Alterado para 'options'
+                                selectedOption={selectedTable} // Passa a opção selecionada
+                                onSelect={setSelectedTable} // Passa a função correta
                             />
                         </div>
                     </div>
+                    <button className={styles.exportButton} onClick={handleExportClick}>
+                        Exportar Arquivo
+                    </button>
                 </div>
-            </div>
-
-            <div className={styles.table}>
-                <ExcelTable sheetName={String(selectedTable?.value || "")} monthProps={String(selectedMonth?.id)} yearProps={String(selectedYear?.label)} />
-            </div>
-
-            <div className="buttonContainer">
-                <button className={styles.export} onClick={handleExportClick}>Exportar Arquivo</button>
                 {isModalOpen && (
                     <div className={styles.modal}>
                         <div className={styles.modalContent}>
-                            <span className={styles.close} onClick={closeModal}>&times;</span>
-                            <p className={styles.modalTitle}>Tabelas exportadas com sucesso!</p>
-                            <img className={styles.modalImg} src={success} alt="Success" />
-                            <p className={styles.modalText}>O arquivo exportado contém todas as três tabelas em diferentes abas.</p>
+                            <img src={success} alt="Success" />
+                            <p>Exportação realizada com sucesso!</p>
+                            <button onClick={closeModal}>Fechar</button>
                         </div>
                     </div>
                 )}
             </div>
+            {selectedTable && selectedMonth && selectedYear && (
+                <ExcelTable 
+                    key={`${selectedTable.value}-${selectedMonth.id}-${selectedYear.label}`} // Adicionando chave única
+                    sheetName={String(selectedTable.value)} // Conversão para string
+                    monthProps={selectedMonth.id} 
+                    yearProps={selectedYear.label} 
+                />
+            )}
         </div>
-    )
-}
+    );
+};
 
 export default ExportExcel;
