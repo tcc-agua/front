@@ -6,7 +6,6 @@ import Graphic from "../../components/Graphic/Graphic"
 import Forecast from "../../components/Forecast/Forecast"
 import { useEffect, useState } from "react";
 import { fetchNotif, fetchPH, fetchTQ01 } from "../../api/api";
-// import { useTheme } from '../../components/ThemeContext/ThemeContext';
 import MapHome from '../../components/MapHome/MapHome';
 
 const mockData = {
@@ -31,14 +30,9 @@ interface Nivel {
     id: number,
     nivel: number
 }
-
-// const MapDark = () => {
-//     const { isDarkMode } = useTheme();
-//     return isDarkMode ? MapDarkmode : Map;
-// }
-
-// Uma função feita para verificar a diferença de dias entre o dia em que a coleta
-// foi salva e o dia atual, mostrando aquela frase "7 dias atrás"
+// Verifica a data atual e compara com a data em que a coleta foi feita
+// assim retornando a quanto tempo aquela coleta foi realizada
+// eslint-disable-next-line react-refresh/only-export-components
 export const getDateDifference = (notifDate: string): string => {
     const [notifYear, notifMonth, notifDay] = notifDate.split('-').map(Number);
     const notifDateObj = new Date(notifYear, notifMonth - 1, notifDay);
@@ -47,10 +41,10 @@ export const getDateDifference = (notifDate: string): string => {
     const todayYear = today.getFullYear();
     const todayMonth = today.getMonth();
     const todayDay = today.getDate();
-    const todayDateObj = new Date(todayYear, todayMonth, todayDay);
+    const todayDateObj = new Date(todayYear, todayMonth, todayDay); // Instancia um objeto com a data atual, ano, mês e dia
 
-    const timeDiff = todayDateObj.getTime() - notifDateObj.getTime();
-    const dayDiff = Math.floor(timeDiff / (1000 * 60 * 60 * 24));
+    const timeDiff = todayDateObj.getTime() - notifDateObj.getTime(); // Faz a diferença entre a data atual e data da notificação
+    const dayDiff = Math.floor(timeDiff / (1000 * 60 * 60 * 24)); // Transforma essa data em dia 
 
     if (notifDateObj.toDateString() === todayDateObj.toDateString()) {
         return "hoje";
@@ -69,16 +63,17 @@ export const SensorPH: React.FC = () => {
     useEffect(() => {
         const getPH = async () => {
             try {
-                await new Promise((resolve) => setTimeout(resolve, 3000));
                 const data: PH[] = await fetchPH();
-                const sortedPH = data.sort((a, b) => b.id - a.id);
+                const sortedPH = data.sort((a, b) => b.id - a.id); // pega do maior id pro menor
                 setPh(sortedPH);
 
 
-                if (sortedPH.length >= 2) {
+                if (sortedPH.length >= 2) { 
+                    // pega somente os dois ultimos registros
                     const lastPH = sortedPH[0].ph;
                     const previousPH = sortedPH[1].ph;
-
+                    
+                    // verifica a diferença entre um registro e outro em porcentagem
                     const percentageDifference = ((lastPH - previousPH) / previousPH) * 100;
                     setDifferencePercentage(Math.abs(percentageDifference));
                     setIsIncrease(percentageDifference > 0);
@@ -111,7 +106,8 @@ export const SensorPH: React.FC = () => {
 };
 
 
-// Faz o mesmo da função de cima, só que com a informação nível do ponto TQ01
+// Pega os dados do nível do ponto tq01, compara o último com o penúltimo nível
+// e indica se ele subiu ou desceu 
 export const Niveltq01: React.FC = () => {
     const [, setNivel] = useState<Nivel[]>([]);
     const [differencePercentage, setDifferencePercentage] = useState<number>(0);
@@ -124,9 +120,11 @@ export const Niveltq01: React.FC = () => {
                 if (Array.isArray(data)) {
                     const sortedNivel = data.sort((a, b) => b.id - a.id);
                     setNivel(sortedNivel);
+
                 if(sortedNivel.length >= 2) {
                     const lastNivel = sortedNivel[0].nivel;
                     const previousNivel = sortedNivel[1].nivel;
+
                     if ( previousNivel !== 0 ) {
                         const percentageDiff = ((lastNivel - previousNivel) / previousNivel) * 100;
                         setDifferencePercentage(Math.abs(percentageDiff));
@@ -163,6 +161,7 @@ export const Niveltq01: React.FC = () => {
 export const Notifications: React.FC = () => {
     const [notifications, setNotifications] = useState<Notification[]>([]);
 
+    // Request que resgata a as notificações
     useEffect(() => {
         const getNotifications = async () => {
             try {
@@ -170,13 +169,17 @@ export const Notifications: React.FC = () => {
                 const sortedNotifications = data.sort((a, b) => b.id - a.id);
 
                 setNotifications(sortedNotifications);
+
             } catch (error) {
                 console.error("Erro ao buscar notificações.");
+                console.log(error)
             }
         };
         getNotifications();
     }, []);
 
+    // Renderiza as notificações com base nos dados de cada uma, definindo o ícone e 
+    // a mensagem a serem definidos
     const renderNotif = (notification: Notification, index: number) => {
         const { tabela, tipo, data } = notification;
         const isExport = tipo === 'EXPORTADO';
@@ -184,8 +187,10 @@ export const Notifications: React.FC = () => {
 
         if (tabela === 'EXCEL' && isExport) {
             message = "Excel exportado com sucesso!";
+
         } else if (['NA', 'PBS'].includes(tabela) && tipo === 'SALVO') {
             message = `Dados "${tabela}" salvo com sucesso!`;
+            
         } else if (['DADOS ETAS'].includes(tabela) && tipo === 'SALVO') {
             message = `Dados "ETAS" salvo com sucesso!`;
         }
@@ -219,6 +224,7 @@ export const Notifications: React.FC = () => {
         );
     };
 
+    // Garante que serão exibidas na home somente as últimas três notificações salvas
     return (
         <div className={styles.content_last_activities}>
             {notifications.slice(0, 3).map(renderNotif)}
@@ -227,20 +233,15 @@ export const Notifications: React.FC = () => {
 };
 
 export function Dashboards() {
-    // const mapSrc = MapDark();
-    const [selectedCategory,] = useState<string | null>(null);
 
     return (
         <div className={styles.container}>
             <div className={styles.left_side}>
                 <div className={styles.updates}>
                     <p className={styles.title}>Atualizações</p>
-                    <div className={styles.content_updates}>
-
-                        <SensorPH />
-
+                    <div className={styles.content_updates}> 
+                        <SensorPH /> 
                         <Niveltq01/>
-
                     </div>
                 </div>
 
