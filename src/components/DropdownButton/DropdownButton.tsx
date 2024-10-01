@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import dropdown_arrow from '../../assets/images/dropdown_arrow.svg';
+import dropdown_arrow from '../../assets/images/arrow.svg';
 import styles from './DropdownButton.module.css';
 
 interface DropdownItem {
@@ -39,19 +39,11 @@ const DropdownButton: React.FC<DropdownButtonProps> = ({
       }
     };
 
-    // Handle "Esc" key to close the dropdown
-    const handleEscapeKey = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') {
-        setIsOpen(false);
-      }
-    };
-
     window.addEventListener('mousedown', handleOutsideClick);
-    window.addEventListener('keydown', handleEscapeKey);
 
     return () => {
       window.removeEventListener('mousedown', handleOutsideClick);
-      window.removeEventListener('keydown', handleEscapeKey);
+     
     };
   }, []);
 

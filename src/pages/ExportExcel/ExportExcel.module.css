@@ -11,26 +11,15 @@
     font-family: 'SF Pro Medium';
     font-size: 1rem;
     margin-left: 5%;
-    margin-top: 10%;
+    margin-top: 1%;
 }
 
-.subtitle {
-    color: #BEBEBE;
-    font-family: 'SF Pro Medium';
-    font-size: 1rem;
-}
-
-.container_top{
-    display: flex;
-}
-
-.left{
+.filter{
     display: flex;
 }
 
 .dropdownContainer{
     display: flex;
-    margin-top: 5%;
 }
 
 .month, .year, .tabelas{

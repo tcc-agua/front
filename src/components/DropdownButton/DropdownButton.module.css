@@ -47,7 +47,7 @@
   
   .open {
     max-height: 300px; /* Altura máxima do dropdown */
-    overflow-y: auto; /* Adiciona rolagem vertical quando aberto */
+    overflow-y:auto; /* Adiciona rolagem vertical quando aberto */
     opacity: 1;
     visibility: visible;
   }
