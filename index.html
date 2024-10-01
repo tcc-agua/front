@@ -9,6 +9,13 @@
   <body>
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
+
+    <!-- Botão da Narradora -->
+    <button class="narrator-button" onclick="toggleNarration()">
+      <img class="narradora-icon" src="./src/assets/images/sound.png" alt="Narradora">
+    </button>
+
+    <!-- VLibras -->
     <div vw class="enabled">
       <div vw-access-button class="active"></div>
       <div vw-plugin-wrapper>
@@ -19,5 +26,61 @@
     <script>
       new window.VLibras.Widget('https://vlibras.gov.br/app');
     </script>
+
+    <!-- Script narradora -->
+    <script>
+      let isSpeaking = false; // Estado da narração
+
+      function toggleNarration() {
+        const synth = window.speechSynthesis;
+
+        if (isSpeaking) {
+          // Se já está falando, interrompe a fala
+          synth.cancel();
+          isSpeaking = false;
+        } else {
+          // Inicia a fala
+          const utterance = new SpeechSynthesisUtterance();
+          utterance.lang = 'pt-BR'; // Define o idioma como português
+
+          // Captura o conteúdo visível da página
+          const content = document.body.innerText || document.body.textContent;
+          utterance.text = content; // Define o texto a ser lido como todo o conteúdo da página
+
+          synth.speak(utterance); // Fala o conteúdo
+          isSpeaking = true;
+
+          // Detecta o fim da fala e altera o estado
+          utterance.onend = () => {
+            isSpeaking = false;
+          };
+        }
+      }
+    </script>
   </body>
+  
+  <!-- NARRADORA  -->
+  <style>
+    .narradora-icon {
+      height: 18px;
+    }
+
+    /* Estilo para o botão de narradora */
+    .narrator-button {
+      position: fixed;
+      bottom: 360px;
+      right: 10px;
+      background-color: #2a76e2;
+      color: white;
+      border: none;
+      padding: 10px 11px;
+      border-radius: 8px;
+      cursor: pointer;
+      z-index: 1000;
+    }
+
+    .narrator-button:hover {
+      background-color: #0968ce;
+    }
+  </style>
 </html>
