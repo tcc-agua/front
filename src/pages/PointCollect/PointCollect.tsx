@@ -5,7 +5,7 @@ import { fetchPointBySheet } from "../../api/api";
 import useUtilsStore from "../../store/utils";
 import { postNotif } from "../../api/api";
 import { PointModal } from "../../components/PointModal";
-
+import MapPoints from "../../components/MapPoints/MapPoints";
 
 interface Point {
     id: string;
@@ -21,24 +21,24 @@ interface PointNamesProps {
 export function PointNames({ onSelectPoint }: PointNamesProps) {
     const [points, setPoints] = useState<Point[]>([]);
     const id_token = localStorage.getItem("id_token");
-    const [currentPage, setCurrentPage] = useState<number>(0); 
-    const [pointsPerPage, setPointsPerPage] = useState<number>(8); 
+    const [currentPage, setCurrentPage] = useState<number>(0);
+    const [pointsPerPage, setPointsPerPage] = useState<number>(8);
     const { planilha, setQtdPontos } = useUtilsStore();
 
     useEffect(() => {
         const updatePointsPerPage = () => {
             if (window.innerWidth <= 680) {
-                setPointsPerPage(5); 
+                setPointsPerPage(5);
             } else {
-                setPointsPerPage(8); 
+                setPointsPerPage(8);
             }
         };
 
         updatePointsPerPage(); // Chamada inicial
-        window.addEventListener("resize", updatePointsPerPage); 
+        window.addEventListener("resize", updatePointsPerPage);
 
         return () => {
-            window.removeEventListener("resize", updatePointsPerPage); 
+            window.removeEventListener("resize", updatePointsPerPage);
         };
     }, []);
 
@@ -122,7 +122,7 @@ export function PointNames({ onSelectPoint }: PointNamesProps) {
 export function PointCollect() {
     const [isModalOpen, setModalOpen] = useState<boolean>(false);
     const [selectedPoint, setSelectedPoint] = useState<Point | null>(null);
-    const { planilha,  qtdPontos } = useUtilsStore(); 
+    const { planilha, qtdPontos } = useUtilsStore();
 
     const openModal = (point: Point) => {
         setSelectedPoint(point);
@@ -143,127 +143,126 @@ export function PointCollect() {
         }
     };
 
- function renderCardInfo(name: string){
+    function renderCardInfo(name: string) {
 
-    if(name.startsWith("PM") || name.startsWith("PT")){
-        return <PointModal.PMPT
-        name={name}
-        />
-    }
-    if(name.startsWith("PB")){
-        return <PointModal.PBS
-        name={name}
-        />
-    }
-    if(name.startsWith("CD")){
-        return <PointModal.CD
-        name={name}
-        />
-    }
-    if(name == "TQ04" || name == "TQ05"){
-        return <PointModal.TQ04_TQ05
-        name={name}
-        />
-    }
-    if(name.startsWith("AG") || name == "BS01 HORIMETRO"){
-        return <PointModal.HORIMETRO
-        name={name}
-        />
-    }
-
-    switch(name){
-        case "BC01": 
-            return <PointModal.BC01
-            name={name}
+        if (name.startsWith("PM") || name.startsWith("PT")) {
+            return <PointModal.PMPT
+                name={name}
             />
-
-        case "BC06":
-            return <PointModal.BC06  
-            name={name}
+        }
+        if (name.startsWith("PB")) {
+            return <PointModal.PBS
+                name={name}
             />
-        
-        case "BH02":
-            return <PointModal.BH02  
-            name={name}
+        }
+        if (name.startsWith("CD")) {
+            return <PointModal.CD
+                name={name}
             />
-        
-        case "BOMBA BC03":
-            return <PointModal.BOMBA_BC03
-            name={name}
-            />
-        
-        case "BS01 HIDROMETRO":
-            return <PointModal.BS01_HIDROMETRO
-            name={name}
-            />
-        
-        case "BS01 PRESSAO":
-            return <PointModal.BS01_PRESSAO
-            name={name}
-            />
-        
-        case "COLUNAS CARVAO":
-            return <PointModal.COLUNAS_CARVAO
-            name={name}
-            />
-
-        case "FASE LIVRE":
-            return <PointModal.FASE_LIVRE
-            name={name}
-            />
-
-        case "FILTRO CARTUCHO":
-            return <PointModal.FILTRO_CARTUCHO
-            name={name}
-            />
-
-        case "HORIMETRO":
-            return <PointModal.HORIMETRO
-            name={name}
-            />
-        
-        case "SENSOR PH":
-            return <PointModal.SENSOR_PH
-            name={name}
-            />
-
-        case "TQ01":
-            return <PointModal.TQ01
-            name={name}
-            />
-
-        case "TQ02":
-            return <PointModal.TQ02
-            name={name}
-            />
-
-        case "TQ04 TQ05":
+        }
+        if (name == "TQ04" || name == "TQ05") {
             return <PointModal.TQ04_TQ05
-            name={name}
+                name={name}
             />
-    }
- }
+        }
+        if (name.startsWith("AG") || name == "BS01 HORIMETRO") {
+            return <PointModal.HORIMETRO
+                name={name}
+            />
+        }
 
- function getPlanilhaTitle(planilha: string | null) {
-    switch (planilha) {
-        case "DADOS ETAS":
-            return "Estações de Tratamento de Águas Subterrâneas";
-        case "PBS":
-            return "Poços de Bombeamento";
-        case "NA":
-            return "Nível de Água";
-        default:
-            return "Planilha não encontrada!";
-    }
-}
+        switch (name) {
+            case "BC01":
+                return <PointModal.BC01
+                    name={name}
+                />
 
+            case "BC06":
+                return <PointModal.BC06
+                    name={name}
+                />
+
+            case "BH02":
+                return <PointModal.BH02
+                    name={name}
+                />
+
+            case "BOMBA BC03":
+                return <PointModal.BOMBA_BC03
+                    name={name}
+                />
+
+            case "BS01 HIDROMETRO":
+                return <PointModal.BS01_HIDROMETRO
+                    name={name}
+                />
+
+            case "BS01 PRESSAO":
+                return <PointModal.BS01_PRESSAO
+                    name={name}
+                />
+
+            case "COLUNAS CARVAO":
+                return <PointModal.COLUNAS_CARVAO
+                    name={name}
+                />
+
+            case "FASE LIVRE":
+                return <PointModal.FASE_LIVRE
+                    name={name}
+                />
+
+            case "FILTRO CARTUCHO":
+                return <PointModal.FILTRO_CARTUCHO
+                    name={name}
+                />
+
+            case "HORIMETRO":
+                return <PointModal.HORIMETRO
+                    name={name}
+                />
+
+            case "SENSOR PH":
+                return <PointModal.SENSOR_PH
+                    name={name}
+                />
+
+            case "TQ01":
+                return <PointModal.TQ01
+                    name={name}
+                />
+
+            case "TQ02":
+                return <PointModal.TQ02
+                    name={name}
+                />
+
+            case "TQ04 TQ05":
+                return <PointModal.TQ04_TQ05
+                    name={name}
+                />
+        }
+    }
+
+    function getPlanilhaTitle(planilha: string | null) {
+        switch (planilha) {
+            case "DADOS ETAS":
+                return "Estações de Tratamento de Águas Subterrâneas";
+            case "PBS":
+                return "Poços de Bombeamento";
+            case "NA":
+                return "Nível de Água";
+            default:
+                return "Planilha não encontrada!";
+        }
+    }
 
     return (
         <>
             <main className={styles.container}>
-            <p className={styles.title}>
-                {getPlanilhaTitle(planilha)}
-            </p>                <div className={styles.main_information}>
+                <p className={styles.title}>
+                    {getPlanilhaTitle(planilha)}
+                </p>                <div className={styles.main_information}>
                     <div className={styles.left_side}>
                         <div className={styles.select_point_container}>
                             <p className={styles.select_point_title}>Selecione um ponto:</p>
@@ -273,21 +272,25 @@ export function PointCollect() {
                     <div className={styles.right_side}>
                         <div className={styles.point_information}>
                             <p className={styles.point_information_text}>Existem <span className={styles.point_information_number}>{qtdPontos}</span> pontos para preencher o arquivo   {
-                planilha === "DADOS ETAS" 
-                    ? "'ETAS'" 
-                    : planilha === "PBS"
-                    ? "'Poços de Bombeamento'"
-                    : planilha === "NA"
-                    ? "'Nível de Água'"
-                    : "'Planilha não encontrada!'"
-                    }</p>
+                                planilha === "DADOS ETAS"
+                                    ? "'ETAS'"
+                                    : planilha === "PBS"
+                                        ? "'Poços de Bombeamento'"
+                                        : planilha === "NA"
+                                            ? "'Nível de Água'"
+                                            : "'Planilha não encontrada!'"
+                            }</p>
                         </div>
+
                         <div className={styles.map_container}>
                             <p className={styles.map_title}>Localize seus pontos no mapa:</p>
-                            <div className={styles.map}></div>
+                            <div className={styles.map}>
+                            <MapPoints planilha={planilha} />
+                            </div>
                         </div>
+
                         <div className={styles.button_container}>
-                       <button className={styles.button_complete} onClick={notify}>Salvar dados</button> 
+                            <button className={styles.button_complete} onClick={notify}>Salvar dados</button>
                         </div>
                     </div>
                 </div>

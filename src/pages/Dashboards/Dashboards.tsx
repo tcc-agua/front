@@ -3,8 +3,6 @@ import styles from "./Dashboards.module.css"
 import icon_correct from "../../assets/images/correct.svg"
 import icon_export from "../../assets/images/export_activity.svg"
 import Graphic from "../../components/Graphic/Graphic"
-// import Map from "../../assets/images/mapa-panorama.svg"
-// import MapDarkmode from "../../assets/images/foto_mapa_dark.svg";
 import Forecast from "../../components/Forecast/Forecast"
 import { useEffect, useState } from "react";
 import { fetchNotif, fetchPH, fetchTQ01 } from "../../api/api";
