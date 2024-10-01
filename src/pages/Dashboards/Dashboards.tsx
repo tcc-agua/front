@@ -3,12 +3,12 @@ import styles from "./Dashboards.module.css"
 import icon_correct from "../../assets/images/correct.svg"
 import icon_export from "../../assets/images/export_activity.svg"
 import Graphic from "../../components/Graphic/Graphic"
-import Map from "../../assets/images/mapa-panorama.svg"
-import MapDarkmode from "../../assets/images/foto_mapa_dark.svg";
+// import Map from "../../assets/images/mapa-panorama.svg"
+// import MapDarkmode from "../../assets/images/foto_mapa_dark.svg";
 import Forecast from "../../components/Forecast/Forecast"
 import { useEffect, useState } from "react";
 import { fetchNotif, fetchPH, fetchTQ01 } from "../../api/api";
-import { useTheme } from '../../components/ThemeContext/ThemeContext';
+// import { useTheme } from '../../components/ThemeContext/ThemeContext';
 import MapSpline from '../../components/MapSpline/MapSpline';
 
 const mockData = {
@@ -19,7 +19,7 @@ const mockData = {
 
 interface Notification {
     id: number;
-    tabela: 'DADOS ETAS' | 'NA' | 'PB' | 'EXCEL';
+    tabela: 'DADOS ETAS' | 'NA' | 'PBS' | 'EXCEL';
     tipo: 'SALVO' | 'EXPORTADO';
     data: string;
 }
