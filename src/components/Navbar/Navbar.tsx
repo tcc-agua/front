@@ -1,9 +1,8 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import styles from './Navbar.module.css';
 
 import { Sidebar } from '../Sidebar/Sidebar';
 import { useTheme } from '../ThemeContext/ThemeContext';
-import Modal from '../Modal/Modal';
 import DarkMode from '../ThemeButton/ThemeButton';
 
 //icons
@@ -11,23 +10,30 @@ import logo from "../../../public/logo.svg";
 import user from "../../assets/images/user.svg";
 import userWhite from '../../assets/images/darkmode_icons/perfilWhite.svg';
 import HamburgerMenu from '../Hamburguer/HamburgerMenu';
+import { fetchUserInfo } from '../../api/api';
+
+interface UserProfile {
+    name: string;
+    email: string;
+  }
 
 export function Navbar() {
+    const [dataProfile, setDataProfile] = useState<UserProfile | null>(null);
+
+    useEffect(() => { 
+  
+      async function fetchProfile() {
+        const response = await fetchUserInfo();
+        setDataProfile(response);
+      }
+      fetchProfile();
+    }, []);
     const { isDarkMode } = useTheme();
 
     const [sidebarVisible, setSidebarVisible] = useState(false);
-    const [isModalOpen, setIsModalOpen] = useState(false);
-
+ 
     const toggleSidebar = () => {
         setSidebarVisible(!sidebarVisible);
-    };
-
-    const handleOpenModal = () => {
-        setIsModalOpen(true);
-    };
-
-    const handleCloseModal = () => {
-        setIsModalOpen(false);
     };
 
     return (
@@ -40,15 +46,14 @@ export function Navbar() {
                     <img src={logo} alt="logo" />
                 </div>
                 <nav className={styles.nav_options}>
-                    <button className={styles.nav_content_options} onClick={handleOpenModal}>
+                    <button className={styles.nav_content_options}>
                         <img
                             src={isDarkMode ? userWhite : user}
                             alt="user"
                             className={styles.icons}
                         />
-                        <span>Perfil</span>
+                        <span>{dataProfile?.name}</span>
                     </button>
-                    <Modal isOpen={isModalOpen} onClose={handleCloseModal} />
                     <DarkMode />
                 </nav>
             </header>
