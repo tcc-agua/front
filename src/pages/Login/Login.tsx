@@ -1,9 +1,7 @@
 import React from 'react';
 import styles from './Login.module.css';
 
-
 const Login: React.FC = () => {
-
   const handleLogin = () => {
     window.location.href = 'http://localhost:5173/oauth2/authorization/azure';
   };
@@ -21,8 +19,7 @@ const Login: React.FC = () => {
           <div className={styles.content_left_side_main}>
             <p className={styles.title_welcome}>Seja bem-vindo(a)!</p>
             <p className={styles.subtitle_welcome}>Entre e explore nossos recursos de amostragem de água.</p>
-            <button className={styles.login_button} onClick={handleLogin} >Entrar</button>
-
+            <button className={styles.login_button} onClick={handleLogin}>Entrar</button>
           </div>
         </div>
         <div className={styles.footer_left}>

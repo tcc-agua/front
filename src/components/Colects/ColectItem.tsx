@@ -3,20 +3,18 @@ import styles from './ColectItem.module.css';
 import arrow from '../../assets/images/arrow.svg';
 import ReactPaginate from 'react-paginate';
 
-// Interface para definir a estrutura dos detalhes recebidos como props
 interface Detail {
   id: number;
   tipo: string;
   ponto: string;
-  dados: Record<string, any>;  // 'dados' pode ser qualquer estrutura de dados
+  dados: Record<string, any>;  
 }
 
-// Interface para definir as props do componente ColetaItem
 interface ColetaItemProps {
   date: string;
   description: string;
-  details: Detail[];  // Lista de detalhes
-  onOpenDetail: (detail: Detail) => void;  // Função para tratar a abertura de um detalhe
+  details: Detail[];  
+  onOpenDetail: (detail: Detail) => void;
 }
 
 const ColetaItem: React.FC<ColetaItemProps> = ({ date, description, details, onOpenDetail }) => {
@@ -28,16 +26,18 @@ const ColetaItem: React.FC<ColetaItemProps> = ({ date, description, details, onO
 
   // Cálculo do deslocamento e dos itens atuais com base na página e na quantidade por página
   const offset = currentPage * itemsPerPage;
-  const currentItems = details.slice(offset, offset + itemsPerPage);
+  let currentItems = details.slice(offset, offset + itemsPerPage);
   const pageCount = Math.ceil(details.length / itemsPerPage);
 
   // Função para lidar com a mudança de página na paginação
   const handlePageClick = (data: { selected: number }) => {
     setCurrentPage(data.selected);
+    currentItems = details.slice(offset, offset + itemsPerPage);
+    console.log(currentItems);
+    
     toggleOpen();
   };
 
-  // Função para alternar entre abrir e fechar a seção de detalhes
   const toggleOpen = () => {setIsOpen(prev => !prev);};
 
   const filterLetters = (text: string) => { return text.match(/[a-zA-Z]+/g)?.join('') || '';};
@@ -60,7 +60,6 @@ const ColetaItem: React.FC<ColetaItemProps> = ({ date, description, details, onO
         </span>
       </div>
 
-      {/* Container que contém os detalhes e sua animação de abrir/fechar */}
       <div className={`${styles.detailsWrapper} ${isOpen ? styles.open : ''}`} ref={detailsRef}>
 
         {/* Mapeia e exibe os detalhes paginados */}
