@@ -23,7 +23,7 @@ const MapSpline = ({ selectedCategory }) => {
     const controls = new OrbitControls(camera, canvas);
     controls.enableDamping = true;
     controls.minPolarAngle = Math.PI / 2.8; // Limitar para cima
-    controls.maxPolarAngle = Math.PI / 2; // Limitar para baixo
+    controls.maxPolarAngle = Math.PI / 3; // Limitar para baixo
     controls.minDistance = 10; // Zoom mínimo
     controls.maxDistance = 170; // Zoom máximo
 
@@ -57,6 +57,8 @@ const MapSpline = ({ selectedCategory }) => {
               child.material.color.set('#419e98'); // Poços de Monitoramento
             } else if (child.name.startsWith('PT')) {
               child.material.color.set('#d543cb'); // Poços de Tratamento
+            } else if (child.name.startsWith('ETAS')) {
+              child.material.color.set('#f05f22'); // ETAS
             } else if (child.name.startsWith('window')) {
               child.material.color.set('#01a4fd'); // Janelas
             } else if (child.name.startsWith('piso')) {
@@ -86,6 +88,7 @@ const MapSpline = ({ selectedCategory }) => {
               child.name.startsWith('PB') ||
               child.name.startsWith('PM') ||
               child.name.startsWith('PT') ||
+              child.name.startsWith('ETAS') ||
               child.name.startsWith('texto_ponto_');
 
             // Lógica para mostrar apenas os pontos e textos correspondentes

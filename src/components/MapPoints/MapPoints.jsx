@@ -23,7 +23,7 @@ const MapPoints = ({ planilha }) => {
     const controls = new OrbitControls(camera, canvas);
     controls.enableDamping = true;
     controls.minPolarAngle = Math.PI / 2.8; // Limitar para cima
-    controls.maxPolarAngle = Math.PI / 2; // Limitar para baixo
+    controls.maxPolarAngle = Math.PI / 3; // Limitar para baixo
     controls.minDistance = 10; // Zoom mínimo
     controls.maxDistance = 170; // Zoom máximo
 
@@ -57,6 +57,8 @@ const MapPoints = ({ planilha }) => {
               child.material.color.set('#419e98'); // Poços de Monitoramento
             } else if (child.name.startsWith('PT')) {
               child.material.color.set('#d543cb'); // Poços de Tratamento
+            } else if (child.name.startsWith('ETAS')) {
+              child.material.color.set('#f05f22'); // ETAS
             } else if (child.name.startsWith('window')) {
               child.material.color.set('#01a4fd'); // Janelas
             } else if (child.name.startsWith('piso')) {
@@ -86,6 +88,7 @@ const MapPoints = ({ planilha }) => {
               child.name.startsWith('PB') ||
               child.name.startsWith('PM') ||
               child.name.startsWith('PT') ||
+              child.name.startsWith('ETAS') ||
               child.name.startsWith('texto_ponto_');
 
             if (isPointOrText) {
@@ -94,6 +97,8 @@ const MapPoints = ({ planilha }) => {
                 child.visible = child.name.startsWith('PM') || child.name.startsWith('PT') || child.name.startsWith('texto_ponto_pm') || child.name.startsWith('texto_ponto_pt');
               } else if (planilha === "PBS") {
                 child.visible = child.name.startsWith('PB') || child.name.startsWith('CD') || child.name.startsWith('texto_ponto_pb') || child.name.startsWith('texto_ponto_cd');
+              } else if (planilha === "ETAS") {
+                child.visible = child.name.startsWith('ETAS') || child.name.startsWith('texto_ponto_pb')
               } else {
                 // Se nenhuma categoria estiver selecionada, todos os pontos são mostrados
                 child.visible = true; // Para "DADOS ETAS" ou outras planilhas

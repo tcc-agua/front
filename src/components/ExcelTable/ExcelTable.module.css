@@ -1,5 +1,6 @@
 .customHotTable {
     font-size: 1rem;
+    z-index: 3;
 }
 
 .customHotTable .handsontable td,
