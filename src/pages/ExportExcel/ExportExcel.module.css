@@ -16,33 +16,18 @@
 
 .filter{
     display: flex;
+    margin-bottom: 3%;
 }
 
 .dropdownContainer{
     display: flex;
 }
 
-.month, .year, .tabelas{
+.month, .year, .selecionar_tabela{
     margin-left: 6%;
 }
 
 @media (max-width: 900px) {
-    .top {
-        font-size: small;
-        flex-direction: column;
-    }
-
-    .left {
-        margin-left: 5%;
-        width: 80%;
-        flex-direction: column;
-    }
-
-    .buttonTable {
-        width: 25%;
-        margin-top: 2%;
-    }
-
     .title {
         margin-bottom: 5%;
     }
@@ -51,22 +36,10 @@
 
 
 @media (min-width: 1500px) {
-    
     .buttonTable {
         margin-top: 0.5%;
         margin-left: 10%;
     }
-}
-
-/* Tabela */
-
-.table {
-    display: flex;
-    justify-content: center;
-    height: 60%;
-    width: 90%;
-    margin-left: 5%;
-    margin-top: 3%;
 }
 
 @media (max-width: 900px) {
@@ -78,6 +51,7 @@
 /* Modal */
 
 .modal {
+    z-index: 99;
     position: fixed;
     top: 0;
     left: 0;
@@ -91,6 +65,7 @@
 }
 
 .close {
+    z-index: 99;
     cursor: pointer;
     margin-left: 95%;
     margin-top: -3%;
@@ -102,6 +77,7 @@
 }
 
 .modalContent {
+    z-index: 99;
     background: var(--backgroud_color);
     padding: 3%;
     border-radius: 10px;
@@ -110,11 +86,13 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    font-family: 'SF Pro Medium';
 }
 
 .modalTitle,
 .modalImg,
 .modalText {
+    z-index: 99;
     text-align: center;
     margin-top: 6%;
 }
@@ -174,15 +152,14 @@
 /* Botão Exportar Arquivo */
 
 .export {
-    font-size: 1rem;
+    width: 17%;
+    font-size: 0.9rem;
     color: #fff;
     background-color: #01A4FD;
     border-radius: 8px;
     border: none;
     cursor: pointer;
-    padding: 1% 4%;
-    margin-left: 75%;
-    margin-top: 3%;
+    padding: 1%;
 }
 
 @media (max-width: 900px) {

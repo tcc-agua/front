@@ -75,6 +75,15 @@ export function Map() {
                             ></div>
                             <p className={styles.subtitle}>Poços de Tratamento (PT)</p>
                         </div>
+                        <div
+                            className={`${styles.pointsContent} ${selectedCategory === 'ETAS' ? styles.selected : ''}`}
+                            onClick={() => handleCategoryClick('ETAS')}
+                        >
+                            <div
+                                className={`${styles.laranja} ${selectedCategory && selectedCategory !== 'ETAS' ? styles.grayscale : ''}`}
+                            ></div>
+                            <p className={styles.subtitle}>Estações de Tratamento (ETAS)</p>
+                        </div>
                     </div>
                 </div>
             </div>

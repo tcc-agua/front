@@ -134,7 +134,7 @@ const ExportExcel: React.FC = () => {
                                 onSelect={setSelectedYear} // Passa a função correta
                             />
                         </div>
-                        <div className={styles.table}>
+                        <div className={styles.selecionar_tabela}>
                             <DropdownButton
                                 id="tableDropdown"
                                 title="Selecione a Tabela"
@@ -144,28 +144,37 @@ const ExportExcel: React.FC = () => {
                             />
                         </div>
                     </div>
-                    <button className={styles.exportButton} onClick={handleExportClick}>
-                        Exportar Arquivo
-                    </button>
+
                 </div>
                 {isModalOpen && (
                     <div className={styles.modal}>
                         <div className={styles.modalContent}>
-                            <img src={success} alt="Success" />
-                            <p>Exportação realizada com sucesso!</p>
-                            <button onClick={closeModal}>Fechar</button>
+                            <span className={styles.close} onClick={closeModal}>&times;</span>
+                            <p className={styles.modalTitle}>Tabelas exportadas com sucesso!</p>
+                            <img className={styles.modalImg} src={success} alt="Success" />
                         </div>
                     </div>
                 )}
             </div>
-            {selectedTable && selectedMonth && selectedYear && (
-                <ExcelTable 
-                    key={`${selectedTable.value}-${selectedMonth.id}-${selectedYear.label}`} // Adicionando chave única
-                    sheetName={String(selectedTable.value)} // Conversão para string
-                    monthProps={selectedMonth.id} 
-                    yearProps={selectedYear.label} 
-                />
-            )}
+
+            <div className={styles.container}>
+
+                {selectedTable && selectedMonth && selectedYear && (
+                    <ExcelTable
+                        key={`${selectedTable.value}-${selectedMonth.id}-${selectedYear.label}`} // Adicionando chave única
+                        sheetName={String(selectedTable.value)} // Conversão para string
+                        monthProps={selectedMonth.id}
+                        yearProps={selectedYear.label}
+                    />
+                )}
+
+            </div>
+
+            <div className="footer">
+                <button className={styles.export} onClick={handleExportClick}>
+                    Exportar Arquivo
+                </button>
+            </div>
         </div>
     );
 };
