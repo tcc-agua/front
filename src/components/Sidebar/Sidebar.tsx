@@ -31,6 +31,10 @@ export function Sidebar({ className }: SidebarProps) {
         return location.pathname === path ? blueIcon : (isDarkMode ? whiteIcon : defaultIcon);
     };
 
+    const handleLogout = () => {
+        window.location.href = 'http://localhost:5173/logout';
+      };
+
     return (
         <aside className={`${styles.container} ${className}`}>
             <header className={styles.header_container}>
@@ -92,6 +96,9 @@ export function Sidebar({ className }: SidebarProps) {
                         />
                         <p>Exportar Excel</p>
                     </Link>
+                </div>
+                <div>
+                    <button onClick={handleLogout}> SAIR </button>
                 </div>
             </section>
         </aside>
