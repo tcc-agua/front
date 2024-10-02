@@ -38,7 +38,7 @@ export const Notifications: React.FC<{
     currentPage: number;
 }> = ({ onFetchNotifications, currentPage }) => {
     const [notifications, setNotifications] = useState<Notification[]>([]);
-    const activitiesPerPage = 8;
+    const activitiesPerPage = 6;
 
     useEffect(() => {
         const getNotifications = async () => {
@@ -83,12 +83,14 @@ export const Notifications: React.FC<{
                     </div>
                     <div className={styles.right_side}>
                         <p className={styles.day_history}>{getDateDifference(data)}</p>
-                        <Link className={styles.button_history} to='/inicial/historico'>Veja</Link>
+                        <Link className={styles.button_history} to='/inicial/historico'><p className={styles.button_text}>Veja</p></Link>
                     </div>
                 </div>
-                <div className={styles.hr}>
-                    <hr />
-                </div>
+                {index < 5 && (
+                    <div className={styles.linha_hr}>
+                        <hr className={styles.hr_dash} />
+                    </div>
+                )}
             </>
         );
     };
@@ -139,7 +141,7 @@ export const LastNotifications: React.FC = () => {
                     <p className={styles.day}>{getDateDifference(data)}</p>
 
                     <div className={`${styles.icon_activity_last} ${isExport ? styles.icon_export : styles.icon_correct}`}>
-                        <img
+                        <img className={styles.imgs_activity}
                             src={isExport ? icon_export : icon_correct}
                             alt={isExport ? "icon_export" : "icon_correct"}
                         />

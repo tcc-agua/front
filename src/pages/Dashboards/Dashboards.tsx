@@ -212,9 +212,11 @@ export const Notifications: React.FC = () => {
                         <p className={styles.days}>{dayDiff}</p>
                     </div>
                 </div>
-                <div className={styles.linha_hr}>
-                    <hr className={styles.hr_dash} />
-                </div>
+                {index < 2 && (
+                    <div className={styles.linha_hr}>
+                        <hr className={styles.hr_dash} />
+                    </div>
+                )}
             </div>
         );
     };

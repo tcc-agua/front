@@ -257,6 +257,10 @@ canvas {
     box-shadow: 0px 1px 10px rgba(0, 0, 0, 0.05);
 }
 
+hr {
+    opacity: 30%;
+}
+
 
 @media (max-width: 1180px) {
     .container {
