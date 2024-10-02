@@ -1,10 +1,10 @@
 import api from "../infra/api"
-import { BC01 } from "../interfaces/postParams"
+import { TQ01 } from "../interfaces/postParams"
 
 
-export const postBc01 = async (data: BC01) => {
+export const postTq01 = async (data: TQ01) => {
     try {
-        const response = await api.post("/bc01", data)
+        const response = await api.post("/tq01", data)
 
         return response.data;
 
