@@ -1,6 +1,8 @@
 import styles from "../../../pages/PointCollect/PointCollect.module.css";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { InputPoint } from "../InputPoint";
+import useTq01Store from "../../../store/Tq01Store";
+import { TQ01 } from "../../../interfaces/postParams";
 
 interface PointNameProps{
     name: string
@@ -8,6 +10,7 @@ interface PointNameProps{
 
 function Tq01Card({ name }: PointNameProps) {
     const [nivel, setNivel] = useState<number>(1);
+    const { createTq01Measure, isCreated, isError, resetState } = useTq01Store();
 
     const increment = (setter: React.Dispatch<React.SetStateAction<number>>, isInteger?: boolean) => {
         setter(prev => isInteger ? prev + 1 : Math.round((prev + 0.1) * 10) / 10);
@@ -24,6 +27,26 @@ function Tq01Card({ name }: PointNameProps) {
         }
     };
 
+    const sendInformation = () => {
+        const obj: TQ01 = {
+            nivel: nivel,
+            nomePonto: name,
+            idColeta: 1
+        }
+        createTq01Measure(obj);
+    };
+
+    useEffect (() =>{
+        if(isCreated){
+            alert("Criado")
+            resetState()
+        }
+        if(isError){
+            alert("ERRO")
+        }
+
+    }, [isCreated, resetState, isError])
+
     return (
         <>
             <p className={styles.pointName}>Dados de coleta do ponto '{name}'</p>
@@ -39,7 +62,7 @@ function Tq01Card({ name }: PointNameProps) {
                 />
                 </div>
                 
-                <button className={styles.buttonEnviar} onClick={() => console.log("Dados enviados")}>Enviar</button>
+                <button className={styles.buttonEnviar} onClick={sendInformation}>Enviar</button>
             </main>
         </>
     );

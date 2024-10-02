@@ -1,6 +1,8 @@
 import styles from "../../../pages/PointCollect/PointCollect.module.css"
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { BooleanInput, InputPoint } from "../InputPoint";
+import useTq04Tq05Store from "../../../store/Tq04Tq05Store";
+import { TQ04_TQ05 } from "../../../interfaces/postParams";
 
 interface PointNameProps{
     name: string
@@ -12,6 +14,7 @@ function Tq04Tq05Card({ name }: PointNameProps) {
     const [horimeter, setHorimeter] = useState<number>(1);
     const [hidrometer, setHidrometer] = useState<number>(1);
     const [preparoSolucao, setPreparoSolucao] = useState<boolean>(false);
+    const { createTq04Tq05Measure, isCreated, isError, resetState} = useTq04Tq05Store();
 
     const increment = (setter: React.Dispatch<React.SetStateAction<number>>, isInteger?: boolean) => {
         setter(prev => isInteger ? prev + 1 : Math.round((prev + 0.1) * 10) / 10);
@@ -31,6 +34,30 @@ function Tq04Tq05Card({ name }: PointNameProps) {
             setter(value);
         }
     };
+
+    const sendInformation = () => {
+        const obj: TQ04_TQ05 ={
+            qtd_bombonas: qtdBombonas,
+            kg_bombonas: kgBombonas,
+            hidrometro: hidrometer,
+            horimetro:horimeter,
+            houve_preparo_solucao: preparoSolucao,
+            nomePonto: name,
+            idColeta: 1
+        }
+        createTq04Tq05Measure(obj);
+    };
+
+    useEffect (() =>{
+        if(isCreated){
+            alert("Criado")
+            resetState()
+        }
+        if(isError){
+            alert("ERRO")
+        }
+
+    }, [isCreated, resetState, isError])
 
     return (
         <>
@@ -76,7 +103,7 @@ function Tq04Tq05Card({ name }: PointNameProps) {
                 />
                 </div>
             
-                <button className={styles.buttonEnviar} onClick={() => console.log("Dados enviados")}>Enviar</button>
+                <button className={styles.buttonEnviar} onClick={sendInformation}>Enviar</button>
             </main>
         </>
     );

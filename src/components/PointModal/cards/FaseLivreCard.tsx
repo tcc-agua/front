@@ -1,6 +1,8 @@
 import styles from "../../../pages/PointCollect/PointCollect.module.css"
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { BooleanInput, InputPoint } from "../InputPoint";
+import useFaseLivreStore from "../../../store/FaseLivreStore";
+import { FASE_LIVRE } from "../../../interfaces/postParams";
 
 interface PointNameProps{
     name: string
@@ -9,6 +11,7 @@ interface PointNameProps{
 function FaseLivreCard({ name }: PointNameProps) {
     const [volume, setVolume] = useState<number>(1);
     const [houveTroca, setHouveTroca] = useState<boolean>(false);
+    const { createFaseLivreMeasure, isCreated, isError, resetState } = useFaseLivreStore();
 
     const increment = (setter: React.Dispatch<React.SetStateAction<number>>, isInteger?: boolean) => {
         setter(prev => isInteger ? prev + 1 : Math.round((prev + 0.1) * 10) / 10);
@@ -29,6 +32,27 @@ function FaseLivreCard({ name }: PointNameProps) {
         }
     };
 
+    const sendInformation = () => {
+        const obj: FASE_LIVRE ={
+            houve_troca: houveTroca,
+            volume: volume,
+            nomePonto: name,
+            idColeta: 1
+        }
+        createFaseLivreMeasure(obj);
+    };
+
+    useEffect (() =>{
+        if(isCreated){
+            alert("Criado")
+            resetState()
+        }
+        if(isError){
+            alert("ERRO")
+        }
+
+    }, [isCreated, resetState, isError])
+
     return (
         <>
             <p className={styles.pointName}>Dados de coleta do ponto '{name}'</p>
@@ -48,7 +72,7 @@ function FaseLivreCard({ name }: PointNameProps) {
                         titulo="Houve Troca?"
                     />
                 </div>
-                <button className={styles.buttonEnviar} onClick={() => console.log("Dados enviados")}>Enviar</button>
+                <button className={styles.buttonEnviar} onClick={sendInformation}>Enviar</button>
             </main>
         </>
     );

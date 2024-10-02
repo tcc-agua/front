@@ -72,7 +72,7 @@ export interface COLUNAS_CARVAO{
 
 export interface FASE_LIVRE{
     volume: number
-    houve_troca: number
+    houve_troca: boolean
 
     nomePonto: string
     idColeta: number

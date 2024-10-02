@@ -1,6 +1,8 @@
 import styles from "../../../pages/PointCollect/PointCollect.module.css"
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { InputPoint } from "../InputPoint";
+import usePmPtStore from "../../../store/PmPtStore";
+import { PMPT } from "../../../interfaces/postParams";
 
 interface PointNameProps{
     name: string
@@ -9,7 +11,8 @@ interface PointNameProps{
 function PmPtCard({ name }: PointNameProps) {
     const [oilLevel, setOilLevel] = useState<number>(1);
     const [waterLevel, setWaterLevel] = useState<number>(1);
-    const [volRemOleo, setVolRemOleo] = useState<number>(1);
+    const [flRemoManual, setFlRemoManual] = useState<number>(1);
+    const { createPmPtMeasure, isCreated, isError, resetState } = usePmPtStore();
 
     const increment = (setter: React.Dispatch<React.SetStateAction<number>>, isInteger?: boolean) => {
         setter(prev => isInteger ? prev + 1 : Math.round((prev + 0.1) * 10) / 10);
@@ -25,6 +28,28 @@ function PmPtCard({ name }: PointNameProps) {
             setter(value);
         }
     };
+
+    const sendInformation = () => {
+        const obj: PMPT = {
+             fl_remo_manual: flRemoManual,
+             nivel_agua: waterLevel,
+             nivel_oleo: oilLevel,
+             nomePonto: name,
+             idColeta: 1
+        }
+        createPmPtMeasure(obj);
+    };
+
+    useEffect (() =>{
+        if(isCreated){
+            alert("Criado")
+            resetState()
+        }
+        if(isError){
+            alert("ERRO")
+        }
+
+    }, [isCreated, resetState, isError])
 
     return (
         <>
@@ -48,16 +73,16 @@ function PmPtCard({ name }: PointNameProps) {
                     isInteger={false}
                 />
                 <InputPoint
-                    decrement={() => decrement(setVolRemOleo, false)}
-                    increment={() => increment(setVolRemOleo, false)}
-                    handleChange={(e) => handleChange(e, setVolRemOleo)}
-                    valor={volRemOleo}
-                    titulo="Vol Rem Óleo"
+                    decrement={() => decrement(setFlRemoManual, false)}
+                    increment={() => increment(setFlRemoManual, false)}
+                    handleChange={(e) => handleChange(e, setFlRemoManual)}
+                    valor={flRemoManual}
+                    titulo="Fl remo Manual"
                     isInteger={false}
                 />
                 </div>
             
-                <button className={styles.buttonEnviar} onClick={() => console.log("Dados enviados")}>Enviar</button>
+                <button className={styles.buttonEnviar} onClick={sendInformation}>Enviar</button>
             </main>
         </>
     );

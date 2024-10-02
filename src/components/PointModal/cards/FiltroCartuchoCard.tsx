@@ -1,6 +1,8 @@
 import styles from "../../../pages/PointCollect/PointCollect.module.css"
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { InputPoint } from "../InputPoint";
+import useFiltroCartuchoStore from "../../../store/FiltroCartuchoStore";
+import { FILTRO_CARTUCHO } from "../../../interfaces/postParams";
 
 interface PointNameProps{
     name: string
@@ -9,6 +11,7 @@ interface PointNameProps{
 function FiltroCartuchoCard({ name }:PointNameProps) {
     const [outletPressure, setOutletPressure] = useState<number>(1);
     const [inletPressure, setInletPressure] = useState<number>(1);
+    const { createFiltroCartuchoMeasure, isCreated, isError, resetState } = useFiltroCartuchoStore();
 
     const increment = (setter: React.Dispatch<React.SetStateAction<number>>, isInteger?: boolean) => {
         setter(prev => isInteger ? prev + 1 : Math.round((prev + 0.1) * 10) / 10);
@@ -24,6 +27,27 @@ function FiltroCartuchoCard({ name }:PointNameProps) {
             setter(value);
         }
     };
+
+    const sendInformation = () => {
+        const obj: FILTRO_CARTUCHO = {
+            pressao_saida: outletPressure,
+            pressao_entrada: inletPressure,
+            nomePonto: name,
+            idColeta: 1
+        }
+        createFiltroCartuchoMeasure(obj);
+    };
+
+    useEffect (() =>{
+        if(isCreated){
+            alert("Criado")
+            resetState()
+        }
+        if(isError){
+            alert("ERRO")
+        }
+
+    }, [isCreated, resetState, isError])
 
     return (
         <>
@@ -47,7 +71,7 @@ function FiltroCartuchoCard({ name }:PointNameProps) {
                         isInteger={false}
                     />
                 </div>
-                <button className={styles.buttonEnviar} onClick={() => console.log("Dados enviados")}>Enviar</button>
+                <button className={styles.buttonEnviar} onClick={sendInformation}>Enviar</button>
             </main>
         </>
     );

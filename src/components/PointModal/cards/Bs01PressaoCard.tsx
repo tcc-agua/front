@@ -1,6 +1,8 @@
 import styles from "../../../pages/PointCollect/PointCollect.module.css"
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { InputPoint } from "../InputPoint";
+import useBs01PressaoStore from "../../../store/Bs01PressaoStore";
+import { BS01_PRESSAO } from "../../../interfaces/postParams";
 
 interface PointNameProps{
     name: string
@@ -8,6 +10,7 @@ interface PointNameProps{
 
 function Bs01PressaoCard({ name }: PointNameProps) {
     const [pressure, setPressure] = useState<number>(1);
+    const { createBs01PressaoMeasure, isCreated, isError, resetState } = useBs01PressaoStore();
 
     const increment = (setter: React.Dispatch<React.SetStateAction<number>>, isInteger?: boolean) => {
         setter(prev => isInteger ? prev + 1 : Math.round((prev + 0.1) * 10) / 10);
@@ -24,6 +27,27 @@ function Bs01PressaoCard({ name }: PointNameProps) {
         }
     };
 
+    const sendInformation = () => {
+        
+        const obj: BS01_PRESSAO = {
+            pressao: pressure,
+            nomePonto: name,
+            idColeta: 1
+        }
+        createBs01PressaoMeasure(obj);
+    };
+
+    useEffect (() =>{
+        if(isCreated){
+            alert("Criado")
+            resetState()
+        }
+        if(isError){
+            alert("ERRO")
+        }
+
+    }, [isCreated, resetState, isError])
+
     return (
         <>
             <p className={styles.pointName}>Dados de coleta do ponto '{name}'</p>
@@ -38,7 +62,7 @@ function Bs01PressaoCard({ name }: PointNameProps) {
                         isInteger={false}
                     />
                     </div>
-                <button className={styles.buttonEnviar} onClick={() => console.log("Dados enviados")}>Enviar</button>
+                <button className={styles.buttonEnviar} onClick={sendInformation}>Enviar</button>
             </main>
         </>
     );

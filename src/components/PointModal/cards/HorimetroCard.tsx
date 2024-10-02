@@ -1,6 +1,8 @@
 import styles from "../../../pages/PointCollect/PointCollect.module.css";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { InputPoint } from "../InputPoint";
+import useHorimetroStore from "../../../store/HorimetroStore";
+import { HORIMETRO } from "../../../interfaces/postParams";
 
 interface PointNameProps{
     name: string
@@ -8,6 +10,7 @@ interface PointNameProps{
 
 function HorimetroCard({ name }: PointNameProps) {
     const [horimeter, setHorimeter] = useState<number>(1);
+    const { createHorimetroMeasure, isCreated, isError, resetState } = useHorimetroStore();
 
     const increment = (setter: React.Dispatch<React.SetStateAction<number>>, isInteger?: boolean) => {
         setter(prev => isInteger ? prev + 1 : Math.round((prev + 0.1) * 10) / 10);
@@ -24,6 +27,26 @@ function HorimetroCard({ name }: PointNameProps) {
         }
     };
 
+    const sendInformation = () => {
+        const obj: HORIMETRO = {
+            horimetro: horimeter,
+            nomePonto: name,
+            idColeta: 1
+        }
+        createHorimetroMeasure(obj);
+    };
+
+    useEffect (() =>{
+        if(isCreated){
+            alert("Criado")
+            resetState()
+        }
+        if(isError){
+            alert("ERRO")
+        }
+
+    }, [isCreated, resetState, isError])
+
     return (
         <>
             <p className={styles.pointName}>Dados de coleta do ponto '{name}'</p>
@@ -38,7 +61,7 @@ function HorimetroCard({ name }: PointNameProps) {
                     isInteger={false}
                 />
                 </div>
-                <button className={styles.buttonEnviar} onClick={() => console.log("Dados enviados")}>Enviar</button>
+                <button className={styles.buttonEnviar} onClick={sendInformation}>Enviar</button>
             </main>
         </>
     );

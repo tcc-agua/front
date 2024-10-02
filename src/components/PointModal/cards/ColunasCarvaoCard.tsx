@@ -1,6 +1,8 @@
 import styles from "../../../pages/PointCollect/PointCollect.module.css";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { BooleanInput, InputPoint } from "../InputPoint";
+import useColunasCarvaoStore from "../../../store/ColunasCarvaoStore";
+import { COLUNAS_CARVAO } from "../../../interfaces/postParams";
 
 interface PointNameProps{
     name: string
@@ -13,6 +15,7 @@ function ColunasCarvaoCard({ name }: PointNameProps) {
     const [outletPressure, setOutletPressure] = useState<number>(1);
     const [trocaCarvao, setTrocaCarvao] = useState<boolean>(false);
     const [retroLavagem, setRetroLavagem] = useState<boolean>(false);
+    const { createColunasCarvaoMeasure, isCreated, isError, resetState } = useColunasCarvaoStore();
 
     const handleBooleanChange = (event: React.ChangeEvent<HTMLSelectElement>, setter: React.Dispatch<React.SetStateAction<boolean>>) => {
         setter(event.target.value === "Sim");
@@ -32,6 +35,32 @@ function ColunasCarvaoCard({ name }: PointNameProps) {
             setter(value);
         }
     };
+
+    const sendInformation = () => {
+        const obj: COLUNAS_CARVAO ={
+            houve_retrolavagem: retroLavagem,
+            houve_troca_carvao: trocaCarvao,
+            pressao_c01: pressure_c01,
+            pressao_c02: pressure_c02,
+            pressao_c03: pressure_c03,
+            pressao_saida: outletPressure,
+            nomePonto: name,
+            idColeta: 1
+        }
+        createColunasCarvaoMeasure(obj);
+    };
+
+    useEffect (() =>{
+        if(isCreated){
+            alert("Criado")
+            resetState()
+        }
+        if(isError){
+            alert("ERRO")
+        }
+
+    }, [isCreated, resetState, isError])
+
 
     return (
         <>
@@ -81,7 +110,7 @@ function ColunasCarvaoCard({ name }: PointNameProps) {
                         titulo="Houve retrolavagem?"
                     />
                 </div>
-                <button className={styles.buttonEnviar} onClick={() => console.log("Dados enviados")}>Enviar</button>
+                <button className={styles.buttonEnviar} onClick={sendInformation}>Enviar</button>
             </main>
         </>
     );

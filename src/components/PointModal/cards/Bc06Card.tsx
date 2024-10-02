@@ -1,6 +1,8 @@
 import styles from "../../../pages/PointCollect/PointCollect.module.css"
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { InputPoint } from "../InputPoint";
+import useBc06Store from "../../../store/Bc06Store";
+import { BC06 } from "../../../interfaces/postParams";
 
 interface PointNameProps{
     name: string
@@ -9,6 +11,7 @@ interface PointNameProps{
 function Bc06Card({ name }: PointNameProps) {
     const [pressure, setPressure] = useState<number>(1);
     const [horimeter, setHorimeter] = useState<number>(1);
+    const { createBc06Measure, isCreated, isError, resetState } = useBc06Store();
 
     const increment = (setter: React.Dispatch<React.SetStateAction<number>>, isInteger?: boolean) => {
         setter(prev => isInteger ? prev + 1 : Math.round((prev + 0.1) * 10) / 10);
@@ -24,6 +27,31 @@ function Bc06Card({ name }: PointNameProps) {
             setter(value);
         }
     };
+
+    const sendInformation = () => {
+
+        const obj: BC06 = {
+            horimetro : horimeter,
+            pressao : pressure,
+            nomePonto : name,
+            idColeta : 1,
+        }
+
+        createBc06Measure(obj);
+
+    };
+
+    useEffect (() =>{
+        if(isCreated){
+            alert("Criado")
+            resetState()
+        }
+        if(isError){
+            alert("ERRO")
+        }
+
+    }, [isCreated, resetState, isError])
+
 
     return (
         <>
@@ -48,7 +76,7 @@ function Bc06Card({ name }: PointNameProps) {
                     />
                 </div>
                 
-                <button className={styles.buttonEnviar} onClick={() => console.log("Dados enviados")}>Enviar</button>
+                <button className={styles.buttonEnviar} onClick={sendInformation}>Enviar</button>
             </main>
         </>
     );

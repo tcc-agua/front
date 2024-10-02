@@ -1,6 +1,8 @@
 import styles from "../../../pages/PointCollect/PointCollect.module.css"
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { InputPoint } from "../InputPoint";
+import useSensorPhStore from "../../../store/SensorPhStore";
+import { SENSOR_PH } from "../../../interfaces/postParams";
 
 interface PointNameProps{
     name: string
@@ -8,6 +10,7 @@ interface PointNameProps{
 
 function SensorPHCard({ name }: PointNameProps) {
     const [ph, setPh] = useState<number>(1);
+    const { createSensorPhMeasure, isCreated, isError, resetState } = useSensorPhStore();
 
     const increment = (setter: React.Dispatch<React.SetStateAction<number>>, isInteger?: boolean) => {
         setter(prev => isInteger ? prev + 1 : Math.round((prev + 0.1) * 10) / 10);
@@ -24,6 +27,27 @@ function SensorPHCard({ name }: PointNameProps) {
         }
     };
 
+
+    const sendInformation = () => {
+        const obj: SENSOR_PH = {
+            ph: ph,
+            nomePonto: name,
+            idColeta: 1
+        }
+        createSensorPhMeasure(obj);
+    };
+
+    useEffect (() =>{
+        if(isCreated){
+            alert("Criado")
+            resetState()
+        }
+        if(isError){
+            alert("ERRO")
+        }
+
+    }, [isCreated, resetState, isError])
+
     return (
         <>
             <p className={styles.pointName}>Dados de coleta do Ponto '{name}'</p>
@@ -39,7 +63,7 @@ function SensorPHCard({ name }: PointNameProps) {
                 />
                 </div>
 
-                <button className={styles.buttonEnviar} onClick={() => console.log("Dados enviados")}>Enviar</button>
+                <button className={styles.buttonEnviar} onClick={sendInformation}>Enviar</button>
             </main>
         </>
     );

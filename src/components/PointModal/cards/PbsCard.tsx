@@ -1,6 +1,8 @@
 import styles from "../../../pages/PointCollect/PointCollect.module.css"
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { InputPoint } from "../InputPoint";
+import usePbsStore from "../../../store/PbsStore";
+import { PBS } from "../../../interfaces/postParams";
 
 interface PointNameProps{
     name: string
@@ -12,6 +14,7 @@ function PbsCard({ name }: PointNameProps) {
     const [oilLevel, setOilLevel] = useState<number>(1);
     const [waterLevel, setWaterLevel] = useState<number>(1);
     const [volRemOleo, setVolRemOleo] = useState<number>(1);
+    const { createPbsMeasure, isCreated, isError, resetState } = usePbsStore();
 
     const increment = (setter: React.Dispatch<React.SetStateAction<number>>, isInteger?: boolean) => {
         setter(prev => isInteger ? prev + 1 : Math.round((prev + 0.1) * 10) / 10);
@@ -27,6 +30,31 @@ function PbsCard({ name }: PointNameProps) {
             setter(value);
         }
     };
+
+    const sendInformation = () => {
+        const obj: PBS ={
+            vol_rem_oleo: volRemOleo,
+            pulsos: pulses,
+            pressao: pressure,
+            nivel_agua: waterLevel,
+            nivel_oleo: oilLevel,
+            nomePonto: name,
+            idColeta: 1
+        } 
+        createPbsMeasure(obj);
+    };
+
+    useEffect (() =>{
+        if(isCreated){
+            alert("Criado")
+            resetState()
+        }
+        if(isError){
+            alert("ERRO")
+        }
+
+    }, [isCreated, resetState, isError])
+
 
     return (
         <>
@@ -75,7 +103,7 @@ function PbsCard({ name }: PointNameProps) {
                 />
                 </div>
                 
-                <button className={styles.buttonEnviar} onClick={() => console.log("Dados enviados")}>Enviar</button>
+                <button className={styles.buttonEnviar} onClick={sendInformation}>Enviar</button>
 
             </main>
         </>
