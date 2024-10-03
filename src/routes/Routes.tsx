@@ -15,16 +15,16 @@ import { LastActivities } from '../pages/LastActivities/LastActivities';
 import { useAuth } from '../hooks/useAuth';
 
 const AppRoutes: React.FC = () => {
-  const { isAuthenticated } = useAuth();
+  const { isAuthenticated, loading } = useAuth();
 
   return (
     <Router>
       <Routes>
         <Route path="/" element={<SplashPage />} />
         <Route path="/login" element={<Login />} />
-        <Route path="/inicial" element={<Initial />}>
         {/* Rotas protegidas */}
-        <Route element={<PrivateRoute isAuthenticated={isAuthenticated} />}>
+        <Route element={<PrivateRoute isAuthenticated={isAuthenticated} loading={loading} />}>
+            <Route path="/inicial" element={<Initial />}>
             <Route index element={<Dashboards />} />
             <Route path='mapa' element={<Map />} />
             <Route path='coleta_de_dados' element={<Collect />} />
