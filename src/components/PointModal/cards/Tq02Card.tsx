@@ -31,7 +31,7 @@ function Tq02Card({ name }: PointNameProps) {
     const sendInformation = () => {
         const obj: TQ02 = {
             sensor_ph: ph,
-            lt_02_1: lt_02_1,
+            Lt_02_1: lt_02_1,
             nomePonto: name,
             idColeta: 1 
         }
