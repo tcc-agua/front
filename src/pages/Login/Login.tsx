@@ -1,12 +1,27 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import styles from './Login.module.css';
-
+import useUtilsStore from '../../store/utils';
 
 const Login: React.FC = () => {
-
   const handleLogin = () => {
     window.location.href = 'http://localhost:5173/oauth2/authorization/azure';
   };
+
+  const { getTokenInfo } = useUtilsStore();
+
+  useEffect(() => {
+    const fetchTokenInfo = async () => {
+        try {
+            await getTokenInfo();
+            
+        } catch (error) {
+            console.error('Erro ao obter informações do token:', error);
+        }
+    };
+
+    fetchTokenInfo();
+}, [getTokenInfo]);
+
 
   return (
     <div className={styles.container}>
@@ -21,8 +36,7 @@ const Login: React.FC = () => {
           <div className={styles.content_left_side_main}>
             <p className={styles.title_welcome}>Seja bem-vindo(a)!</p>
             <p className={styles.subtitle_welcome}>Entre e explore nossos recursos de amostragem de água.</p>
-            <button className={styles.login_button} onClick={handleLogin} >Entrar</button>
-
+            <button className={styles.login_button} onClick={handleLogin}>Entrar</button>
           </div>
         </div>
         <div className={styles.footer_left}>
