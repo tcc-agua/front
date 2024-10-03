@@ -129,7 +129,7 @@ export interface TQ01{
 
 export interface TQ02{
     sensor_ph: number
-    lt_02_1: number
+    Lt_02_1: number
 
     nomePonto: string
     idColeta: number
