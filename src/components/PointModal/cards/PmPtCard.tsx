@@ -31,9 +31,9 @@ function PmPtCard({ name }: PointNameProps) {
 
     const sendInformation = () => {
         const obj: PMPT = {
-             fl_remo_manual: flRemoManual,
-             nivel_agua: waterLevel,
-             nivel_oleo: oilLevel,
+             flRemoManual: flRemoManual,
+             nivelAgua: waterLevel,
+             nivelOleo: oilLevel,
              nomePonto: name,
              idColeta: 1
         }

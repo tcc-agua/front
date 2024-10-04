@@ -105,9 +105,9 @@ export interface PBS{
 }
 
 export interface PMPT{
-    nivel_agua: number
-    nivel_oleo: number
-    fl_remo_manual: number
+    nivelAgua: number
+    nivelOleo: number
+    flRemoManual: number
 
     nomePonto: string
     idColeta: number
