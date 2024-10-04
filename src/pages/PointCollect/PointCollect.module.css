@@ -221,13 +221,13 @@
     justify-content: center;
     align-items: center;
     text-align: center;
-    font-size: large;
+    font-size: 1rem;
     font-weight: bold;
     border: 1px solid var( --border_color);
     border-radius: 10px;
     margin-top: 5%;
     height: 50%;
-    width: 40%;
+    width: 50%;
 }
 
 .separator {
@@ -237,8 +237,9 @@
 }
 
 .buttonEnviar {
-    width: 40%;
+    width: 35%;
     height: 15%;
+    margin-top: 12%;
     background-color: #01A4FD;
     border: 1px solid #0095e6;
     color: white;

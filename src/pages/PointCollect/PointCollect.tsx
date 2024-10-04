@@ -252,6 +252,8 @@ export function PointCollect() {
                 return "Poços de Bombeamento";
             case "NA":
                 return "Nível de Água";
+            case "CA":
+                return "Consumo de Água";
             default:
                 return "Planilha não encontrada!";
         }
@@ -278,14 +280,16 @@ export function PointCollect() {
                                         ? "'Poços de Bombeamento'"
                                         : planilha === "NA"
                                             ? "'Nível de Água'"
-                                            : "'Planilha não encontrada!'"
+                                            : planilha === "CA"
+                                                ? "'Consumo de Água'"
+                                                : "'Planilha não encontrada!'"
                             }</p>
                         </div>
 
                         <div className={styles.map_container}>
                             <p className={styles.map_title}>Localize seus pontos no mapa:</p>
                             <div className={styles.map}>
-                            <MapPoints planilha={planilha} />
+                                <MapPoints planilha={planilha} />
                             </div>
                         </div>
 

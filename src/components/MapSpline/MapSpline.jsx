@@ -59,6 +59,8 @@ const MapSpline = ({ selectedCategory }) => {
               child.material.color.set('#d543cb'); // Poços de Tratamento
             } else if (child.name.startsWith('ETAS')) {
               child.material.color.set('#f05f22'); // ETAS
+            } else if (child.name.startsWith('HD')) {
+              child.material.color.set('#6d46c8'); // Hidrômetros
             } else if (child.name.startsWith('window')) {
               child.material.color.set('#01a4fd'); // Janelas
             } else if (child.name.startsWith('piso')) {
@@ -89,6 +91,7 @@ const MapSpline = ({ selectedCategory }) => {
               child.name.startsWith('PM') ||
               child.name.startsWith('PT') ||
               child.name.startsWith('ETAS') ||
+              child.name.startsWith('HD') ||
               child.name.startsWith('texto_ponto_');
 
             // Lógica para mostrar apenas os pontos e textos correspondentes

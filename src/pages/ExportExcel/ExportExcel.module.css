@@ -27,6 +27,11 @@
     margin-left: 6%;
 }
 
+.container_table{
+    width: 97%;
+    margin-left: 1%;
+}
+
 @media (max-width: 900px) {
     .title {
         margin-bottom: 5%;
@@ -81,8 +86,8 @@
     background: var(--backgroud_color);
     padding: 3%;
     border-radius: 10px;
-    width: 40%;
-    height: 60%;
+    width: 30%;
+    height: 50%;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -100,7 +105,7 @@
 .modalTitle {
     color: var(--font_color);
     font-family: 'SF Pro Medium';
-    font-size: 1.3rem;
+    font-size: 1.1rem;
 }
 
 .modalText {
@@ -152,14 +157,16 @@
 /* Botão Exportar Arquivo */
 
 .export {
-    width: 17%;
-    font-size: 0.9rem;
+    width: 15%;
+    font-size: 0.85rem;
     color: #fff;
     background-color: #01A4FD;
     border-radius: 8px;
     border: none;
     cursor: pointer;
     padding: 1%;
+    margin-left: 5%;
+    margin-top: 20px;
 }
 
 @media (max-width: 900px) {

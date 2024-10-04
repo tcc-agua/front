@@ -21,7 +21,7 @@
     padding: 2%;
 }
 
-.title{
+.title {
     font-family: 'SF Pro Medium';
     font-size: 1.1rem;
     margin-left: 3%;
@@ -29,14 +29,14 @@
     margin-bottom: 1%;
 }
 
-.title_caption{
+.title_caption {
     font-family: 'SF Pro Medium';
     font-size: 1.1rem;
     margin-left: 3%;
     margin-bottom: 1%;
 }
 
-.information{
+.information {
     font-family: 'SF Pro Light';
     color: var(--font_color4);
     font-size: 0.9rem;
@@ -68,7 +68,7 @@
     border-radius: 4px;
     display: flex;
     display: grid;
-    grid-template-columns: repeat(3, 1fr); 
+    grid-template-columns: repeat(3, 1fr);
     justify-content: center;
     align-items: center;
     gap: 1%;
@@ -91,34 +91,35 @@
 
     .pointsContent {
         display: flex;
-        margin-bottom: 1rem; 
+        margin-bottom: 1rem;
     }
 
-    .map{
+    .map {
         height: 80%
     }
-    
+
 }
 
 @media (max-width: 600px) {
-    .map{
-        height:max-content;
-    } 
+    .map {
+        height: max-content;
+    }
 }
 
-.pointsContent{
+.pointsContent {
     display: flex;
     width: 100%;
     margin-top: 2%;
     margin-bottom: 2%;
     cursor: pointer;
-} 
+}
 
 .selected .azulclaro,
 .selected .azulescuro,
 .selected .verdeagua,
 .selected .roxo,
-.selected .laranja {
+.selected .laranja,
+.selected .roxoescuro {
     transform: scale(1.1);
 }
 
@@ -134,7 +135,8 @@
 .azulescuro,
 .verdeagua,
 .roxo,
-.laranja {
+.laranja,
+.roxoescuro {
     margin-left: 2%;
     margin-top: 2%;
     height: 16px;
@@ -161,4 +163,8 @@
 
 .laranja {
     background-color: #f05f22;
+}
+
+.roxoescuro {
+    background-color: #6d46c8;
 }

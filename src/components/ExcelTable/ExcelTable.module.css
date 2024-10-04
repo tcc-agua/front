@@ -1,20 +1,19 @@
-.customHotTable {
+:global(.customHotTable) {
     font-size: 1rem;
     z-index: 3;
 }
 
-.customHotTable .handsontable td,
-.customHotTable .handsontable th {
+:global(.customHotTable .handsontable td),
+:global(.customHotTable .handsontable th) {
     font-size: 1.2rem;
-    
 }
 
-.customHotTable .lightGreen {
-    background-color: var(--table_header);
-    color: white;
-    font-size: 1.1rem;
+:global(.handsontable .relative) {
+    position: relative;
+    background-color: #052889 !important;
+    color: white !important;
 }
-  
-.errorMessage{
+
+.errorMessage {
     color: var(--font_color);
 }

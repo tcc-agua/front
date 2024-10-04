@@ -59,6 +59,8 @@ const MapPoints = ({ planilha }) => {
               child.material.color.set('#d543cb'); // Poços de Tratamento
             } else if (child.name.startsWith('ETAS')) {
               child.material.color.set('#f05f22'); // ETAS
+            } else if (child.name.startsWith('HD')) {
+              child.material.color.set('#6d46c8'); // Hidrômetros
             } else if (child.name.startsWith('window')) {
               child.material.color.set('#01a4fd'); // Janelas
             } else if (child.name.startsWith('piso')) {
@@ -89,6 +91,7 @@ const MapPoints = ({ planilha }) => {
               child.name.startsWith('PM') ||
               child.name.startsWith('PT') ||
               child.name.startsWith('ETAS') ||
+              child.name.startsWith('HD') ||
               child.name.startsWith('texto_ponto_');
 
             if (isPointOrText) {
@@ -97,8 +100,10 @@ const MapPoints = ({ planilha }) => {
                 child.visible = child.name.startsWith('PM') || child.name.startsWith('PT') || child.name.startsWith('texto_ponto_pm') || child.name.startsWith('texto_ponto_pt');
               } else if (planilha === "PBS") {
                 child.visible = child.name.startsWith('PB') || child.name.startsWith('CD') || child.name.startsWith('texto_ponto_pb') || child.name.startsWith('texto_ponto_cd');
-              } else if (planilha === "ETAS") {
-                child.visible = child.name.startsWith('ETAS') || child.name.startsWith('texto_ponto_pb')
+              } else if (planilha === "DADOS ETAS") {
+                child.visible = child.name.startsWith('ETAS') || child.name.startsWith('texto_ponto_etas')
+              } else if (planilha === "CA") {
+                child.visible = child.name.startsWith('HD') || child.name.startsWith('texto_ponto_hd')
               } else {
                 // Se nenhuma categoria estiver selecionada, todos os pontos são mostrados
                 child.visible = true; // Para "DADOS ETAS" ou outras planilhas

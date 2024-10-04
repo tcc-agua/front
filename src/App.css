@@ -74,6 +74,13 @@ body {
   --PB_title: #007BC0;
   --PB_hover: #89b3cc;
 
+  --CA_color: #a1cae2;
+  --CA_content: #ffff;
+  --CA_content_border: #ffff;
+  --CA_border: #5992b3;
+  --CA_title: #007BC0;
+  --CA_hover: #89b3cc;
+
   --historic_point_hover: #ebebeb;
 
   --table_header: #A1DFDB;
@@ -123,6 +130,13 @@ body {
   --PB_border: #0b6094;
   --PB_title: #ffff;
   --PB_hover: #054064;
+
+  --CA_color: #381c7a;
+  --CA_content: #381c7a;
+  --CA_content_border: #381c7a;
+  --CA_border: #381c7a;
+  --CA_title: #ffff;
+  --CA_hover: #381c7a;
 
   --historic_point_hover: #004b7c;
 
