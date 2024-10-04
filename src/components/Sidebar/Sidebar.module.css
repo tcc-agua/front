@@ -72,6 +72,36 @@
     background-color: #01A4FD;
 }
 
+.line {
+    border-bottom: 1px solid #dfdfdf;
+    width: 70%; 
+    margin-left: 14%;
+    margin-top: 55%;
+  }
+  
+
+.logout{
+    margin-top: 15%;
+    display: flex;
+    width: 40%;
+    padding: 3%;
+    color: #fff;
+    background-color: #01A4FD;
+    border-radius: 5px;
+    border: none;
+    cursor: pointer;
+    margin-left: 29%;
+}
+
+.logout img {
+    margin-right: 10%;
+    margin-left: 10%;
+}
+
+.logout p {
+    margin-top: 3%;
+}
+
 .showSidebar {
     display: flex;
     position: fixed;

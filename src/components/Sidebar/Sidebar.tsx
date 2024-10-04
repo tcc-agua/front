@@ -1,6 +1,7 @@
 import { Link, useLocation } from "react-router-dom";
 import styles from './Sidebar.module.css';
 import { useTheme } from '../ThemeContext/ThemeContext'; // Importa o contexto
+
 import HomeIMG from '../../assets/images/home.svg';
 import HomeBlueIMG from '../../assets/images/home-blue.svg';
 import MapaIMG from '../../assets/images/mapa.svg';
@@ -12,12 +13,15 @@ import HistoricoBlueIMG from '../../assets/images/historico-blue.svg';
 import ExportarIMG from '../../assets/images/exportar.svg';
 import ExportarBlueIMG from '../../assets/images/exportar-blue.svg';
 
+
 //dark mode icons
 import HomeWhite from '../../assets/images/darkmode_icons/home_white.svg';
 import MapaWhite from '../../assets/images/darkmode_icons/map_white.svg';
 import MaisWhite from '../../assets/images/darkmode_icons/plus_white.svg';
 import HistoricoWhite from '../../assets/images/darkmode_icons/historic_white.svg';
 import ExportarWhite from '../../assets/images/darkmode_icons/export_white.svg';
+
+import SairWhite from '../../assets/images/sair_white.svg';
 
 interface SidebarProps {
     className?: string;
@@ -97,8 +101,12 @@ export function Sidebar({ className }: SidebarProps) {
                         <p>Exportar Excel</p>
                     </Link>
                 </div>
+                <div className={styles.line}></div>
                 <div>
-                    <button onClick={handleLogout}> SAIR </button>
+                    <button onClick={handleLogout} className={styles.logout}> 
+                        <img src={SairWhite}></img>
+                        <p>SAIR</p>
+                    </button>
                 </div>
             </section>
         </aside>
