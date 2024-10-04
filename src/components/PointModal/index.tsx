@@ -8,6 +8,7 @@ import CdCard from "./cards/CdCard";
 import ColunasCarvaoCard from "./cards/ColunasCarvaoCard";
 import FaseLivreCard from "./cards/FaseLivreCard";
 import FiltroCartuchoCard from "./cards/FiltroCartuchoCard";
+import HidrometroCard from "./cards/HidrometroCard";
 import HorimetroCard from "./cards/HorimetroCard";
 import PbsCard from "./cards/PbsCard";
 import PmPtCard from "./cards/PmPtCard";
@@ -36,5 +37,6 @@ export const PointModal = {
     SENSOR_PH: SensorPHCard,
     TQ01: Tq01Card,
     TQ02: Tq02Card,
-    TQ04_TQ05:Tq04Tq05Card  
+    TQ04_TQ05:Tq04Tq05Card ,
+    HIDROMETRO: HidrometroCard
 }

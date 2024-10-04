@@ -170,6 +170,22 @@ export function PointCollect() {
                 name={name}
             />
         }
+        if(name.startsWith("Geral") ||
+            name.startsWith("Entrada") ||
+            name.startsWith("Saida") || 
+            name == "Refeitorio" ||
+            name.startsWith("Kinderhaus") ||
+            name.startsWith("Descarte") ||
+            name.startsWith("Agua") ||
+            name.startsWith("Central") ||
+            name.startsWith("Caixa") ||
+            name.startsWith("ETAS") ||
+            name.startsWith("Tanque")){
+
+            return <PointModal.HIDROMETRO
+            name={name}
+            />
+        }
 
         switch (name) {
             case "BC01":

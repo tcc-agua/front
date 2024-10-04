@@ -1,6 +1,8 @@
 import styles from "../../../pages/PointCollect/PointCollect.module.css"
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { InputPoint } from "../InputPoint";
+import useHidrometroStore from "../../../store/HidrometroStore";
+import { HIDROMETRO } from "../../../interfaces/postParams";
 
 interface PointNameProps{
     name: string
@@ -8,6 +10,7 @@ interface PointNameProps{
 
 function HidrometroCard({ name }: PointNameProps) {
     const [volume, setVolume] = useState<number>(1);
+    const { createHidrometroMeasure, isCreated, isError, resetState } = useHidrometroStore();
 
     const increment = (setter: React.Dispatch<React.SetStateAction<number>>, isInteger?: boolean) => {
         setter(prev => isInteger ? prev + 1 : Math.round((prev + 0.1) * 10) / 10);
@@ -24,6 +27,27 @@ function HidrometroCard({ name }: PointNameProps) {
         }
     };
 
+    const sendInformation = () => {
+        const obj: HIDROMETRO = {
+            volume: volume,
+
+            nomePonto: name,
+            idColeta: 1
+        }
+        createHidrometroMeasure(obj);
+    };
+
+    useEffect (() =>{
+        if(isCreated){
+            alert("Criado")
+            resetState()
+        }
+        if(isError){
+            alert("ERRO")
+        }
+
+    }, [isCreated, resetState, isError])
+
     return (
         <>
             <p className={styles.pointName}>Dados de coleta do ponto '{name}'</p>
@@ -38,7 +62,7 @@ function HidrometroCard({ name }: PointNameProps) {
                         isInteger={false}
                     />
                 </div>
-                <button className={styles.buttonEnviar} onClick={() =>console.log("1111")}>Enviar</button>
+                <button className={styles.buttonEnviar} onClick={sendInformation}>Enviar</button>
             </main>
         </>
     );
