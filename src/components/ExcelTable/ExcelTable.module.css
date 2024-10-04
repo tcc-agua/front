@@ -1,6 +1,6 @@
 :global(.customHotTable) {
     font-size: 1rem;
-    z-index: 3;
+    z-index: 10;
 }
 
 :global(.customHotTable .handsontable td),
@@ -12,6 +12,7 @@
     position: relative;
     background-color: #052889 !important;
     color: white !important;
+    z-index: 10;
 }
 
 .errorMessage {

@@ -37,7 +37,7 @@ export function Sidebar({ className }: SidebarProps) {
 
     const handleLogout = () => {
         window.location.href = 'http://localhost:5173/logout';
-      };
+    };
 
     return (
         <aside className={`${styles.container} ${className}`}>
@@ -102,9 +102,9 @@ export function Sidebar({ className }: SidebarProps) {
                     </Link>
                 </div>
                 <div className={styles.line}></div>
-                <div>
-                    <button onClick={handleLogout} className={styles.logout}> 
-                        <img src={SairWhite}></img>
+                <div className={styles.logout_container}>
+                    <button onClick={handleLogout} className={styles.logout}>
+                        <img src={SairWhite} alt="Sair" />
                         <p>SAIR</p>
                     </button>
                 </div>

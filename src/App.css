@@ -74,12 +74,12 @@ body {
   --PB_title: #007BC0;
   --PB_hover: #89b3cc;
 
-  --CA_color: #a1cae2;
+  --CA_color: #a1dee2c4;
   --CA_content: #ffff;
   --CA_content_border: #ffff;
-  --CA_border: #5992b3;
-  --CA_title: #007BC0;
-  --CA_hover: #89b3cc;
+  --CA_border: #79a7aac4;
+  --CA_title: #359fa7;
+  --CA_hover: #64a7acc4;
 
   --historic_point_hover: #ebebeb;
 
@@ -131,12 +131,12 @@ body {
   --PB_title: #ffff;
   --PB_hover: #054064;
 
-  --CA_color: #381c7a;
-  --CA_content: #381c7a;
-  --CA_content_border: #381c7a;
-  --CA_border: #381c7a;
+  --CA_color: #409096c4;
+  --CA_content: #409096c4;
+  --CA_content_border: #4ba8afc4;
+  --CA_border: #4ba8afc4;
   --CA_title: #ffff;
-  --CA_hover: #381c7a;
+  --CA_hover: #409096c4;
 
   --historic_point_hover: #004b7c;
 

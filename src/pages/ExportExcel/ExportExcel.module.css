@@ -6,6 +6,15 @@
     height: 100%;
 }
 
+.container1 {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+    z-index: 2;
+}
+
 .title {
     color: var(--font_color);
     font-family: 'SF Pro Medium';
@@ -56,7 +65,7 @@
 /* Modal */
 
 .modal {
-    z-index: 99;
+    z-index: 101;
     position: fixed;
     top: 0;
     left: 0;
