@@ -61,26 +61,30 @@ const Historic: React.FC = () => {
     value: year
   }));
 
+  const [page, setPage] = useState(1); 
+  const [size, setSize] = useState(6); 
+
   useEffect(() => {
     async function fetchPontosPorColeta() {
       try {
         const token = localStorage.getItem('id_token');
         if (token) {
-          let paramsData: { startDate?: string; endDate?: string } = {};
+          let paramsData: { startDate?: string; endDate?: string; page?: number; size?: number } = {};
+  
           if (selectedDay?.value != null && selectedMonth?.value != null && selectedYear?.value != null) {
             const year = Number(selectedYear.value);
             const month = Number(selectedMonth.id) - 1; // Mês é zero-indexado em dayjs
             const day = Number(selectedDay.value);
-
-            // Crie uma data com o ano, mês e dia fornecidos
+  
             const startDate = dayjs(new Date(year, month, day)).format('YYYY-MM-DD');
             console.log('Start Date:', startDate);
-            paramsData = { startDate, endDate: startDate };
+            paramsData = { startDate, endDate: startDate, page, size };
           } else {
             const endDate = dayjs().format('YYYY-MM-DD');
             const startDate = dayjs().subtract(15, 'day').format('YYYY-MM-DD');
-            paramsData = { startDate, endDate };
+            paramsData = { startDate, endDate, page, size }; 
           }
+          
           const response = await fetchColetasByData(paramsData);
           setColetasPonto(response);
         }
@@ -89,7 +93,7 @@ const Historic: React.FC = () => {
       }
     }
     fetchPontosPorColeta();
-  }, [selectedDay, selectedMonth, selectedYear]);
+  }, [selectedDay, selectedMonth, selectedYear, page, size]);
 
   console.log(coletasPonto)
 
