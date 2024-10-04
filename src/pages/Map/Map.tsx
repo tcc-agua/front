@@ -84,6 +84,15 @@ export function Map() {
                             ></div>
                             <p className={styles.subtitle}>Estações de Tratamento (ETAS)</p>
                         </div>
+                        <div
+                            className={`${styles.pointsContent} ${selectedCategory === 'HD' ? styles.selected : ''}`}
+                            onClick={() => handleCategoryClick('HD')}
+                        >
+                            <div
+                                className={`${styles.roxoescuro} ${selectedCategory && selectedCategory !== 'HD' ? styles.grayscale : ''}`}
+                            ></div>
+                            <p className={styles.subtitle}>Hidrômetros (HD)</p>
+                        </div>
                     </div>
                 </div>
             </div>

@@ -61,13 +61,15 @@ input::placeholder {
 
 .data_etas_content,
 .data_na_content,
-.data_pb_content {
+.data_pb_content,
+.data_ca_content {
     text-decoration: none;
 }
 
 .data_etas_content,
 .data_na_content,
-.data_pb_content {
+.data_pb_content,
+.data_ca_content {
     display: flex;
     height: 10vw;
     border-radius: 10px;
@@ -91,6 +93,11 @@ input::placeholder {
     border: 1px solid var(--PB_border);
 }
 
+.data_ca_content {
+    background-color: var(--CA_color);
+    border: 1px solid var(--CA_border);
+}
+
 .title_data_content_etas,
 .percentage_content_etas,
 .points_content_etas,
@@ -98,6 +105,10 @@ input::placeholder {
 .title_data_content_na,
 .percentage_content_na,
 .points_content_na,
+
+.title_data_content_ca,
+.percentage_content_ca,
+.points_content_ca,
 
 .title_data_content_pb,
 .percentage_content_pb,
@@ -131,9 +142,17 @@ input::placeholder {
     border: 1px solid var(--PB_content_border);
 }
 
+.title_data_content_ca,
+.percentage_content_ca,
+.points_content_ca {
+    background-color: var(--CA_content);
+    border: 1px solid var(--CA_content_border);
+}
+
 .title_data_content_etas,
 .title_data_content_na,
-.title_data_content_pb {
+.title_data_content_pb,
+.title_data_content_ca {
     width: 100%;
     padding: 10px 20px;
 }
@@ -148,7 +167,9 @@ input::placeholder {
 .percentage_content_na,
 .points_content_na,
 .percentage_content_pb,
-.points_content_pb {
+.points_content_pb,
+.percentage_content_ca,
+.points_content_ca {
     width: 100%;
     display: flex;
     justify-content: center;
@@ -175,6 +196,12 @@ input::placeholder {
 .data_pb_content .percentage,
 .data_pb_content .points {
     color: var(--PB_title);
+}
+
+.data_ca_content .title_data,
+.data_ca_content .percentage,
+.data_ca_content .points {
+    color: var(--CA_title);
 }
 
 .percentage_content,
@@ -246,6 +273,7 @@ input::placeholder {
 .data_etas_content,
 .data_na_content,
 .data_pb_content,
+.data_ca_content,
 .recent_points_container {
     transition: transform 0.3s ease, cursor 0.3s ease, background-color 0.5s ease;
     font-family: 'SF Pro';
@@ -254,13 +282,15 @@ input::placeholder {
 .data_etas_content,
 .data_na_content,
 .data_pb_content,
-.historic_point {
+.historic_point,
+.data_ca_content {
     cursor: pointer;
 }
 
 .data_etas_content:hover,
 .data_na_content:hover,
 .data_pb_content:hover,
+.data_ca_content:hover,
 .recent_points_container:hover {
     transform: scale(1.03);
 }
@@ -279,6 +309,10 @@ input::placeholder {
 
 .data_pb_content:hover {
     background-color: var(--PB_hover);
+}
+
+.data_ca_content:hover {
+    background-color: var(--CA_hover);
 }
 
 
@@ -404,7 +438,8 @@ input::placeholder {
 
     .data_etas_content,
     .data_na_content,
-    .data_pb_content {
+    .data_pb_content,
+    .data_ca_content {
         height: 35vw;
         display: flex;
         flex-direction: column;
@@ -412,7 +447,7 @@ input::placeholder {
         width: 100%;
     }
 
-    .title_data_content_etas, .title_data_content_na, .title_data_content_pb {
+    .title_data_content_etas, .title_data_content_na, .title_data_content_pb, .title_data_content_ca {
         height: 40%;
         width: 90%;
         margin: 10px;
@@ -425,8 +460,8 @@ input::placeholder {
         margin-bottom: 10px;
     }
 
-    .percentage_content_etas, .percentage_content_na, .percentage_content_pb,
-    .points_content_etas, .points_content_na, .points_content_pb {
+    .percentage_content_etas, .percentage_content_na, .percentage_content_pb, .percentage_content_ca,
+    .points_content_etas, .points_content_na, .points_content_pb, .points_content_ca {
         width: 48%;
         height: 100%;
         margin: 0px;

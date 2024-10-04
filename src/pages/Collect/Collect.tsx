@@ -201,6 +201,25 @@ export function Collect() {
                 </div>
               </div>
             </button>
+
+            <button
+              onClick={() => handlePoint("CA")}
+              className={styles.data_ca_content}
+            >
+              <div className={styles.title_data_content_ca}>
+                <p className={styles.title_data}>Consumo de Água</p>
+              </div>
+              <div className={styles.percentage_and_points}>
+                <div className={styles.percentage_content_ca}>
+                  <p className={styles.percentage}>75%</p>
+                  <p className={styles.complement}>Preenchido</p>
+                </div>
+                <div className={styles.points_content_ca}>
+                  <p className={styles.points}>09</p>
+                  <p className={styles.complement}>Pontos</p>
+                </div>
+              </div>
+            </button>
           </div>
         </section>
 
