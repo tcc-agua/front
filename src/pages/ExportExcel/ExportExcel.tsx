@@ -42,6 +42,7 @@ const ExportExcel: React.FC = () => {
         { id: '1', label: 'DADOS ETAS', value: 'DADOS ETAS' },
         { id: '2', label: 'NA', value: 'NA' },
         { id: '3', label: 'PB', value: 'PB' },
+        { id: '4', label: 'CA', value: 'CA' },
     ];
 
     const openModal = () => {
