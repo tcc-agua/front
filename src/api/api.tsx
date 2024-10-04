@@ -114,7 +114,7 @@ export const fetchPointBySheet = async (sheetName: string) => {
 export const fetchNotif = async () => {
     const token = await waitForToken();
     try {
-        const response = await axios.get(`${API_BASE_URL}/notificacoes/getNotif`, {
+        const response = await axios.get(`${API_BASE_URL}/notificacoes`, {
             headers: {
                 Authorization: `Bearer ${token}`,
             },
@@ -131,7 +131,7 @@ export const fetchNotif = async () => {
 export const postNotif = async (planilha: string | null, tipo: string) => {
     try {
         const token = localStorage.getItem("id_token")
-        const response = await axios.post(`${API_BASE_URL}/notificacoes/postNotif`,
+        const response = await axios.post(`${API_BASE_URL}/notificacoes`,
             {
                 tabela: planilha,
                 tipo: tipo
@@ -154,7 +154,7 @@ export const postNotif = async (planilha: string | null, tipo: string) => {
 export const fetchPH = async () => {
     const token = await waitForToken();
     try {
-        const response = await axios.get(`${API_BASE_URL}/sensor-ph/get-ph`, 
+        const response = await axios.get(`${API_BASE_URL}/sensor-ph`, 
             {
                 headers: {
                     Authorization: `Bearer ${token}`
@@ -173,7 +173,7 @@ export const fetchPH = async () => {
 export const fetchTQ01 = async () => {
     const token = await waitForToken();
     try {
-        const response = await axios.get(`${API_BASE_URL}/tq01/get`, 
+        const response = await axios.get(`${API_BASE_URL}/tq01`, 
             {
                 headers: {
                     Authorization: `Bearer ${token}`
