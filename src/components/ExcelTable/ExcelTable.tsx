@@ -17,13 +17,14 @@ const ExcelTable: React.FC<ExcelTableProps> = ({ sheetName, monthProps, yearProp
   const [dataPonto, setDataPonto] = useState<any[][]>([]);
   const [tableData, setTableData] = useState<any[][]>([]);  // Dados processados para a tabela
   const [columnHeaders, setColumnHeaders] = useState<string[]>([]);  // Cabeçalhos das colunas
+  const [mergeCells, setMergeCells] = useState<any[]>([]);  // Armazena as informações para mesclar células
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
   const month = parseInt(monthProps); // Mês como número
   const year = parseInt(yearProps); // Ano como número
 
   useEffect(() => {
-    if (!sheetName || (sheetName !== 'DADOS ETAS' && sheetName !== 'NA' && sheetName !== 'PB')) {
+    if (!sheetName || (sheetName !== 'DADOS ETAS' && sheetName !== 'NA' && sheetName !== 'PB' && sheetName !== 'CA')) {
       setErrorMessage('Selecione uma das planilhas!');
       return;
     }
@@ -78,6 +79,25 @@ const ExcelTable: React.FC<ExcelTableProps> = ({ sheetName, monthProps, yearProp
     }
   }, [dataPonto]);
 
+  const afterRenderHandler = () => {
+    // Obtém os elementos do colHeaders e verifica se precisam ser mesclados
+    const colHeaders = document.querySelectorAll('.handsontable .ht_clone_top th');
+
+    colHeaders.forEach((header, index) => {
+      const currentHeader = header as HTMLTableCellElement;
+
+      if (currentHeader && index < colHeaders.length - 1) {
+        const nextHeader = colHeaders[index + 1] as HTMLTableCellElement;
+        
+        // Verifica se o conteúdo do cabeçalho é o mesmo
+        if (currentHeader.innerHTML === nextHeader.innerHTML) {
+          currentHeader.colSpan = 2; // Mescla duas colunas
+          nextHeader.style.display = 'none'; // Oculta o próximo cabeçalho
+        }
+      }
+    });
+  };
+
   if (errorMessage) {
     return <div className={styles.errorMessage}>{errorMessage}</div>;
   }
@@ -91,6 +111,7 @@ const ExcelTable: React.FC<ExcelTableProps> = ({ sheetName, monthProps, yearProp
       width="100%"
       autoWrapRow={true}
       autoWrapCol={true}
+      afterRender={afterRenderHandler} // Aciona a lógica após o render
       className={styles.customHotTable}
       licenseKey="non-commercial-and-evaluation"
     />
