@@ -51,12 +51,6 @@ export default defineConfig({
         secure: false,
         rewrite: (path) => path.replace(/^\/gateway/, ''),
       } as ProxyOptions,
-      '/notificacoes/postNotif': {
-        target: URL,
-        changeOrigin: true,
-        secure: false,
-        rewrite: (path) => path.replace(/^\/gateway/, ''),
-      } as ProxyOptions,
       '/coleta/get-by-date': {
         target: URL,
         changeOrigin: true,
@@ -69,12 +63,6 @@ export default defineConfig({
         secure: false,
         rewrite: (path) => path.replace(/^\/gateway/, ''),
       } as ProxyOptions,
-      '/notificacoes/getNotif': {
-        target: URL,
-        changeOrigin: true,
-        secure: false,
-        rewrite: (path) => path.replace(/^\/gateway/, ''),
-      } as ProxyOptions,
       '/excel/': {
         target: URL,
         changeOrigin: true,
@@ -82,12 +70,6 @@ export default defineConfig({
         rewrite: (path) => path.replace(/^\/gateway/, ''),
       } as ProxyOptions,
       '/tq01': {
-        target: URL,
-        changeOrigin: true,
-        secure: false,
-        rewrite: (path) => path.replace(/^\/gateway/, ''),
-      } as ProxyOptions,
-      '/tq01/get': {
         target: URL,
         changeOrigin: true,
         secure: false,
@@ -190,6 +172,12 @@ export default defineConfig({
         rewrite: (path) => path.replace(/^\/gateway/, ''),
       } as ProxyOptions,
       '/logout': {
+        target: URL,
+        changeOrigin: true,
+        secure: false,
+        rewrite: (path) => path.replace(/^\/gateway/, ''),
+      } as ProxyOptions,
+      '/hidrometro': {
         target: URL,
         changeOrigin: true,
         secure: false,

@@ -145,3 +145,10 @@ export interface TQ04_TQ05{
     nomePonto: string
     idColeta: number
 }
+
+export interface HIDROMETRO{
+    volume: number
+
+    nomePonto: string
+    idColeta: number
+}
