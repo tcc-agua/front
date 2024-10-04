@@ -143,18 +143,22 @@ pre {
   margin-right: 20%;
 }
 
-.viewButton {
+.viewButton{
   color: var(--font_color2);
   display: flex;
   align-items: center;
-  justify-content: center;
-  padding: 7px;
+  padding: 0 10px;
   font-size: small;
+  justify-content: center;
   background: none;
   border: none;
   cursor: pointer;
   height: 100%;
   margin-right: 2%;
+}
+
+.viewP{
+  margin-right: 10%;
 }
 
 .arrow {

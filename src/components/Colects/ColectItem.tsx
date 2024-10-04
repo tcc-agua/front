@@ -7,13 +7,13 @@ interface Detail {
   id: number;
   tipo: string;
   ponto: string;
-  dados: Record<string, any>; 
+  dados: Record<string, any>;  
 }
 
 interface ColetaItemProps {
   date: string;
   description: string;
-  details: Detail[];
+  details: Detail[];  
   onOpenDetail: (detail: Detail) => void;
 }
 
@@ -22,90 +22,85 @@ const ColetaItem: React.FC<ColetaItemProps> = ({ date, description, details, onO
   const detailsRef = useRef<HTMLDivElement>(null);
 
   const [currentPage, setCurrentPage] = useState(0);
-  const itemsPerPage = 6;
+  const itemsPerPage = 6; 
 
+  // Cálculo do deslocamento e dos itens atuais com base na página e na quantidade por página
   const offset = currentPage * itemsPerPage;
-  const currentItems = details.slice(offset, offset + itemsPerPage);
+  let currentItems = details.slice(offset, offset + itemsPerPage);
   const pageCount = Math.ceil(details.length / itemsPerPage);
 
+  // Função para lidar com a mudança de página na paginação
   const handlePageClick = (data: { selected: number }) => {
     setCurrentPage(data.selected);
+    currentItems = details.slice(offset, offset + itemsPerPage);
+    console.log(currentItems);
+    
     toggleOpen();
   };
 
-  const toggleOpen = () => {
-    setIsOpen(prev => !prev);
-  };
+  const toggleOpen = () => {setIsOpen(prev => !prev);};
 
-  const filterLetters = (text: string) => {
-    return text.match(/[a-zA-Z]+/g)?.join('') || '';
-  };
-
-  const filterNumbers = (text: string) => {
-    return text.match(/[0-9]+/g)?.join('') || '';
-  };
+  const filterLetters = (text: string) => { return text.match(/[a-zA-Z]+/g)?.join('') || '';};
+  const filterNumbers = (text: string) => { return text.match(/[0-9]+/g)?.join('') || ''; };
 
   return (
     <div className={styles.coleta} onClick={toggleOpen}>
       <div className={styles.title}>
         <p className={styles.date}>{date}</p>
         <div className={styles.separator}></div>
-        <p className={styles.description}>{description}</p>
+        <p className={styles.description}>{description}</p> 
         <span
           className={styles.rotateArrow}
           onClick={(e) => {
-            e.stopPropagation();
-            toggleOpen();
+            e.stopPropagation(); 
+            toggleOpen();  
           }}
-          style={{ transform: isOpen ? 'rotate(180deg)' : 'rotate(0deg)' }}
-        >
+          style={{ transform: isOpen ? 'rotate(180deg)' : 'rotate(0deg)' }}>
           <img src={arrow} alt="Arrow" style={{ width: '16px', height: '16px' }} />
         </span>
       </div>
 
-      <div
-        ref={detailsRef}
-        className={`${styles.detailsWrapper} ${isOpen ? styles.open : ''}`}
-        style={{ height: isOpen ? `${detailsRef.current?.scrollHeight}px` : '0' }}
-      >
+      <div className={`${styles.detailsWrapper} ${isOpen ? styles.open : ''}`} ref={detailsRef}>
+
+        {/* Mapeia e exibe os detalhes paginados */}
         <div className={styles.details}>
           {currentItems.map(detail => (
             <div key={detail.id} className={styles.detailContainer}>
               <div
-                onClick={(e) => { e.stopPropagation(); onOpenDetail(detail); }}
                 className={styles.detailButton}
+                onClick={(e) => { e.stopPropagation(); onOpenDetail(detail); }} 
               >
                 <div className={styles.texts}>
                   <span className={styles.label}>{filterLetters(detail.tipo)}</span>
                   <pre>–</pre>
-                  <span className={styles.number}>{filterNumbers(detail.ponto)}</span>
+                  <span className={styles.number}>{filterNumbers(detail.ponto)}</span> 
                 </div>
+                  
                 <span
-                  onClick={(e) => { e.stopPropagation(); onOpenDetail(detail); }}
                   className={styles.viewButton}
-                >
-                  <pre className={styles.arrow}>⟶</pre>
+                  onClick={(e) => { e.stopPropagation(); onOpenDetail(detail); }} 
+                > <p className={styles.viewP}>visualizar</p><pre className={styles.arrow}>⟶</pre>  {/* Exibe a seta indicando ação */}
                 </span>
               </div>
             </div>
           ))}
+        </div>
 
-          <div className={styles.paginationContainer}>
+        <div className={styles.paginationContainer}>
             {details.length > itemsPerPage && (
               <ReactPaginate
-                previousLabel={'<'}
-                nextLabel={'>'}
-                breakLabel={'...'}
-                pageCount={pageCount}
-                marginPagesDisplayed={2}
-                pageRangeDisplayed={3}
-                onPageChange={handlePageClick}
-                containerClassName={styles.pagination}
+                previousLabel={'<'}  
+                nextLabel={'>'}  
+                breakLabel={'...'}  
+                pageCount={pageCount} 
+                marginPagesDisplayed={2}  
+                pageRangeDisplayed={3}  
+                onPageChange={handlePageClick}  // Lida com a troca de página
+                containerClassName={styles.pagination}  
                 activeClassName={styles.active}
               />
             )}
           </div>
-        </div>
       </div>
     </div>
   );
