@@ -30,7 +30,7 @@ function CdCard({ name }: PointNameProps) {
                         : parseFloat(((prevState[key] as number) + 0.1).toFixed(1)),
                 };
             }
-            return prevState; // No caso de não ser um número, não faz nada
+            return prevState; 
         });
     }, []);
 
@@ -90,7 +90,7 @@ function CdCard({ name }: PointNameProps) {
     const infoContentData = [
         { type: "Pressão", key: "pressure", value: measurements.pressure, isInteger: false },
         { type: "Hidrometro", key: "hidrometer", value: measurements.hidrometer, isInteger: true },
-        { type: "Tipo de Rede", key: "tipoRede", value: measurements.tipoRede, isInteger: false }, // tipoRede não precisa de incremento
+        { type: "Tipo de Rede", key: "tipoRede", value: measurements.tipoRede, isInteger: false },
     ];
 
     const nextPage = () => {
