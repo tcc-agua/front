@@ -1,4 +1,4 @@
-import { ReactNode } from 'react';
+import { ReactNode, useState } from 'react';
 import styles from "../../pages/PointCollect/PointCollect.module.css"
 
 
@@ -9,6 +9,7 @@ interface ModalContainerProps{
 }
 
 export default function ModalContainer({children, closeModal}:ModalContainerProps){
+    
     return (
         <div className={styles.modal}>
             <div className={styles.modalContent}>

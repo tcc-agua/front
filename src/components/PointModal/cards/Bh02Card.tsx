@@ -59,7 +59,7 @@ function Bh02Card({ name }: PointNameProps) {
         <>
             <p className={styles.pointName}>Dados de coleta do ponto '{name}'</p>
             <main className={styles.infoContainer}>
-                <div style={{display: "flex"}}>
+                <div className={styles.infoGrid}>
                 <InputPoint
                     decrement={() => decrement(setPressure, true)}
                     increment={() => increment(setPressure, true)}

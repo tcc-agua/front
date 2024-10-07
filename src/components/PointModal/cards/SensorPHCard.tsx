@@ -52,7 +52,7 @@ function SensorPHCard({ name }: PointNameProps) {
         <>
             <p className={styles.pointName}>Dados de coleta do Ponto '{name}'</p>
             <main className={styles.infoContainer}>
-                <div>
+                <div className={styles.infoGrid}>
                 <InputPoint
                     decrement={() => decrement(setPh, false)}
                     increment={() => increment(setPh, false)}

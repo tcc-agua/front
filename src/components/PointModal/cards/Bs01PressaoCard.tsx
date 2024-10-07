@@ -52,7 +52,7 @@ function Bs01PressaoCard({ name }: PointNameProps) {
         <>
             <p className={styles.pointName}>Dados de coleta do ponto '{name}'</p>
             <main className={styles.infoContainer}>
-                <div>
+                <div className={styles.infoGrid}>
                     <InputPoint
                         decrement={() => decrement(setPressure, false)}
                         increment={() => increment(setPressure, false)}

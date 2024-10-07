@@ -1,16 +1,16 @@
-import styles from "../../pages/PointCollect/PointCollect.module.css"
+import React from "react";
+import styles from "../../pages/PointCollect/PointCollect.module.css";
 import ArrowUp from '../../assets/images/arrow-up.svg';
 import ArrowDown from '../../assets/images/arrow-down.svg';
-
 
 export interface DropdownProps {
     handleChange: (event: React.ChangeEvent<HTMLSelectElement>) => void;
     titulo: string;
     valor: string;
     opcoes: string[];
-  }
+}
 
-  interface InputPointProps{
+interface InputPointProps {
     titulo: string;
     valor: number;
     increment: () => void;
@@ -20,31 +20,30 @@ export interface DropdownProps {
 }
 
 interface BooleanInputProps {
-  titulo: string;
-  valor: boolean;
-  handleChange: (event: React.ChangeEvent<HTMLSelectElement>) => void;
+    titulo: string;
+    valor: boolean;
+    handleChange: (event: React.ChangeEvent<HTMLSelectElement>) => void;
 }
 
 export function BooleanInput({ titulo, valor, handleChange }: BooleanInputProps) {
-  return (
-      <div className={styles.infoContent}>
-          <p className={styles.type}>{titulo}</p>
-          <div className={styles.information}>
-              <select
-                  value={valor ? "Sim" : "Não"}
-                  onChange={handleChange}
-                  className={styles.dropdownInput}
-              >
-                  <option value="Sim">Sim</option>
-                  <option value="Não">Não</option>
-              </select>
-          </div>
-      </div>
-  );
+    return (
+        <div className={styles.infoContent}>
+            <p className={styles.type}>{titulo}</p>
+            <div className={styles.information}>
+                <select
+                    value={valor ? "Sim" : "Não"}
+                    onChange={handleChange}
+                    className={styles.dropdownInput}
+                >
+                    <option value="Sim">Sim</option>
+                    <option value="Não">Não</option>
+                </select>
+            </div>
+        </div>
+    );
 }
 
-export function InputPoint({ decrement, handleChange, increment, titulo, valor, isInteger }: InputPointProps) {
-
+export const InputPoint = React.memo(({ decrement, handleChange, increment, titulo, valor, isInteger }: InputPointProps) => {
     return (
         <div className={styles.infoContent}>
             <p className={styles.type}>{titulo}</p>
@@ -54,9 +53,9 @@ export function InputPoint({ decrement, handleChange, increment, titulo, valor, 
                 </button>
                 <input
                     type="number"
-                    value={isInteger ? valor.toFixed(0) : valor.toFixed(1)}  
+                    value={isInteger ? valor.toFixed(0) : valor.toFixed(1)}
                     onChange={handleChange}
-                    step={isInteger ? 1 : 0.1}  
+                    step={isInteger ? 1 : 0.1}
                     min="0"
                     className={styles.numberInput}
                 />
@@ -66,25 +65,27 @@ export function InputPoint({ decrement, handleChange, increment, titulo, valor, 
             </div>
         </div>
     );
-}
+});
 
 export function DropdownInput({ handleChange, titulo, valor, opcoes }: DropdownProps) {
-  return (
-    <div className={styles.infoContent}>
-      <p className={styles.type}>{titulo}</p>
-      <div className={styles.information}>
-        <select 
-          value={valor} 
-          onChange={handleChange} 
-          className={styles.dropdownInput}
-        >
-          {opcoes.map((opcao, index) => (
-            <option key={index} value={opcao}>
-              {opcao}
-            </option>
-          ))}
-        </select>
-      </div>
-    </div>
-  );
+    return (
+        <div className={styles.infoContent}>
+            <p className={styles.type}>{titulo}</p>
+            <div className={styles.information}>
+                <select 
+                    value={valor} 
+                    onChange={handleChange} 
+                    className={styles.dropdownInput}
+                >
+                    {opcoes.map((opcao, index) => (
+                        <option key={index} value={opcao}>
+                            {opcao}
+                        </option>
+                    ))}
+                </select>
+            </div>
+        </div>
+    );
 }
+
+export default InputPoint;

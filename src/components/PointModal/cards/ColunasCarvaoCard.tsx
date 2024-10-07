@@ -66,7 +66,7 @@ function ColunasCarvaoCard({ name }: PointNameProps) {
         <>
             <p className={styles.pointName}>Dados de coleta do ponto '{name}'</p>
             <main className={styles.infoContainer}>
-                <div>
+                <div className={styles.infoGrid}>
                     <InputPoint
                         decrement={() => decrement(setPressure_c01, false)}
                         increment={() => increment(setPressure_c01, false)}

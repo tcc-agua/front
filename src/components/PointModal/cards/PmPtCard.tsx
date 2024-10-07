@@ -55,7 +55,7 @@ function PmPtCard({ name }: PointNameProps) {
         <>
             <p className={styles.pointName}>Dados de coleta do ponto '{name}'</p>
             <main className={styles.infoContainer}>
-                <div>
+                <div className={styles.infoGrid}>
                 <InputPoint
                     decrement={() => decrement(setOilLevel, false)}
                     increment={() => increment(setOilLevel, false)}
