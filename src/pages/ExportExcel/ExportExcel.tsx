@@ -8,7 +8,7 @@ import { fetchExport, postNotif } from '../../api/api';
 interface DropdownItem {
     id: string;
     label: string;
-    value: string | number; // O valor pode ser string ou number
+    value: string | number; 
 }
 
 const ExportExcel: React.FC = () => {
@@ -16,6 +16,7 @@ const ExportExcel: React.FC = () => {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [selectedMonth, setSelectedMonth] = useState<DropdownItem | undefined>(undefined);
     const [selectedYear, setSelectedYear] = useState<DropdownItem | undefined>(undefined);
+    const [exportYearOnly, setExportYearOnly] = useState(false); // Estado para controlar a exportação por ano
 
     const months: DropdownItem[] = [
         { id: '1', label: 'Janeiro', value: 'Janeiro' },
@@ -55,21 +56,23 @@ const ExportExcel: React.FC = () => {
 
     async function fetchExportExcel(startDate: string, endDate: string) {
         try {
-            const response = await fetchExport(startDate, endDate); // Chama a função para buscar o Excel
+            const endpoint = selectedTable?.value === 'CA' ? '/exportExcel/hidrometro' : '/exportExcel';
+            const response = await fetchExport(startDate, endDate, endpoint);
             console.log(response);
 
-            const url = window.URL.createObjectURL(response); // Cria o URL do Blob
+            const url = window.URL.createObjectURL(response); 
             const link = document.createElement('a');
             link.href = url;
-            link.setAttribute('download', 'coletas.xlsx'); // Nome do arquivo para download
+            const nomeExcel = selectedTable?.value === 'CA' ? 'coletas_hidrometro.xlsx' : 'coletas.xlsx';
+            link.setAttribute('download', nomeExcel);
             document.body.appendChild(link);
-            link.click(); // Simula o clique para iniciar o download
+            link.click(); 
 
             setTimeout(() => {
-                window.URL.revokeObjectURL(url); // Libera a URL do Blob
-                link.remove(); // Remove o link
+                window.URL.revokeObjectURL(url);
+                link.remove(); 
             }, 100);
-            openModal(); // Abre um modal, se necessário
+            openModal(); 
         } catch (e) {
             console.error("Erro ao exportar o arquivo:", e);
         }
@@ -85,29 +88,34 @@ const ExportExcel: React.FC = () => {
     };
 
     const handleExportClick = () => {
-        if (selectedMonth && selectedYear) {
-            const month = parseInt(selectedMonth.id); // Mês como número
-            const year = parseInt(selectedYear.label); // Ano como número
+        if (selectedYear) {
+            const year = parseInt(selectedYear.label);
+            let startDate: Date;
+            let endDate: Date;
 
-            // Cria as datas de início e fim
-            const startDate = new Date(year, month - 1, 1); // Primeiro dia do mês
-            const endDate = new Date(year, month, 0); // Último dia do mês
+            if (exportYearOnly) {
+                startDate = new Date(year, 0, 1); // 1º de Janeiro
+                endDate = new Date(year, 11, 31); // 31 de Dezembro
+            } else if (selectedMonth) {
+                const month = parseInt(selectedMonth.id); 
+                startDate = new Date(year, month - 1, 1); 
+                endDate = new Date(year, month, 0); 
+            } else {
+                console.error("Selecione um mês ou o ano completo.");
+                return;
+            }
 
-            // Converte para o formato 'YYYY-MM-DD'
             const startDateString = startDate.toISOString().split('T')[0];
             const endDateString = endDate.toISOString().split('T')[0];
 
-            // Log para verificar os valores
             console.log("Selected Table: ", selectedTable);
-            console.log("Month: ", selectedMonth);
-            console.log("Year: ", selectedYear);
+            console.log("Start Date: ", startDateString);
+            console.log("End Date: ", endDateString);
 
-            // Chama a função fetchExportExcel com as datas
-            console.log(startDateString, endDateString);
             fetchExportExcel(startDateString, endDateString);
-            notify(); // Chama a função notify após a exportação
+            notify();
         } else {
-            console.error("Selecione um mês e um ano válidos.");
+            console.error("Selecione um ano válido.");
         }
     };
 
@@ -121,31 +129,40 @@ const ExportExcel: React.FC = () => {
                             <DropdownButton
                                 id="monthDropdown"
                                 title="Selecione o Mês"
-                                options={months} // Alterado para 'options'
-                                selectedOption={selectedMonth} // Passa a opção selecionada
-                                onSelect={setSelectedMonth} // Passa a função correta
+                                options={months}
+                                selectedOption={selectedMonth}
+                                onSelect={setSelectedMonth}
+                                disabled={exportYearOnly} 
                             />
                         </div>
                         <div className={styles.year}>
                             <DropdownButton
                                 id="yearDropdown"
                                 title="Selecione o Ano"
-                                options={years} // Alterado para 'options'
-                                selectedOption={selectedYear} // Passa a opção selecionada
-                                onSelect={setSelectedYear} // Passa a função correta
+                                options={years}
+                                selectedOption={selectedYear}
+                                onSelect={setSelectedYear}
                             />
                         </div>
                         <div className={styles.selecionar_tabela}>
                             <DropdownButton
                                 id="tableDropdown"
                                 title="Selecione a Tabela"
-                                options={tables} // Alterado para 'options'
-                                selectedOption={selectedTable} // Passa a opção selecionada
-                                onSelect={setSelectedTable} // Passa a função correta
+                                options={tables}
+                                selectedOption={selectedTable}
+                                onSelect={setSelectedTable}
                             />
                         </div>
+                        <div className={styles.exportYearContainer}>
+                            <input
+                                type="checkbox"
+                                id="exportYear"
+                                checked={exportYearOnly}
+                                onChange={() => setExportYearOnly(!exportYearOnly)}
+                            />
+                            <label htmlFor="exportYear">Exportar o ano inteiro</label>
+                        </div>
                     </div>
-
                 </div>
                 {isModalOpen && (
                     <div className={styles.modal}>
@@ -157,20 +174,16 @@ const ExportExcel: React.FC = () => {
                     </div>
                 )}
             </div>
-
             <div className={styles.container1}>
-
                 {selectedTable && selectedMonth && selectedYear && (
                     <ExcelTable
-                        key={`${selectedTable.value}-${selectedMonth.id}-${selectedYear.label}`} // Adicionando chave única
-                        sheetName={String(selectedTable.value)} // Conversão para string
-                        monthProps={selectedMonth.id}
+                        key={`${selectedTable.value}-${selectedMonth?.id}-${selectedYear.label}`}
+                        sheetName={String(selectedTable.value)}
+                        monthProps={selectedMonth?.id || '0'} 
                         yearProps={selectedYear.label}
                     />
                 )}
-
             </div>
-
             <div className="footer">
                 <button className={styles.export} onClick={handleExportClick}>
                     Exportar Arquivo

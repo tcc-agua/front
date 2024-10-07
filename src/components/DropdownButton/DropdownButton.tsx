@@ -14,6 +14,7 @@ interface DropdownButtonProps {
   options: DropdownItem[];
   selectedOption?: DropdownItem;
   onSelect?: (option: DropdownItem) => void;
+  disabled?: boolean; // Adiciona a propriedade disabled
 }
 
 const DropdownButton: React.FC<DropdownButtonProps> = ({
@@ -22,12 +23,15 @@ const DropdownButton: React.FC<DropdownButtonProps> = ({
   options,
   selectedOption,
   onSelect,
+  disabled = false, // Define o valor padrão como false
 }) => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
   const handleChange = (option: DropdownItem) => {
-    onSelect && onSelect(option);
+    if (!disabled && onSelect) {
+      onSelect(option);
+    }
     setIsOpen(false);
   };
 
@@ -43,7 +47,6 @@ const DropdownButton: React.FC<DropdownButtonProps> = ({
 
     return () => {
       window.removeEventListener('mousedown', handleOutsideClick);
-     
     };
   }, []);
 
@@ -63,8 +66,10 @@ const DropdownButton: React.FC<DropdownButtonProps> = ({
         aria-haspopup="true"
         aria-expanded={isOpen}
         type="button"
-        onClick={() => setIsOpen(!isOpen)}
+        onClick={() => !disabled && setIsOpen(!isOpen)} // Impede de abrir o dropdown se estiver desabilitado
         className={styles.button}
+        disabled={disabled} // Aplica a propriedade disabled ao botão
+        style={disabled ? { cursor: 'not-allowed', opacity: 0.5 } : {}}
       >
         <span className={styles.dia_mes_ano}>{selectedOption ? selectedOption.label : title}</span>
         <span

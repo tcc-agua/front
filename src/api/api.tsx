@@ -31,14 +31,14 @@ export const fetchUserInfo = async () => {
 
 // Exportar Excel
 
-export const fetchExport = async (startDate: string, endDate: string) => {
+export const fetchExport = async (startDate: string, endDate: string, endpoint: string) => {
     try {
         const token = localStorage.getItem("id_token");
 
         const formattedStartDate = dayjs(startDate).format('YYYY-MM-DD');
         const formattedEndDate = dayjs(endDate).format('YYYY-MM-DD');
 
-        const response = await axios.get(`${API_BASE_URL}/exportExcel`, {
+        const response = await axios.get(`${API_BASE_URL}${endpoint}`, {
             headers: {
                 Authorization: `Bearer ${token}`,
                 'Accept': 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
@@ -61,7 +61,9 @@ export const fetchSheet = async (sheetName: string, startDate: string, endDate: 
         const formattedStartDate = dayjs(startDate).format('YYYY-MM-DD');
         const formattedEndDate = dayjs(endDate).format('YYYY-MM-DD');
 
-        const response = await axios.get(`${API_BASE_URL}/excel/${sheetName}`, {
+        const endpoint = sheetName === 'CA' ? `${API_BASE_URL}/excel/${sheetName}/hidrometro` : `${API_BASE_URL}/excel/${sheetName}`;
+
+        const response = await axios.get(endpoint, {
             headers: {
                 Authorization: `Bearer ${token}`,
             },
