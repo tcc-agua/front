@@ -61,37 +61,65 @@ const Historic: React.FC = () => {
     value: year
   }));
 
+  const [page, setPage] = useState(1); 
+  const [size, setSize] = useState(6);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+
   useEffect(() => {
     async function fetchPontosPorColeta() {
-      try {
-        const token = localStorage.getItem('id_token');
-        if (token) {
-          let paramsData: { startDate?: string; endDate?: string } = {};
-          if (selectedDay?.value != null && selectedMonth?.value != null && selectedYear?.value != null) {
-            const year = Number(selectedYear.value);
-            const month = Number(selectedMonth.id) - 1; // Mês é zero-indexado em dayjs
-            const day = Number(selectedDay.value);
+        setLoading(true); 
+        setError(null); 
+        try {
+            const token = localStorage.getItem('id_token');
+            if (!token) {
+                setError('Token não encontrado.');
+                return; 
+            }
 
-            // Crie uma data com o ano, mês e dia fornecidos
-            const startDate = dayjs(new Date(year, month, day)).format('YYYY-MM-DD');
-            console.log('Start Date:', startDate);
-            paramsData = { startDate, endDate: startDate };
+            let paramsData: { startDate?: string; endDate?: string; page?: number; size?: number } = {};
+  
+            if (selectedDay?.value != null && selectedMonth?.value != null && selectedYear?.value != null) {
+                const year = Number(selectedYear.value);
+                const month = Number(selectedMonth.id) - 1; 
+                const day = Number(selectedDay.value);
+  
+                const startDate = dayjs(new Date(year, month, day)).format('YYYY-MM-DD');
+                console.log('Start Date:', startDate);
+                paramsData = { startDate, endDate: startDate, page, size };
+            } else {
+                const endDate = dayjs().format('YYYY-MM-DD');
+                const startDate = dayjs().subtract(15, 'day').format('YYYY-MM-DD');
+                paramsData = { startDate, endDate, page, size }; 
+            }
+  
+            console.log('Parameters for API:', paramsData);
+            const response = await fetchColetasByData(paramsData);
+            console.log('API Response:', response);  
+            
+            if (response.content) {
+                const pontos = response.content;
+                setColetasPonto(pontos); 
+            } else {
+                setError('Nenhum dado retornado.');
+            }
+        } catch (e) {
+          if (e instanceof Error) {
+              console.error('Error fetching data:', e.message);
+              setError('Erro ao buscar dados: ' + e.message);
           } else {
-            const endDate = dayjs().format('YYYY-MM-DD');
-            const startDate = dayjs().subtract(15, 'day').format('YYYY-MM-DD');
-            paramsData = { startDate, endDate };
+              console.error('Error fetching data:', e);
+              setError('Erro ao buscar dados: Erro desconhecido.');
           }
-          const response = await fetchColetasByData(paramsData);
-          setColetasPonto(response);
-        }
-      } catch (e) {
-        console.log(e);
+      } finally {
+          setLoading(false); 
       }
     }
+    
     fetchPontosPorColeta();
-  }, [selectedDay, selectedMonth, selectedYear]);
+}, [selectedDay, selectedMonth, selectedYear, page, size]);
 
-  console.log(coletasPonto)
+console.log(coletasPonto);
 
   const handleOpenDetail = (detail: Detail) => {
     setSelectedDetail(detail);
@@ -158,59 +186,60 @@ const Historic: React.FC = () => {
 
       <p className={styles.title}>Últimas coletas:</p>
       <div className={styles.colects}>
-        {coletasPonto
-          .filter(coleta => coleta.details.length > 0)
-          .map(coleta => (
-            <ColetaItem
-              key={coleta.id}
-              date={coleta.date}
-              description={coleta.description}
-              details={coleta.details.filter(detail => Object.keys(detail.dados).length > 0)}
-              onOpenDetail={handleOpenDetail}
-            />
-          ))}
+        {coletasPonto &&
+          coletasPonto
+            .filter(coleta => coleta.details.length > 0)
+            .map(coleta => (
+              <ColetaItem
+                key={coleta.id} // Verifique se `id` é único
+                date={coleta.date}
+                description={coleta.description}
+                details={coleta.details.filter(detail => Object.keys(detail.dados).length > 0)}
+                onOpenDetail={handleOpenDetail}
+              />
+            ))}
       </div>
 
       {modalOpen && selectedDetail && (
         <div className={styles.modal}>
-        <div className={styles.modalContent}>
-          <button className={styles.close} onClick={handleCloseModal}>x</button>
-          <p className={styles.pointName}>Dados de coleta do ponto {selectedDetail.ponto}</p>
+          <div className={styles.modalContent}>
+            <button className={styles.close} onClick={handleCloseModal}>x</button>
+            <p className={styles.pointName}>Dados de coleta do ponto {selectedDetail.ponto}</p>
 
-          <main className={styles.carousel}>
-            <button 
-              className={`${styles.carousel_button} ${carouselIndex === 0 ? styles.carousel_button_invisible : ''}`} 
-              onClick={handlePrevious}
-              disabled={carouselIndex === 0}
-            >
-              ‹
-            </button>
-
-            {visibleInfoContainers.map(([key, value]) => (
-              <div 
-                key={key} 
-                className={`${styles.infoContainer} ${key === "*" ? styles.hidden : ''}`}
+            <main className={styles.carousel}>
+              <button 
+                className={`${styles.carousel_button} ${carouselIndex === 0 ? styles.carousel_button_invisible : ''}`} 
+                onClick={handlePrevious}
+                disabled={carouselIndex === 0}
               >
-                <p className={styles.pointName}>{key}</p>
-                <div className={styles.information}>
-                  <p className={styles.pointName}>{String(value)}</p>
-                </div>
-              </div>
-            ))}
+                ‹
+              </button>
 
-            <button 
-              className={`${styles.carousel_button} ${carouselIndex + 2 >= Object.keys(selectedDetail.dados).length ? styles.carousel_button_invisible : ''}`} 
-              onClick={handleNext}
-              disabled={carouselIndex + 2 >= Object.keys(selectedDetail.dados).length}
-            >
-              ›
-            </button>
+              {visibleInfoContainers.map(([key, value]) => (
+                <div 
+                  key={key} 
+                  className={`${styles.infoContainer} ${key === "*" ? styles.hidden : ''}`}
+                >
+                  <p className={styles.pointName}>{key}</p>
+                  <div className={styles.information}>
+                    <p className={styles.pointName}>{String(value)}</p>
+                  </div>
+                </div>
+              ))}
+
+              <button 
+                className={`${styles.carousel_button} ${carouselIndex + 2 >= Object.keys(selectedDetail.dados).length ? styles.carousel_button_invisible : ''}`} 
+                onClick={handleNext}
+                disabled={carouselIndex + 2 >= Object.keys(selectedDetail.dados).length}
+              >
+                ›
+                </button>
           </main>
         </div>
       </div>
     )}
   </div>
-  );
+);
 };
 
 export default Historic;

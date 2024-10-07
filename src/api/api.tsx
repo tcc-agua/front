@@ -18,7 +18,6 @@ const waitForToken = (): Promise<string> => {
 
 
 // Get userInfo
-
 export const fetchUserInfo = async () => {
     try {
         const response = await axios.get(`${API_BASE_URL}/userinfo`);
@@ -30,7 +29,6 @@ export const fetchUserInfo = async () => {
 };
 
 // Exportar Excel
-
 export const fetchExport = async (startDate: string, endDate: string, endpoint: string) => {
     try {
         const token = localStorage.getItem("id_token");
@@ -54,7 +52,6 @@ export const fetchExport = async (startDate: string, endDate: string, endpoint: 
 };
 
 // Get Planilhas
-
 export const fetchSheet = async (sheetName: string, startDate: string, endDate: string) => {
     try {
         const token = localStorage.getItem("id_token")
@@ -77,24 +74,37 @@ export const fetchSheet = async (sheetName: string, startDate: string, endDate: 
 };
 
 // Get coletas by data (historico)
-export const fetchColetasByData = async (paramsData: { startDate?: string; endDate?: string }) => {
+export const fetchColetasByData = async (paramsData: { startDate?: string; endDate?: string; page?: number; size?: number }) => {
     try {
-        const token = localStorage.getItem("id_token")
+        const token = localStorage.getItem("id_token");
+        
+        if (!paramsData.startDate) {
+            throw new Error("startDate é obrigatório");
+        }
+        if (paramsData.endDate && new Date(paramsData.endDate) < new Date(paramsData.startDate)) {
+            throw new Error("endDate deve ser maior ou igual a startDate");
+        }
+
         const response = await axios.get("http://localhost:5173/coleta/get-by-date", {
             headers: {
-              Authorization: `Bearer ${token}`
+                Authorization: `Bearer ${token}`
             },
             params: paramsData
-          });
-          return response.data;
-          
+        });
+
+        if (!response.data || !response.data.content) {
+            throw new Error("Invalid response format");
+        }
+
+        return response.data;
+
     } catch (e) {
-    console.log(e);
-  }
+        console.error("Error fetching coletas by data:", e);
+        throw e; 
+    }
 }
 
 // Get point by Sheet
-
 export const fetchPointBySheet = async (sheetName: string) => {
     try {
         const token = localStorage.getItem("id_token")
@@ -112,7 +122,6 @@ export const fetchPointBySheet = async (sheetName: string) => {
 };
 
 // Get notificacoes
-
 export const fetchNotif = async () => {
     const token = await waitForToken();
     try {
@@ -129,7 +138,6 @@ export const fetchNotif = async () => {
 }; // esse funciona 
 
 // Post notificacoes
-
 export const postNotif = async (planilha: string | null, tipo: string) => {
     try {
         const token = localStorage.getItem("id_token")
