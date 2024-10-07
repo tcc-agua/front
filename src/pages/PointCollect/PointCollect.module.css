@@ -289,13 +289,26 @@
 }
 
 .arrow {
-    background: none;
+    color: var(--font_color2);
+    background-color: transparent; 
     border: none;
-    font-size: 2em;
+    padding: 0.3rem 0.8rem;
+    font-size: 2vw;
     cursor: pointer;
-    color: var(--font_color);
-    padding: 10px;
-    transition: color 0.5s ease;
+    transition: color 0.3s ease, transform 0.2s;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.arrow:disabled {
+    color: rgba(0, 0, 0, 0.3);
+    cursor: auto;
+}
+
+.arrow:hover:not(:disabled) {
+    color: var(--font_color2); 
+    transform: scale(1.1); 
 }
 
 .information p {
@@ -359,6 +372,14 @@ input[type="number"] {
 .disabled {
     cursor: not-allowed;
     opacity: 0.5;
+}
+
+.text_numbers {
+    display: flex;
+    margin: 20% 0px;
+    align-items: center;
+    text-align: center;
+    justify-content: center;
 }
 
 @media (max-width: 1080px) {

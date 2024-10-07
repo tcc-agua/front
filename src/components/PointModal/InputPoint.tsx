@@ -51,6 +51,7 @@ export const InputPoint = React.memo(({ decrement, handleChange, increment, titu
                 <button className={styles.arrow} onClick={increment}>
                     <img src={ArrowUp} alt="Arrow Up" />
                 </button>
+                <div className={styles.text_numbers}>
                 <input
                     type="number"
                     value={isInteger ? valor.toFixed(0) : valor.toFixed(1)}
@@ -59,6 +60,7 @@ export const InputPoint = React.memo(({ decrement, handleChange, increment, titu
                     min="0"
                     className={styles.numberInput}
                 />
+                </div>
                 <button className={styles.arrow} onClick={decrement}>
                     <img src={ArrowDown} alt="Arrow Down" />
                 </button>
