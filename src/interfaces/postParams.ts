@@ -152,3 +152,10 @@ export interface HIDROMETRO{
     nomePonto: string
     idColeta: number
 }
+
+export interface COLETA{
+    tecnico: string,
+    data: string,
+    horaInicio: string,
+    horaFim: string
+}
