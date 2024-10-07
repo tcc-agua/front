@@ -127,14 +127,14 @@ function ColunasCarvaoCard({ name }: PointNameProps) {
                         onClick={prevPage}
                         disabled={currentIndex === 0}
                     >
-                        ←
+                        &lt;
                     </button>
                     <button
                         className={styles.arrow_modal}
                         onClick={nextPage}
                         disabled={currentIndex + itemsPerPage >= infoContentData.length}
                     >
-                        →
+                        &gt;
                     </button>
                 </div>
                 <button className={styles.buttonEnviar} onClick={sendInformation}>Enviar</button>

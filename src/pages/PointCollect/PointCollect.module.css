@@ -192,7 +192,7 @@
     padding: 3%;
     border-radius: 10px;
     width: 40%;
-    height: 60%;
+    height: 65%;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -210,7 +210,10 @@
 .infoGrid {
     display: flex;
     width: 100%;
-    height: 100%;
+    height: 80%;
+    align-items: center;
+    justify-content: center;
+    margin-top: 15px;
 }
 
 .infoContent {
@@ -220,6 +223,36 @@
     justify-content: center;
     width: 45%;
     height: 100%;
+}
+
+.arrow_modal {
+    color: var(--font_color3);
+    background-color: transparent; 
+    border: none;
+    padding: 0.3rem 0.8rem;
+    font-size: 1.7vw;
+    cursor: pointer;
+    transition: color 0.3s ease, transform 0.2s;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: -40%;
+}
+
+.arrow_modal:disabled {
+    color: rgba(0, 0, 0, 0.3);
+    cursor: auto;
+}
+
+.arrow_modal:hover:not(:disabled) {
+    color: var(--font_color2); 
+    transform: scale(1.1); 
+}
+
+.button_container_modal {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
 }
 
 .information {
@@ -233,9 +266,10 @@
     border: 1px solid var( --border_color);
     border-radius: 10px;
     margin-top: 5%;
-    height: 50%;
+    height: 70%;
     width: 50%;
 }
+
 
 .separator {
     border-left: 1px solid var( --border_color);
@@ -246,7 +280,7 @@
 .buttonEnviar {
     width: 35%;
     height: 15%;
-    margin-top: 12%;
+    margin-top: 6%;
     background-color: #01A4FD;
     border: 1px solid #0095e6;
     color: white;
@@ -275,7 +309,7 @@
 
 
 .type {
-    font-size: 1.8vw;
+    font-size: 1.5vw;
     font-family: "SF Pro Medium";
 }
 
