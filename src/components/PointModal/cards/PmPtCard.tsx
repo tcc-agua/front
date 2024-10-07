@@ -1,26 +1,35 @@
-import styles from "../../../pages/PointCollect/PointCollect.module.css"
-import { useEffect, useState } from "react";
+import styles from "../../../pages/PointCollect/PointCollect.module.css";
+import { useEffect, useState, useCallback } from "react";
 import { InputPoint } from "../InputPoint";
 import usePmPtStore from "../../../store/PmPtStore";
 import { PMPT } from "../../../interfaces/postParams";
 
-interface PointNameProps{
-    name: string
+interface PointNameProps {
+    name: string;
 }
+
+const itemsPerPage = 2;
 
 function PmPtCard({ name }: PointNameProps) {
     const [oilLevel, setOilLevel] = useState<number>(1);
     const [waterLevel, setWaterLevel] = useState<number>(1);
     const [flRemoManual, setFlRemoManual] = useState<number>(1);
     const { createPmPtMeasure, isCreated, isError, resetState } = usePmPtStore();
+    const [currentIndex, setCurrentIndex] = useState(0);
 
-    const increment = (setter: React.Dispatch<React.SetStateAction<number>>, isInteger?: boolean) => {
-        setter(prev => isInteger ? prev + 1 : Math.round((prev + 0.1) * 10) / 10);
-    };
-    
-    const decrement = (setter: React.Dispatch<React.SetStateAction<number>>, isInteger?: boolean) => {
-        setter(prev => isInteger ? Math.max(prev - 1, 0) : Math.max(Math.round((prev - 0.1) * 10) / 10, 0));
-    };
+    const increment = useCallback(
+        (setter: React.Dispatch<React.SetStateAction<number>>, isInteger?: boolean) => {
+            setter(prev => (isInteger ? prev + 1 : Math.round((prev + 0.1) * 10) / 10));
+        },
+        []
+    );
+
+    const decrement = useCallback(
+        (setter: React.Dispatch<React.SetStateAction<number>>, isInteger?: boolean) => {
+            setter(prev => (isInteger ? Math.max(prev - 1, 0) : Math.max(Math.round((prev - 0.1) * 10) / 10, 0)));
+        },
+        []
+    );
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>, setter: React.Dispatch<React.SetStateAction<number>>) => {
         const value = parseFloat(e.target.value);
@@ -31,58 +40,75 @@ function PmPtCard({ name }: PointNameProps) {
 
     const sendInformation = () => {
         const obj: PMPT = {
-             flRemoManual: flRemoManual,
-             nivelAgua: waterLevel,
-             nivelOleo: oilLevel,
-             nomePonto: name,
-             idColeta: 1
-        }
+            flRemoManual: flRemoManual,
+            nivelAgua: waterLevel,
+            nivelOleo: oilLevel,
+            nomePonto: name,
+            idColeta: 1
+        };
         createPmPtMeasure(obj);
     };
 
-    useEffect (() =>{
-        if(isCreated){
-            alert("Criado")
-            resetState()
+    useEffect(() => {
+        if (isCreated) {
+            alert("Criado");
+            resetState();
         }
-        if(isError){
-            alert("ERRO")
+        if (isError) {
+            alert("ERRO");
         }
+    }, [isCreated, resetState, isError]);
 
-    }, [isCreated, resetState, isError])
+    const infoContentData = [
+        { type: "Nível do óleo", value: oilLevel, isInteger: false, setter: setOilLevel },
+        { type: "Nível da água", value: waterLevel, isInteger: false, setter: setWaterLevel },
+        { type: "Fl remo Manual", value: flRemoManual, isInteger: false, setter: setFlRemoManual }
+    ];
+
+    const nextPage = () => {
+        if (currentIndex + itemsPerPage < infoContentData.length) {
+            setCurrentIndex(currentIndex + itemsPerPage);
+        }
+    };
+
+    const prevPage = () => {
+        if (currentIndex - itemsPerPage >= 0) {
+            setCurrentIndex(currentIndex - itemsPerPage);
+        }
+    };
 
     return (
         <>
             <p className={styles.pointName}>Dados de coleta do ponto '{name}'</p>
             <main className={styles.infoContainer}>
                 <div className={styles.infoGrid}>
-                <InputPoint
-                    decrement={() => decrement(setOilLevel, false)}
-                    increment={() => increment(setOilLevel, false)}
-                    handleChange={(e) => handleChange(e, setOilLevel)}
-                    valor={oilLevel}
-                    titulo="Nível do óleo"
-                    isInteger={false}
-                />
-                <InputPoint
-                    decrement={() => decrement(setWaterLevel, false)}
-                    increment={() => increment(setWaterLevel, false)}
-                    handleChange={(e) => handleChange(e, setWaterLevel)}
-                    valor={waterLevel}
-                    titulo="Nível da água"
-                    isInteger={false}
-                />
-                <InputPoint
-                    decrement={() => decrement(setFlRemoManual, false)}
-                    increment={() => increment(setFlRemoManual, false)}
-                    handleChange={(e) => handleChange(e, setFlRemoManual)}
-                    valor={flRemoManual}
-                    titulo="Fl remo Manual"
-                    isInteger={false}
-                />
+                    {infoContentData.slice(currentIndex, currentIndex + itemsPerPage).map((item, index) => (
+                        <InputPoint
+                            key={index}
+                            titulo={item.type}
+                            valor={item.value}
+                            increment={() => increment(item.setter, item.isInteger)}
+                            decrement={() => decrement(item.setter, item.isInteger)}
+                            handleChange={(e) => handleChange(e, item.setter)}
+                            isInteger={item.isInteger}
+                        />
+                    ))}
                 </div>
-            
-                <button className={styles.buttonEnviar} onClick={sendInformation}>Enviar</button>
+                <div className={styles.button_container_modal}>
+                    <button className={styles.arrow_modal} onClick={prevPage} disabled={currentIndex === 0}>
+                        ←
+                    </button>
+                    <button
+                        className={styles.arrow_modal}
+                        onClick={nextPage}
+                        disabled={currentIndex + itemsPerPage >= infoContentData.length}
+                    >
+                        →
+                    </button>
+                </div>
+                <button className={styles.buttonEnviar} onClick={sendInformation}>
+                    Enviar
+                </button>
             </main>
         </>
     );
