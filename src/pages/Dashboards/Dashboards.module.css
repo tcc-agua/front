@@ -342,6 +342,10 @@ hr {
         font-size: calc(1vw + 0.5em);
     }
 
+    .mapview {
+        height: 350px;
+    }
+
 }
 
 
@@ -363,8 +367,8 @@ hr {
     .updates,
     .weekly_weather,
     .graphic,
-    .last_activities,
-    .mapview {
+    .last_activities
+    {
         width: 100%;
         background-color: var(--backgroud_color2);
         border: none;
@@ -466,4 +470,9 @@ hr {
     .days {
         font-size: calc(1.5vw + 1em);
     }
+
+    .mapview {
+        height: 350px;
+    }
+
 }

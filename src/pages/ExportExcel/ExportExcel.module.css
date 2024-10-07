@@ -10,9 +10,10 @@
     display: flex;
     justify-content: center;
     flex-direction: column;
-    width: 100%;
+    width: 96%;
     height: 100%;
     z-index: 2;
+    margin-left: 4%;
 }
 
 .title {
@@ -38,7 +39,6 @@
 
 .container_table{
     width: 97%;
-    margin-left: 1%;
 }
 
 @media (max-width: 900px) {
@@ -46,21 +46,20 @@
         margin-bottom: 5%;
     }
 
-}
+    .filter{
+        display: block;
+    }
 
+    .dropdownContainer{
+        display: block;
+        margin-left: 3%;
+    }
 
-@media (min-width: 1500px) {
-    .buttonTable {
-        margin-top: 0.5%;
-        margin-left: 10%;
+    .month, .year, .selecionar_tabela{
+        margin-bottom: 1%;
     }
 }
 
-@media (max-width: 900px) {
-    .table {
-        margin-bottom: 7%;
-    }
-}
 
 /* Modal */
 
@@ -178,13 +177,37 @@
     margin-top: 20px;
 }
 
-@media (max-width: 900px) {
+@media (max-width: 1200px) {
     .export {
-        font-size: small;
-        margin-left: auto;
-        margin-right: auto;
-        display: block;
-        padding: 3% 5%;
+        width: 22%;
+        padding: 1.5%;
+    }
+
+    .month, .year, .selecionar_tabela{
+        margin-left: 1%;
+    }
+
+}
+
+@media (max-width: 810px) {
+    .export {
+        width: 35%;
+        padding: 2%;
+    }
+}
+
+@media (max-width: 600px) {
+    .export {
+        width: 35%;
+        padding: 2%;
+    }
+
+}
+
+@media (max-width: 370px) {
+    .export {
+        width: 40%;
+        padding: 2%;
     }
 
 }
