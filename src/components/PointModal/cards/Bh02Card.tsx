@@ -1,91 +1,119 @@
-import styles from "../../../pages/PointCollect/PointCollect.module.css"
-import { useEffect, useState } from "react";
-import { InputPoint } from "../InputPoint";
+import styles from "../../../pages/PointCollect/PointCollect.module.css";
+import React, { useEffect, useState, useCallback } from "react";
+import { InputPoint } from "../InputPoint"; 
 import { BH02 } from "../../../interfaces/postParams";
 import useBh02Store from "../../../store/Bh02Store";
 
-interface PointNameProps{
-    name: string
+const itemsPerPage = 2;
+
+interface PointNameProps {
+    name: string;
 }
 
 function Bh02Card({ name }: PointNameProps) {
-    const [pressure, setPressure] = useState<number>(1);
-    const [horimeter, setHorimeter] = useState<number>(1);
-    const [frequency, setFrequency] = useState<number>(1);
-    const { createBh02Measure, isCreated, resetState, isError } = useBh02Store();
+    const [measurements, setMeasurements] = useState({
+        pressure: 1,
+        frequency: 1,
+        horimeter: 1,
+    });
 
+    const { createBh02Measure, isCreated, isError, resetState } = useBh02Store();
+    const [currentIndex, setCurrentIndex] = useState(0);
 
-    const increment = (setter: React.Dispatch<React.SetStateAction<number>>, isInteger?: boolean) => {
-        setter(prev => isInteger ? prev + 1 : Math.round((prev + 0.1) * 10) / 10);
-    };
+    const increment = useCallback((key: keyof typeof measurements, isInteger: boolean) => {
+        setMeasurements(prevState => ({
+            ...prevState,
+            [key]: isInteger ? prevState[key] + 1 : parseFloat((prevState[key] + 0.1).toFixed(1))
+        }));
+    }, []);
     
-    const decrement = (setter: React.Dispatch<React.SetStateAction<number>>, isInteger?: boolean) => {
-        setter(prev => isInteger ? Math.max(prev - 1, 0) : Math.max(Math.round((prev - 0.1) * 10) / 10, 0));
-    };
+    const decrement = useCallback((key: keyof typeof measurements, isInteger: boolean) => {
+        setMeasurements(prevState => ({
+            ...prevState,
+            [key]: isInteger && prevState[key] > 0 ? prevState[key] - 1 : prevState[key] > 0 ? parseFloat((prevState[key] - 0.1).toFixed(1)) : 0
+        }));
+    }, []);
 
-    const handleChange = (e: React.ChangeEvent<HTMLInputElement>, setter: React.Dispatch<React.SetStateAction<number>>) => {
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement>, key: keyof typeof measurements) => {
         const value = parseFloat(e.target.value);
         if (!isNaN(value)) {
-            setter(value);
+            setMeasurements(prev => ({ ...prev, [key]: value }));
         }
     };
 
     const sendInformation = () => {
-
         const obj: BH02 = {
-            frequencia: frequency,
-            horimetro: horimeter,
-            pressao: pressure,
+            pressao: measurements.pressure,
+            frequencia: measurements.frequency,
+            horimetro: measurements.horimeter,
             nomePonto: name,
-            idColeta: 1
-        }
+            idColeta: 1,
+        };
 
         createBh02Measure(obj);
-
     };
 
-    useEffect (() =>{
-        if(isCreated){
-            alert("Criado")
-            resetState()
+    useEffect(() => {
+        if (isCreated) {
+            alert("Criado");
+            resetState();
         }
-        if(isError){
-            alert("ERRO")
+        if (isError) {
+            alert("ERRO");
         }
+    }, [isCreated, resetState, isError]);
 
-    }, [isCreated, resetState, isError])
+    const infoContentData = [
+        { type: "Pressão", key: "pressure", value: measurements.pressure, isInteger: true },
+        { type: "Frequência", key: "frequency", value: measurements.frequency, isInteger: true },
+        { type: "Horímetro", key: "horimeter", value: measurements.horimeter, isInteger: true },
+    ];
+
+    const nextPage = () => {
+        if (currentIndex + itemsPerPage < infoContentData.length) {
+            setCurrentIndex(currentIndex + itemsPerPage);
+        }
+    };
+
+    const prevPage = () => {
+        if (currentIndex - itemsPerPage >= 0) {
+            setCurrentIndex(currentIndex - itemsPerPage);
+        }
+    };
 
     return (
         <>
             <p className={styles.pointName}>Dados de coleta do ponto '{name}'</p>
             <main className={styles.infoContainer}>
                 <div className={styles.infoGrid}>
-                <InputPoint
-                    decrement={() => decrement(setPressure, true)}
-                    increment={() => increment(setPressure, true)}
-                    handleChange={(e) => handleChange(e, setPressure)}
-                    valor={pressure}
-                    titulo="Pressão"
-                    isInteger={true}
-                />
-                <InputPoint
-                    decrement={() => decrement(setHorimeter, true) }
-                    increment={() => increment(setHorimeter, true)}
-                    handleChange={(e) => handleChange(e, setHorimeter)}
-                    valor={horimeter}
-                    titulo="Horimetro"
-                    isInteger={true}
-                />
-                <InputPoint
-                    decrement={() => decrement(setFrequency, true)}
-                    increment={() => increment(setFrequency, true)}
-                    handleChange={(e) => handleChange(e, setFrequency)}
-                    valor={frequency}
-                    titulo="Frequência"
-                    isInteger={true}
-                />
+                    {infoContentData.slice(currentIndex, currentIndex + itemsPerPage).map((item, index) => (
+                        <InputPoint
+                            key={index}
+                            titulo={item.type}
+                            valor={item.value}
+                            increment={() => increment(item.key as keyof typeof measurements, item.isInteger)} 
+                            decrement={() => decrement(item.key as keyof typeof measurements, item.isInteger)} 
+                            isInteger={item.isInteger}
+                            handleChange={(e: React.ChangeEvent<HTMLInputElement>) => handleChange(e, item.key as keyof typeof measurements)}
+                        />
+                    ))}
                 </div>
-                
+                <div className={styles.button_container_modal}>
+                    <button
+                        className={styles.arrow_modal}
+                        onClick={prevPage}
+                        disabled={currentIndex === 0}
+                    >
+                        ←
+                    </button>
+                    <button
+                        className={styles.arrow_modal}
+                        onClick={nextPage}
+                        disabled={currentIndex + itemsPerPage >= infoContentData.length}
+                    >
+                        →
+                    </button>
+                </div>
                 <button className={styles.buttonEnviar} onClick={sendInformation}>Enviar</button>
             </main>
         </>
