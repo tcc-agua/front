@@ -1,7 +1,6 @@
 import { Link, useLocation } from "react-router-dom";
 import styles from './Sidebar.module.css';
-import { useTheme } from '../ThemeContext/ThemeContext'; // Importa o contexto
-
+import { useTheme } from '../ThemeContext/ThemeContext'; 
 import HomeIMG from '../../assets/images/home.svg';
 import HomeBlueIMG from '../../assets/images/home-blue.svg';
 import MapaIMG from '../../assets/images/mapa.svg';
@@ -12,16 +11,14 @@ import HistoricoIMG from '../../assets/images/historico.svg';
 import HistoricoBlueIMG from '../../assets/images/historico-blue.svg';
 import ExportarIMG from '../../assets/images/exportar.svg';
 import ExportarBlueIMG from '../../assets/images/exportar-blue.svg';
+import logout from '../../assets/images/logout.svg'
 
-
-//dark mode icons
+// dark mode icons
 import HomeWhite from '../../assets/images/darkmode_icons/home_white.svg';
 import MapaWhite from '../../assets/images/darkmode_icons/map_white.svg';
 import MaisWhite from '../../assets/images/darkmode_icons/plus_white.svg';
 import HistoricoWhite from '../../assets/images/darkmode_icons/historic_white.svg';
 import ExportarWhite from '../../assets/images/darkmode_icons/export_white.svg';
-
-import SairWhite from '../../assets/images/sair_white.svg';
 
 interface SidebarProps {
     className?: string;
@@ -29,7 +26,7 @@ interface SidebarProps {
 
 export function Sidebar({ className }: SidebarProps) {
     const location = useLocation();
-    const { isDarkMode } = useTheme(); // Consome o contexto
+    const { isDarkMode } = useTheme(); 
 
     const getIcon = (defaultIcon: string, blueIcon: string, whiteIcon: string, path: string) => {
         return location.pathname === path ? blueIcon : (isDarkMode ? whiteIcon : defaultIcon);
@@ -46,7 +43,7 @@ export function Sidebar({ className }: SidebarProps) {
                 <p className={styles.title_side}>WISE</p>
             </header>
             <section>
-                <div className={`${styles.options} ${location.pathname === '/inicial' ? styles.active : ''}`}>
+                <div className={`${styles.options} ${['/inicial', '/inicial/ultimas_atividades'].includes(location.pathname) ? styles.active : ''}`}>
                     <Link className={styles.content_options} to={"/inicial"}>
                         <div className={styles.blue}></div>
                         <img
@@ -69,7 +66,7 @@ export function Sidebar({ className }: SidebarProps) {
                     </Link>
                 </div>
 
-                <div className={`${styles.options} ${location.pathname === '/inicial/coleta_de_dados' ? styles.active : ''}`}>
+                <div className={`${styles.options} ${['/inicial/coleta_de_dados', '/inicial/pontos_de_coleta'].includes(location.pathname) ? styles.active : ''}`}>
                     <Link className={styles.content_options} to={"/inicial/coleta_de_dados"}>
                         <div className={styles.blue}></div>
                         <img
@@ -101,13 +98,18 @@ export function Sidebar({ className }: SidebarProps) {
                         <p>Exportar Excel</p>
                     </Link>
                 </div>
-                <div className={styles.line}></div>
-                <div className={styles.logout_container}>
-                    <button onClick={handleLogout} className={styles.logout}>
-                        <img src={SairWhite} alt="Sair" />
-                        <p>SAIR</p>
+
+                <div className={styles.hrLinha}>
+                    <hr />
+                </div>
+
+                <div className={styles.logout}>
+                    <button className={styles.logoutButton} onClick={handleLogout}>
+                        <img src={logout} alt="logout" />
+                        <span>Sair</span>
                     </button>
                 </div>
+
             </section>
         </aside>
     );
