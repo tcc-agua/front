@@ -5,10 +5,11 @@ import useFaseLivreStore from "../../../store/FaseLivreStore";
 import { FASE_LIVRE } from "../../../interfaces/postParams";
 
 interface PointNameProps{
-    name: string
+    name: string;
+    idColeta: number;
 }
 
-function FaseLivreCard({ name }: PointNameProps) {
+function FaseLivreCard({ name, idColeta }: PointNameProps) {
     const [volume, setVolume] = useState<number>(1);
     const [houveTroca, setHouveTroca] = useState<boolean>(false);
     const { createFaseLivreMeasure, isCreated, isError, resetState } = useFaseLivreStore();
@@ -37,7 +38,7 @@ function FaseLivreCard({ name }: PointNameProps) {
             houve_troca: houveTroca,
             volume: volume,
             nomePonto: name,
-            idColeta: 1
+            idColeta: idColeta
         }
         createFaseLivreMeasure(obj);
     };

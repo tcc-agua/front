@@ -6,9 +6,10 @@ import { HORIMETRO } from "../../../interfaces/postParams";
 
 interface PointNameProps{
     name: string
+    idColeta: number
 }
 
-function HorimetroCard({ name }: PointNameProps) {
+function HorimetroCard({ name, idColeta }: PointNameProps) {
     const [horimeter, setHorimeter] = useState<number>(1);
     const { createHorimetroMeasure, isCreated, isError, resetState } = useHorimetroStore();
 
@@ -31,7 +32,7 @@ function HorimetroCard({ name }: PointNameProps) {
         const obj: HORIMETRO = {
             horimetro: horimeter,
             nomePonto: name,
-            idColeta: 1
+            idColeta: idColeta
         }
         createHorimetroMeasure(obj);
     };

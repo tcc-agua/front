@@ -167,26 +167,31 @@ export function PointCollect() {
         if (name.startsWith("PM") || name.startsWith("PT")) {
             return <PointModal.PMPT
                 name={name}
+                idColeta={idColeta}
             />
         }
         if (name.startsWith("PB")) {
             return <PointModal.PBS
                 name={name}
+                idColeta={idColeta}
             />
         }
         if (name.startsWith("CD")) {
             return <PointModal.CD
                 name={name}
+                idColeta={idColeta}
             />
         }
         if (name == "TQ04" || name == "TQ05") {
             return <PointModal.TQ04_TQ05
                 name={name}
+                idColeta={idColeta}
             />
         }
         if (name.startsWith("AG") || name == "BS01 HORIMETRO") {
             return <PointModal.HORIMETRO
                 name={name}
+                idColeta={idColeta}
             />
         }
         if(name.startsWith("Geral") ||
@@ -203,6 +208,7 @@ export function PointCollect() {
 
             return <PointModal.HIDROMETRO
             name={name}
+            idColeta={idColeta}
             />
         }
 
@@ -216,66 +222,79 @@ export function PointCollect() {
             case "BC06":
                 return <PointModal.BC06
                     name={name}
+                    idColeta={idColeta}
                 />
 
             case "BH02":
                 return <PointModal.BH02
                     name={name}
+                    idColeta={idColeta}
                 />
 
             case "BOMBA BC03":
                 return <PointModal.BOMBA_BC03
                     name={name}
+                    idColeta={idColeta}
                 />
 
             case "BS01 HIDROMETRO":
                 return <PointModal.BS01_HIDROMETRO
                     name={name}
+                    idColeta={idColeta}
                 />
 
             case "BS01 PRESSAO":
                 return <PointModal.BS01_PRESSAO
                     name={name}
+                    idColeta={idColeta}
                 />
 
             case "COLUNAS CARVAO":
                 return <PointModal.COLUNAS_CARVAO
                     name={name}
+                    idColeta={idColeta}
                 />
 
             case "FASE LIVRE":
                 return <PointModal.FASE_LIVRE
                     name={name}
+                    idColeta={idColeta}
                 />
 
             case "FILTRO CARTUCHO":
                 return <PointModal.FILTRO_CARTUCHO
                     name={name}
+                    idColeta={idColeta}
                 />
 
             case "HORIMETRO":
                 return <PointModal.HORIMETRO
                     name={name}
+                    idColeta={idColeta}
                 />
 
             case "SENSOR PH":
                 return <PointModal.SENSOR_PH
                     name={name}
+                    idColeta={idColeta}
                 />
 
             case "TQ01":
                 return <PointModal.TQ01
                     name={name}
+                    idColeta={idColeta}
                 />
 
             case "TQ02":
                 return <PointModal.TQ02
                     name={name}
+                    idColeta={idColeta}
                 />
 
             case "TQ04 TQ05":
                 return <PointModal.TQ04_TQ05
                     name={name}
+                    idColeta={idColeta}
                 />
         }
     }

@@ -5,10 +5,11 @@ import useBs01PressaoStore from "../../../store/Bs01PressaoStore";
 import { BS01_PRESSAO } from "../../../interfaces/postParams";
 
 interface PointNameProps{
-    name: string
+    name: string;
+    idColeta: number;
 }
 
-function Bs01PressaoCard({ name }: PointNameProps) {
+function Bs01PressaoCard({ name, idColeta }: PointNameProps) {
     const [pressure, setPressure] = useState<number>(1);
     const { createBs01PressaoMeasure, isCreated, isError, resetState } = useBs01PressaoStore();
 
@@ -32,7 +33,7 @@ function Bs01PressaoCard({ name }: PointNameProps) {
         const obj: BS01_PRESSAO = {
             pressao: pressure,
             nomePonto: name,
-            idColeta: 1
+            idColeta: idColeta
         }
         createBs01PressaoMeasure(obj);
     };

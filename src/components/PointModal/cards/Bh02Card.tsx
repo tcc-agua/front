@@ -8,9 +8,10 @@ const itemsPerPage = 2;
 
 interface PointNameProps {
     name: string;
+    idColeta: number
 }
 
-function Bh02Card({ name }: PointNameProps) {
+function Bh02Card({ name, idColeta }: PointNameProps) {
     const [measurements, setMeasurements] = useState({
         pressure: 1,
         frequency: 1,
@@ -47,7 +48,7 @@ function Bh02Card({ name }: PointNameProps) {
             frequencia: measurements.frequency,
             horimetro: measurements.horimeter,
             nomePonto: name,
-            idColeta: 1,
+            idColeta: idColeta,
         };
 
         createBh02Measure(obj);

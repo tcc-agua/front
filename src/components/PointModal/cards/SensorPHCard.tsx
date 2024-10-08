@@ -5,10 +5,11 @@ import useSensorPhStore from "../../../store/SensorPhStore";
 import { SENSOR_PH } from "../../../interfaces/postParams";
 
 interface PointNameProps{
-    name: string
+    name: string;
+    idColeta: number
 }
 
-function SensorPHCard({ name }: PointNameProps) {
+function SensorPHCard({ name, idColeta }: PointNameProps) {
     const [ph, setPh] = useState<number>(1);
     const { createSensorPhMeasure, isCreated, isError, resetState } = useSensorPhStore();
 
@@ -32,7 +33,7 @@ function SensorPHCard({ name }: PointNameProps) {
         const obj: SENSOR_PH = {
             ph: ph,
             nomePonto: name,
-            idColeta: 1
+            idColeta: idColeta
         }
         createSensorPhMeasure(obj);
     };

@@ -5,10 +5,11 @@ import useTq02Store from "../../../store/Tq02Store";
 import { TQ02 } from "../../../interfaces/postParams";
 
 interface PointNameProps{
-    name: string
+    name: string;
+    idColeta: number;
 }
 
-function Tq02Card({ name }: PointNameProps) {
+function Tq02Card({ name, idColeta }: PointNameProps) {
     const [ph, setPh] = useState<number>(1);
     const [lt_02_1, setLt_02_1] = useState<number>(1);
     const { createTq02Measure, isCreated, isError, resetState } = useTq02Store();
@@ -33,7 +34,7 @@ function Tq02Card({ name }: PointNameProps) {
             sensor_ph: ph,
             Lt_02_1: lt_02_1,
             nomePonto: name,
-            idColeta: 1 
+            idColeta: idColeta
         }
         createTq02Measure(obj);
     };

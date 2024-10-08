@@ -5,10 +5,11 @@ import useHidrometroStore from "../../../store/HidrometroStore";
 import { HIDROMETRO } from "../../../interfaces/postParams";
 
 interface PointNameProps{
-    name: string
+    name: string;
+    idColeta: number;
 }
 
-function HidrometroCard({ name }: PointNameProps) {
+function HidrometroCard({ name, idColeta }: PointNameProps) {
     const [volume, setVolume] = useState<number>(1);
     const { createHidrometroMeasure, isCreated, isError, resetState } = useHidrometroStore();
 
@@ -32,7 +33,7 @@ function HidrometroCard({ name }: PointNameProps) {
             volume: volume,
 
             nomePonto: name,
-            idColeta: 1
+            idColeta: idColeta
         }
         createHidrometroMeasure(obj);
     };

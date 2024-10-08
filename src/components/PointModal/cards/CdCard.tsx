@@ -8,9 +8,10 @@ const itemsPerPage = 2; // Definindo itens por página
 
 interface PointNameProps {
     name: string;
+    idColeta: number;
 }
 
-function CdCard({ name }: PointNameProps) {
+function CdCard({ name, idColeta }: PointNameProps) {
     const [measurements, setMeasurements] = useState({
         pressure: 1,
         hidrometer: 1,
@@ -72,7 +73,7 @@ function CdCard({ name }: PointNameProps) {
             pressao: measurements.pressure,
             tipo_rede: measurements.tipoRede,
             nomePonto: name,
-            idColeta: 1,
+            idColeta: idColeta,
         };
         createCdMeasure(obj);
     };

@@ -8,14 +8,15 @@ const itemsPerPage = 2; // Definir o número de itens por página
 
 interface PointNameProps {
     name: string;
+    idColeta: number;
 }
 
-function PbsCard({ name }: PointNameProps) {
-    const [pressure] = useState<number>(1);
-    const [pulses] = useState<number>(1);
-    const [oilLevel] = useState<number>(1);
-    const [waterLevel] = useState<number>(1);
-    const [volRemOleo] = useState<number>(1);
+function PbsCard({ name, idColeta }: PointNameProps) {
+    const [pressure, setPressure] = useState<number>(1);
+    const [pulses, setPulses] = useState<number>(1);
+    const [oilLevel, setOilLevel] = useState<number>(1);
+    const [waterLevel, setWaterLevel] = useState<number>(1);
+    const [volRemOleo, setVolRemOleo] = useState<number>(1);
     const { createPbsMeasure, isCreated, isError, resetState } = usePbsStore();
     const [currentIndex, setCurrentIndex] = useState<number>(0);
 
@@ -42,7 +43,7 @@ function PbsCard({ name }: PointNameProps) {
             nivel_agua: waterLevel,
             nivel_oleo: oilLevel,
             nomePonto: name,
-            idColeta: 1 // Atualize este ID conforme necessário
+            idColeta: idColeta
         };
         createPbsMeasure(obj);
     };
@@ -57,16 +58,14 @@ function PbsCard({ name }: PointNameProps) {
         }
     }, [isCreated, resetState, isError]);
 
-    // Dados para exibição no modal
     const infoContentData = [
-        { type: "Pressão", key: "pressure", value: pressure, isInteger: false },
-        { type: "Pulsos", key: "pulses", value: pulses, isInteger: false },
-        { type: "Nível do óleo", key: "oilLevel", value: oilLevel, isInteger: false },
-        { type: "Nível da água", key: "waterLevel", value: waterLevel, isInteger: false },
-        { type: "Vol Rem Óleo", key: "volRemOleo", value: volRemOleo, isInteger: false }
+        { type: "Pressão", key: "pressure", value: pressure, setter: setPressure, isInteger: false },
+        { type: "Pulsos", key: "pulses", value: pulses, setter: setPulses, isInteger: false },
+        { type: "Nível do óleo", key: "oilLevel", value: oilLevel, setter: setOilLevel, isInteger: false },
+        { type: "Nível da água", key: "waterLevel", value: waterLevel, setter: setWaterLevel, isInteger: false },
+        { type: "Vol Rem Óleo", key: "volRemOleo", value: volRemOleo, setter: setVolRemOleo, isInteger: false }
     ];
 
-    // Funções de navegação entre os itens no modal
     const nextPage = () => {
         if (currentIndex + itemsPerPage < infoContentData.length) {
             setCurrentIndex(prev => prev + itemsPerPage);
@@ -89,9 +88,9 @@ function PbsCard({ name }: PointNameProps) {
                             key={index}
                             titulo={item.type}
                             valor={item.value}
-                            increment={() => increment(eval(`set${item.key.charAt(0).toUpperCase() + item.key.slice(1)}`), item.isInteger)}
-                            decrement={() => decrement(eval(`set${item.key.charAt(0).toUpperCase() + item.key.slice(1)}`), item.isInteger)}
-                            handleChange={(e) => handleChange(e, eval(`set${item.key.charAt(0).toUpperCase() + item.key.slice(1)}`))}
+                            increment={() => increment(item.setter, item.isInteger)}
+                            decrement={() => decrement(item.setter, item.isInteger)}
+                            handleChange={(e) => handleChange(e, item.setter)}
                             isInteger={item.isInteger}
                         />
                     ))}

@@ -8,6 +8,7 @@ const itemsPerPage = 2; // Define the number of items to show per page
 
 interface PointNameProps {
     name: string;
+    idColeta: number
 }
 
 // Define um tipo que representa os setters para diferentes tipos de estado
@@ -22,7 +23,7 @@ interface InfoContentData {
     setter: Setter<number> | Setter<boolean>; // Define o setter como um tipo de união
 }
 
-function Tq04Tq05Card({ name }: PointNameProps) {
+function Tq04Tq05Card({ name, idColeta }: PointNameProps) {
     const [kgBombonas, setKgBombonas] = useState<number>(1);
     const [qtdBombonas, setQtdBombonas] = useState<number>(1);
     const [horimeter, setHorimeter] = useState<number>(1);
@@ -59,7 +60,7 @@ function Tq04Tq05Card({ name }: PointNameProps) {
             horimetro: horimeter,
             houve_preparo_solucao: preparoSolucao,
             nomePonto: name,
-            idColeta: 1
+            idColeta: idColeta
         };
         createTq04Tq05Measure(obj);
     };

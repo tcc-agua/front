@@ -8,9 +8,10 @@ const itemsPerPage = 2;
 
 interface PointNameProps {
     name: string;
+    idColeta: number;
 }
 
-function ColunasCarvaoCard({ name }: PointNameProps) {
+function ColunasCarvaoCard({ name, idColeta }: PointNameProps) {
     const [measurements, setMeasurements] = useState({
         pressure_c01: 1,
         pressure_c02: 1,
@@ -59,7 +60,7 @@ function ColunasCarvaoCard({ name }: PointNameProps) {
             pressao_c03: measurements.pressure_c03,
             pressao_saida: measurements.outletPressure,
             nomePonto: name,
-            idColeta: 1
+            idColeta: idColeta
         };
         createColunasCarvaoMeasure(obj);
     };

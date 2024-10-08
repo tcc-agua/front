@@ -8,9 +8,10 @@ const itemsPerPage = 2;
 
 interface PointNameProps {
     name: string;
+    idColeta: number;
 }
 
-function BombaBc03Card({ name }: PointNameProps) {
+function BombaBc03Card({ name, idColeta }: PointNameProps) {
     const [measurements, setMeasurements] = useState({
         pressure: 1,
         horimeter: 1,
@@ -47,7 +48,7 @@ function BombaBc03Card({ name }: PointNameProps) {
             horimetro: measurements.horimeter,
             pressao: measurements.pressure,
             nomePonto: name,
-            idColeta: 1,
+            idColeta: idColeta,
         };
 
         createBombaBc03Measure(obj);

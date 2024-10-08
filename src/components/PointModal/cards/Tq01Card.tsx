@@ -5,10 +5,11 @@ import useTq01Store from "../../../store/Tq01Store";
 import { TQ01 } from "../../../interfaces/postParams";
 
 interface PointNameProps{
-    name: string
+    name: string;
+    idColeta: number
 }
 
-function Tq01Card({ name }: PointNameProps) {
+function Tq01Card({ name, idColeta }: PointNameProps) {
     const [nivel, setNivel] = useState<number>(1);
     const { createTq01Measure, isCreated, isError, resetState } = useTq01Store();
 
@@ -31,7 +32,7 @@ function Tq01Card({ name }: PointNameProps) {
         const obj: TQ01 = {
             nivel: nivel,
             nomePonto: name,
-            idColeta: 1
+            idColeta: idColeta
         }
         createTq01Measure(obj);
     };

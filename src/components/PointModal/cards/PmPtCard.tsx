@@ -6,11 +6,12 @@ import { PMPT } from "../../../interfaces/postParams";
 
 interface PointNameProps {
     name: string;
+    idColeta: number;
 }
 
 const itemsPerPage = 2;
 
-function PmPtCard({ name }: PointNameProps) {
+function PmPtCard({ name, idColeta }: PointNameProps) {
     const [oilLevel, setOilLevel] = useState<number>(1);
     const [waterLevel, setWaterLevel] = useState<number>(1);
     const [flRemoManual, setFlRemoManual] = useState<number>(1);
@@ -44,7 +45,7 @@ function PmPtCard({ name }: PointNameProps) {
             nivelAgua: waterLevel,
             nivelOleo: oilLevel,
             nomePonto: name,
-            idColeta: 1
+            idColeta: idColeta
         };
         createPmPtMeasure(obj);
     };

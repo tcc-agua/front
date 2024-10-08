@@ -5,10 +5,11 @@ import useBs01HidrometroStore from "../../../store/Bs01HidrometroStore";
 import { BS01_HIDROMETRO } from "../../../interfaces/postParams";
 
 interface PointNameProps{
-    name: string
+    name: string;
+    idColeta: number;
 }
 
-function Bs01HidrometroCard({ name }:PointNameProps ) {
+function Bs01HidrometroCard({ name , idColeta}:PointNameProps ) {
     const [volume, setVolume] = useState<number>(1);
     const { createBs01HidrometroMeasure, isCreated, isError, resetState } = useBs01HidrometroStore();
 
@@ -32,7 +33,7 @@ function Bs01HidrometroCard({ name }:PointNameProps ) {
         const obj: BS01_HIDROMETRO = {
             volume: volume,
             nomePonto: name,
-            idColeta: 1
+            idColeta: idColeta
         }
 
         createBs01HidrometroMeasure(obj);

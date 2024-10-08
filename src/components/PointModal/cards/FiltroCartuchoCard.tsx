@@ -5,10 +5,11 @@ import useFiltroCartuchoStore from "../../../store/FiltroCartuchoStore";
 import { FILTRO_CARTUCHO } from "../../../interfaces/postParams";
 
 interface PointNameProps{
-    name: string
+    name: string;
+    idColeta: number;
 }
 
-function FiltroCartuchoCard({ name }:PointNameProps) {
+function FiltroCartuchoCard({ name, idColeta }:PointNameProps) {
     const [outletPressure, setOutletPressure] = useState<number>(1);
     const [inletPressure, setInletPressure] = useState<number>(1);
     const { createFiltroCartuchoMeasure, isCreated, isError, resetState } = useFiltroCartuchoStore();
@@ -33,7 +34,7 @@ function FiltroCartuchoCard({ name }:PointNameProps) {
             pressao_saida: outletPressure,
             pressao_entrada: inletPressure,
             nomePonto: name,
-            idColeta: 1
+            idColeta: idColeta
         }
         createFiltroCartuchoMeasure(obj);
     };
