@@ -73,13 +73,21 @@ const Historic: React.FC = () => {
     setIsErrorModalOpen(false);
   };
 
-  const [page,] = useState(1);
-  const [size,] = useState(6);
-  const [, setLoading] = useState(false);
-  const [, setError] = useState<string | null>(null);
+  const [page, setPage] = useState(1);
+  const [size, setSize] = useState(6);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     async function fetchPontosPorColeta() {
+      setLoading(true);
+      setError(null);
+      try {
+        const token = localStorage.getItem('id_token');
+        if (!token) {
+          setError('Token não encontrado.');
+          return;
+        }
       setLoading(true);
       setError(null);
       try {
@@ -101,40 +109,42 @@ const Historic: React.FC = () => {
           paramsData = { startDate, endDate: startDate, page, size };
         } else {
           const endDate = dayjs().format('YYYY-MM-DD');
-          const startDate = dayjs().subtract(15, 'day').format('YYYY-MM-DD');
+          const startDate = dayjs().subtract(30, 'day').format('YYYY-MM-DD');
           paramsData = { startDate, endDate, page, size };
         }
 
         console.log('Parameters for API:', paramsData);
         const response = await fetchColetasByData(paramsData);
-        console.log('API Response:', response);
+        console.log('API Response:', response.content);
 
         if (response.content) {
           const pontos = response.content;
           setColetasPonto(pontos);
         } else {
-          openErrorModal("Nenhum dado encontrado, tente novamente."); // Abre modal de erro
-          
+          setError('Nenhum dado retornado.');
         }
       } catch (e) {
         if (e instanceof Error) {
           console.error('Error fetching data:', e.message);
-          openErrorModal('Erro ao buscar dados: ' + e.message); // Abre modal de erro
-
+          setError('Erro ao buscar dados: ' + e.message);
         } else {
           console.error('Error fetching data:', e);
-          openErrorModal("Erro ao buscar dados: Erro desconhecido."); // Abre modal de erro
+          setError('Erro ao buscar dados: Erro desconhecido.');
         }
-
       } finally {
+        setLoading(false);
         setLoading(false);
       }
     }
 
+
     fetchPontosPorColeta();
   }, [selectedDay, selectedMonth, selectedYear, page, size]);
+  }, [selectedDay, selectedMonth, selectedYear, page, size]);
 
-  console.log(coletasPonto);
+  console.log(`COLETAS PONTO: ${coletasPonto}`);
+
+  console.log(`DADOS: ${coletasPonto.map(coleta => coleta.details)}`)
 
   const handleOpenDetail = (detail: Detail) => {
     setSelectedDetail(detail);
@@ -160,6 +170,10 @@ const Historic: React.FC = () => {
   };
 
   const visibleInfoContainers = selectedDetail
+    ? Object.entries(selectedDetail.dados)
+      .filter(([key]) => key !== 'id' && key !== '')
+      .slice(carouselIndex, carouselIndex + 2)
+    : [];
     ? Object.entries(selectedDetail.dados)
       .filter(([key]) => key !== 'id' && key !== '')
       .slice(carouselIndex, carouselIndex + 2)
@@ -228,6 +242,8 @@ const Historic: React.FC = () => {
             <main className={styles.carousel}>
               <button
                 className={`${styles.carousel_button} ${carouselIndex === 0 ? styles.carousel_button_invisible : ''}`}
+              <button
+                className={`${styles.carousel_button} ${carouselIndex === 0 ? styles.carousel_button_invisible : ''}`}
                 onClick={handlePrevious}
                 disabled={carouselIndex === 0}
               >
@@ -235,6 +251,8 @@ const Historic: React.FC = () => {
               </button>
 
               {visibleInfoContainers.map(([key, value]) => (
+                <div
+                  key={key}
                 <div
                   key={key}
                   className={`${styles.infoContainer} ${key === "*" ? styles.hidden : ''}`}
@@ -248,10 +266,19 @@ const Historic: React.FC = () => {
 
               <button
                 className={`${styles.carousel_button} ${carouselIndex + 2 >= Object.keys(selectedDetail.dados).length ? styles.carousel_button_invisible : ''}`}
+              <button
+                className={`${styles.carousel_button} ${carouselIndex + 2 >= Object.keys(selectedDetail.dados).length ? styles.carousel_button_invisible : ''}`}
                 onClick={handleNext}
                 disabled={carouselIndex + 2 >= Object.keys(selectedDetail.dados).length}
               >
                 ›
+              </button>
+            </main>
+          </div>
+        </div>
+      )}
+    </div>
+  );
               </button>
             </main>
           </div>
