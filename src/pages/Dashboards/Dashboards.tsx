@@ -2,17 +2,24 @@ import { Link } from "react-router-dom"
 import styles from "./Dashboards.module.css"
 import icon_correct from "../../assets/images/correct.svg"
 import icon_export from "../../assets/images/export_activity.svg"
-import Graphic from "../../components/Graphic/Graphic"
+import Graphic, { ChartDataProp } from "../../components/Graphic/Graphic"
 import Forecast from "../../components/Forecast/Forecast"
 import { useEffect, useState } from "react";
-import { fetchNotif, fetchPH, fetchTQ01 } from "../../api/api";
+import { fetchHidrometro, fetchNotif, fetchPH, fetchTQ01 } from "../../api/api";
 import MapHome from '../../components/MapHome/MapHome';
+import DropdownButton from "../../components/DropdownButton/DropdownButton"
 
-const mockData = {
-    months: ["Janeiro", "Fevereiro", "Março", "Abril", "Maio"],
-    expense: [500, 700, 300, 800, 600],
-    income: [1000, 1200, 900, 1400, 1300],
-};
+interface DropdownItem {
+    id: string;
+    label: string;
+    value: string | number; 
+}
+
+interface Hidrometro {
+    id: number;
+    volume: number;
+    ponto: string
+}
 
 interface Notification {
     id: number;
@@ -30,6 +37,82 @@ interface Nivel {
     id: number,
     nivel: number
 }
+
+// Função que permite ao usuário escolher o ponto que os dados serão exibidos no gráfico
+const GraphicDropdown: React.FC = () => {
+    const [chartData, setChartData] = useState<ChartDataProp | undefined>(undefined);
+    const [selectedHidro, setSelectedHidro ] = useState<DropdownItem | undefined>(undefined);
+    const [hidroVolume, setHidroVolume] = useState<number[]>([]); 
+
+    // Opções de pontos que o usuário pode escolher
+    const hidro: DropdownItem[] = [
+        { id: '53', label: 'Geral Fábrica', value:'Geral Fabrica' },
+        { id: '54', label: 'Kinderhaus', value:'Kinderhaus' },
+        { id: '55', label: 'Refeitório', value:'Refeitorio' },
+        { id: '56', label: 'Geral 222', value:'Geral222' },
+        { id: '57', label: 'Entrada Desmi', value:'EntradaDesmi' },
+        { id: '58', label: 'Daída Desmi', value:'SaidaDesmi' },
+        { id: '59', label: 'Geral 210', value:'Geral210' },
+        { id: '60', label: 'Descarte', value:'Descarte' },
+        { id: '61', label: 'Geral 401', value:'Geral401' },
+        { id: '62', label: 'Geral 215', value:'Geral215' },
+        { id: '63', label: 'Água Quente', value:'Agua Quente' },
+        { id: '64', label: 'Água Industrial', value:'Agua industrial' },
+        { id: '65', label: 'Geral 303', value:'Geral303' },
+        { id: '66', label: 'Geral 304', value:'Geral304' },
+        { id: '67', label: 'Central de Óleo', value:'CentraldeOleo' },
+        { id: '68', label: 'Geral 115', value:'Geral115' },
+        { id: '69', label: 'Tanque Reman', value:'tanqueReman' },       
+]
+
+// Função para buscar os dados do hidrometro selecionado
+useEffect(() => {
+    const FetchHidrometro = async (ponto : string) => {
+      try {
+        const data: Hidrometro[] = await fetchHidrometro(ponto);
+        const volumes = data.map(hidrometro => hidrometro.volume);
+        const nome = selectedHidro?.label ?? 'Hidrometro não selecionado.';
+        setHidroVolume(volumes);  
+      
+        // Definindo o que o gráfico irá receber
+        setChartData({
+            meses: ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro' ],
+            nome,
+            volumes,
+        })
+
+      } catch (error) {
+        console.error("Erro ao buscar dados do hidrometro selecionado.");
+        console.error(error);
+      }
+    };
+
+    if (selectedHidro) {
+      FetchHidrometro(selectedHidro.value.toString()); 
+    } else {
+        FetchHidrometro('Geral Fabrica') // Seleciona um valor base, caso nenhum ponto seja escolhido ainda, para o gráfico não sumir
+    }
+  }, [selectedHidro]);
+
+return (
+    <div> 
+    <DropdownButton
+    id="hidroDropdown"
+    title="Geral Fábrica"
+    options={hidro}
+    selectedOption={selectedHidro}
+    onSelect={setSelectedHidro}
+    />
+
+    {hidroVolume && (
+        <div>
+            <Graphic chartDataProp={chartData}/>
+        </div>
+      )}
+    </div>
+)
+};
+
 // Verifica a data atual e compara com a data em que a coleta foi feita
 // assim retornando a quanto tempo aquela coleta foi realizada
 // eslint-disable-next-line react-refresh/only-export-components
@@ -251,9 +334,9 @@ export function Dashboards() {
                 </div>
 
                 <div className={styles.graphic}>
-                    <p className={styles.title}>Gráfico</p>
+                    <p className={styles.title}>Leitura dos hidrômetros</p>
                     <div className={styles.grafico}>
-                        <Graphic chartDataProp={mockData} />
+                        <GraphicDropdown/>                        
                     </div>
                 </div>
             </div>
