@@ -8,7 +8,7 @@ import ReactPaginate from 'react-paginate';
 
 interface Notification {
     id: number;
-    tabela: 'DADOS ETAS' | 'NA' | 'PBS' | 'EXCEL';
+    tabela: 'DADOS ETAS' | 'NA' | 'PBS' | 'EXCEL' | 'CA';
     tipo: 'SALVO' | 'EXPORTADO';
     data: string;
 }
@@ -66,6 +66,8 @@ export const Notifications: React.FC<{
             message = `Dados "${tabela}" salvo com sucesso!`;
         } else if (['DADOS ETAS'].includes(tabela) && tipo === 'SALVO') {
             message = `Dados "ETAS" salvo com sucesso!`;
+        } else if ( ['CA'].includes(tabela) && tipo === 'SALVO') {
+            message = `Dados de "Consumo de água" salvo com sucesso!`
         }
 
         return (
