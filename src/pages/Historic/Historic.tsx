@@ -64,16 +64,7 @@ const Historic: React.FC = () => {
     value: year
   }));
 
-  const openErrorModal = (message: string) => {
-    setErrorMessage(message);
-    setIsErrorModalOpen(true);
-  };
-
-  const closeErrorModal = () => {
-    setIsErrorModalOpen(false);
-  };
-
-  const [page, setPage] = useState(1);
+  const [page, setPage] = useState(0);
   const [size, setSize] = useState(6);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);

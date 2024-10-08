@@ -29,6 +29,7 @@ const ColetaItem: React.FC<ColetaItemProps> = ({ date, description, details, onO
 
   const handlePageClick = (data: { selected: number }) => {
     setCurrentPage(data.selected);
+    toggleOpen();
   };
 
   const toggleOpen = () => setIsOpen(prev => !prev);
