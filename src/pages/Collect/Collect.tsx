@@ -6,6 +6,7 @@ import { fetchPointBySheet } from "../../api/api";
 import PointButton from "../../components/PointButton/PointButton";
 import { COLETA } from "../../interfaces/postParams";
 import { postColeta } from "../../services/ColetaService";
+import { NextCollects } from "../../components/Colects/NextCollects";
 
 export function Collect() {
   const [etas, setEtas] = useState<number>(0);
@@ -143,6 +144,11 @@ export function Collect() {
                 />
               </div>
             </section>
+            <section className={styles.right_side}>
+              <div className={styles.recent_points_container}>
+                <NextCollects/>
+            </div>
+        </section>
           </div>
         </div>
       )}
