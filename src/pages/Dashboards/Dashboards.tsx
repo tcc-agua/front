@@ -7,7 +7,7 @@ import Forecast from "../../components/Forecast/Forecast"
 import { useEffect, useState } from "react";
 import { fetchNotif, fetchPH, fetchTQ01 } from "../../api/api";
 // import { useTheme } from '../../components/ThemeContext/ThemeContext';
-import MapSpline from '../../components/MapSpline/MapSpline';
+import MapHome from '../../components/MapHome/MapHome';
 
 const mockData = {
     months: ["Janeiro", "Fevereiro", "Março", "Abril", "Maio"],
@@ -270,7 +270,7 @@ export function Dashboards() {
                     <p className={styles.title}>Mapa de Curitiba</p>
                     <div className={styles.content_mapview}>
                         <div className={styles.map}>
-                            <MapSpline selectedCategory={selectedCategory}/>
+                            <MapHome />
                         </div>
                     </div>
                 </div>

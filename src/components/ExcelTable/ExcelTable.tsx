@@ -41,6 +41,7 @@ const ExcelTable: React.FC<ExcelTableProps> = ({ sheetName, monthProps, yearProp
         if (token) {
           const response = await fetchSheet(sheetName, startDateString, endDateString);
           setDataPonto(response);
+          console.log(response);
         }
       } catch (e) {
         console.error(e);
