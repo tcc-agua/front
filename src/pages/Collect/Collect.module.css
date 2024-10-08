@@ -223,7 +223,7 @@ input::placeholder {
 
 .recent_points_container {
     width: 100%;
-    height: 32vw;
+    height: 90%;
     background-color: var(--backgroud_color);
     border: 1px solid var(--border_color);
     border-radius: 10px;
@@ -315,6 +315,60 @@ input::placeholder {
     background-color: var(--CA_hover);
 }
 
+.coleta_activity {
+    display: flex;
+    padding: 5px;
+    width: 100%;
+    align-items: center;
+}
+
+.icon_coleta {
+    width: 17%;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+    aspect-ratio: 1 / 1;
+}
+
+.icon_salvo {
+    background-color: var(--icon_alert); 
+}
+
+.imgs_coleta {
+    width: 50%;
+    height: 50%;
+}
+
+.data_coleta {
+    font-size: 1.1vw;
+}
+
+.text_coleta {
+    margin-left: 10px;
+    font-family: "SF Pro Semibold";
+    font-size: 1.2vw;
+    color: var(--font_color);
+    width: 90%;
+}
+
+.dias_coleta {
+    margin-top: 3px;
+    font-size: 1vw;
+    font-family: "SF Pro Light";
+}
+
+.linha_coleta {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 5% 0%;;
+}
+
+.hr_coleta {
+    width: 80%;
+}
 
 
 @media (max-width: 1180px) {

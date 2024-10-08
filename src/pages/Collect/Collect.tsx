@@ -1,12 +1,11 @@
 import { useEffect, useState } from "react";
-
 import { Outlet, useNavigate } from "react-router-dom";
-
 import styles from "./Collect.module.css";
-
 import useUtilsStore from "../../store/utils";
 import { fetchNotif } from "../../api/api";
 import { getDateDifference } from "../Dashboards/Dashboards";
+import icon_correct from "../../assets/images/correct.svg";
+import icon_alert from "../../assets/images/alert.svg"
 
 interface Coleta {
   id: number;
@@ -53,48 +52,66 @@ export const NextCollects: React.FC = () => {
     return Object.values(ultimasColetas); // Retorna apenas as últimas coletas filtradas
   };
 
-  const renderUltimasColetas = (coleta: Coleta) => {
+  const renderUltimasColetas = (coleta: Coleta, index: number) => {
     const { tabela, tipo, data } = coleta;
     let message = '';
-
-    // Verificação da coleta quinzenal para tabela "NA"
+    let iconClass = '';
+    
+    // Definir a mensagem e o ícone baseado na tabela e tipo
     if (tabela === 'NA' && tipo === 'SALVO') {
-      if (getDateDifference(data) !== "hoje") {
+        iconClass = 'icon_salvo'; 
         const diasDesdeUltimaColeta = parseInt(getDateDifference(data));
         const diasParaProximaColeta = 15 - diasDesdeUltimaColeta;
 
         if (diasParaProximaColeta > 0) {
-          message = `Dados "${tabela}" coletados há ${diasDesdeUltimaColeta} dias, uma nova coleta deve ser feita em ${diasParaProximaColeta} dias.`;
+            message = `Dados "${tabela}" coletados há ${diasDesdeUltimaColeta} dias, próxima coleta em ${diasParaProximaColeta} dias.`;
         } else {
-          message = `Já passou o prazo para coletar os dados "${tabela}".`;
+            message = `Já passou o prazo para coletar os dados "${tabela}".`;
         }
-      } else {
-        message = `Dados ${tabela} foram coletados hoje, a próxima coleta deve ser feita em 15 dias.`
-      }
-    } 
-    // Verificação da coleta diária para tabela "ETAS"
-    else if (tabela === 'DADOS ETAS' && tipo === 'SALVO') {
-      if (coletaFeitaHoje(data)) {
-        message = `Dados "ETAS" já foram coletados hoje, a próxima coleta deve ser feita amanhã.`;
-      } else {
-        message = `Dados "ETAS" ainda não foram coletados hoje.`;
-      }
-    } 
-    // Verificação da coleta diária para tabela "PB"
-    else if (tabela === 'PBS' && tipo === 'SALVO') {
-      if (coletaFeitaHoje(data)) {
-        message = `Dados "${tabela}" já foram coletados hoje, a próxima coleta deve ser feita amanhã.`;
-      } else {
-        message = `Os dados "${tabela}" ainda não foram coletados hoje.`;
-      }
+    } else if (tabela === 'DADOS ETAS' && tipo === 'SALVO') {
+        iconClass = coletaFeitaHoje(data) ? 'icon_salvo' : 'icon_alert'; 
+        message = coletaFeitaHoje(data) 
+            ? `Dados "ETAS" já coletados hoje, próxima coleta amanhã.` 
+            : `Dados "ETAS" ainda não coletados hoje.`;
+    } else if (tabela === 'PBS' && tipo === 'SALVO') {
+        iconClass = coletaFeitaHoje(data) ? 'icon_salvo' : 'icon_alert'; 
+        message = coletaFeitaHoje(data) 
+            ? `Dados "${tabela}" já coletados hoje, próxima coleta amanhã.` 
+            : `Os dados "${tabela}" ainda não coletados hoje.`;
     }
 
-    return <div key={coleta.id}>{message}</div>;
-  };
+    let dayDiff = getDateDifference(data);
+    if (dayDiff !== "hoje") {
+        dayDiff = `${dayDiff} dias atrás`;
+    }
+
+    return (
+        <div key={`${tabela}-${tipo}-${index}`} className={styles.coleta_container}>
+            <div className={styles.coleta_activity}>
+                <div className={`${styles.icon_coleta} ${styles[iconClass]}`}>
+                    <img
+                        className={styles.imgs_coleta}
+                        src={icon_alert}
+                    />
+                </div>
+                <div className={styles.text_coleta}>
+                    <p className={styles.data_coleta}>{message}</p>
+                    <p className={styles.dias_coleta}>{dayDiff}</p>
+                </div>
+            </div>
+            {index < 5 && (
+                <div className={styles.linha_coleta}>
+                    <hr className={styles.hr_coleta} />
+                </div>
+            )}
+        </div>
+    );
+};
+
 
   return (
-    <section className={styles.right_side}>
-      {filtrarUltimasColetas(coleta).map((c) => renderUltimasColetas(c))}
+    <section className={styles.notifications_coleta}>
+      {filtrarUltimasColetas(coleta).map((c, index) => renderUltimasColetas(c, index))}
     </section>
   );
 };
@@ -227,54 +244,6 @@ export function Collect() {
         <section className={styles.right_side}>
           <div className={styles.recent_points_container}>
           <NextCollects/>
-            <p className={styles.title_historic_points}>Pontos recentes:</p>
-            <div className={styles.historic_points_container}>
-              <button
-                className={styles.historic_point}
-                onClick={() => openModal("AG - 02")}
-              >
-                <p className={styles.name_point}>
-                  <span className={styles.name_color}>AG</span> - 02
-                </p>
-                <p className={styles.arrow}>⟶</p>
-              </button>
-              <button
-                className={styles.historic_point}
-                onClick={() => openModal("TQ - 01")}
-              >
-                <p className={styles.name_point}>
-                  <span className={styles.name_color}>TQ</span> - 01
-                </p>
-                <p className={styles.arrow}>⟶</p>
-              </button>
-              <button
-                className={styles.historic_point}
-                onClick={() => openModal("PM - 21")}
-              >
-                <p className={styles.name_point}>
-                  <span className={styles.name_color}>PM</span> - 21
-                </p>
-                <p className={styles.arrow}>⟶</p>
-              </button>
-              <button
-                className={styles.historic_point}
-                onClick={() => openModal("PM - 56")}
-              >
-                <p className={styles.name_point}>
-                  <span className={styles.name_color}>PM</span> - 56
-                </p>
-                <p className={styles.arrow}>⟶</p>
-              </button>
-              <button
-                className={styles.historic_point}
-                onClick={() => openModal("PT - 09")}
-              >
-                <p className={styles.name_point}>
-                  <span className={styles.name_color}>PT</span> - 09
-                </p>
-                <p className={styles.arrow}>⟶</p>
-              </button>
-            </div>
           </div>
         </section>
 

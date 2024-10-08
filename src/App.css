@@ -52,6 +52,7 @@ body {
 
   --icon_correct: #DEF5F3;
   --icon_export: #F7EEF6;
+  --icon_alert: #FBEDB1;
 
   --ETAS_color: #bcdad8;
   --ETAS_content: #ffff;
@@ -109,6 +110,7 @@ body {
 
   --icon_correct: #53ADA5;
   --icon_export: #CA73C0;
+  --icon_alert: #FFCF00;
 
   --ETAS_color: #1A5562;
   --ETAS_content: #216D7E;
