@@ -155,7 +155,7 @@ export interface HIDROMETRO{
 
 export interface COLETA{
     tecnico: string,
-    data: string,
+    dataColeta: string,
     horaInicio: string,
     horaFim: string
 }
