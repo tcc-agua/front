@@ -88,7 +88,7 @@ const ExportExcel: React.FC = () => {
     };
 
     const handleExportClick = () => {
-        if (selectedYear) {
+        if (selectedYear && selectedTable && selectedMonth) {
             const year = parseInt(selectedYear.label);
             let startDate: Date;
             let endDate: Date;
@@ -114,8 +114,12 @@ const ExportExcel: React.FC = () => {
 
             fetchExportExcel(startDateString, endDateString);
             notify();
-        } else {
-            console.error("Selecione um ano válido.");
+        } else if(!selectedMonth) {
+            console.error("Selecione um mês válido.")
+        } else if(!selectedYear) {
+            console.error("Selecione um ano válido.")
+        } else if(!selectedTable){
+            console.error("Selecione uma tabela.")
         }
     };
 
