@@ -1,22 +1,26 @@
 import React, { useState } from 'react';
 import DropdownButton from '../../components/DropdownButton/DropdownButton';
 import ExcelTable from '../../components/ExcelTable/ExcelTable';
-import success from '../../assets/images/success.svg';
+import ModalError from '../../components/ModalError/ModalError';
+import ModalSuccess from '../../components/ModalSuccess/ModalSuccess';
 import styles from './ExportExcel.module.css';
 import { fetchExport, postNotif } from '../../api/api';
 
 interface DropdownItem {
     id: string;
     label: string;
-    value: string | number; 
+    value: string | number;
 }
 
 const ExportExcel: React.FC = () => {
     const [selectedTable, setSelectedTable] = useState<DropdownItem | undefined>(undefined);
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const [isErrorModalOpen, setIsErrorModalOpen] = useState(false); // Estado para controlar o modal de erro
     const [selectedMonth, setSelectedMonth] = useState<DropdownItem | undefined>(undefined);
     const [selectedYear, setSelectedYear] = useState<DropdownItem | undefined>(undefined);
     const [exportYearOnly, setExportYearOnly] = useState(false); // Estado para controlar a exportação por ano
+    const [errorMessage, setErrorMessage] = useState<string>(''); // Estado para guardar a mensagem de erro
+    const [successMessage, setSuccessMessage] = useState<string>(''); // Estado para guardar a mensagem de sucesso
 
     const months: DropdownItem[] = [
         { id: '1', label: 'Janeiro', value: 'Janeiro' },
@@ -47,6 +51,7 @@ const ExportExcel: React.FC = () => {
     ];
 
     const openModal = () => {
+        setSuccessMessage('Arquivo exportado com sucesso!');
         setIsModalOpen(true);
     };
 
@@ -54,29 +59,41 @@ const ExportExcel: React.FC = () => {
         setIsModalOpen(false);
     };
 
+    const openErrorModal = (message: string) => {
+        setErrorMessage(message);
+        setIsErrorModalOpen(true);
+    };
+
+    const closeErrorModal = () => {
+        setIsErrorModalOpen(false);
+    };
+
+
     async function fetchExportExcel(startDate: string, endDate: string) {
         try {
             const endpoint = selectedTable?.value === 'CA' ? '/exportExcel/hidrometro' : '/exportExcel';
             const response = await fetchExport(startDate, endDate, endpoint);
             console.log(response);
 
-            const url = window.URL.createObjectURL(response); 
+            const url = window.URL.createObjectURL(response);
             const link = document.createElement('a');
             link.href = url;
             const nomeExcel = selectedTable?.value === 'CA' ? 'coletas_hidrometro.xlsx' : 'coletas.xlsx';
             link.setAttribute('download', nomeExcel);
             document.body.appendChild(link);
-            link.click(); 
+            link.click();
 
             setTimeout(() => {
                 window.URL.revokeObjectURL(url);
-                link.remove(); 
+                link.remove();
             }, 100);
-            openModal(); 
+            openModal(); // Abre modal de sucesso
         } catch (e) {
             console.error("Erro ao exportar o arquivo:", e);
+            openErrorModal("Erro ao exportar o arquivo. Por favor, tente novamente."); // Abre modal de erro
         }
     }
+    
 
     const notify = async () => {
         try {
@@ -84,6 +101,7 @@ const ExportExcel: React.FC = () => {
             console.log("Dados salvos com sucesso:", result);
         } catch (error) {
             console.error("Erro ao salvar os dados:", error);
+            openErrorModal("Erro ao salvar os dados."); // Modal de erro ao notificar
         }
     };
 
@@ -97,9 +115,9 @@ const ExportExcel: React.FC = () => {
                 startDate = new Date(year, 0, 1); // 1º de Janeiro
                 endDate = new Date(year, 11, 31); // 31 de Dezembro
             } else if (selectedMonth) {
-                const month = parseInt(selectedMonth.id); 
-                startDate = new Date(year, month - 1, 1); 
-                endDate = new Date(year, month, 0); 
+                const month = parseInt(selectedMonth.id);
+                startDate = new Date(year, month - 1, 1);
+                endDate = new Date(year, month, 0);
             } else {
                 console.error("Selecione um mês ou o ano completo.");
                 return;
@@ -108,18 +126,11 @@ const ExportExcel: React.FC = () => {
             const startDateString = startDate.toISOString().split('T')[0];
             const endDateString = endDate.toISOString().split('T')[0];
 
-            console.log("Selected Table: ", selectedTable);
-            console.log("Start Date: ", startDateString);
-            console.log("End Date: ", endDateString);
-
             fetchExportExcel(startDateString, endDateString);
             notify();
-        } else if(!selectedMonth) {
-            console.error("Selecione um mês válido.")
-        } else if(!selectedYear) {
-            console.error("Selecione um ano válido.")
-        } else if(!selectedTable){
-            console.error("Selecione uma tabela.")
+        } else {
+            console.error("Selecione um ano válido.");
+            openErrorModal("Selecione um ano válido."); // Modal de erro ao selecionar ano
         }
     };
 
@@ -136,7 +147,7 @@ const ExportExcel: React.FC = () => {
                                 options={months}
                                 selectedOption={selectedMonth}
                                 onSelect={setSelectedMonth}
-                                disabled={exportYearOnly} 
+                                disabled={exportYearOnly}
                             />
                         </div>
                         <div className={styles.year}>
@@ -169,13 +180,10 @@ const ExportExcel: React.FC = () => {
                     </div>
                 </div>
                 {isModalOpen && (
-                    <div className={styles.modal}>
-                        <div className={styles.modalContent}>
-                            <span className={styles.close} onClick={closeModal}>&times;</span>
-                            <p className={styles.modalTitle}>Tabelas exportadas com sucesso!</p>
-                            <img className={styles.modalImg} src={success} alt="Success" />
-                        </div>
-                    </div>
+                    <ModalSuccess message={successMessage} onClose={closeModal} />
+                )}
+                {isErrorModalOpen && (
+                    <ModalError message={errorMessage} onClose={closeErrorModal} />
                 )}
             </div>
             <div className={styles.container1}>
@@ -183,11 +191,12 @@ const ExportExcel: React.FC = () => {
                     <ExcelTable
                         key={`${selectedTable.value}-${selectedMonth?.id}-${selectedYear.label}`}
                         sheetName={String(selectedTable.value)}
-                        monthProps={selectedMonth?.id || '0'} 
+                        monthProps={selectedMonth?.id || '0'}
                         yearProps={selectedYear.label}
                     />
                 )}
             </div>
+
             <div className="footer">
                 <button className={styles.export} onClick={handleExportClick}>
                     Exportar Arquivo

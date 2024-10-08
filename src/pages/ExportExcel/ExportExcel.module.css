@@ -25,16 +25,28 @@
 }
 
 .filter{
-    display: flex;
+    display: block;
     margin-bottom: 3%;
 }
 
 .dropdownContainer{
     display: flex;
+    margin-top: 3%;
+    margin-left: 2.5%;
 }
 
-.month, .year, .selecionar_tabela{
-    margin-left: 6%;
+.month, .year, .selecionar_tabela, .exportYearContainer{
+    margin-left: 2%;
+}
+
+.exportYearContainer{
+    align-content: center;
+    width: 20%;
+}
+
+.exportYearContainer label{
+    margin-left: 5%;
+    color: var(--font_color);
 }
 
 .container_table{
@@ -58,6 +70,11 @@
     .month, .year, .selecionar_tabela{
         margin-bottom: 1%;
     }
+    .exportYearContainer{
+        align-content: center;
+        width: 30%;
+    }
+    
 }
 
 
@@ -139,6 +156,11 @@
         font-size: medium;
         margin-bottom: 10%;
     }
+    .exportYearContainer{
+        align-content: center;
+        width: 20%;
+    }
+    
 
 }
 
@@ -187,6 +209,11 @@
         margin-left: 1%;
     }
 
+    .exportYearContainer{
+        align-content: center;
+        width: 40%;
+    }
+
 }
 
 @media (max-width: 810px) {
@@ -194,6 +221,11 @@
         width: 35%;
         padding: 2%;
     }
+    .exportYearContainer{
+        align-content: center;
+        width: 40%;
+    }
+    
 }
 
 @media (max-width: 600px) {
@@ -201,6 +233,11 @@
         width: 35%;
         padding: 2%;
     }
+    .exportYearContainer{
+        align-content: center;
+        width: 40%;
+    }
+    
 
 }
 
@@ -209,6 +246,10 @@
         width: 40%;
         padding: 2%;
     }
+    .exportYearContainer{
+        align-content: center;
+        width: 60%;
+    }    
 
 }
 

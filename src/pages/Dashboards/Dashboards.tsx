@@ -2,18 +2,24 @@ import { Link } from "react-router-dom"
 import styles from "./Dashboards.module.css"
 import icon_correct from "../../assets/images/correct.svg"
 import icon_export from "../../assets/images/export_activity.svg"
-import Graphic from "../../components/Graphic/Graphic"
+import Graphic, { ChartDataProp } from "../../components/Graphic/Graphic"
 import Forecast from "../../components/Forecast/Forecast"
 import { useEffect, useState } from "react";
-import { fetchNotif, fetchPH, fetchTQ01 } from "../../api/api";
-// import { useTheme } from '../../components/ThemeContext/ThemeContext';
-import MapSpline from '../../components/MapSpline/MapSpline';
+import { fetchHidrometro, fetchNotif, fetchPH, fetchTQ01 } from "../../api/api";
+import MapHome from '../../components/MapHome/MapHome';
+import DropdownButton from "../../components/DropdownButton/DropdownButton"
 
-const mockData = {
-    months: ["Janeiro", "Fevereiro", "Março", "Abril", "Maio"],
-    expense: [500, 700, 300, 800, 600],
-    income: [1000, 1200, 900, 1400, 1300],
-};
+interface DropdownItem {
+    id: string;
+    label: string;
+    value: string | number; 
+}
+
+interface Hidrometro {
+    id: number;
+    volume: number;
+    ponto: string
+}
 
 interface Notification {
     id: number;
@@ -32,13 +38,84 @@ interface Nivel {
     nivel: number
 }
 
-// const MapDark = () => {
-//     const { isDarkMode } = useTheme();
-//     return isDarkMode ? MapDarkmode : Map;
-// }
+// Função que permite ao usuário escolher o ponto que os dados serão exibidos no gráfico
+const GraphicDropdown: React.FC = () => {
+    const [chartData, setChartData] = useState<ChartDataProp | undefined>(undefined);
+    const [selectedHidro, setSelectedHidro ] = useState<DropdownItem | undefined>(undefined);
+    const [hidroVolume, setHidroVolume] = useState<number[]>([]); 
 
-// Uma função feita para verificar a diferença de dias entre o dia em que a coleta
-// foi salva e o dia atual, mostrando aquela frase "7 dias atrás"
+    // Opções de pontos que o usuário pode escolher
+    const hidro: DropdownItem[] = [
+        { id: '53', label: 'Geral Fábrica', value:'Geral Fabrica' },
+        { id: '54', label: 'Kinderhaus', value:'Kinderhaus' },
+        { id: '55', label: 'Refeitório', value:'Refeitorio' },
+        { id: '56', label: 'Geral 222', value:'Geral222' },
+        { id: '57', label: 'Entrada Desmi', value:'EntradaDesmi' },
+        { id: '58', label: 'Daída Desmi', value:'SaidaDesmi' },
+        { id: '59', label: 'Geral 210', value:'Geral210' },
+        { id: '60', label: 'Descarte', value:'Descarte' },
+        { id: '61', label: 'Geral 401', value:'Geral401' },
+        { id: '62', label: 'Geral 215', value:'Geral215' },
+        { id: '63', label: 'Água Quente', value:'Agua Quente' },
+        { id: '64', label: 'Água Industrial', value:'Agua industrial' },
+        { id: '65', label: 'Geral 303', value:'Geral303' },
+        { id: '66', label: 'Geral 304', value:'Geral304' },
+        { id: '67', label: 'Central de Óleo', value:'CentraldeOleo' },
+        { id: '68', label: 'Geral 115', value:'Geral115' },
+        { id: '69', label: 'Tanque Reman', value:'tanqueReman' },       
+]
+
+// Função para buscar os dados do hidrometro selecionado
+useEffect(() => {
+    const FetchHidrometro = async (ponto : string) => {
+      try {
+        const data: Hidrometro[] = await fetchHidrometro(ponto);
+        const volumes = data.map(hidrometro => hidrometro.volume);
+        const nome = selectedHidro?.label ?? 'Hidrometro não selecionado.';
+        setHidroVolume(volumes);  
+      
+        // Definindo o que o gráfico irá receber
+        setChartData({
+            meses: ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro' ],
+            nome,
+            volumes,
+        })
+
+      } catch (error) {
+        console.error("Erro ao buscar dados do hidrometro selecionado.");
+        console.error(error);
+      }
+    };
+
+    if (selectedHidro) {
+      FetchHidrometro(selectedHidro.value.toString()); 
+    } else {
+        FetchHidrometro('Geral Fabrica') // Seleciona um valor base, caso nenhum ponto seja escolhido ainda, para o gráfico não sumir
+    }
+  }, [selectedHidro]);
+
+return (
+    <div> 
+    <DropdownButton
+    id="hidroDropdown"
+    title="Geral Fábrica"
+    options={hidro}
+    selectedOption={selectedHidro}
+    onSelect={setSelectedHidro}
+    />
+
+    {hidroVolume && (
+        <div>
+            <Graphic chartDataProp={chartData}/>
+        </div>
+      )}
+    </div>
+)
+};
+
+// Verifica a data atual e compara com a data em que a coleta foi feita
+// assim retornando a quanto tempo aquela coleta foi realizada
+// eslint-disable-next-line react-refresh/only-export-components
 export const getDateDifference = (notifDate: string): string => {
     const [notifYear, notifMonth, notifDay] = notifDate.split('-').map(Number);
     const notifDateObj = new Date(notifYear, notifMonth - 1, notifDay);
@@ -47,10 +124,10 @@ export const getDateDifference = (notifDate: string): string => {
     const todayYear = today.getFullYear();
     const todayMonth = today.getMonth();
     const todayDay = today.getDate();
-    const todayDateObj = new Date(todayYear, todayMonth, todayDay);
+    const todayDateObj = new Date(todayYear, todayMonth, todayDay); // Instancia um objeto com a data atual, ano, mês e dia
 
-    const timeDiff = todayDateObj.getTime() - notifDateObj.getTime();
-    const dayDiff = Math.floor(timeDiff / (1000 * 60 * 60 * 24));
+    const timeDiff = todayDateObj.getTime() - notifDateObj.getTime(); // Faz a diferença entre a data atual e data da notificação
+    const dayDiff = Math.floor(timeDiff / (1000 * 60 * 60 * 24)); // Transforma essa data em dia 
 
     if (notifDateObj.toDateString() === todayDateObj.toDateString()) {
         return "hoje";
@@ -69,16 +146,17 @@ export const SensorPH: React.FC = () => {
     useEffect(() => {
         const getPH = async () => {
             try {
-                await new Promise((resolve) => setTimeout(resolve, 3000));
                 const data: PH[] = await fetchPH();
-                const sortedPH = data.sort((a, b) => b.id - a.id);
+                const sortedPH = data.sort((a, b) => b.id - a.id); // pega do maior id pro menor
                 setPh(sortedPH);
 
 
-                if (sortedPH.length >= 2) {
+                if (sortedPH.length >= 2) { 
+                    // pega somente os dois ultimos registros
                     const lastPH = sortedPH[0].ph;
                     const previousPH = sortedPH[1].ph;
-
+                    
+                    // verifica a diferença entre um registro e outro em porcentagem
                     const percentageDifference = ((lastPH - previousPH) / previousPH) * 100;
                     setDifferencePercentage(Math.abs(percentageDifference));
                     setIsIncrease(percentageDifference > 0);
@@ -111,7 +189,8 @@ export const SensorPH: React.FC = () => {
 };
 
 
-// Faz o mesmo da função de cima, só que com a informação nível do ponto TQ01
+// Pega os dados do nível do ponto tq01, compara o último com o penúltimo nível
+// e indica se ele subiu ou desceu 
 export const Niveltq01: React.FC = () => {
     const [, setNivel] = useState<Nivel[]>([]);
     const [differencePercentage, setDifferencePercentage] = useState<number>(0);
@@ -124,9 +203,11 @@ export const Niveltq01: React.FC = () => {
                 if (Array.isArray(data)) {
                     const sortedNivel = data.sort((a, b) => b.id - a.id);
                     setNivel(sortedNivel);
+
                 if(sortedNivel.length >= 2) {
                     const lastNivel = sortedNivel[0].nivel;
                     const previousNivel = sortedNivel[1].nivel;
+
                     if ( previousNivel !== 0 ) {
                         const percentageDiff = ((lastNivel - previousNivel) / previousNivel) * 100;
                         setDifferencePercentage(Math.abs(percentageDiff));
@@ -163,6 +244,7 @@ export const Niveltq01: React.FC = () => {
 export const Notifications: React.FC = () => {
     const [notifications, setNotifications] = useState<Notification[]>([]);
 
+    // Request que resgata a as notificações
     useEffect(() => {
         const getNotifications = async () => {
             try {
@@ -170,13 +252,17 @@ export const Notifications: React.FC = () => {
                 const sortedNotifications = data.sort((a, b) => b.id - a.id);
 
                 setNotifications(sortedNotifications);
+
             } catch (error) {
                 console.error("Erro ao buscar notificações.");
+                console.log(error)
             }
         };
         getNotifications();
     }, []);
 
+    // Renderiza as notificações com base nos dados de cada uma, definindo o ícone e 
+    // a mensagem a serem definidos
     const renderNotif = (notification: Notification, index: number) => {
         const { tabela, tipo, data } = notification;
         const isExport = tipo === 'EXPORTADO';
@@ -184,8 +270,10 @@ export const Notifications: React.FC = () => {
 
         if (tabela === 'EXCEL' && isExport) {
             message = "Excel exportado com sucesso!";
+
         } else if (['NA', 'PBS'].includes(tabela) && tipo === 'SALVO') {
             message = `Dados "${tabela}" salvo com sucesso!`;
+            
         } else if (['DADOS ETAS'].includes(tabela) && tipo === 'SALVO') {
             message = `Dados "ETAS" salvo com sucesso!`;
         }
@@ -219,6 +307,7 @@ export const Notifications: React.FC = () => {
         );
     };
 
+    // Garante que serão exibidas na home somente as últimas três notificações salvas
     return (
         <div className={styles.content_last_activities}>
             {notifications.slice(0, 3).map(renderNotif)}
@@ -227,20 +316,15 @@ export const Notifications: React.FC = () => {
 };
 
 export function Dashboards() {
-    // const mapSrc = MapDark();
-    const [selectedCategory,] = useState<string | null>(null);
 
     return (
         <div className={styles.container}>
             <div className={styles.left_side}>
                 <div className={styles.updates}>
                     <p className={styles.title}>Atualizações</p>
-                    <div className={styles.content_updates}>
-
-                        <SensorPH />
-
+                    <div className={styles.content_updates}> 
+                        <SensorPH /> 
                         <Niveltq01/>
-
                     </div>
                 </div>
 
@@ -250,9 +334,9 @@ export function Dashboards() {
                 </div>
 
                 <div className={styles.graphic}>
-                    <p className={styles.title}>Gráfico</p>
+                    <p className={styles.title}>Leitura dos hidrômetros</p>
                     <div className={styles.grafico}>
-                        <Graphic chartDataProp={mockData} />
+                        <GraphicDropdown/>                        
                     </div>
                 </div>
             </div>
@@ -270,7 +354,7 @@ export function Dashboards() {
                     <p className={styles.title}>Mapa de Curitiba</p>
                     <div className={styles.content_mapview}>
                         <div className={styles.map}>
-                            <MapSpline selectedCategory={selectedCategory}/>
+                            <MapHome />
                         </div>
                     </div>
                 </div>
