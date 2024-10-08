@@ -1,5 +1,5 @@
 import styles from "../../../pages/PointCollect/PointCollect.module.css";
-import { useEffect, useState} from "react";
+import { useEffect, useState } from "react";
 import { InputPoint } from "../InputPoint";
 import usePbsStore from "../../../store/PbsStore";
 import { PBS } from "../../../interfaces/postParams";
@@ -11,19 +11,19 @@ interface PointNameProps {
 }
 
 function PbsCard({ name }: PointNameProps) {
-    const [pressure, setPressure] = useState<number>(1);
-    const [pulses, setPulses] = useState<number>(1);
-    const [oilLevel, setOilLevel] = useState<number>(1);
-    const [waterLevel, setWaterLevel] = useState<number>(1);
-    const [volRemOleo, setVolRemOleo] = useState<number>(1);
+    const [pressure] = useState<number>(1);
+    const [pulses] = useState<number>(1);
+    const [oilLevel] = useState<number>(1);
+    const [waterLevel] = useState<number>(1);
+    const [volRemOleo] = useState<number>(1);
     const { createPbsMeasure, isCreated, isError, resetState } = usePbsStore();
-    const [currentIndex, setCurrentIndex] = useState(0); // Controle do índice de paginação
+    const [currentIndex, setCurrentIndex] = useState<number>(0);
 
-    const increment = (setter: React.Dispatch<React.SetStateAction<number>>, isInteger?: boolean) => {
+    const increment = (setter: React.Dispatch<React.SetStateAction<number>>, isInteger: boolean = false) => {
         setter(prev => isInteger ? prev + 1 : Math.round((prev + 0.1) * 10) / 10);
     };
 
-    const decrement = (setter: React.Dispatch<React.SetStateAction<number>>, isInteger?: boolean) => {
+    const decrement = (setter: React.Dispatch<React.SetStateAction<number>>, isInteger: boolean = false) => {
         setter(prev => isInteger ? Math.max(prev - 1, 0) : Math.max(Math.round((prev - 0.1) * 10) / 10, 0));
     };
 
@@ -42,7 +42,7 @@ function PbsCard({ name }: PointNameProps) {
             nivel_agua: waterLevel,
             nivel_oleo: oilLevel,
             nomePonto: name,
-            idColeta: 1
+            idColeta: 1 // Atualize este ID conforme necessário
         };
         createPbsMeasure(obj);
     };
@@ -69,13 +69,13 @@ function PbsCard({ name }: PointNameProps) {
     // Funções de navegação entre os itens no modal
     const nextPage = () => {
         if (currentIndex + itemsPerPage < infoContentData.length) {
-            setCurrentIndex(currentIndex + itemsPerPage);
+            setCurrentIndex(prev => prev + itemsPerPage);
         }
     };
 
     const prevPage = () => {
         if (currentIndex - itemsPerPage >= 0) {
-            setCurrentIndex(currentIndex - itemsPerPage);
+            setCurrentIndex(prev => prev - itemsPerPage);
         }
     };
 
