@@ -218,6 +218,7 @@ input::placeholder {
 .complement {
     font-size: 0.8vw;
     color: var(--font_color);
+    font-family: "SF Pro Medium";
 }
 
 

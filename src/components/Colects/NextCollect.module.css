@@ -332,8 +332,12 @@ input::placeholder {
     aspect-ratio: 1 / 1;
 }
 
-.icon_salvo {
+.icon_alert {
     background-color: var(--icon_alert); 
+}
+
+.correct {
+    background-color: var(--icon_correct); 
 }
 
 .imgs_coleta {
