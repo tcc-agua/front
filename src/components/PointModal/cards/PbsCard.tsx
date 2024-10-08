@@ -11,11 +11,11 @@ interface PointNameProps {
 }
 
 function PbsCard({ name }: PointNameProps) {
-    const [pressure,] = useState<number>(1);
-    const [pulses,] = useState<number>(1);
-    const [oilLevel,] = useState<number>(1);
-    const [waterLevel,] = useState<number>(1);
-    const [volRemOleo,] = useState<number>(1);
+    const [pressure, setPressure] = useState<number>(1);
+    const [pulses, setPulses] = useState<number>(1);
+    const [oilLevel, setOilLevel] = useState<number>(1);
+    const [waterLevel, setWaterLevel] = useState<number>(1);
+    const [volRemOleo, setVolRemOleo] = useState<number>(1);
     const { createPbsMeasure, isCreated, isError, resetState } = usePbsStore();
     const [currentIndex, setCurrentIndex] = useState(0); // Controle do índice de paginação
 

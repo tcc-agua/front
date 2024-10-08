@@ -47,7 +47,7 @@ const useColetaStore = create<ColetaState>((set) => ({
                 isLoading:false
 
             })
-
+            
         } catch (error) {
             set({
                 coletaId: null,

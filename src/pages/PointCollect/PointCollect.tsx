@@ -125,6 +125,24 @@ export function PointCollect() {
     const { planilha, qtdPontos } = useUtilsStore();
     const { coletaId } = useColetaStore();
 
+    useEffect(() => {
+        const fetchColetaId = async () => {
+          try {
+                if(coletaId != null){
+                    localStorage.setItem("coletaId", String(coletaId));
+                }
+                else{
+                    throw new Error;
+                }
+                
+          } catch (error) {
+            console.log("Erro", error);
+          }
+        };
+    
+        fetchColetaId();
+      }, [coletaId]);
+
     const openModal = (point: Point) => {
         setSelectedPoint(point);
         setModalOpen(true);
@@ -277,6 +295,8 @@ export function PointCollect() {
         }
     }
 
+    const coleta = localStorage.getItem("coletaId");
+
     return (
         <>
             <main className={styles.container}>
@@ -321,8 +341,9 @@ export function PointCollect() {
             {isModalOpen && selectedPoint && (
                 <PointModal.Container closeModal={closeModal}>
                 {(() => {
-                        if (coletaId != null) {
-                            return renderCardInfo(selectedPoint.nome, coletaId);
+
+                        if (coleta != null) {
+                            return renderCardInfo(selectedPoint.nome, Number(coleta));
                         }
                         return <>
                             <p className={styles.point_information_text}>ERRO</p>
