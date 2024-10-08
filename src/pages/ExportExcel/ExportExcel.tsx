@@ -128,9 +128,15 @@ const ExportExcel: React.FC = () => {
 
             fetchExportExcel(startDateString, endDateString);
             notify();
-        } else {
-            console.error("Selecione um ano válido.");
-            openErrorModal("Selecione um ano válido."); // Modal de erro ao selecionar ano
+        } else if(!selectedMonth){
+            console.error("Selecione um mês válido.");
+            openErrorModal("Selecione um mês válido."); // Modal de erro ao selecionar ano
+        } else if(!selectedYear){
+            console.error("Selecione um ano válido.")
+            openErrorModal("Selecione um ano válido.")
+        } else if(!selectedTable){
+            console.error("Selecione uma tabela válida.")
+            openErrorModal("Seleciona uma tabela válida.")
         }
     };
 
