@@ -5,7 +5,7 @@ import styles from './Map.module.css';
 
 export function Map() {
     const [isLoading, setIsLoading] = useState(true);
-    const [selectedCategory, setSelectedCategory] = useState(null); // Estado para a categoria selecionada
+    const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
 
     useEffect(() => {
         const timer = setTimeout(() => {
@@ -15,7 +15,7 @@ export function Map() {
         return () => clearTimeout(timer);
     }, []);
 
-    const handleCategoryClick = (category) => {
+    const handleCategoryClick = (category: string) => {
         // Se já está selecionada, deseleciona; caso contrário, seleciona
         setSelectedCategory(selectedCategory === category ? null : category);
     };

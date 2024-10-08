@@ -228,6 +228,7 @@ export const Notifications: React.FC = () => {
 
 export function Dashboards() {
     // const mapSrc = MapDark();
+    const [selectedCategory,] = useState<string | null>(null);
 
     return (
         <div className={styles.container}>
@@ -269,7 +270,7 @@ export function Dashboards() {
                     <p className={styles.title}>Mapa de Curitiba</p>
                     <div className={styles.content_mapview}>
                         <div className={styles.map}>
-                            <MapSpline />
+                            <MapSpline selectedCategory={selectedCategory}/>
                         </div>
                     </div>
                 </div>

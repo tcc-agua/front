@@ -61,10 +61,10 @@ const Historic: React.FC = () => {
     value: year
   }));
 
-  const [page, setPage] = useState(1); 
-  const [size, setSize] = useState(6);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
+  const [page,] = useState(1); 
+  const [size,] = useState(6);
+  const [, setLoading] = useState(false);
+  const [, setError] = useState<string | null>(null);
 
   useEffect(() => {
     async function fetchPontosPorColeta() {

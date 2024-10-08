@@ -1,4 +1,4 @@
-import { ReactNode, useState } from 'react';
+import { ReactNode,} from 'react';
 import styles from "../../pages/PointCollect/PointCollect.module.css"
 
 
