@@ -5,14 +5,15 @@ import useUtilsStore from "../../store/utils";
 import { fetchPointBySheet } from "../../api/api";
 import PointButton from "../../components/PointButton/PointButton";
 import { COLETA } from "../../interfaces/postParams";
-import { postColeta } from "../../services/ColetaService";
 import { NextCollects } from "../../components/Colects/NextCollects";
+import useColetaStore from "../../store/ColetaStore";
 
 export function Collect() {
   const [etas, setEtas] = useState<number>(0);
   const [na, setNa] = useState<number>(0);
   const [pb, setPb] = useState<number>(0);
   const [ca, setCa] = useState<number>(0);
+  const { createColetaMeasure } = useColetaStore();
   const [showPointButtons, setShowPointButtons] = useState<boolean>(false);
   
   const navigate = useNavigate();
@@ -34,7 +35,8 @@ export function Collect() {
     };
 
     console.log(obj);
-    postColeta(obj);
+
+    createColetaMeasure(obj);
     setShowPointButtons(true);
     localStorage.setItem("coletaDia", formatDate(new Date()));
   };

@@ -8,9 +8,10 @@ const itemsPerPage = 2;
 
 interface PointNameProps {
     name: string;
+    idColeta: number
 }
 
-function Bc01Card({ name }: PointNameProps) {
+function Bc01Card({ name, idColeta }: PointNameProps) {
     const [measurements, setMeasurements] = useState({
         pressure: 1,
         frequency: 1,
@@ -51,7 +52,7 @@ function Bc01Card({ name }: PointNameProps) {
             vazao: measurements.leak,
             volume: measurements.volume,
             nomePonto: name,
-            idColeta: 1,
+            idColeta: idColeta,
         };
 
         createBc01Measure(obj);

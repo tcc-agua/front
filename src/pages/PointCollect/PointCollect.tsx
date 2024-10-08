@@ -6,6 +6,7 @@ import useUtilsStore from "../../store/utils";
 import { postNotif } from "../../api/api";
 import { PointModal } from "../../components/PointModal";
 import MapPoints from "../../components/MapPoints/MapPoints";
+import useColetaStore from "../../store/ColetaStore";
 
 interface Point {
     id: string;
@@ -118,11 +119,11 @@ export function PointNames({ onSelectPoint }: PointNamesProps) {
     );
 }
 
-
 export function PointCollect() {
     const [isModalOpen, setModalOpen] = useState<boolean>(false);
     const [selectedPoint, setSelectedPoint] = useState<Point | null>(null);
     const { planilha, qtdPontos } = useUtilsStore();
+    const { coletaId } = useColetaStore();
 
     const openModal = (point: Point) => {
         setSelectedPoint(point);
@@ -143,7 +144,7 @@ export function PointCollect() {
         }
     };
 
-    function renderCardInfo(name: string) {
+    function renderCardInfo(name: string, idColeta: number) {
 
         if (name.startsWith("PM") || name.startsWith("PT")) {
             return <PointModal.PMPT
@@ -191,6 +192,7 @@ export function PointCollect() {
             case "BC01":
                 return <PointModal.BC01
                     name={name}
+                    idColeta={idColeta}
                 />
 
             case "BC06":
@@ -318,8 +320,16 @@ export function PointCollect() {
 
             {isModalOpen && selectedPoint && (
                 <PointModal.Container closeModal={closeModal}>
-                    {renderCardInfo(selectedPoint.nome)}
+                {(() => {
+                        if (coletaId != null) {
+                            return renderCardInfo(selectedPoint.nome, coletaId);
+                        }
+                        return <>
+                            <p className={styles.point_information_text}>ERRO</p>
+                        </>; 
+                 })()}
                 </PointModal.Container>
+
             )}
         </>
     );
