@@ -126,7 +126,17 @@ const ExportExcel: React.FC = () => {
 
             fetchExportExcel(startDateString, endDateString);
             notify();
-        } else {
+        } else if(!selectedMonth){
+            console.error("Selecione um mês válido.");
+
+            // Mensagem de erro de seleção com SweetAlert2
+            Swal.fire({
+                icon: 'warning',
+                title: 'Inválido!',
+                text: 'Selecione um mês para prosseguir.',
+                width: '30%',
+            });
+        } else if (!selectedYear){
             console.error("Selecione um ano válido.");
 
             // Mensagem de erro de seleção com SweetAlert2
@@ -134,6 +144,16 @@ const ExportExcel: React.FC = () => {
                 icon: 'warning',
                 title: 'Inválido!',
                 text: 'Selecione um ano para prosseguir.',
+                width: '30%',
+            });
+        } else if (!selectedTable){
+            console.error("Selecione uma tabela válida.");
+
+            // Mensagem de erro de seleção com SweetAlert2
+            Swal.fire({
+                icon: 'warning',
+                title: 'Inválido!',
+                text: 'Selecione uma tabela para prosseguir.',
                 width: '30%',
             });
         }
