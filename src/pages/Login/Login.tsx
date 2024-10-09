@@ -1,27 +1,18 @@
 import React, { useEffect } from 'react';
 import styles from './Login.module.css';
-import useUtilsStore from '../../store/utils';
+import { useNavigate } from 'react-router-dom';
 
 const Login: React.FC = () => {
+  const navigate = useNavigate();
   const handleLogin = () => {
     window.location.href = 'http://localhost:5173/oauth2/authorization/azure';
   };
 
-  const { getTokenInfo } = useUtilsStore();
-
   useEffect(() => {
-    const fetchTokenInfo = async () => {
-        try {
-            await getTokenInfo();
-            
-        } catch (error) {
-            console.error('Erro ao obter informações do token:', error);
-        }
-    };
-
-    fetchTokenInfo();
-}, [getTokenInfo]);
-
+    if(localStorage.getItem("id_token")){
+      navigate("/inicial");
+    }
+  }, [navigate])
 
   return (
     <div className={styles.container}>

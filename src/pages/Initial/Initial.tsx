@@ -3,16 +3,26 @@ import { Navbar } from "../../components/Navbar/Navbar";
 import { Sidebar } from "../../components/Sidebar/Sidebar";
 import { Outlet } from "react-router-dom";
 import { Main } from '../../components/Main/Main';
-import React from 'react';
+import React, { useEffect } from 'react';
+import useUtilsStore from '../../store/utils';
+import PrivateRoute from '../../routes/PrivateRoute';
 
 const Initial: React.FC = () => {
+    
+    const { getTokenInfo } = useUtilsStore();
+
+    useEffect(() => {
+                getTokenInfo();
+      }, [getTokenInfo]);
 
     return (
         <div className={styles.grid_container}>
             <Sidebar />
             <Navbar />
             <Main>
-                <Outlet />
+                <PrivateRoute>
+                    <Outlet />
+                </PrivateRoute>
             </Main>
         </div>
     );

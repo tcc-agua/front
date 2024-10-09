@@ -34,6 +34,9 @@ export function Sidebar({ className }: SidebarProps) {
 
     const handleLogout = () => {
         window.location.href = 'http://localhost:5173/logout';
+        localStorage.removeItem("id_token");
+        localStorage.removeItem("access_token");
+        localStorage.removeItem("dataCriacaoToken");
     };
 
     return (
