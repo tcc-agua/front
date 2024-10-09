@@ -10,9 +10,10 @@ const itemsPerPage = 2;
 interface PointNameProps {
     name: string;
     idColeta: number;
+    preencher: (pointName: string) => void;
 }
 
-function Bc06Card({ name, idColeta  }: PointNameProps) {
+function Bc06Card({ name, idColeta, preencher }: PointNameProps) {
     const [measurements, setMeasurements] = useState({
         pressure: 1,
         horimeter: 1,
@@ -64,6 +65,7 @@ function Bc06Card({ name, idColeta  }: PointNameProps) {
                 width: '30%'
             });
             resetState();
+            preencher(name);
         }
         if (isError) {
             Swal.fire({
@@ -71,9 +73,10 @@ function Bc06Card({ name, idColeta  }: PointNameProps) {
                 icon: 'error',
                 text: 'Ocorreu um erro durante a criação. Tente novamente!',
             });
+            resetState();
         }
 
-    }, [isCreated, resetState, isError]);
+    }, [isCreated, resetState, isError, name, preencher]);
 
     const infoContentData = [
         { type: "Pressão", key: "pressure", value: measurements.pressure, isInteger: false },

@@ -8,9 +8,11 @@ import { FILTRO_CARTUCHO } from "../../../interfaces/postParams";
 interface PointNameProps{
     name: string;
     idColeta: number;
+    preencher: (pointName: string) => void;
+
 }
 
-function FiltroCartuchoCard({ name, idColeta }:PointNameProps) {
+function FiltroCartuchoCard({ name, idColeta, preencher }:PointNameProps) {
     const [outletPressure, setOutletPressure] = useState<number>(1);
     const [inletPressure, setInletPressure] = useState<number>(1);
     const { createFiltroCartuchoMeasure, isCreated, isError, resetState } = useFiltroCartuchoStore();
@@ -51,6 +53,7 @@ function FiltroCartuchoCard({ name, idColeta }:PointNameProps) {
                 width: '30%'
             });
             resetState();
+            preencher(name);
         }
         if (isError) {
             Swal.fire({
@@ -58,8 +61,9 @@ function FiltroCartuchoCard({ name, idColeta }:PointNameProps) {
                 icon: 'error',
                 text: 'Ocorreu um erro durante a criação. Tente novamente!',
             });
+            resetState();
         }
-    }, [isCreated, resetState, isError]);
+    }, [isCreated, resetState, isError, name, preencher]);
 
     return (
         <>

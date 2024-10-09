@@ -10,9 +10,10 @@ const itemsPerPage = 2; // Definir o número de itens por página
 interface PointNameProps {
     name: string;
     idColeta: number;
+    preencher: (pointName: string) => void;
 }
 
-function PbsCard({ name, idColeta }: PointNameProps) {
+function PbsCard({ name, idColeta, preencher }: PointNameProps) {
     const [pressure, setPressure] = useState<number>(1);
     const [pulses, setPulses] = useState<number>(1);
     const [oilLevel, setOilLevel] = useState<number>(1);
@@ -60,6 +61,7 @@ function PbsCard({ name, idColeta }: PointNameProps) {
                 width: '30%'
             });
             resetState();
+            preencher(name);
         }
         if (isError) {
             Swal.fire({
@@ -67,8 +69,9 @@ function PbsCard({ name, idColeta }: PointNameProps) {
                 icon: 'error',
                 text: 'Ocorreu um erro durante a criação. Tente novamente!',
             });
+            resetState();
         }
-    }, [isCreated, resetState, isError]);
+    }, [isCreated, resetState, isError, name, preencher]);
 
     const infoContentData = [
         { type: "Pressão", key: "pressure", value: pressure, setter: setPressure, isInteger: false },
