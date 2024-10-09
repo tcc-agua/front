@@ -243,6 +243,7 @@ export const Niveltq01: React.FC = () => {
 // Resgata todas as notificações salvas no banco de dados e configura como serão exibidas
 export const Notifications: React.FC = () => {
     const [notifications, setNotifications] = useState<Notification[]>([]);
+    const [windowWidth, setWindowWidth] = useState(window.innerWidth);
 
     // Request que resgata a as notificações
     useEffect(() => {
@@ -261,6 +262,15 @@ export const Notifications: React.FC = () => {
         getNotifications();
     }, []);
 
+    // Atualiza a largura da tela
+    useEffect(() => {
+        const handleResize = () => setWindowWidth(window.innerWidth);
+        window.addEventListener('resize', handleResize);
+        return () => {
+            window.removeEventListener('resize', handleResize);
+        };
+    }, []);
+
     // Renderiza as notificações com base nos dados de cada uma, definindo o ícone e 
     // a mensagem a serem definidos
     const renderNotif = (notification: Notification, index: number) => {
@@ -277,7 +287,7 @@ export const Notifications: React.FC = () => {
         } else if (['DADOS ETAS'].includes(tabela) && tipo === 'SALVO') {
             message = `Dados "ETAS" salvo com sucesso!`;
         } else if ( ['CA'].includes(tabela) && tipo === 'SALVO') {
-            message = `Dados de "Consumo de água" salvo com sucesso!`
+            message = `Dados de "CA" salvo com sucesso!`
         }
 
         let dayDiff = getDateDifference(data)
@@ -300,7 +310,7 @@ export const Notifications: React.FC = () => {
                         <p className={styles.days}>{dayDiff}</p>
                     </div>
                 </div>
-                {index < 2 && (
+                {index < 2 + (windowWidth < 1500 ? 1 : 0) && (
                     <div className={styles.linha_hr}>
                         <hr className={styles.hr_dash} />
                     </div>
@@ -312,7 +322,7 @@ export const Notifications: React.FC = () => {
     // Garante que serão exibidas na home somente as últimas três notificações salvas
     return (
         <div className={styles.content_last_activities}>
-            {notifications.slice(0, 3).map(renderNotif)}
+            {notifications.slice(0, 3 + (windowWidth < 1500 ? 1 : 0)).map(renderNotif)}
         </div>
     );
 };
