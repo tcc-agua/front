@@ -98,7 +98,8 @@ export const fetchColetasByData = async (paramsData: { startDate?: string; endDa
             throw new Error("Formato de resposta inválido");
         }
         return {
-            page: response.data.page,      
+            page: response.data.page,
+            size: response.data.size,      
             content: response.data.content 
         };
 
@@ -107,15 +108,6 @@ export const fetchColetasByData = async (paramsData: { startDate?: string; endDa
         throw e; 
     }
 }
-
-// const resultado = await fetchColetasByData({
-//     startDate: "2024-09-19", 
-//     endDate: "2024-09-24", 
-//     page: 1,
-//     size: 6
-// });
-// console.log(resultado.page);    
-// console.log(resultado.content);
 
 // Get point by Sheet
 export const fetchPointBySheet = async (sheetName: string) => {
