@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import styles from './PointCollect.module.css';
-import Swal from 'sweetalert2'; // Importe o SweetAlert
+import Swal from 'sweetalert2'; 
 import { fetchPointBySheet } from "../../api/api";
 import useUtilsStore from "../../store/utils";
 import { postNotif } from "../../api/api";
@@ -39,7 +39,7 @@ export function PointNames({ onSelectPoint, pontosPreenchidos }: PointNamesProps
             }
         };
 
-        updatePointsPerPage(); // Chamada inicial
+        updatePointsPerPage(); 
         window.addEventListener("resize", updatePointsPerPage);
 
         return () => {
@@ -128,12 +128,12 @@ export function PointNames({ onSelectPoint, pontosPreenchidos }: PointNamesProps
 export function PointCollect() {
     const [isModalOpen, setModalOpen] = useState<boolean>(false);
     const [selectedPoint, setSelectedPoint] = useState<Point | null>(null);
-    const [preenchido, setPreenchido] = useState<string[]>([]); // Estado para controlar os pontos preenchidos
+    const [preenchido, setPreenchido] = useState<string[]>([]); 
     const { planilha, qtdPontos } = useUtilsStore();
     const { coletaId } = useColetaStore();
 
     const preencher = (pointName: string) => {
-        setPreenchido(prev => [...prev, pointName]); // Adiciona o nome do ponto à lista de pontos preenchidos
+        setPreenchido(prev => [...prev, pointName]); 
     };
 
     useEffect(() => {
@@ -168,7 +168,7 @@ export function PointCollect() {
         try {
             const result = await postNotif(planilha, "SALVO");
             console.log("Dados salvos com sucesso:", result);
-            Swal.fire({ // Usando SweetAlert para sucesso
+            Swal.fire({ 
                 icon: 'success',
                 title: 'Sucesso',
                 text: 'Dados salvos com sucesso!',
@@ -177,7 +177,7 @@ export function PointCollect() {
             });
         } catch (error) {
             console.error("Erro ao salvar os dados:", error);
-            Swal.fire({ // Usando SweetAlert para erro
+            Swal.fire({ 
                 icon: 'error',
                 title: 'Erro',
                 text: 'Erro ao salvar os dados.',
