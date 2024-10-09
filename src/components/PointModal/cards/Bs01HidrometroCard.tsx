@@ -1,5 +1,6 @@
 import styles from "../../../pages/PointCollect/PointCollect.module.css"
 import { useEffect, useState } from "react";
+import Swal from 'sweetalert2';
 import { InputPoint } from "../InputPoint";
 import useBs01HidrometroStore from "../../../store/Bs01HidrometroStore";
 import { BS01_HIDROMETRO } from "../../../interfaces/postParams";

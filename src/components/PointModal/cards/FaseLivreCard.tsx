@@ -1,5 +1,6 @@
 import styles from "../../../pages/PointCollect/PointCollect.module.css"
 import { useEffect, useState } from "react";
+import Swal from 'sweetalert2';
 import { BooleanInput, InputPoint } from "../InputPoint";
 import useFaseLivreStore from "../../../store/FaseLivreStore";
 import { FASE_LIVRE } from "../../../interfaces/postParams";
@@ -43,16 +44,26 @@ function FaseLivreCard({ name, idColeta }: PointNameProps) {
         createFaseLivreMeasure(obj);
     };
 
-    useEffect (() =>{
-        if(isCreated){
-            alert("Criado")
-            resetState()
+    useEffect(() => {
+        if (isCreated) {
+            Swal.fire({
+                title: 'Sucesso!',
+                icon: 'success',
+                text: 'Coleta inserida com sucesso!',
+                showConfirmButton: false,
+                timer: 2000,
+                width: '30%'
+            });
+            resetState();
         }
-        if(isError){
-            alert("ERRO")
+        if (isError) {
+            Swal.fire({
+                title: 'Erro ao criar',
+                icon: 'error',
+                text: 'Ocorreu um erro durante a criação. Tente novamente!',
+            });
         }
-
-    }, [isCreated, resetState, isError])
+    }, [isCreated, resetState, isError]);
 
     return (
         <>

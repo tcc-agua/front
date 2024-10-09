@@ -7,9 +7,23 @@
     color: var(--font_color);
 }
 
+.iniciarcoleta{
+    margin-top: 2%;
+    width: 25%;
+    height: 9%;
+    background-color: #01A4FD;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+}
 
 .data_color {
     color: #D543CB;
+}
+
+.iniciarcoleta p{
+    font-size: 1rem;
+    color: white;
 }
 
 .search_bar {

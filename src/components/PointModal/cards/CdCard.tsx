@@ -1,5 +1,6 @@
 import styles from "../../../pages/PointCollect/PointCollect.module.css";
 import { useEffect, useState, useCallback } from "react";
+import Swal from 'sweetalert2';
 import { DropdownInput, InputPoint } from "../InputPoint";
 import useCdStore from "../../../store/CdStore";
 import { CD } from "../../../interfaces/postParams";
@@ -80,11 +81,22 @@ function CdCard({ name, idColeta }: PointNameProps) {
 
     useEffect(() => {
         if (isCreated) {
-            alert("Criado");
+            Swal.fire({
+                title: 'Sucesso!',
+                icon: 'success',
+                text: 'Coleta inserida com sucesso!',
+                showConfirmButton: false,
+                timer: 2000,
+                width: '30%'
+            });
             resetState();
         }
         if (isError) {
-            alert("ERRO");
+            Swal.fire({
+                title: 'Erro ao criar',
+                icon: 'error',
+                text: 'Ocorreu um erro durante a criação. Tente novamente!',
+            });
         }
     }, [isCreated, resetState, isError]);
 

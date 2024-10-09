@@ -1,5 +1,6 @@
 import styles from "../../../pages/PointCollect/PointCollect.module.css";
 import React, { useEffect, useState, useCallback } from "react";
+import Swal from 'sweetalert2';
 import { BooleanInput, InputPoint } from "../InputPoint";
 import useColunasCarvaoStore from "../../../store/ColunasCarvaoStore";
 import { COLUNAS_CARVAO } from "../../../interfaces/postParams";
@@ -67,11 +68,22 @@ function ColunasCarvaoCard({ name, idColeta }: PointNameProps) {
 
     useEffect(() => {
         if (isCreated) {
-            alert("Criado");
+            Swal.fire({
+                title: 'Sucesso!',
+                icon: 'success',
+                text: 'Coleta inserida com sucesso!',
+                showConfirmButton: false,
+                timer: 2000,
+                width: '30%'
+            });
             resetState();
         }
         if (isError) {
-            alert("ERRO");
+            Swal.fire({
+                title: 'Erro ao criar',
+                icon: 'error',
+                text: 'Ocorreu um erro durante a criação. Tente novamente!',
+            });
         }
     }, [isCreated, resetState, isError]);
 

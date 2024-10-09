@@ -1,5 +1,6 @@
 import styles from "../../../pages/PointCollect/PointCollect.module.css";
 import React, { useEffect, useState, useCallback } from "react";
+import Swal from 'sweetalert2';
 import { InputPoint } from "../InputPoint"; 
 import useBombaBc03Store from "../../../store/BombaBc03Store";
 import { BOMBA_BC03 } from "../../../interfaces/postParams";
@@ -56,11 +57,22 @@ function BombaBc03Card({ name, idColeta }: PointNameProps) {
 
     useEffect(() => {
         if (isCreated) {
-            alert("Criado");
+            Swal.fire({
+                title: 'Sucesso!',
+                icon: 'success',
+                text: 'Coleta inserida com sucesso!',
+                showConfirmButton: false,
+                timer: 2000,
+                width: '30%'
+            });
             resetState();
         }
         if (isError) {
-            alert("ERRO");
+            Swal.fire({
+                title: 'Erro ao criar',
+                icon: 'error',
+                text: 'Ocorreu um erro durante a criação. Tente novamente!',
+            });
         }
     }, [isCreated, resetState, isError]);
 

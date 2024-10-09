@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import DropdownButton from '../../components/DropdownButton/DropdownButton';
 import ColetaItem from '../../components/Colects/ColectItem';
+import ModalError from '../../components/ModalError/ModalError';
 import styles from './Historic.module.css';
 import dayjs from 'dayjs';
 import { fetchColetasByData } from '../../api/api';
@@ -33,6 +34,8 @@ const Historic: React.FC = () => {
   const [selectedDetail, setSelectedDetail] = useState<Detail | null>(null);
   const [coletasPonto, setColetasPonto] = useState<Coleta[]>([]);
   const [carouselIndex, setCarouselIndex] = useState(0);
+  const [isErrorModalOpen, setIsErrorModalOpen] = useState(false); // Estado para controlar o modal de erro
+  const [errorMessage, setErrorMessage] = useState<string>(''); // Estado para guardar a mensagem de erro
 
   const days: DropdownItem[] = Array.from({ length: 31 }, (_, i) => ({
     id: (i + 1).toString(),
@@ -61,65 +64,77 @@ const Historic: React.FC = () => {
     value: year
   }));
 
-  const [page,] = useState(1); 
+  const openErrorModal = (message: string) => {
+    setErrorMessage(message);
+    setIsErrorModalOpen(true);
+  };
+
+  const closeErrorModal = () => {
+    setIsErrorModalOpen(false);
+  };
+
+  const [page,] = useState(1);
   const [size,] = useState(6);
   const [, setLoading] = useState(false);
   const [, setError] = useState<string | null>(null);
 
   useEffect(() => {
     async function fetchPontosPorColeta() {
-        setLoading(true); 
-        setError(null); 
-        try {
-            const token = localStorage.getItem('id_token');
-            if (!token) {
-                setError('Token não encontrado.');
-                return; 
-            }
+      setLoading(true);
+      setError(null);
+      try {
+        const token = localStorage.getItem('id_token');
+        if (!token) {
+          setError('Token não encontrado.');
+          return;
+        }
 
-            let paramsData: { startDate?: string; endDate?: string; page?: number; size?: number } = {};
-  
-            if (selectedDay?.value != null && selectedMonth?.value != null && selectedYear?.value != null) {
-                const year = Number(selectedYear.value);
-                const month = Number(selectedMonth.id) - 1; 
-                const day = Number(selectedDay.value);
-  
-                const startDate = dayjs(new Date(year, month, day)).format('YYYY-MM-DD');
-                console.log('Start Date:', startDate);
-                paramsData = { startDate, endDate: startDate, page, size };
-            } else {
-                const endDate = dayjs().format('YYYY-MM-DD');
-                const startDate = dayjs().subtract(15, 'day').format('YYYY-MM-DD');
-                paramsData = { startDate, endDate, page, size }; 
-            }
-  
-            console.log('Parameters for API:', paramsData);
-            const response = await fetchColetasByData(paramsData);
-            console.log('API Response:', response);  
-            
-            if (response.content) {
-                const pontos = response.content;
-                setColetasPonto(pontos); 
-            } else {
-                setError('Nenhum dado retornado.');
-            }
-        } catch (e) {
-          if (e instanceof Error) {
-              console.error('Error fetching data:', e.message);
-              setError('Erro ao buscar dados: ' + e.message);
-          } else {
-              console.error('Error fetching data:', e);
-              setError('Erro ao buscar dados: Erro desconhecido.');
-          }
+        let paramsData: { startDate?: string; endDate?: string; page?: number; size?: number } = {};
+
+        if (selectedDay?.value != null && selectedMonth?.value != null && selectedYear?.value != null) {
+          const year = Number(selectedYear.value);
+          const month = Number(selectedMonth.id) - 1;
+          const day = Number(selectedDay.value);
+
+          const startDate = dayjs(new Date(year, month, day)).format('YYYY-MM-DD');
+          console.log('Start Date:', startDate);
+          paramsData = { startDate, endDate: startDate, page, size };
+        } else {
+          const endDate = dayjs().format('YYYY-MM-DD');
+          const startDate = dayjs().subtract(15, 'day').format('YYYY-MM-DD');
+          paramsData = { startDate, endDate, page, size };
+        }
+
+        console.log('Parameters for API:', paramsData);
+        const response = await fetchColetasByData(paramsData);
+        console.log('API Response:', response);
+
+        if (response.content) {
+          const pontos = response.content;
+          setColetasPonto(pontos);
+        } else {
+          openErrorModal("Nenhum dado encontrado, tente novamente."); // Abre modal de erro
+          
+        }
+      } catch (e) {
+        if (e instanceof Error) {
+          console.error('Error fetching data:', e.message);
+          openErrorModal('Erro ao buscar dados: ' + e.message); // Abre modal de erro
+
+        } else {
+          console.error('Error fetching data:', e);
+          openErrorModal("Erro ao buscar dados: Erro desconhecido."); // Abre modal de erro
+        }
+
       } finally {
-          setLoading(false); 
+        setLoading(false);
       }
     }
-    
-    fetchPontosPorColeta();
-}, [selectedDay, selectedMonth, selectedYear, page, size]);
 
-console.log(coletasPonto);
+    fetchPontosPorColeta();
+  }, [selectedDay, selectedMonth, selectedYear, page, size]);
+
+  console.log(coletasPonto);
 
   const handleOpenDetail = (detail: Detail) => {
     setSelectedDetail(detail);
@@ -145,10 +160,10 @@ console.log(coletasPonto);
   };
 
   const visibleInfoContainers = selectedDetail
-  ? Object.entries(selectedDetail.dados)
-    .filter(([key]) => key !== 'id' && key !== '')
-    .slice(carouselIndex, carouselIndex + 2)
-  : [];
+    ? Object.entries(selectedDetail.dados)
+      .filter(([key]) => key !== 'id' && key !== '')
+      .slice(carouselIndex, carouselIndex + 2)
+    : [];
 
   return (
     <div className={styles.container}>
@@ -184,6 +199,10 @@ console.log(coletasPonto);
         </div>
       </div>
 
+      {isErrorModalOpen && (
+        <ModalError message={errorMessage} onClose={closeErrorModal} />
+      )}
+
       <p className={styles.title}>Últimas coletas:</p>
       <div className={styles.colects}>
         {coletasPonto &&
@@ -207,8 +226,8 @@ console.log(coletasPonto);
             <p className={styles.pointName}>Dados de coleta do ponto {selectedDetail.ponto}</p>
 
             <main className={styles.carousel}>
-              <button 
-                className={`${styles.carousel_button} ${carouselIndex === 0 ? styles.carousel_button_invisible : ''}`} 
+              <button
+                className={`${styles.carousel_button} ${carouselIndex === 0 ? styles.carousel_button_invisible : ''}`}
                 onClick={handlePrevious}
                 disabled={carouselIndex === 0}
               >
@@ -216,8 +235,8 @@ console.log(coletasPonto);
               </button>
 
               {visibleInfoContainers.map(([key, value]) => (
-                <div 
-                  key={key} 
+                <div
+                  key={key}
                   className={`${styles.infoContainer} ${key === "*" ? styles.hidden : ''}`}
                 >
                   <p className={styles.pointName}>{key}</p>
@@ -227,19 +246,19 @@ console.log(coletasPonto);
                 </div>
               ))}
 
-              <button 
-                className={`${styles.carousel_button} ${carouselIndex + 2 >= Object.keys(selectedDetail.dados).length ? styles.carousel_button_invisible : ''}`} 
+              <button
+                className={`${styles.carousel_button} ${carouselIndex + 2 >= Object.keys(selectedDetail.dados).length ? styles.carousel_button_invisible : ''}`}
                 onClick={handleNext}
                 disabled={carouselIndex + 2 >= Object.keys(selectedDetail.dados).length}
               >
                 ›
-                </button>
-          </main>
+              </button>
+            </main>
+          </div>
         </div>
-      </div>
-    )}
-  </div>
-);
+      )}
+    </div>
+  );
 };
 
 export default Historic;

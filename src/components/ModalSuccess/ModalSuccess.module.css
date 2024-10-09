@@ -56,3 +56,43 @@
     font-family: 'SF Pro Medium';
     font-size: 1rem;
 }
+
+@media (max-width: 600px) {
+    .modalContent {
+        width: 78%;
+        height: auto;
+    }
+
+    .modalTitle,
+    .modalImg,
+    .modalText {
+        text-align: center;
+        margin-top: 8%;
+    }
+
+    .modalText {
+        font-size: medium;
+        margin-bottom: 10%;
+    }
+
+}
+
+@media (min-width: 1500px) {
+    .modalContent {
+        width: 35%;
+        height: auto;
+    }
+
+    .modalTitle,
+    .modalImg,
+    .modalText {
+        text-align: center;
+        font-size: x-large;
+        margin-top: 8%;
+    }
+
+    .modalText {
+        font-size: larger;
+        margin-bottom: 10%;
+    }
+}

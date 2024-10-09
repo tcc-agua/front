@@ -1,5 +1,6 @@
 import styles from "../../../pages/PointCollect/PointCollect.module.css"
 import { useEffect, useState } from "react";
+import Swal from 'sweetalert2';
 import { InputPoint } from "../InputPoint";
 import useBs01PressaoStore from "../../../store/Bs01PressaoStore";
 import { BS01_PRESSAO } from "../../../interfaces/postParams";
@@ -38,16 +39,26 @@ function Bs01PressaoCard({ name, idColeta }: PointNameProps) {
         createBs01PressaoMeasure(obj);
     };
 
-    useEffect (() =>{
-        if(isCreated){
-            alert("Criado")
-            resetState()
+    useEffect(() => {
+        if (isCreated) {
+            Swal.fire({
+                title: 'Sucesso!',
+                icon: 'success',
+                text: 'Coleta inserida com sucesso!',
+                showConfirmButton: false,
+                timer: 2000,
+                width: '30%'
+            });
+            resetState();
         }
-        if(isError){
-            alert("ERRO")
+        if (isError) {
+            Swal.fire({
+                title: 'Erro ao criar',
+                icon: 'error',
+                text: 'Ocorreu um erro durante a criação. Tente novamente!',
+            });
         }
-
-    }, [isCreated, resetState, isError])
+    }, [isCreated, resetState, isError]);
 
     return (
         <>

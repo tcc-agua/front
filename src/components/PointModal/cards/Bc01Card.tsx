@@ -1,5 +1,6 @@
 import styles from "../../../pages/PointCollect/PointCollect.module.css";
 import React, { useEffect, useState, useCallback } from "react";
+import Swal from 'sweetalert2';
 import { InputPoint } from "../InputPoint"; 
 import { BC01 } from "../../../interfaces/postParams";
 import useBc01Store from "../../../store/Bc01Store";
@@ -60,13 +61,25 @@ function Bc01Card({ name, idColeta }: PointNameProps) {
 
     useEffect(() => {
         if (isCreated) {
-            alert("Criado");
+            Swal.fire({
+                title: 'Sucesso!',
+                icon: 'success',
+                text: 'Coleta inserida com sucesso!',
+                showConfirmButton: false,
+                timer: 2000,
+                width: '30%'
+            });
             resetState();
         }
         if (isError) {
-            alert("ERRO");
+            Swal.fire({
+                title: 'Erro ao criar',
+                icon: 'error',
+                text: 'Ocorreu um erro durante a criação. Tente novamente!',
+            });
         }
     }, [isCreated, resetState, isError]);
+    
 
     const infoContentData = [
         { type: "Pressão", key: "pressure", value: measurements.pressure, isInteger: false },

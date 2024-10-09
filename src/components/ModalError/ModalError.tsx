@@ -14,7 +14,7 @@ const ModalError: React.FC<ModalErrorProps> = ({ message, onClose }) => {
         <button className={styles.close} onClick={onClose}>
           &times;
         </button>
-        <div className={styles.modalTitle}>Erro</div>
+        <div className={styles.modalTitle}>Erro!</div>
         <img className={styles.modalImg} src={Erro} alt="Error" />
         <div className={styles.modalText}>{message}</div>
       </div>

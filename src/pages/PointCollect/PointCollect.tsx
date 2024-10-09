@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import styles from './PointCollect.module.css';
-
+import Swal from 'sweetalert2'; // Importe o SweetAlert
 import { fetchPointBySheet } from "../../api/api";
 import useUtilsStore from "../../store/utils";
 import { postNotif } from "../../api/api";
@@ -25,6 +25,7 @@ export function PointNames({ onSelectPoint }: PointNamesProps) {
     const [currentPage, setCurrentPage] = useState<number>(0);
     const [pointsPerPage, setPointsPerPage] = useState<number>(8);
     const { planilha, setQtdPontos } = useUtilsStore();
+   
 
     useEffect(() => {
         const updatePointsPerPage = () => {
@@ -84,6 +85,7 @@ export function PointNames({ onSelectPoint }: PointNamesProps) {
 
     const isNextDisabled = (currentPage + 1) * pointsPerPage >= points.length;
     const isPrevDisabled = currentPage === 0;
+
 
     return (
         <div className={styles.select_point_grid}>
@@ -157,8 +159,22 @@ export function PointCollect() {
         try {
             const result = await postNotif(planilha, "SALVO");
             console.log("Dados salvos com sucesso:", result);
+            Swal.fire({ // Usando SweetAlert para sucesso
+                icon: 'success',
+                title: 'Sucesso',
+                text: 'Dados salvos com sucesso!',
+                confirmButtonText: 'Ok',
+                width: '30%',
+            });
         } catch (error) {
             console.error("Erro ao salvar os dados:", error);
+            Swal.fire({ // Usando SweetAlert para erro
+                icon: 'error',
+                title: 'Erro',
+                text: 'Erro ao salvar os dados.',
+                confirmButtonText: 'Ok',
+                width: '30%',
+            });
         }
     };
 
@@ -194,9 +210,9 @@ export function PointCollect() {
                 idColeta={idColeta}
             />
         }
-        if(name.startsWith("Geral") ||
+        if (name.startsWith("Geral") ||
             name.startsWith("Entrada") ||
-            name.startsWith("Saida") || 
+            name.startsWith("Saida") ||
             name == "Refeitorio" ||
             name.startsWith("Kinderhaus") ||
             name.startsWith("Descarte") ||
@@ -204,7 +220,7 @@ export function PointCollect() {
             name.startsWith("Central") ||
             name.startsWith("Caixa") ||
             name.startsWith("ETAS") ||
-            name.startsWith("Tanque")){
+            name.startsWith("Tanque")) {
 
             return <PointModal.HIDROMETRO
             name={name}

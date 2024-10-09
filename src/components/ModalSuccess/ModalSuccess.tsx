@@ -14,7 +14,7 @@ const ModalSuccess: React.FC<ModalSuccessProps> = ({ message, onClose }) => {
         <button className={styles.close} onClick={onClose}>
           &times;
         </button>
-        <div className={styles.modalTitle}>Sucesso</div>
+        <div className={styles.modalTitle}>Sucesso!</div>
         <img className={styles.modalImg} src={Success} alt="Success" />
         <div className={styles.modalText}>{message}</div>
       </div>

@@ -1,10 +1,9 @@
 import React, { useState } from 'react';
+import Swal from 'sweetalert2';
 import DropdownButton from '../../components/DropdownButton/DropdownButton';
 import ExcelTable from '../../components/ExcelTable/ExcelTable';
-import ModalError from '../../components/ModalError/ModalError';
-import ModalSuccess from '../../components/ModalSuccess/ModalSuccess';
-import styles from './ExportExcel.module.css';
 import { fetchExport, postNotif } from '../../api/api';
+import styles from './ExportExcel.module.css';
 
 interface DropdownItem {
     id: string;
@@ -14,13 +13,9 @@ interface DropdownItem {
 
 const ExportExcel: React.FC = () => {
     const [selectedTable, setSelectedTable] = useState<DropdownItem | undefined>(undefined);
-    const [isModalOpen, setIsModalOpen] = useState(false);
-    const [isErrorModalOpen, setIsErrorModalOpen] = useState(false); // Estado para controlar o modal de erro
     const [selectedMonth, setSelectedMonth] = useState<DropdownItem | undefined>(undefined);
     const [selectedYear, setSelectedYear] = useState<DropdownItem | undefined>(undefined);
-    const [exportYearOnly, setExportYearOnly] = useState(false); // Estado para controlar a exportação por ano
-    const [errorMessage, setErrorMessage] = useState<string>(''); // Estado para guardar a mensagem de erro
-    const [successMessage, setSuccessMessage] = useState<string>(''); // Estado para guardar a mensagem de sucesso
+    const [exportYearOnly, setExportYearOnly] = useState(false);
 
     const months: DropdownItem[] = [
         { id: '1', label: 'Janeiro', value: 'Janeiro' },
@@ -50,25 +45,7 @@ const ExportExcel: React.FC = () => {
         { id: '4', label: 'CA', value: 'CA' },
     ];
 
-    const openModal = () => {
-        setSuccessMessage('Arquivo exportado com sucesso!');
-        setIsModalOpen(true);
-    };
-
-    const closeModal = () => {
-        setIsModalOpen(false);
-    };
-
-    const openErrorModal = (message: string) => {
-        setErrorMessage(message);
-        setIsErrorModalOpen(true);
-    };
-
-    const closeErrorModal = () => {
-        setIsErrorModalOpen(false);
-    };
-
-
+    // Função de exportação usando SweetAlert2 para feedback
     async function fetchExportExcel(startDate: string, endDate: string) {
         try {
             const endpoint = selectedTable?.value === 'CA' ? '/exportExcel/hidrometro' : '/exportExcel';
@@ -87,13 +64,27 @@ const ExportExcel: React.FC = () => {
                 window.URL.revokeObjectURL(url);
                 link.remove();
             }, 100);
-            openModal(); // Abre modal de sucesso
+
+            // Mensagem de sucesso com SweetAlert2
+            Swal.fire({
+                icon: 'success',
+                title: 'Sucesso!',
+                text: 'O arquivo foi exportado com sucesso.',
+                width: '30%',
+            });
+
         } catch (e) {
             console.error("Erro ao exportar o arquivo:", e);
-            openErrorModal("Erro ao exportar o arquivo. Por favor, tente novamente."); // Abre modal de erro
+
+            // Mensagem de erro com SweetAlert2
+            Swal.fire({
+                icon: 'error',
+                title: 'Erro!',
+                text: 'Erro ao exportar o arquivo. Por favor, tente novamente.',
+                width: '30%',
+            });
         }
     }
-    
 
     const notify = async () => {
         try {
@@ -101,12 +92,19 @@ const ExportExcel: React.FC = () => {
             console.log("Dados salvos com sucesso:", result);
         } catch (error) {
             console.error("Erro ao salvar os dados:", error);
-            openErrorModal("Erro ao salvar os dados."); // Modal de erro ao notificar
+
+            // Mensagem de erro com SweetAlert2 ao notificar
+            Swal.fire({
+                icon: 'error',
+                title: 'Erro!',
+                text: 'Erro ao salvar os dados.',
+                width: '30%',
+            });
         }
     };
 
     const handleExportClick = () => {
-        if (selectedYear && selectedTable && selectedMonth) {
+        if (selectedYear) {
             const year = parseInt(selectedYear.label);
             let startDate: Date;
             let endDate: Date;
@@ -128,15 +126,16 @@ const ExportExcel: React.FC = () => {
 
             fetchExportExcel(startDateString, endDateString);
             notify();
-        } else if(!selectedMonth){
-            console.error("Selecione um mês válido.");
-            openErrorModal("Selecione um mês válido."); // Modal de erro ao selecionar ano
-        } else if(!selectedYear){
-            console.error("Selecione um ano válido.")
-            openErrorModal("Selecione um ano válido.")
-        } else if(!selectedTable){
-            console.error("Selecione uma tabela válida.")
-            openErrorModal("Seleciona uma tabela válida.")
+        } else {
+            console.error("Selecione um ano válido.");
+
+            // Mensagem de erro de seleção com SweetAlert2
+            Swal.fire({
+                icon: 'warning',
+                title: 'Inválido!',
+                text: 'Selecione um ano para prosseguir.',
+                width: '30%',
+            });
         }
     };
 
@@ -185,12 +184,6 @@ const ExportExcel: React.FC = () => {
                         </div>
                     </div>
                 </div>
-                {isModalOpen && (
-                    <ModalSuccess message={successMessage} onClose={closeModal} />
-                )}
-                {isErrorModalOpen && (
-                    <ModalError message={errorMessage} onClose={closeErrorModal} />
-                )}
             </div>
             <div className={styles.container1}>
                 {selectedTable && selectedMonth && selectedYear && (

@@ -86,7 +86,9 @@ export function Collect() {
           <p className={styles.text}>
             Para prosseguir, inicie uma nova coleta para registrar os pontos desejados.
           </p>
-          <button onClick={sendInformation}>Iniciar Coleta</button>
+          <button onClick={sendInformation} className={styles.iniciarcoleta}>
+            <p>Iniciar Coleta</p>
+          </button>
         </>
       )}
 

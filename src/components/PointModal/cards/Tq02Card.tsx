@@ -1,5 +1,6 @@
 import styles from "../../../pages/PointCollect/PointCollect.module.css";
 import { useEffect, useState } from "react";
+import Swal from 'sweetalert2';
 import { InputPoint } from "../InputPoint";
 import useTq02Store from "../../../store/Tq02Store";
 import { TQ02 } from "../../../interfaces/postParams";
@@ -39,17 +40,27 @@ function Tq02Card({ name, idColeta }: PointNameProps) {
         createTq02Measure(obj);
     };
 
-    useEffect (() =>{
-        if(isCreated){
-            alert("Criado")
-            resetState()
+    useEffect(() => {
+        if (isCreated) {
+            Swal.fire({
+                title: 'Sucesso!',
+                icon: 'success',
+                text: 'Coleta inserida com sucesso!',
+                showConfirmButton: false,
+                timer: 2000,
+                width: '30%'
+            });
+            resetState();
         }
-        if(isError){
-            alert("ERRO")
+        if (isError) {
+            Swal.fire({
+                title: 'Erro ao criar',
+                icon: 'error',
+                text: 'Ocorreu um erro durante a criação. Tente novamente!',
+            });
         }
-
-    }, [isCreated, resetState, isError])
-
+    }, [isCreated, resetState, isError]);
+    
     return (
         <>
             <p className={styles.pointName}>Dados de coleta do ponto '{name}'</p>
