@@ -73,6 +73,7 @@ input::placeholder {
 
 }
 
+
 .data_etas_content,
 .data_na_content,
 .data_pb_content,
@@ -194,27 +195,27 @@ input::placeholder {
     font-family: "SF Pro Semibold";
 }
 
-.data_etas_content .title_data_content_etas,
-.data_etas_content .percentage_content_etas,
-.data_etas_content .points_content_etas {
+.title_data_content_etas,
+.percentage_content_etas,
+.points_content_etas{
     color: var(--ETAS_title);
 }
 
-.data_na_content .title_data_content_na,
-.data_na_content .percentage_content_na,
-.data_na_content .points_content_na {
+.title_data_content_na,
+.percentage_content_na,
+.points_content_na {
     color: var(--NA_title);
 }
 
-.data_pb_content .title_data_content_pb,
-.data_pb_content .percentage_content_pb,
-.data_pb_content .points_content_pb {
+.title_data_content_pb,
+.percentage_content_pb,
+.points_content_pb{
     color: var(--PB_title);
 }
 
-.data_ca_content .title_data_content,
-.data_ca_content .percentage_content,
-.data_ca_content .points_content {
+.title_data_content_ca,
+.percentage_content_ca,
+.points_content_ca {
     color: var(--CA_title);
 }
 

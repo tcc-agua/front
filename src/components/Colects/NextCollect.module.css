@@ -602,3 +602,11 @@ input::placeholder {
         font-size: 3vw;
     }
 }
+
+.icon_coleta{
+    background-color: var(--icon_alert); 
+}
+
+.correct{
+    background-color: var(--icon_correct);
+}

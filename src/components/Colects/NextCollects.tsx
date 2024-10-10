@@ -47,93 +47,89 @@ export const NextCollects: React.FC = () => {
     };
 
     const renderUltimasColetas = (coleta: Coleta, index: number) => {
-        const { tabela, tipo, data } = coleta;
-        let message = '';
-        let iconClass = '';
-        const isCorrect = iconClass === correct;
+    const { tabela, tipo, data } = coleta;
+    let message = '';
+    let iconClass = '';
+    let isCorrect = false;
 
-        if (tabela === 'NA' && tipo === 'SALVO') {
-            if (getDateDifference(data) !== "hoje") {
-                iconClass = icon_alert;
-                const diasDesdeUltimaColeta = parseInt(getDateDifference(data));
-                const diasParaProximaColeta = 15 - diasDesdeUltimaColeta;
+    // Verificar e atribuir a classe do ícone e mensagem com base nos dados
+    if (tabela === 'NA' && tipo === 'SALVO') {
+        const diasDesdeUltimaColeta = parseInt(getDateDifference(data));
+        const diasParaProximaColeta = 15 - diasDesdeUltimaColeta;
 
-                if ( diasParaProximaColeta > 0) {
-                    message = `Dados "NA" coletados há ${diasDesdeUltimaColeta} dias, uma nova coleta deve ser feita em ${diasParaProximaColeta} dias.`;
-                } else if (diasParaProximaColeta === 0) {
-                    message = `A data para coletar os dados "NA" é hoje.`;
-                } else if (diasParaProximaColeta < 0 ) {
-                    message = `A data para coletar os dados "NA" venceu a ${diasParaProximaColeta} dias.`;
-                }
-            } else {
-                iconClass = correct;
-                message = 'Dados "Consumo de água" coletados hoje, a próxima coleta deve ser feita em 15 dias.'
-            }
-
-        } else if (tabela === 'DADOS ETAS' && tipo === 'SALVO') {
-            if (coletaFeitaHoje(data)) {
-                iconClass = correct;
-                message = 'Dados "ETAS" já coletados hoje, próxima coleta amanhã.'
-            } else if (parseInt(getDateDifference(data)) >= 2 ) {
-                iconClass = icon_alert;
-                message = `Coleta dados "ETAS" atrasada a ${getDateDifference(data)} dias.`
-            } else {
-                iconClass = icon_alert;
-                message = 'Coleta dados "ETAS" ainda não foram coletados hoje.'
-            }
-            
-        } else if (tabela === 'PBS' && tipo === 'SALVO') {
-            if (coletaFeitaHoje(data)) {
-                iconClass = correct;
-                message = 'Dados "PBS" já coletados hoje, próxima coleta amanhã.'
-            } else if (parseInt(getDateDifference(data)) >= 2 ) {
-                iconClass = icon_alert;
-                message = `Coleta dados "PBS" atrasada a ${getDateDifference(data)} dias.`
-            } else {
-                iconClass = icon_alert;
-                message = 'Coleta dados "PBS" ainda não foram coletados hoje.'
-            }
-        } else if (tabela === 'CA' && tipo === 'SALVO') {
-            if (getDateDifference(data) !== "hoje") {
-                
-                const diasDesdeUltimaColeta = parseInt(getDateDifference(data));
-                const diasParaProximaColeta = 30 - diasDesdeUltimaColeta;
-
-                if ( diasParaProximaColeta > 0) {
-                    iconClass = icon_alert;
-                    message = `Dados "NA" coletados há ${diasDesdeUltimaColeta} dias, uma nova coleta deve ser feita em ${diasParaProximaColeta} dias.`;
-                } else if (diasParaProximaColeta === 0) {
-                    iconClass = icon_alert;
-                    message = `A data para coletar os dados "NA" é hoje.`;
-                } else if (diasParaProximaColeta < 0 ) {
-                    iconClass = icon_alert;
-                    message = `A data para coletar os dados "NA" venceu a ${diasParaProximaColeta} dias.`;
-                }
-            } else {
-                iconClass = correct;
-                message = 'Dados "Consumo de água" coletados hoje, a próxima coleta deve ser feita em 15 dias.'
-            }
+        if (getDateDifference(data) !== "hoje") {
+            iconClass = icon_alert;
+            message = diasParaProximaColeta > 0
+                ? `Dados "NA" coletados há ${diasDesdeUltimaColeta} dias, nova coleta em ${diasParaProximaColeta} dias.`
+                : diasParaProximaColeta === 0
+                    ? `A data para coletar os dados "NA" é hoje.`
+                    : `A coleta dos dados "NA" está vencida há ${Math.abs(diasParaProximaColeta)} dias.`;
+        } else {
+            iconClass = correct;
+            isCorrect = true;
+            message = 'Dados "Consumo de água" coletados hoje, próxima coleta em 15 dias.';
         }
+    } else if (tabela === 'DADOS ETAS' && tipo === 'SALVO') {
+        if (coletaFeitaHoje(data)) {
+            iconClass = correct;
+            isCorrect = true;
+            message = 'Dados "ETAS" já coletados hoje, próxima coleta amanhã.';
+        } else if (parseInt(getDateDifference(data)) >= 2) {
+            iconClass = icon_alert;
+            message = `Coleta dos dados "ETAS" atrasada há ${getDateDifference(data)} dias.`;
+        } else {
+            iconClass = icon_alert;
+            message = 'Coleta dos dados "ETAS" ainda não realizada hoje.';
+        }
+    } else if (tabela === 'PBS' && tipo === 'SALVO') {
+        if (coletaFeitaHoje(data)) {
+            iconClass = correct;
+            isCorrect = true;
+            message = 'Dados "PBS" já coletados hoje, próxima coleta amanhã.';
+        } else if (parseInt(getDateDifference(data)) >= 2) {
+            iconClass = icon_alert;
+            message = `Coleta dos dados "PBS" atrasada há ${getDateDifference(data)} dias.`;
+        } else {
+            iconClass = icon_alert;
+            message = 'Coleta dos dados "PBS" ainda não realizada hoje.';
+        }
+    } else if (tabela === 'CA' && tipo === 'SALVO') {
+        const diasDesdeUltimaColeta = parseInt(getDateDifference(data));
+        const diasParaProximaColeta = 30 - diasDesdeUltimaColeta;
 
-        return (
-            <div key={`${tabela}-${tipo}-${index}`} className={styles.coleta_container}>
-                <div className={styles.coleta_activity}>
-                    <div className={`${styles.icon_coleta} ${isCorrect ? styles.icon_alert : styles.correct}`}>
-                        <img className={styles.imgs_coleta} src={`${iconClass}`} alt="Ícone" />
-                    </div>
-                    <div className={styles.text_coleta}>
-                        <p className={styles.data_coleta}>{message}</p>
+        if (getDateDifference(data) !== "hoje") {
+            iconClass = icon_alert;
+            message = diasParaProximaColeta > 0
+                ? `Dados "CA" coletados há ${diasDesdeUltimaColeta} dias, nova coleta em ${diasParaProximaColeta} dias.`
+                : diasParaProximaColeta === 0
+                    ? `A coleta dos dados "CA" é hoje.`
+                    : `A coleta dos dados "CA" está vencida há ${Math.abs(diasParaProximaColeta)} dias.`;
+        } else {
+            iconClass = correct;
+            isCorrect = true;
+            message = 'Dados "CA" coletados hoje, próxima coleta em 30 dias.';
+        }
+    }
 
-                    </div>
+    return (
+        <div key={`${tabela}-${tipo}-${index}`} className={styles.coleta_container}>
+            <div className={styles.coleta_activity}>
+                <div className={`${styles.icon_coleta} ${isCorrect ? styles.correct : styles.icon_alert}`}>
+                    <img className={styles.imgs_coleta} src={iconClass} alt="Ícone" />
                 </div>
-                {index < 5 && (
-                    <div className={styles.linha_coleta}>
-                        <hr className={styles.hr_coleta} />
-                    </div>
-                )}
+                <div className={styles.text_coleta}>
+                    <p className={styles.data_coleta}>{message}</p>
+                </div>
             </div>
-        );
-    };
+            {index < 5 && (
+                <div className={styles.linha_coleta}>
+                    <hr className={styles.hr_coleta} />
+                </div>
+            )}
+        </div>
+    );
+};
+
 
     return (
         <section className={styles.notifications_coleta}>
