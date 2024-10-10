@@ -6,6 +6,7 @@ import { BC01 } from "../../../interfaces/postParams";
 import useBc01Store from "../../../store/Bc01Store";
 import usePontoState, { STATUS_OPT } from "../../../store/PontoStore";
 
+
 const itemsPerPage = 2;
 
 interface PointNameProps {
