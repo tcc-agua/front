@@ -16,6 +16,7 @@ interface PointNamesProps {
 
 export function PointNames({ onSelectPoint }: PointNamesProps) {
     const [points, setPoints] = useState<Point[]>([]);
+    const [pontosPreenchidos, setPontosPreenchidos] = useState<string[]>([]); // Agora usando useState
     const id_token = localStorage.getItem("id_token");
     const [currentPage, setCurrentPage] = useState<number>(0);
     const [pointsPerPage, setPointsPerPage] = useState<number>(8);
@@ -32,7 +33,7 @@ export function PointNames({ onSelectPoint }: PointNamesProps) {
             }
         };
 
-        updatePointsPerPage(); 
+        updatePointsPerPage();
         window.addEventListener("resize", updatePointsPerPage);
 
         return () => {
@@ -47,11 +48,17 @@ export function PointNames({ onSelectPoint }: PointNamesProps) {
                     const response = await fetchPointBySheet(planilha);
                     if (Array.isArray(response)) {
                         setPoints(response);
+
+                        const pontosColetados = response.filter((point) => point.status === "COLETADO").map((point) => point.nome);
+
+                        setPontosPreenchidos(pontosColetados);
                         setQtdPontos(response.length);
+
                     } else {
                         setPoints([]);
                     }
-                } catch (error) {
+                } 
+                catch (error) {
                     console.error("Erro ao buscar pontos:", error);
                     setPoints([]);
                     setQtdPontos(0);
@@ -82,7 +89,7 @@ export function PointNames({ onSelectPoint }: PointNamesProps) {
     return (
         <div className={styles.select_point_grid}>
             {getCurrentPoints().map((point) => {
-                const isPreenchido = pontosPreenchidos.includes(point.nome); 
+                const isPreenchido = pontosPreenchidos.includes(point.nome);
                 return (
                     <button
                         key={point.id}
@@ -93,7 +100,7 @@ export function PointNames({ onSelectPoint }: PointNamesProps) {
                             <span className={styles.name_point_type}>{point.nome}</span>
                         </p>
                         <pre className={styles.status_point}>
-                            {point.status} ⟶ {isPreenchido ? "(Preenchido)" : "(Não Preenchido)"}
+                            {point.status} ⟶ {isPreenchido ? "Preenchido" : "Não Preenchido"}
                         </pre>
                     </button>
                 );
