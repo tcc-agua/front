@@ -10,10 +10,9 @@ const itemsPerPage = 2;
 interface PointNameProps {
     name: string;
     idColeta: number;
-    preencher: (pointName: string) => void;
 }
 
-function BombaBc03Card({ name, idColeta, preencher }: PointNameProps) {
+function BombaBc03Card({ name, idColeta }: PointNameProps) {
     const [measurements, setMeasurements] = useState({
         pressure: 1,
         horimeter: 1,
@@ -67,7 +66,6 @@ function BombaBc03Card({ name, idColeta, preencher }: PointNameProps) {
                 width: '30%'
             });
             resetState();
-            preencher(name); 
         }
         if (isError) {
             Swal.fire({
@@ -77,7 +75,7 @@ function BombaBc03Card({ name, idColeta, preencher }: PointNameProps) {
             });
             resetState();
         }
-    }, [isCreated, resetState, isError, name, preencher]);
+    }, [isCreated, resetState, isError, name]);
 
     const infoContentData = [
         { type: "Pressão", key: "pressure", value: measurements.pressure },

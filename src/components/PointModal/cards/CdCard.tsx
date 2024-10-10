@@ -10,10 +10,9 @@ const itemsPerPage = 2; // Definindo itens por página
 interface PointNameProps {
     name: string;
     idColeta: number;
-    preencher: (pointName: string) => void;
 }
 
-function CdCard({ name, idColeta, preencher }: PointNameProps) {
+function CdCard({ name, idColeta }: PointNameProps) {
     const [measurements, setMeasurements] = useState({
         pressure: 1,
         hidrometer: 1,
@@ -91,7 +90,6 @@ function CdCard({ name, idColeta, preencher }: PointNameProps) {
                 width: '30%'
             });
             resetState();
-            preencher(name);
         }
         if (isError) {
             Swal.fire({
@@ -101,7 +99,7 @@ function CdCard({ name, idColeta, preencher }: PointNameProps) {
             });
             resetState();
         }
-    }, [isCreated, resetState, isError, name, preencher]);
+    }, [isCreated, resetState, isError, name]);
 
     const infoContentData = [
         { type: "Pressão", key: "pressure", value: measurements.pressure, isInteger: false },

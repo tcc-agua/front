@@ -8,10 +8,9 @@ import { TQ01 } from "../../../interfaces/postParams";
 interface PointNameProps{
     name: string;
     idColeta: number;
-    preencher: (pointName: string) => void;
 }
 
-function Tq01Card({ name, idColeta, preencher }: PointNameProps) {
+function Tq01Card({ name, idColeta }: PointNameProps) {
     const [nivel, setNivel] = useState<number>(1);
     const { createTq01Measure, isCreated, isError, resetState } = useTq01Store();
 
@@ -50,7 +49,6 @@ function Tq01Card({ name, idColeta, preencher }: PointNameProps) {
                 width: '30%'
             });
             resetState();
-            preencher(name);
         }
         if (isError) {
             Swal.fire({
@@ -60,7 +58,7 @@ function Tq01Card({ name, idColeta, preencher }: PointNameProps) {
             });
             resetState();
         }
-    }, [isCreated, resetState, isError, name, preencher]);
+    }, [isCreated, resetState, isError, name]);
     
     return (
         <>

@@ -10,7 +10,6 @@ const itemsPerPage = 2; // Define the number of items to show per page
 interface PointNameProps {
     name: string;
     idColeta: number;
-    preencher: (pointName: string) => void;
 }
 
 // Define um tipo que representa os setters para diferentes tipos de estado
@@ -25,7 +24,7 @@ interface InfoContentData {
     setter: Setter<number> | Setter<boolean>; // Define o setter como um tipo de união
 }
 
-function Tq04Tq05Card({ name, idColeta, preencher }: PointNameProps) {
+function Tq04Tq05Card({ name, idColeta }: PointNameProps) {
     const [kgBombonas, setKgBombonas] = useState<number>(1);
     const [qtdBombonas, setQtdBombonas] = useState<number>(1);
     const [horimeter, setHorimeter] = useState<number>(1);
@@ -78,7 +77,6 @@ function Tq04Tq05Card({ name, idColeta, preencher }: PointNameProps) {
                 width: '30%'
             });
             resetState();
-            preencher(name);
         }
         if (isError) {
             Swal.fire({
@@ -88,7 +86,7 @@ function Tq04Tq05Card({ name, idColeta, preencher }: PointNameProps) {
             });
             resetState();
         }
-    }, [isCreated, resetState, isError, name, preencher]);
+    }, [isCreated, resetState, isError, name]);
 
     // Data to be displayed in the modal
     const infoContentData: InfoContentData[] = [

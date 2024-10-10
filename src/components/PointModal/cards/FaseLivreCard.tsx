@@ -8,10 +8,9 @@ import { FASE_LIVRE } from "../../../interfaces/postParams";
 interface PointNameProps{
     name: string;
     idColeta: number;
-    preencher: (pointName: string) => void;
 }
 
-function FaseLivreCard({ name, idColeta, preencher }: PointNameProps) {
+function FaseLivreCard({ name, idColeta }: PointNameProps) {
     const [volume, setVolume] = useState<number>(1);
     const [houveTroca, setHouveTroca] = useState<boolean>(false);
     const { createFaseLivreMeasure, isCreated, isError, resetState } = useFaseLivreStore();
@@ -56,7 +55,6 @@ function FaseLivreCard({ name, idColeta, preencher }: PointNameProps) {
                 width: '30%'
             });
             resetState();
-            preencher(name);
         }
         if (isError) {
             Swal.fire({
@@ -65,7 +63,7 @@ function FaseLivreCard({ name, idColeta, preencher }: PointNameProps) {
                 text: 'Ocorreu um erro durante a criação. Tente novamente!',
             });
         }
-    }, [isCreated, resetState, isError, preencher, name]);
+    }, [isCreated, resetState, isError, name]);
 
     return (
         <>

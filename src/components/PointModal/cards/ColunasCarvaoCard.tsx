@@ -10,10 +10,9 @@ const itemsPerPage = 2;
 interface PointNameProps {
     name: string;
     idColeta: number;
-    preencher: (pointName: string) => void;
 }
 
-function ColunasCarvaoCard({ name, idColeta, preencher }: PointNameProps) {
+function ColunasCarvaoCard({ name, idColeta }: PointNameProps) {
     const [measurements, setMeasurements] = useState({
         pressure_c01: 1,
         pressure_c02: 1,
@@ -78,7 +77,6 @@ function ColunasCarvaoCard({ name, idColeta, preencher }: PointNameProps) {
                 width: '30%'
             });
             resetState();
-            preencher(name);
         }
         if (isError) {
             Swal.fire({
@@ -88,7 +86,7 @@ function ColunasCarvaoCard({ name, idColeta, preencher }: PointNameProps) {
             });
             resetState();
         }
-    }, [isCreated, resetState, isError, name, preencher]);
+    }, [isCreated, resetState, isError, name]);
 
     const infoContentData = [
         { type: "Pressão C01", key: "pressure_c01", value: measurements.pressure_c01, isInteger: false, isBoolean: false },

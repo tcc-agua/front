@@ -8,10 +8,9 @@ import { HORIMETRO } from "../../../interfaces/postParams";
 interface PointNameProps{
     name: string
     idColeta: number
-    preencher: (pointName: string) => void;
 }
 
-function HorimetroCard({ name, idColeta, preencher }: PointNameProps) {
+function HorimetroCard({ name, idColeta }: PointNameProps) {
     const [horimeter, setHorimeter] = useState<number>(1);
     const { createHorimetroMeasure, isCreated, isError, resetState } = useHorimetroStore();
 
@@ -50,7 +49,6 @@ function HorimetroCard({ name, idColeta, preencher }: PointNameProps) {
                 width: '30%'
             });
             resetState();
-            preencher(name);
         }
         if (isError) {
             Swal.fire({
@@ -59,7 +57,7 @@ function HorimetroCard({ name, idColeta, preencher }: PointNameProps) {
                 text: 'Ocorreu um erro durante a criação. Tente novamente!',
             });
         }
-    }, [isCreated, resetState, isError, preencher, name]);
+    }, [isCreated, resetState, isError, name]);
 
     return (
         <>

@@ -4,16 +4,20 @@ import Swal from 'sweetalert2';
 import { InputPoint } from "../InputPoint"; 
 import { BC01 } from "../../../interfaces/postParams";
 import useBc01Store from "../../../store/Bc01Store";
+import usePontoState, { STATUS_OPT } from "../../../store/PontoStore";
 
 const itemsPerPage = 2;
 
 interface PointNameProps {
     name: string;
     idColeta: number;
-    preencher: (pointName: string) => void;
 }
 
-function Bc01Card({ name, idColeta, preencher }: PointNameProps) {
+function Bc01Card({ name, idColeta }: PointNameProps) {
+    const { createBc01Measure, isCreated, isError, resetState } = useBc01Store();
+    const [currentIndex, setCurrentIndex] = useState(0);
+    const { setStatus } = usePontoState();
+
     const [measurements, setMeasurements] = useState({
         pressure: 1,
         frequency: 1,
@@ -21,9 +25,6 @@ function Bc01Card({ name, idColeta, preencher }: PointNameProps) {
         leak: 1,
         volume: 1,
     });
-
-    const { createBc01Measure, isCreated, isError, resetState } = useBc01Store();
-    const [currentIndex, setCurrentIndex] = useState(0);
 
     const increment = useCallback((key: keyof typeof measurements, isInteger: boolean) => {
         setMeasurements(prevState => ({
@@ -71,7 +72,7 @@ function Bc01Card({ name, idColeta, preencher }: PointNameProps) {
                 width: '30%'
             });
             resetState();
-            preencher(name);
+            setStatus(name, STATUS_OPT.COLETADO);
             
         }
         if (isError) {
@@ -81,8 +82,9 @@ function Bc01Card({ name, idColeta, preencher }: PointNameProps) {
                 text: 'Ocorreu um erro durante a criação. Tente novamente!',
             });
             resetState();
+            setStatus(name, STATUS_OPT.NAO_COLETADO);
         }
-    }, [isCreated, resetState, isError, name, preencher]);
+    }, [isCreated, resetState, isError, name, setStatus]);
     
 
     const infoContentData = [

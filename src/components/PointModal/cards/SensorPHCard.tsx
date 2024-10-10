@@ -8,10 +8,9 @@ import { SENSOR_PH } from "../../../interfaces/postParams";
 interface PointNameProps{
     name: string;
     idColeta: number
-    preencher: (pointName: string) => void;
 }
 
-function SensorPHCard({ name, idColeta, preencher }: PointNameProps) {
+function SensorPHCard({ name, idColeta }: PointNameProps) {
     const [ph, setPh] = useState<number>(1);
     const { createSensorPhMeasure, isCreated, isError, resetState } = useSensorPhStore();
 
@@ -51,7 +50,6 @@ function SensorPHCard({ name, idColeta, preencher }: PointNameProps) {
                 width: '30%'
             });
             resetState();
-            preencher(name);
 
         }
         if (isError) {
@@ -62,7 +60,7 @@ function SensorPHCard({ name, idColeta, preencher }: PointNameProps) {
             });
             resetState();
         }
-    }, [isCreated, resetState, isError, name, preencher]);
+    }, [isCreated, resetState, isError, name]);
 
     return (
         <>
