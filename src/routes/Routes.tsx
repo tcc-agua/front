@@ -12,6 +12,7 @@ import Login from '../pages/Login/Login';
 import NotFound from '../pages/NotFound/NotFound';
 import SplashPage from '../pages/Splash/Splash';
 import { LastActivities } from '../pages/LastActivities/LastActivities';
+import { WaterConsumption } from '../pages/WaterConsumption/WaterConsumption';
 
 const AppRoutes: React.FC = () => {
     return (
@@ -27,6 +28,8 @@ const AppRoutes: React.FC = () => {
                     <Route path='historico' element={<Historic />} />
                     <Route path='exportar_excel' element={<ExportExcel />} />
                     <Route path='ultimas_atividades' element={<LastActivities />} />
+                    <Route path='consumo_de_agua' element={<WaterConsumption />} />
+
                 </Route>
                 <Route path="*" element={<NotFound />} />
             </Routes>

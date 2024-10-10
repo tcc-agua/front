@@ -1,6 +1,9 @@
 import { Link, useLocation } from "react-router-dom";
 import styles from './Sidebar.module.css';
-import { useTheme } from '../ThemeContext/ThemeContext'; 
+import { useTheme } from '../ThemeContext/ThemeContext';
+import logout from '../../assets/images/logout.svg'
+
+// icons normal e azul
 import HomeIMG from '../../assets/images/home.svg';
 import HomeBlueIMG from '../../assets/images/home-blue.svg';
 import MapaIMG from '../../assets/images/mapa.svg';
@@ -11,7 +14,8 @@ import HistoricoIMG from '../../assets/images/historico.svg';
 import HistoricoBlueIMG from '../../assets/images/historico-blue.svg';
 import ExportarIMG from '../../assets/images/exportar.svg';
 import ExportarBlueIMG from '../../assets/images/exportar-blue.svg';
-import logout from '../../assets/images/logout.svg'
+import ConsumoAguaIMG from '../../assets/images/torneira.svg';
+import ConsumoAguaBlueIMG from '../../assets/images/torneira-blue.svg'
 
 // dark mode icons
 import HomeWhite from '../../assets/images/darkmode_icons/home_white.svg';
@@ -19,6 +23,7 @@ import MapaWhite from '../../assets/images/darkmode_icons/map_white.svg';
 import MaisWhite from '../../assets/images/darkmode_icons/plus_white.svg';
 import HistoricoWhite from '../../assets/images/darkmode_icons/historic_white.svg';
 import ExportarWhite from '../../assets/images/darkmode_icons/export_white.svg';
+import ConsumoAguaWhite from '../../assets/images/darkmode_icons/torneira_white.svg'
 
 interface SidebarProps {
     className?: string;
@@ -88,6 +93,17 @@ export function Sidebar({ className }: SidebarProps) {
                             alt="historic"
                         />
                         <p>Histórico</p>
+                    </Link>
+                </div>
+
+                <div className={`${styles.options} ${location.pathname === '/inicial/consumo_de_agua' ? styles.active : ''}`}>
+                    <Link className={styles.content_options} to={"/inicial/consumo_de_agua"}>
+                        <div className={styles.blue}></div>
+                        <img
+                            src={getIcon(ConsumoAguaIMG, ConsumoAguaBlueIMG, ConsumoAguaWhite, '/inicial/consumo_de_agua')}
+                            alt="consumo_agua"
+                        />
+                        <p>Consumo de água</p>
                     </Link>
                 </div>
 
