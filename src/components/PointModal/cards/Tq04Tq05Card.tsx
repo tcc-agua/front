@@ -4,6 +4,7 @@ import Swal from 'sweetalert2';
 import { BooleanInput, InputPoint } from "../InputPoint";
 import useTq04Tq05Store from "../../../store/Tq04Tq05Store";
 import { TQ04_TQ05 } from "../../../interfaces/postParams";
+import usePontoState from "../../../store/PontoStore";
 
 const itemsPerPage = 2; // Define the number of items to show per page
 
@@ -25,6 +26,7 @@ interface InfoContentData {
 }
 
 function Tq04Tq05Card({ name, idColeta }: PointNameProps) {
+    const { setStatus } = usePontoState();
     const [kgBombonas, setKgBombonas] = useState<number>(1);
     const [qtdBombonas, setQtdBombonas] = useState<number>(1);
     const [horimeter, setHorimeter] = useState<number>(1);
@@ -77,6 +79,7 @@ function Tq04Tq05Card({ name, idColeta }: PointNameProps) {
                 width: '30%'
             });
             resetState();
+            setStatus(name, "COLETADO");
         }
         if (isError) {
             Swal.fire({
@@ -84,9 +87,10 @@ function Tq04Tq05Card({ name, idColeta }: PointNameProps) {
                 icon: 'error',
                 text: 'Ocorreu um erro durante a criação. Tente novamente!',
             });
+            setStatus(name, "NAO_COLETADO");
             resetState();
         }
-    }, [isCreated, resetState, isError, name]);
+    }, [isCreated, resetState, isError, name, setStatus]);
 
     // Data to be displayed in the modal
     const infoContentData: InfoContentData[] = [

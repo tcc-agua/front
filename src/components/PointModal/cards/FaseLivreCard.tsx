@@ -4,6 +4,7 @@ import Swal from 'sweetalert2';
 import { BooleanInput, InputPoint } from "../InputPoint";
 import useFaseLivreStore from "../../../store/FaseLivreStore";
 import { FASE_LIVRE } from "../../../interfaces/postParams";
+import usePontoState from "../../../store/PontoStore";
 
 interface PointNameProps{
     name: string;
@@ -11,6 +12,7 @@ interface PointNameProps{
 }
 
 function FaseLivreCard({ name, idColeta }: PointNameProps) {
+    const { setStatus } = usePontoState();
     const [volume, setVolume] = useState<number>(1);
     const [houveTroca, setHouveTroca] = useState<boolean>(false);
     const { createFaseLivreMeasure, isCreated, isError, resetState } = useFaseLivreStore();
@@ -55,6 +57,7 @@ function FaseLivreCard({ name, idColeta }: PointNameProps) {
                 width: '30%'
             });
             resetState();
+            setStatus(name, "COLETADO");
         }
         if (isError) {
             Swal.fire({
@@ -62,8 +65,11 @@ function FaseLivreCard({ name, idColeta }: PointNameProps) {
                 icon: 'error',
                 text: 'Ocorreu um erro durante a criação. Tente novamente!',
             });
+            resetState();
+            setStatus(name, "NAO_COLETADO");
+
         }
-    }, [isCreated, resetState, isError, name]);
+    }, [isCreated, resetState, isError, name, setStatus]);
 
     return (
         <>

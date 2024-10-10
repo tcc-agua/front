@@ -4,8 +4,7 @@ import Swal from 'sweetalert2';
 import { InputPoint } from "../InputPoint"; 
 import { BC01 } from "../../../interfaces/postParams";
 import useBc01Store from "../../../store/Bc01Store";
-import usePontoState, { STATUS_OPT } from "../../../store/PontoStore";
-
+import usePontoState from "../../../store/PontoStore";
 
 const itemsPerPage = 2;
 
@@ -73,7 +72,7 @@ function Bc01Card({ name, idColeta }: PointNameProps) {
                 width: '30%'
             });
             resetState();
-            setStatus(name, STATUS_OPT.COLETADO);
+            setStatus(name, "COLETADO");
             
         }
         if (isError) {
@@ -83,10 +82,9 @@ function Bc01Card({ name, idColeta }: PointNameProps) {
                 text: 'Ocorreu um erro durante a criação. Tente novamente!',
             });
             resetState();
-            setStatus(name, STATUS_OPT.NAO_COLETADO);
+            setStatus(name, "NAO_COLETADO");
         }
     }, [isCreated, resetState, isError, name, setStatus]);
-    
 
     const infoContentData = [
         { type: "Pressão", key: "pressure", value: measurements.pressure, isInteger: false },

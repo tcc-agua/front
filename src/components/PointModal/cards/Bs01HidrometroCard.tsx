@@ -4,6 +4,7 @@ import Swal from 'sweetalert2';
 import { InputPoint } from "../InputPoint";
 import useBs01HidrometroStore from "../../../store/Bs01HidrometroStore";
 import { BS01_HIDROMETRO } from "../../../interfaces/postParams";
+import usePontoState from "../../../store/PontoStore";
 
 interface PointNameProps{
     name: string;
@@ -11,6 +12,7 @@ interface PointNameProps{
 }
 
 function Bs01HidrometroCard({ name , idColeta}:PointNameProps ) {
+    const { setStatus, status } = usePontoState();
     const [volume, setVolume] = useState<number>(1);
     const { createBs01HidrometroMeasure, isCreated, isError, resetState } = useBs01HidrometroStore();
 
@@ -51,7 +53,8 @@ function Bs01HidrometroCard({ name , idColeta}:PointNameProps ) {
                 timer: 2000,
                 width: '30%'
             });
-            resetState();            
+            resetState();
+            setStatus(name, "COLETADO");    
         }
         if (isError) {
             Swal.fire({
@@ -60,9 +63,10 @@ function Bs01HidrometroCard({ name , idColeta}:PointNameProps ) {
                 text: 'Ocorreu um erro durante a criação. Tente novamente!',
             });
             resetState();
+            setStatus(name, "NAO_COLETADO");
         }
 
-    }, [isCreated, resetState, isError, name])
+    }, [isCreated, resetState, isError, name, setStatus, status])
 
     return (
         <>

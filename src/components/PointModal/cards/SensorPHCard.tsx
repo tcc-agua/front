@@ -4,6 +4,7 @@ import Swal from 'sweetalert2';
 import { InputPoint } from "../InputPoint";
 import useSensorPhStore from "../../../store/SensorPhStore";
 import { SENSOR_PH } from "../../../interfaces/postParams";
+import usePontoState from "../../../store/PontoStore";
 
 interface PointNameProps{
     name: string;
@@ -11,6 +12,7 @@ interface PointNameProps{
 }
 
 function SensorPHCard({ name, idColeta }: PointNameProps) {
+    const { setStatus } = usePontoState();
     const [ph, setPh] = useState<number>(1);
     const { createSensorPhMeasure, isCreated, isError, resetState } = useSensorPhStore();
 
@@ -50,6 +52,7 @@ function SensorPHCard({ name, idColeta }: PointNameProps) {
                 width: '30%'
             });
             resetState();
+            setStatus(name, "COLETADO");
 
         }
         if (isError) {
@@ -59,8 +62,9 @@ function SensorPHCard({ name, idColeta }: PointNameProps) {
                 text: 'Ocorreu um erro durante a criação. Tente novamente!',
             });
             resetState();
+            setStatus(name, "NAO_COLETADO");
         }
-    }, [isCreated, resetState, isError, name]);
+    }, [isCreated, resetState, isError, name, setStatus]);
 
     return (
         <>

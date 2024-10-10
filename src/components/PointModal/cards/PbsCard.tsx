@@ -4,6 +4,7 @@ import Swal from 'sweetalert2';
 import { InputPoint } from "../InputPoint";
 import usePbsStore from "../../../store/PbsStore";
 import { PBS } from "../../../interfaces/postParams";
+import usePontoState from "../../../store/PontoStore";
 
 const itemsPerPage = 2; // Definir o número de itens por página
 
@@ -13,6 +14,7 @@ interface PointNameProps {
 }
 
 function PbsCard({ name, idColeta }: PointNameProps) {
+    const { setStatus } = usePontoState();
     const [pressure, setPressure] = useState<number>(1);
     const [pulses, setPulses] = useState<number>(1);
     const [oilLevel, setOilLevel] = useState<number>(1);
@@ -60,6 +62,7 @@ function PbsCard({ name, idColeta }: PointNameProps) {
                 width: '30%'
             });
             resetState();
+            setStatus(name, "COLETADO");
         }
         if (isError) {
             Swal.fire({
@@ -68,8 +71,9 @@ function PbsCard({ name, idColeta }: PointNameProps) {
                 text: 'Ocorreu um erro durante a criação. Tente novamente!',
             });
             resetState();
+            setStatus(name, "NAO_COLETADO");
         }
-    }, [isCreated, resetState, isError, name]);
+    }, [isCreated, resetState, isError, name, setStatus]);
 
     const infoContentData = [
         { type: "Pressão", key: "pressure", value: pressure, setter: setPressure, isInteger: false },

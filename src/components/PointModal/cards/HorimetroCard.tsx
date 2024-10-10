@@ -4,6 +4,7 @@ import Swal from 'sweetalert2';
 import { InputPoint } from "../InputPoint";
 import useHorimetroStore from "../../../store/HorimetroStore";
 import { HORIMETRO } from "../../../interfaces/postParams";
+import usePontoState from "../../../store/PontoStore";
 
 interface PointNameProps{
     name: string
@@ -11,6 +12,7 @@ interface PointNameProps{
 }
 
 function HorimetroCard({ name, idColeta }: PointNameProps) {
+    const { setStatus } = usePontoState();
     const [horimeter, setHorimeter] = useState<number>(1);
     const { createHorimetroMeasure, isCreated, isError, resetState } = useHorimetroStore();
 
@@ -49,6 +51,7 @@ function HorimetroCard({ name, idColeta }: PointNameProps) {
                 width: '30%'
             });
             resetState();
+            setStatus(name, "COLETADO");
         }
         if (isError) {
             Swal.fire({
@@ -56,8 +59,10 @@ function HorimetroCard({ name, idColeta }: PointNameProps) {
                 icon: 'error',
                 text: 'Ocorreu um erro durante a criação. Tente novamente!',
             });
+            setStatus(name, "NAO_COLETADO");
+            resetState();
         }
-    }, [isCreated, resetState, isError, name]);
+    }, [isCreated, resetState, isError, name, setStatus]);
 
     return (
         <>

@@ -7,7 +7,7 @@ export interface Point {
     id: string;
     nome: string;
     localizacao: string;
-    status: string;
+    statusEnum: string;
 }
 
 interface PointNamesProps {
@@ -16,7 +16,6 @@ interface PointNamesProps {
 
 export function PointNames({ onSelectPoint }: PointNamesProps) {
     const [points, setPoints] = useState<Point[]>([]);
-    const [pontosPreenchidos, setPontosPreenchidos] = useState<string[]>([]); // Agora usando useState
     const id_token = localStorage.getItem("id_token");
     const [currentPage, setCurrentPage] = useState<number>(0);
     const [pointsPerPage, setPointsPerPage] = useState<number>(8);
@@ -48,12 +47,7 @@ export function PointNames({ onSelectPoint }: PointNamesProps) {
                     const response = await fetchPointBySheet(planilha);
                     if (Array.isArray(response)) {
                         setPoints(response);
-
-                        const pontosColetados = response.filter((point) => point.status === "COLETADO").map((point) => point.nome);
-
-                        setPontosPreenchidos(pontosColetados);
                         setQtdPontos(response.length);
-
                     } else {
                         setPoints([]);
                     }
@@ -68,6 +62,21 @@ export function PointNames({ onSelectPoint }: PointNamesProps) {
 
         fetchPoints();
     }, [id_token, planilha, setQtdPontos]);
+
+    const handlePointSelect = async (selectedPoint: Point) => {
+        try {
+            await onSelectPoint(selectedPoint);
+
+            // Atualiza o estado local para refletir a mudança de status
+            setPoints((prevPoints) =>
+                prevPoints.map((point) =>
+                    point.id === selectedPoint.id ? { ...point, status: "COLETADO" } : point
+                )
+            );
+        } catch (error) {
+            console.error("Erro ao selecionar ponto:", error);
+        }
+    };
 
     const getCurrentPoints = () => {
         const startIndex = currentPage * pointsPerPage;
@@ -89,18 +98,18 @@ export function PointNames({ onSelectPoint }: PointNamesProps) {
     return (
         <div className={styles.select_point_grid}>
             {getCurrentPoints().map((point) => {
-                const isPreenchido = pontosPreenchidos.includes(point.nome);
+                const isPreenchido = point.statusEnum === "COLETADO";
                 return (
                     <button
                         key={point.id}
                         className={styles.select_point}
-                        onClick={() => onSelectPoint(point)}
+                        onClick={() => handlePointSelect(point)}
                     >
                         <p className={styles.name_point}>
                             <span className={styles.name_point_type}>{point.nome}</span>
                         </p>
                         <pre className={styles.status_point}>
-                            {point.status} ⟶ {isPreenchido ? "Preenchido" : "Não Preenchido"}
+                             ⟶ {isPreenchido ? "Preenchido" : "Não Preenchido"}
                         </pre>
                     </button>
                 );

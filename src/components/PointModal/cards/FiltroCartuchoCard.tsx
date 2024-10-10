@@ -4,6 +4,7 @@ import Swal from 'sweetalert2';
 import { InputPoint } from "../InputPoint";
 import useFiltroCartuchoStore from "../../../store/FiltroCartuchoStore";
 import { FILTRO_CARTUCHO } from "../../../interfaces/postParams";
+import usePontoState from "../../../store/PontoStore";
 
 interface PointNameProps{
     name: string;
@@ -12,6 +13,7 @@ interface PointNameProps{
 }
 
 function FiltroCartuchoCard({ name, idColeta }:PointNameProps) {
+    const { setStatus } = usePontoState();
     const [outletPressure, setOutletPressure] = useState<number>(1);
     const [inletPressure, setInletPressure] = useState<number>(1);
     const { createFiltroCartuchoMeasure, isCreated, isError, resetState } = useFiltroCartuchoStore();
@@ -52,6 +54,7 @@ function FiltroCartuchoCard({ name, idColeta }:PointNameProps) {
                 width: '30%'
             });
             resetState();
+            setStatus(name, "COLETADO");
         }
         if (isError) {
             Swal.fire({
@@ -60,8 +63,9 @@ function FiltroCartuchoCard({ name, idColeta }:PointNameProps) {
                 text: 'Ocorreu um erro durante a criação. Tente novamente!',
             });
             resetState();
+            setStatus(name, "NAO_COLETADO");
         }
-    }, [isCreated, resetState, isError, name]);
+    }, [isCreated, resetState, isError, name, setStatus]);
 
     return (
         <>

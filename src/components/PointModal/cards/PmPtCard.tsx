@@ -4,6 +4,7 @@ import Swal from 'sweetalert2';
 import { InputPoint } from "../InputPoint";
 import usePmPtStore from "../../../store/PmPtStore";
 import { PMPT } from "../../../interfaces/postParams";
+import usePontoState from "../../../store/PontoStore";
 
 interface PointNameProps {
     name: string;
@@ -13,6 +14,7 @@ interface PointNameProps {
 const itemsPerPage = 2;
 
 function PmPtCard({ name, idColeta }: PointNameProps) {
+    const { setStatus } = usePontoState();
     const [oilLevel, setOilLevel] = useState<number>(1);
     const [waterLevel, setWaterLevel] = useState<number>(1);
     const [flRemoManual, setFlRemoManual] = useState<number>(1);
@@ -62,6 +64,7 @@ function PmPtCard({ name, idColeta }: PointNameProps) {
                 width: '30%'
             });
             resetState();
+            setStatus(name, "COLETADO");
         }
         if (isError) {
             Swal.fire({
@@ -70,8 +73,9 @@ function PmPtCard({ name, idColeta }: PointNameProps) {
                 text: 'Ocorreu um erro durante a criação. Tente novamente!',
             });
             resetState();
+            setStatus(name, "NAO_COLETADO");
         }
-    }, [isCreated, resetState, isError, name]);
+    }, [isCreated, resetState, isError, name, setStatus]);
 
     const infoContentData = [
         { type: "Nível do óleo", value: oilLevel, isInteger: false, setter: setOilLevel },

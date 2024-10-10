@@ -4,6 +4,7 @@ import Swal from 'sweetalert2';
 import { InputPoint } from "../InputPoint";
 import useTq02Store from "../../../store/Tq02Store";
 import { TQ02 } from "../../../interfaces/postParams";
+import usePontoState from "../../../store/PontoStore";
 
 interface PointNameProps{
     name: string;
@@ -11,6 +12,7 @@ interface PointNameProps{
 }
 
 function Tq02Card({ name, idColeta,  }: PointNameProps) {
+    const { setStatus } = usePontoState();
     const [ph, setPh] = useState<number>(1);
     const [lt_02_1, setLt_02_1] = useState<number>(1);
     const { createTq02Measure, isCreated, isError, resetState } = useTq02Store();
@@ -51,6 +53,7 @@ function Tq02Card({ name, idColeta,  }: PointNameProps) {
                 width: '30%'
             });
             resetState();
+            setStatus(name, "COLETADO");
         }
         if (isError) {
             Swal.fire({
@@ -59,8 +62,9 @@ function Tq02Card({ name, idColeta,  }: PointNameProps) {
                 text: 'Ocorreu um erro durante a criação. Tente novamente!',
             });
             resetState();
+            setStatus(name, "NAO_COLETADO");
         }
-    }, [isCreated, resetState, isError, name]);
+    }, [isCreated, resetState, isError, name, setStatus]);
     
     return (
         <>
