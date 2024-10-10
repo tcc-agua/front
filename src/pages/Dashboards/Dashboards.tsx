@@ -12,7 +12,7 @@ import DropdownButton from "../../components/DropdownButton/DropdownButton"
 interface DropdownItem {
     id: string;
     label: string;
-    value: string | number; 
+    value: string | number;
 }
 
 interface Hidrometro {
@@ -41,76 +41,76 @@ interface Nivel {
 // Função que permite ao usuário escolher o ponto que os dados serão exibidos no gráfico
 const GraphicDropdown: React.FC = () => {
     const [chartData, setChartData] = useState<ChartDataProp | undefined>(undefined);
-    const [selectedHidro, setSelectedHidro ] = useState<DropdownItem | undefined>(undefined);
-    const [hidroVolume, setHidroVolume] = useState<number[]>([]); 
+    const [selectedHidro, setSelectedHidro] = useState<DropdownItem | undefined>(undefined);
+    const [hidroVolume, setHidroVolume] = useState<number[]>([]);
 
     // Opções de pontos que o usuário pode escolher
     const hidro: DropdownItem[] = [
-        { id: '53', label: 'Geral Fábrica', value:'Geral Fabrica' },
-        { id: '54', label: 'Kinderhaus', value:'Kinderhaus' },
-        { id: '55', label: 'Refeitório', value:'Refeitorio' },
-        { id: '56', label: 'Geral 222', value:'Geral222' },
-        { id: '57', label: 'Entrada Desmi', value:'EntradaDesmi' },
-        { id: '58', label: 'Daída Desmi', value:'SaidaDesmi' },
-        { id: '59', label: 'Geral 210', value:'Geral210' },
-        { id: '60', label: 'Descarte', value:'Descarte' },
-        { id: '61', label: 'Geral 401', value:'Geral401' },
-        { id: '62', label: 'Geral 215', value:'Geral215' },
-        { id: '63', label: 'Água Quente', value:'Agua Quente' },
-        { id: '64', label: 'Água Industrial', value:'Agua industrial' },
-        { id: '65', label: 'Geral 303', value:'Geral303' },
-        { id: '66', label: 'Geral 304', value:'Geral304' },
-        { id: '67', label: 'Central de Óleo', value:'CentraldeOleo' },
-        { id: '68', label: 'Geral 115', value:'Geral115' },
-        { id: '69', label: 'Tanque Reman', value:'tanqueReman' },       
-]
+        { id: '53', label: 'Geral Fábrica', value: 'Geral Fabrica' },
+        { id: '54', label: 'Kinderhaus', value: 'Kinderhaus' },
+        { id: '55', label: 'Refeitório', value: 'Refeitorio' },
+        { id: '56', label: 'Geral 222', value: 'Geral222' },
+        { id: '57', label: 'Entrada Desmi', value: 'EntradaDesmi' },
+        { id: '58', label: 'Daída Desmi', value: 'SaidaDesmi' },
+        { id: '59', label: 'Geral 210', value: 'Geral210' },
+        { id: '60', label: 'Descarte', value: 'Descarte' },
+        { id: '61', label: 'Geral 401', value: 'Geral401' },
+        { id: '62', label: 'Geral 215', value: 'Geral215' },
+        { id: '63', label: 'Água Quente', value: 'Agua Quente' },
+        { id: '64', label: 'Água Industrial', value: 'Agua industrial' },
+        { id: '65', label: 'Geral 303', value: 'Geral303' },
+        { id: '66', label: 'Geral 304', value: 'Geral304' },
+        { id: '67', label: 'Central de Óleo', value: 'CentraldeOleo' },
+        { id: '68', label: 'Geral 115', value: 'Geral115' },
+        { id: '69', label: 'Tanque Reman', value: 'tanqueReman' },
+    ]
 
-// Função para buscar os dados do hidrometro selecionado
-useEffect(() => {
-    const FetchHidrometro = async (ponto : string) => {
-      try {
-        const data: Hidrometro[] = await fetchHidrometro(ponto);
-        const volumes = data.map(hidrometro => hidrometro.volume);
-        const nome = selectedHidro?.label ?? 'Hidrometro não selecionado.';
-        setHidroVolume(volumes);  
-      
-        // Definindo o que o gráfico irá receber
-        setChartData({
-            meses: ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro' ],
-            nome,
-            volumes,
-        })
+    // Função para buscar os dados do hidrometro selecionado
+    useEffect(() => {
+        const FetchHidrometro = async (ponto: string) => {
+            try {
+                const data: Hidrometro[] = await fetchHidrometro(ponto);
+                const volumes = data.map(hidrometro => hidrometro.volume);
+                const nome = selectedHidro?.label ?? 'Hidrometro não selecionado.';
+                setHidroVolume(volumes);
 
-      } catch (error) {
-        console.error("Erro ao buscar dados do hidrometro selecionado.");
-        console.error(error);
-      }
-    };
+                // Definindo o que o gráfico irá receber
+                setChartData({
+                    meses: ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'],
+                    nome,
+                    volumes,
+                })
 
-    if (selectedHidro) {
-      FetchHidrometro(selectedHidro.value.toString()); 
-    } else {
-        FetchHidrometro('Geral Fabrica') // Seleciona um valor base, caso nenhum ponto seja escolhido ainda, para o gráfico não sumir
-    }
-  }, [selectedHidro]);
+            } catch (error) {
+                console.error("Erro ao buscar dados do hidrometro selecionado.");
+                console.error(error);
+            }
+        };
 
-return (
-    <div> 
-    <DropdownButton
-    id="hidroDropdown"
-    title="Geral Fábrica"
-    options={hidro}
-    selectedOption={selectedHidro}
-    onSelect={setSelectedHidro}
-    />
+        if (selectedHidro) {
+            FetchHidrometro(selectedHidro.value.toString());
+        } else {
+            FetchHidrometro('Geral Fabrica') // Seleciona um valor base, caso nenhum ponto seja escolhido ainda, para o gráfico não sumir
+        }
+    }, [selectedHidro]);
 
-    {hidroVolume && (
+    return (
         <div>
-            <Graphic chartDataProp={chartData}/>
+            <DropdownButton
+                id="hidroDropdown"
+                title="Geral Fábrica"
+                options={hidro}
+                selectedOption={selectedHidro}
+                onSelect={setSelectedHidro}
+            />
+
+            {hidroVolume && (
+                <div>
+                    <Graphic chartDataProp={chartData} />
+                </div>
+            )}
         </div>
-      )}
-    </div>
-)
+    )
 };
 
 // Verifica a data atual e compara com a data em que a coleta foi feita
@@ -151,11 +151,11 @@ export const SensorPH: React.FC = () => {
                 setPh(sortedPH);
 
 
-                if (sortedPH.length >= 2) { 
+                if (sortedPH.length >= 2) {
                     // pega somente os dois ultimos registros
                     const lastPH = sortedPH[0].ph;
                     const previousPH = sortedPH[1].ph;
-                    
+
                     // verifica a diferença entre um registro e outro em porcentagem
                     const percentageDifference = ((lastPH - previousPH) / previousPH) * 100;
                     setDifferencePercentage(Math.abs(percentageDifference));
@@ -195,7 +195,7 @@ export const Niveltq01: React.FC = () => {
     const [, setNivel] = useState<Nivel[]>([]);
     const [differencePercentage, setDifferencePercentage] = useState<number>(0);
     const [isIncrease, setIsIncrease] = useState<boolean>(true);
-    
+
     useEffect(() => {
         const getNivel = async () => {
             try {
@@ -204,16 +204,16 @@ export const Niveltq01: React.FC = () => {
                     const sortedNivel = data.sort((a, b) => b.id - a.id);
                     setNivel(sortedNivel);
 
-                if(sortedNivel.length >= 2) {
-                    const lastNivel = sortedNivel[0].nivel;
-                    const previousNivel = sortedNivel[1].nivel;
+                    if (sortedNivel.length >= 2) {
+                        const lastNivel = sortedNivel[0].nivel;
+                        const previousNivel = sortedNivel[1].nivel;
 
-                    if ( previousNivel !== 0 ) {
-                        const percentageDiff = ((lastNivel - previousNivel) / previousNivel) * 100;
-                        setDifferencePercentage(Math.abs(percentageDiff));
-                        setIsIncrease(percentageDiff > 0);
+                        if (previousNivel !== 0) {
+                            const percentageDiff = ((lastNivel - previousNivel) / previousNivel) * 100;
+                            setDifferencePercentage(Math.abs(percentageDiff));
+                            setIsIncrease(percentageDiff > 0);
+                        }
                     }
-                }
                 }
             } catch (error) {
                 console.error("Erro ao buscar informações de 'Nivel TQ01.");
@@ -231,9 +231,9 @@ export const Niveltq01: React.FC = () => {
                 <pre>
                     <span className={styles.extra}>
                         {isIncrease ? '↗' : '↘'} {differencePercentage.toFixed(0)}%
-                        </span> {' '}
-                        {isIncrease ? 'maior' : 'menor'} que na última semana
-                    </pre>
+                    </span> {' '}
+                    {isIncrease ? 'maior' : 'menor'} que na última semana
+                </pre>
             </div>
         </div>
     )
@@ -283,11 +283,11 @@ export const Notifications: React.FC = () => {
 
         } else if (['NA', 'PBS'].includes(tabela) && tipo === 'SALVO') {
             message = `Dados "${tabela}" salvo com sucesso!`;
-            
+
         } else if (['DADOS ETAS'].includes(tabela) && tipo === 'SALVO') {
             message = `Dados "ETAS" salvo com sucesso!`;
-        } else if ( ['CA'].includes(tabela) && tipo === 'SALVO') {
-            message = `Dados de "CA" salvo com sucesso!`
+        } else if (['CA'].includes(tabela) && tipo === 'SALVO') {
+            message = `Dados de "Consumo de água" salvo com sucesso!`
         }
 
         let dayDiff = getDateDifference(data)
@@ -334,9 +334,9 @@ export function Dashboards() {
             <div className={styles.left_side}>
                 <div className={styles.updates}>
                     <p className={styles.title}>Atualizações</p>
-                    <div className={styles.content_updates}> 
-                        <SensorPH /> 
-                        <Niveltq01/>
+                    <div className={styles.content_updates}>
+                        <SensorPH />
+                        <Niveltq01 />
                     </div>
                 </div>
 
@@ -348,7 +348,7 @@ export function Dashboards() {
                 <div className={styles.graphic}>
                     <p className={styles.title}>Leitura dos hidrômetros</p>
                     <div className={styles.grafico}>
-                        <GraphicDropdown/>                        
+                        <GraphicDropdown />
                     </div>
                 </div>
             </div>
@@ -362,12 +362,9 @@ export function Dashboards() {
                     <Notifications />
                 </div>
                 <div className={styles.mapview}>
-
                     <p className={styles.title}>Mapa de Curitiba</p>
-                    <div className={styles.content_mapview}>
-                        <div className={styles.map}>
-                            <MapHome />
-                        </div>
+                    <div className={styles.map}>
+                        <MapHome />
                     </div>
                 </div>
 

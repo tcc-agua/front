@@ -57,30 +57,34 @@ const ExcelTable: React.FC<ExcelTableProps> = ({ sheetName, monthProps, yearProp
     if (dataPonto.length > 0) {
       // Obter os cabeçalhos (nomes dos pontos)
       const headers = dataPonto.map((item: any) => item[0]);
-      setColumnHeaders(headers);
-
-      // Obter todas as propriedades únicas para definir as linhas
+  
+      // Apenas atualize os cabeçalhos se forem diferentes dos atuais
+      if (JSON.stringify(headers) !== JSON.stringify(columnHeaders)) {
+        setColumnHeaders(headers);
+      }
+  
+      // Processar as linhas da tabela da mesma maneira
       const allKeys = new Set<string>();
       dataPonto.forEach((item: any) => {
         const dataKeys = Object.keys(item[1]);
         dataKeys.forEach(key => allKeys.add(key));
       });
-
-      // Converter o Set de chaves em um array para a tabela
+  
       const rowKeys = Array.from(allKeys);
-
-      // Criar as linhas da tabela, onde cada linha corresponde a uma propriedade (volume, vazão, etc.)
       const rows = rowKeys.map((key) => {
-        return dataPonto.map((item: any) => item[1][key] || '');  // Preencher com os valores ou vazio se não existir
+        return dataPonto.map((item: any) => item[1][key] || '');
       });
-
-      // Atualizar os dados da tabela
+  
       setTableData([rowKeys, ...rows]);
     }
-  }, [dataPonto]);
+  }, [dataPonto, columnHeaders]);  
+
+  useEffect(() => {
+    console.log("dataPonto:", dataPonto);
+  }, [dataPonto]);  
 
   // Função para mesclar os headers dinamicamente
-  const mergeHeaders = (headers: HTMLTableHeaderCellElement[]) => {
+  const mergeHeaders = (headers: HTMLTableCellElement[]) => {
     let i = 0;
     while (i < headers.length) {
       let currentHeader = headers[i];
@@ -103,11 +107,12 @@ const ExcelTable: React.FC<ExcelTableProps> = ({ sheetName, monthProps, yearProp
 
   // Chamar a função mergeHeaders quando os headers estiverem prontos
   useEffect(() => {
-    const tableHeaders = document.querySelectorAll('th'); // Seleciona todos os headers
+    const tableHeaders = document.querySelectorAll<HTMLTableCellElement>('th'); // Seleciona todos os headers
     if (tableHeaders.length > 0) {
       mergeHeaders(Array.from(tableHeaders)); // Converte NodeList para array e chama a função
     }
   }, [columnHeaders]);
+
 
   if (errorMessage) {
     return <div className={styles.errorMessage}>{errorMessage}</div>;
