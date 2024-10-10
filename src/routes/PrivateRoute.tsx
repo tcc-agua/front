@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Navigate } from "react-router-dom";
 import useUtilsStore from "../store/utils";
 
@@ -8,8 +8,15 @@ interface PrivateRouteProps {
 
 const PrivateRoute: React.FC<PrivateRouteProps> = ({children}) => {
     const { isTokenExpired } = useUtilsStore();
+    const tokenExpired = isTokenExpired();
 
-    if(isTokenExpired()){
+    useEffect(() => {
+        if(tokenExpired){
+            console.log("TOKEN EXPIRADO!")
+        }
+    }, [tokenExpired]);
+
+    if (tokenExpired) {
         return <Navigate to="/login" replace />;
     }
 

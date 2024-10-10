@@ -47,5 +47,6 @@ export interface GlobalState {
     nonce: string;
     picture: string;
     access_token: string;
+    expires_at: string;
   }
   

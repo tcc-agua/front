@@ -37,11 +37,12 @@ const useUtilsStore = create<UtilState>((set) => ({
             const response: GlobalState = await fetchUserInfo();
 
             console.log(response.id_token)
-            const currentTime = new Date().getTime();
-            
+
             localStorage.setItem("id_token", response.id_token);
             localStorage.setItem("access_token", response.access_token);
-            localStorage.setItem("dataCriacaoToken", currentTime.toString());
+            localStorage.setItem("expires_at", response.expires_at);
+
+            console.log(`EXPIRES AT ${response.expires_at}`);
 
             if(localStorage.getItem("id_token") != null){
                 set({
@@ -54,23 +55,30 @@ const useUtilsStore = create<UtilState>((set) => ({
     },
 
     isTokenExpired: () => {
-        if(localStorage.getItem("id_token")){
-            const dataCriacaoTokenString = localStorage.getItem("dataCriacaoToken");
-            
-            if(dataCriacaoTokenString !== null){
-                const dataCriacaoToken = new Date(parseInt(dataCriacaoTokenString));
+        const idToken = localStorage.getItem("id_token");
 
-                const currentTime = new Date().getTime();
-                const convHoraMilissegundos = 60 * 60 * 1000; // Convertendo 1 hora para milissegundos
-    
-    
-                return (currentTime - dataCriacaoToken.getTime()) > convHoraMilissegundos;
-            }
-            
+        if(!idToken){
             return true;
-
         }
-        return true;
+
+        const expiresAtString = localStorage.getItem("expires_at")
+
+        if(expiresAtString !== null) {
+            const expiresAt = new Date(expiresAtString);
+            const currentTime = new Date();
+
+            const expirado = currentTime > expiresAt;
+
+            console.log(`Token expirado: ${expirado}`)
+
+            if(expirado) {
+                localStorage.removeItem("id_token");
+                localStorage.removeItem("access_token");
+                localStorage.removeItem("expires_at");
+            }
+            return expirado;
+        }
+        return true; // Caso não haja expires_at, considere como expirado
     }
 }));
 
