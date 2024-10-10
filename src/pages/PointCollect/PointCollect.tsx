@@ -133,6 +133,7 @@ export function PointCollect() {
     const { coletaId } = useColetaStore();
 
     const preencher = (pointName: string) => {
+        
         setPreenchido(prev => [...prev, pointName]); 
     };
 
