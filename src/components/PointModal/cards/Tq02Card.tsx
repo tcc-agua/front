@@ -8,9 +8,10 @@ import { TQ02 } from "../../../interfaces/postParams";
 interface PointNameProps{
     name: string;
     idColeta: number;
+    preencher: (pointName: string) => void;
 }
 
-function Tq02Card({ name, idColeta }: PointNameProps) {
+function Tq02Card({ name, idColeta, preencher }: PointNameProps) {
     const [ph, setPh] = useState<number>(1);
     const [lt_02_1, setLt_02_1] = useState<number>(1);
     const { createTq02Measure, isCreated, isError, resetState } = useTq02Store();
@@ -51,6 +52,7 @@ function Tq02Card({ name, idColeta }: PointNameProps) {
                 width: '30%'
             });
             resetState();
+            preencher(name);
         }
         if (isError) {
             Swal.fire({
@@ -58,8 +60,9 @@ function Tq02Card({ name, idColeta }: PointNameProps) {
                 icon: 'error',
                 text: 'Ocorreu um erro durante a criação. Tente novamente!',
             });
+            resetState();
         }
-    }, [isCreated, resetState, isError]);
+    }, [isCreated, resetState, isError, name, preencher]);
     
     return (
         <>

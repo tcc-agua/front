@@ -8,9 +8,10 @@ import { BS01_PRESSAO } from "../../../interfaces/postParams";
 interface PointNameProps{
     name: string;
     idColeta: number;
+    preencher: (pointName: string) => void;
 }
 
-function Bs01PressaoCard({ name, idColeta }: PointNameProps) {
+function Bs01PressaoCard({ name, idColeta, preencher }: PointNameProps) {
     const [pressure, setPressure] = useState<number>(1);
     const { createBs01PressaoMeasure, isCreated, isError, resetState } = useBs01PressaoStore();
 
@@ -50,6 +51,7 @@ function Bs01PressaoCard({ name, idColeta }: PointNameProps) {
                 width: '30%'
             });
             resetState();
+            preencher(name);
         }
         if (isError) {
             Swal.fire({
@@ -57,8 +59,9 @@ function Bs01PressaoCard({ name, idColeta }: PointNameProps) {
                 icon: 'error',
                 text: 'Ocorreu um erro durante a criação. Tente novamente!',
             });
+            resetState();
         }
-    }, [isCreated, resetState, isError]);
+    }, [isCreated, resetState, isError, name, preencher]);
 
     return (
         <>

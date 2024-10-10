@@ -8,9 +8,10 @@ import { BS01_HIDROMETRO } from "../../../interfaces/postParams";
 interface PointNameProps{
     name: string;
     idColeta: number;
+    preencher: (pointName: string) => void;
 }
 
-function Bs01HidrometroCard({ name , idColeta}:PointNameProps ) {
+function Bs01HidrometroCard({ name , idColeta, preencher}:PointNameProps ) {
     const [volume, setVolume] = useState<number>(1);
     const { createBs01HidrometroMeasure, isCreated, isError, resetState } = useBs01HidrometroStore();
 
@@ -42,15 +43,29 @@ function Bs01HidrometroCard({ name , idColeta}:PointNameProps ) {
     };
     
     useEffect (() =>{
-        if(isCreated){
-            alert("Criado")
-            resetState()
+        if (isCreated) {
+            Swal.fire({
+                title: 'Sucesso!',
+                icon: 'success',
+                text: 'Coleta inserida com sucesso!',
+                showConfirmButton: false,
+                timer: 2000,
+                width: '30%'
+            });
+            resetState();
+            preencher(name);
+            
         }
-        if(isError){
-            alert("ERRO")
+        if (isError) {
+            Swal.fire({
+                title: 'Erro ao criar',
+                icon: 'error',
+                text: 'Ocorreu um erro durante a criação. Tente novamente!',
+            });
+            resetState();
         }
 
-    }, [isCreated, resetState, isError])
+    }, [isCreated, resetState, isError, name, preencher])
 
     return (
         <>

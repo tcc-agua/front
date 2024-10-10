@@ -8,9 +8,10 @@ import { SENSOR_PH } from "../../../interfaces/postParams";
 interface PointNameProps{
     name: string;
     idColeta: number
+    preencher: (pointName: string) => void;
 }
 
-function SensorPHCard({ name, idColeta }: PointNameProps) {
+function SensorPHCard({ name, idColeta, preencher }: PointNameProps) {
     const [ph, setPh] = useState<number>(1);
     const { createSensorPhMeasure, isCreated, isError, resetState } = useSensorPhStore();
 
@@ -50,6 +51,8 @@ function SensorPHCard({ name, idColeta }: PointNameProps) {
                 width: '30%'
             });
             resetState();
+            preencher(name);
+
         }
         if (isError) {
             Swal.fire({
@@ -57,8 +60,9 @@ function SensorPHCard({ name, idColeta }: PointNameProps) {
                 icon: 'error',
                 text: 'Ocorreu um erro durante a criação. Tente novamente!',
             });
+            resetState();
         }
-    }, [isCreated, resetState, isError]);
+    }, [isCreated, resetState, isError, name, preencher]);
 
     return (
         <>

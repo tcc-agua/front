@@ -8,11 +8,12 @@ import { PMPT } from "../../../interfaces/postParams";
 interface PointNameProps {
     name: string;
     idColeta: number;
+    preencher: (pointName: string) => void;
 }
 
 const itemsPerPage = 2;
 
-function PmPtCard({ name, idColeta }: PointNameProps) {
+function PmPtCard({ name, idColeta, preencher }: PointNameProps) {
     const [oilLevel, setOilLevel] = useState<number>(1);
     const [waterLevel, setWaterLevel] = useState<number>(1);
     const [flRemoManual, setFlRemoManual] = useState<number>(1);
@@ -62,6 +63,7 @@ function PmPtCard({ name, idColeta }: PointNameProps) {
                 width: '30%'
             });
             resetState();
+            preencher(name);
         }
         if (isError) {
             Swal.fire({
@@ -69,8 +71,9 @@ function PmPtCard({ name, idColeta }: PointNameProps) {
                 icon: 'error',
                 text: 'Ocorreu um erro durante a criação. Tente novamente!',
             });
+            resetState();
         }
-    }, [isCreated, resetState, isError]);
+    }, [isCreated, resetState, isError, name, preencher]);
 
     const infoContentData = [
         { type: "Nível do óleo", value: oilLevel, isInteger: false, setter: setOilLevel },

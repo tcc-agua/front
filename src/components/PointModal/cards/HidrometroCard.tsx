@@ -8,9 +8,10 @@ import { HIDROMETRO } from "../../../interfaces/postParams";
 interface PointNameProps{
     name: string;
     idColeta: number;
+    preencher: (pointName: string) => void;
 }
 
-function HidrometroCard({ name, idColeta }: PointNameProps) {
+function HidrometroCard({ name, idColeta, preencher }: PointNameProps) {
     const [volume, setVolume] = useState<number>(1);
     const { createHidrometroMeasure, isCreated, isError, resetState } = useHidrometroStore();
 
@@ -50,6 +51,7 @@ function HidrometroCard({ name, idColeta }: PointNameProps) {
                 width: '30%'
             });
             resetState();
+            preencher(name);
         }
         if (isError) {
             Swal.fire({
@@ -57,8 +59,9 @@ function HidrometroCard({ name, idColeta }: PointNameProps) {
                 icon: 'error',
                 text: 'Ocorreu um erro durante a criação. Tente novamente!',
             });
+            resetState();
         }
-    }, [isCreated, resetState, isError]);
+    }, [isCreated, resetState, isError, name, preencher]);
 
     return (
         <>
