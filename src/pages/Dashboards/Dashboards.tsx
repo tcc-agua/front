@@ -41,7 +41,7 @@ interface Nivel {
 // Função que permite ao usuário escolher o ponto que os dados serão exibidos no gráfico
 const GraphicDropdown: React.FC = () => {
     const [chartData, setChartData] = useState<ChartDataProp | undefined>(undefined);
-    const [selectedHidro, setSelectedHidro] = useState<DropdownItem>({ id: '53', label: 'Geral Fábrica', value: 'Geral Fabrica' });
+    const [selectedHidro, setSelectedHidro] = useState<DropdownItem | undefined>(undefined);
     const [hidroVolume, setHidroVolume] = useState<number[]>([]);
     const [selectedDate, setSelectedDate] = useState< DropdownItem>({ id: '1', label: '2024', value: '2024' });
 
@@ -78,17 +78,9 @@ const GraphicDropdown: React.FC = () => {
 
     // Função para buscar os dados do hidrometro selecionado
     useEffect(() => {
-        const FetchHidrometro = async (year: string) => {
-            try {
-                const startDate = `01-01-${year}`
-                const endDate =`25-12-${year}`;
-                
-                const data: Hidrometro[] = await fetchHidrometro({
-                    ponto: selectedHidro.value.toString(),
-                    startDate: startDate,
-                    endDate: endDate
-
-                });
+        const FetchHidrometro = async (ponto: string, year: string) => {
+            try {                
+                const data: Hidrometro[] = await fetchHidrometro(ponto, year);
                 const volumes = data.map(hidrometro => hidrometro.volume);
                 const nome = selectedHidro?.label ?? 'Hidrometro não selecionado.';
                 setHidroVolume(volumes);
@@ -106,10 +98,13 @@ const GraphicDropdown: React.FC = () => {
             }
         };
 
+        const ponto = selectedHidro ? selectedHidro.value.toString() : 'Geral Fabrica';
+        const year = selectedDate.value.toString();
+
         if (selectedHidro) {
-            FetchHidrometro(selectedDate.value.toString());
+            FetchHidrometro(ponto, year);
         } else {
-            FetchHidrometro( '2024') // Seleciona um valor base, caso nenhum ponto seja escolhido ainda, para o gráfico não sumir
+            FetchHidrometro('Geral Fabrica', '2024') // Seleciona um valor base, caso nenhum ponto seja escolhido ainda, para o gráfico não sumir
         }
     }, [selectedHidro, selectedDate]);
 
