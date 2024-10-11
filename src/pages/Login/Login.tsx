@@ -9,7 +9,7 @@ const Login: React.FC = () => {
   };
 
   useEffect(() => {
-    if(localStorage.getItem("id_token")){
+    if(localStorage.getItem("id_token") || localStorage.getItem("access_token")){
       navigate("/inicial")
     }
   }, [navigate])
