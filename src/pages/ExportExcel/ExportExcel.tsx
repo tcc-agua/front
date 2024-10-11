@@ -41,7 +41,7 @@ const ExportExcel: React.FC = () => {
     const tables: DropdownItem[] = [
         { id: '1', label: 'DADOS ETAS', value: 'DADOS ETAS' },
         { id: '2', label: 'NA', value: 'NA' },
-        { id: '3', label: 'PB', value: 'PB' },
+        { id: '3', label: 'PBS', value: 'PBS' },
         { id: '4', label: 'CA', value: 'CA' },
     ];
 
