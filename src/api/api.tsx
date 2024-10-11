@@ -200,14 +200,24 @@ export const fetchTQ01 = async () => {
 
 
 //get hidrometro by ponto
-export const fetchHidrometro = async (ponto : string) => {
+export const fetchHidrometro = async (ponto: string, year: string) => {
     const token = await waitForToken();
     try {
+        const StartDate = `${year}-01-01`;
+        const EndDate = `${year}-12-25`;
+        const FormattedStartDate = dayjs(StartDate).format('YYYY-MM-DD')
+        const FormattedEndDate = dayjs(EndDate).format('YYYY-MM-DD')
         const response = await axios.get(`${API_BASE_URL}/hidrometro/ponto/${ponto}`,
             {
+                params: {
+                    startDate: FormattedStartDate,
+                    endDate: FormattedEndDate
+                },           
+            
                 headers: {
                     Authorization: `Bearer ${token}`
                 },
+                
             });
             return response.data;
          } catch (error) {
@@ -215,4 +225,4 @@ export const fetchHidrometro = async (ponto : string) => {
             console.error(error)
             throw error
          }
-}
+};
