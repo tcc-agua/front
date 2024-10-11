@@ -50,6 +50,7 @@ export function Collect() {
     } else {
       setShowPointButtons(false);
     }
+
   }, []);
 
   useEffect(() => {

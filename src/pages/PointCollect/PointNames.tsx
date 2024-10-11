@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import useUtilsStore from "../../store/utils";
 import { fetchPointBySheet } from "../../api/api";
 import styles from './PointCollect.module.css';
+import { updatePontoStatus } from "../../services/PontoService";
 
 export interface Point {
     id: string;
@@ -16,12 +17,21 @@ interface PointNamesProps {
 
 export function PointNames({ onSelectPoint }: PointNamesProps) {
     const [points, setPoints] = useState<Point[]>([]);
+    const [ pontosPreenchidos, setPontosPreenchidos ] = useState<Point[]>([]);
+
     const id_token = localStorage.getItem("id_token");
     const [currentPage, setCurrentPage] = useState<number>(0);
     const [pointsPerPage, setPointsPerPage] = useState<number>(8);
     const isNextDisabled = (currentPage + 1) * pointsPerPage >= points.length;
     const isPrevDisabled = currentPage === 0;
     const { planilha, setQtdPontos } = useUtilsStore();
+
+    const formatDate = (date: Date): string => {
+        const day = String(date.getDate()).padStart(2, '0');
+        const month = String(date.getMonth() + 1).padStart(2, '0');
+        const year = date.getFullYear();
+        return `${year}-${month}-${day}`;
+      };
 
     useEffect(() => {
         const updatePointsPerPage = () => {
@@ -48,26 +58,37 @@ export function PointNames({ onSelectPoint }: PointNamesProps) {
                     if (Array.isArray(response)) {
                         setPoints(response);
                         setQtdPontos(response.length);
+    
+                        const storedDate = localStorage.getItem("coletaDia");
+                        const currentDate = formatDate(new Date());
+    
+                        if (storedDate === currentDate) {
+                            setPontosPreenchidos(response.filter(point => point.statusEnum === "COLETADO"));
+                        } else {
+                            response.forEach(point => {
+                                updatePontoStatus(point.nome, "NAO_COLETADO");
+                                console.log("UPDATE");
+                            });
+                        }
                     } else {
                         setPoints([]);
                     }
-                } 
-                catch (error) {
+                } catch (error) {
                     console.error("Erro ao buscar pontos:", error);
                     setPoints([]);
                     setQtdPontos(0);
                 }
             }
         };
-
+    
         fetchPoints();
-    }, [id_token, planilha, setQtdPontos]);
+    }, [id_token, planilha, setQtdPontos, pontosPreenchidos]);
+    
 
     const handlePointSelect = async (selectedPoint: Point) => {
         try {
             await onSelectPoint(selectedPoint);
 
-            // Atualiza o estado local para refletir a mudança de status
             setPoints((prevPoints) =>
                 prevPoints.map((point) =>
                     point.id === selectedPoint.id ? { ...point, status: "COLETADO" } : point
