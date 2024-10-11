@@ -200,14 +200,27 @@ export const fetchTQ01 = async () => {
 
 
 //get hidrometro by ponto
-export const fetchHidrometro = async (ponto : string) => {
+export const fetchHidrometro = async (paramsData: {ponto?: string; startDate?: string; endDate?: string; }) => {
     const token = await waitForToken();
+
+    if (!paramsData.startDate) {
+        throw new Error("startDate é obrigatório");
+    }
+    if (paramsData.endDate && new Date(paramsData.endDate) < new Date(paramsData.startDate)) {
+        throw new Error("endDate deve ser maior ou igual a startDate");
+    }
     try {
-        const response = await axios.get(`${API_BASE_URL}/hidrometro/ponto/${ponto}`,
+        const response = await axios.get(`${API_BASE_URL}/hidrometro/ponto/${paramsData.ponto}`,
             {
+                params: {
+                    startDate: paramsData.startDate,
+                    endDate: paramsData.endDate
+                },           
+            
                 headers: {
                     Authorization: `Bearer ${token}`
                 },
+                
             });
             return response.data;
          } catch (error) {
@@ -215,4 +228,4 @@ export const fetchHidrometro = async (ponto : string) => {
             console.error(error)
             throw error
          }
-}
+};
