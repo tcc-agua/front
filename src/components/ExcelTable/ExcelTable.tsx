@@ -23,7 +23,7 @@ const ExcelTable: React.FC<ExcelTableProps> = ({ sheetName, monthProps, yearProp
   const year = parseInt(yearProps); // Ano como número
 
   useEffect(() => {
-    if (!sheetName || (sheetName !== 'DADOS ETAS' && sheetName !== 'NA' && sheetName !== 'PB' && sheetName !== 'CA')) {
+    if (!sheetName || (sheetName !== 'DADOS ETAS' && sheetName !== 'NA' && sheetName !== 'PBS' && sheetName !== 'CA')) {
       setErrorMessage('Selecione uma das planilhas!');
       return;
     }
