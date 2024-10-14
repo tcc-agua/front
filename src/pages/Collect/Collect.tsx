@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Outlet, useNavigate } from "react-router-dom";
+import { Outlet, useLocation, useNavigate } from "react-router-dom";
 import styles from "./Collect.module.css";
 import useUtilsStore from "../../store/utils";
 import { fetchPointBySheet } from "../../api/api";
@@ -7,15 +7,18 @@ import PointButton from "../../components/PointButton/PointButton";
 import { COLETA } from "../../interfaces/postParams";
 import { NextCollects } from "../../components/Colects/NextCollects";
 import useColetaStore from "../../store/ColetaStore";
+import { Point } from "../PointCollect/PointNames";
+import { updatePontoStatus } from "../../services/PontoService";
 
 export function Collect() {
-  const [etas, setEtas] = useState<number>(0);
-  const [na, setNa] = useState<number>(0);
-  const [pb, setPb] = useState<number>(0);
-  const [ca, setCa] = useState<number>(0);
+  const [etas, setEtas] = useState<Point[]>([]);
+  const [na, setNa] = useState<Point[]>([]);
+  const [pb, setPb] = useState<Point[]>([]);
+  const [ca, setCa] = useState<Point[]>([]);
+
   const { createColetaMeasure } = useColetaStore();
   const [showPointButtons, setShowPointButtons] = useState<boolean>(false);
-  
+  const location = useLocation(); 
   const navigate = useNavigate();
   const { setPlanilha } = useUtilsStore();
 
@@ -41,6 +44,27 @@ export function Collect() {
     localStorage.setItem("coletaDia", formatDate(new Date()));
   };
 
+  const handlePoint = (planilha: string) => {
+    setPlanilha(planilha);
+    navigate("/inicial/pontos_de_coleta");
+  };
+
+  function calculatePercentageCollected(points: Point[]): string {
+    if (points.length === 0) return "0%";
+  
+    const collectedPoints = points.filter((point) => point.statusEnum === "COLETADO");
+    const percentage = (collectedPoints.length / points.length) * 100;
+  
+    return `${percentage.toFixed(0)}%`;
+  }
+
+  const etasPercentage = calculatePercentageCollected(etas);
+  const naPercentage = calculatePercentageCollected(na);
+  const pbPercentage = calculatePercentageCollected(pb);
+  const caPercentage = calculatePercentageCollected(ca);
+
+  
+
   useEffect(() => {
     const storedDate = localStorage.getItem("coletaDia");
     const currentDate = formatDate(new Date());
@@ -50,6 +74,7 @@ export function Collect() {
     } else {
       setShowPointButtons(false);
     }
+
   }, []);
 
   useEffect(() => {
@@ -62,10 +87,11 @@ export function Collect() {
           fetchPointBySheet("CA"),
         ]);
 
-        setEtas(etasResponse.length);
-        setNa(naResponse.length);
-        setPb(pbResponse.length);
-        setCa(caResponse.length);
+        setEtas(etasResponse);
+        setNa(naResponse);
+        setPb(pbResponse);
+        setCa(caResponse);
+
       } catch (error) {
         console.error("Erro ao buscar pontos:", error);
       }
@@ -74,10 +100,25 @@ export function Collect() {
     fetchQtdPontos();
   }, []);
 
-  const handlePoint = (planilha: string) => {
-    setPlanilha(planilha);
-    navigate("/inicial/pontos_de_coleta");
-  };
+  useEffect(() => {
+    const storedDate = localStorage.getItem("coletaDia");
+    const currentDate = formatDate(new Date());
+
+    if (storedDate !== currentDate) {
+        etas.forEach((i) => {
+            updatePontoStatus(i.nome, "NAO_COLETADO");
+        });
+        na.forEach((i) => {
+            updatePontoStatus(i.nome, "NAO_COLETADO");
+        });
+        pb.forEach((i) => {
+            updatePontoStatus(i.nome, "NAO_COLETADO");
+        });
+        ca.forEach((i) => {
+            updatePontoStatus(i.nome, "NAO_COLETADO");
+        });
+    }
+}, [etas, na, pb, ca, location]); 
 
   return (
     <div className={styles.container}>
@@ -101,8 +142,8 @@ export function Collect() {
                 <PointButton
                   onClick={() => handlePoint("DADOS ETAS")}
                   title="Estações de Tratamento de Águas S."
-                  percentage="40%"
-                  points={etas}
+                  percentage={etasPercentage}
+                  points={etas.length}
                   filledText="Preenchido"
                   pointsText="Pontos"
                   containerClass={styles.data_etas_content}
@@ -113,8 +154,8 @@ export function Collect() {
                 <PointButton
                   onClick={() => handlePoint("NA")}
                   title="Nível D'água"
-                  percentage="10%"
-                  points={na}
+                  percentage={naPercentage}
+                  points={na.length}
                   filledText="Preenchido"
                   pointsText="Pontos"
                   containerClass={styles.data_na_content}
@@ -125,8 +166,8 @@ export function Collect() {
                 <PointButton
                   onClick={() => handlePoint("PBS")}
                   title="Poços de Bombeamento"
-                  percentage="75%"
-                  points={pb}
+                  percentage={pbPercentage}
+                  points={pb.length}
                   filledText="Preenchido"
                   pointsText="Pontos"
                   containerClass={styles.data_pb_content}
@@ -137,8 +178,8 @@ export function Collect() {
                 <PointButton
                   onClick={() => handlePoint("CA")}
                   title="Consumo de Água"
-                  percentage="75%"
-                  points={ca}
+                  percentage={caPercentage}
+                  points={ca.length}
                   filledText="Preenchido"
                   pointsText="Pontos"
                   containerClass={styles.data_ca_content}

@@ -4,16 +4,17 @@ import Swal from 'sweetalert2';
 import { BooleanInput, InputPoint } from "../InputPoint";
 import useColunasCarvaoStore from "../../../store/ColunasCarvaoStore";
 import { COLUNAS_CARVAO } from "../../../interfaces/postParams";
+import usePontoState from "../../../store/PontoStore";
 
 const itemsPerPage = 2;
 
 interface PointNameProps {
     name: string;
     idColeta: number;
-    preencher: (pointName: string) => void;
 }
 
-function ColunasCarvaoCard({ name, idColeta, preencher }: PointNameProps) {
+function ColunasCarvaoCard({ name, idColeta }: PointNameProps) {
+    const { setStatus } = usePontoState();
     const [measurements, setMeasurements] = useState({
         pressure_c01: 1,
         pressure_c02: 1,
@@ -78,7 +79,7 @@ function ColunasCarvaoCard({ name, idColeta, preencher }: PointNameProps) {
                 width: '30%'
             });
             resetState();
-            preencher(name);
+            setStatus(name, "COLETADO");
         }
         if (isError) {
             Swal.fire({
@@ -87,8 +88,9 @@ function ColunasCarvaoCard({ name, idColeta, preencher }: PointNameProps) {
                 text: 'Ocorreu um erro durante a criação. Tente novamente!',
             });
             resetState();
+            setStatus(name, "NAO_COLETADO");
         }
-    }, [isCreated, resetState, isError, name, preencher]);
+    }, [isCreated, resetState, isError, name, setStatus]);
 
     const infoContentData = [
         { type: "Pressão C01", key: "pressure_c01", value: measurements.pressure_c01, isInteger: false, isBoolean: false },

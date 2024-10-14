@@ -4,16 +4,18 @@ import Swal from 'sweetalert2';
 import { InputPoint } from "../InputPoint"; 
 import useBombaBc03Store from "../../../store/BombaBc03Store";
 import { BOMBA_BC03 } from "../../../interfaces/postParams";
+import usePontoState from "../../../store/PontoStore";
 
 const itemsPerPage = 2;
 
 interface PointNameProps {
     name: string;
     idColeta: number;
-    preencher: (pointName: string) => void;
 }
 
-function BombaBc03Card({ name, idColeta, preencher }: PointNameProps) {
+function BombaBc03Card({ name, idColeta }: PointNameProps) {
+    const { setStatus } = usePontoState();
+
     const [measurements, setMeasurements] = useState({
         pressure: 1,
         horimeter: 1,
@@ -66,8 +68,8 @@ function BombaBc03Card({ name, idColeta, preencher }: PointNameProps) {
                 timer: 2000,
                 width: '30%'
             });
+            setStatus(name, "COLETADO");
             resetState();
-            preencher(name); 
         }
         if (isError) {
             Swal.fire({
@@ -75,9 +77,10 @@ function BombaBc03Card({ name, idColeta, preencher }: PointNameProps) {
                 icon: 'error',
                 text: 'Ocorreu um erro durante a criação. Tente novamente!',
             });
+            setStatus(name, "NAO_COLETADO");
             resetState();
         }
-    }, [isCreated, resetState, isError, name, preencher]);
+    }, [isCreated, resetState, isError, name, setStatus]);
 
     const infoContentData = [
         { type: "Pressão", key: "pressure", value: measurements.pressure },

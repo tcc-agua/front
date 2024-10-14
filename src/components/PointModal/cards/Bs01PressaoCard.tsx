@@ -4,14 +4,15 @@ import Swal from 'sweetalert2';
 import { InputPoint } from "../InputPoint";
 import useBs01PressaoStore from "../../../store/Bs01PressaoStore";
 import { BS01_PRESSAO } from "../../../interfaces/postParams";
+import usePontoState from "../../../store/PontoStore";
 
 interface PointNameProps{
     name: string;
     idColeta: number;
-    preencher: (pointName: string) => void;
 }
 
-function Bs01PressaoCard({ name, idColeta, preencher }: PointNameProps) {
+function Bs01PressaoCard({ name, idColeta }: PointNameProps) {
+    const { setStatus } = usePontoState();
     const [pressure, setPressure] = useState<number>(1);
     const { createBs01PressaoMeasure, isCreated, isError, resetState } = useBs01PressaoStore();
 
@@ -51,7 +52,7 @@ function Bs01PressaoCard({ name, idColeta, preencher }: PointNameProps) {
                 width: '30%'
             });
             resetState();
-            preencher(name);
+            setStatus(name, "COLETADO");
         }
         if (isError) {
             Swal.fire({
@@ -60,8 +61,9 @@ function Bs01PressaoCard({ name, idColeta, preencher }: PointNameProps) {
                 text: 'Ocorreu um erro durante a criação. Tente novamente!',
             });
             resetState();
+            setStatus(name, "NAO_COLETADO");
         }
-    }, [isCreated, resetState, isError, name, preencher]);
+    }, [isCreated, resetState, isError, name, setStatus]);
 
     return (
         <>

@@ -4,16 +4,18 @@ import Swal from 'sweetalert2';
 import { InputPoint } from "../InputPoint"; 
 import { BH02 } from "../../../interfaces/postParams";
 import useBh02Store from "../../../store/Bh02Store";
+import usePontoState from "../../../store/PontoStore";
 
 const itemsPerPage = 2;
 
 interface PointNameProps {
     name: string;
     idColeta: number;
-    preencher: (pointName: string) => void;
 }
 
-function Bh02Card({ name, idColeta, preencher }: PointNameProps) {
+function Bh02Card({ name, idColeta }: PointNameProps) {
+    const { setStatus } = usePontoState();
+    
     const [measurements, setMeasurements] = useState({
         pressure: 1,
         frequency: 1,
@@ -67,7 +69,7 @@ function Bh02Card({ name, idColeta, preencher }: PointNameProps) {
                 width: '30%'
             });
             resetState();
-            preencher(name);
+            setStatus(name, "COLETADO");
         }
         if (isError) {
             Swal.fire({
@@ -76,8 +78,9 @@ function Bh02Card({ name, idColeta, preencher }: PointNameProps) {
                 text: 'Ocorreu um erro durante a criação. Tente novamente!',
             });
             resetState();
+            setStatus(name, "NAO_COLETADO");
         }
-    }, [isCreated, resetState, isError, name, preencher]);
+    }, [isCreated, resetState, isError, name, setStatus]);
 
     const infoContentData = [
         { type: "Pressão", key: "pressure", value: measurements.pressure, isInteger: true },

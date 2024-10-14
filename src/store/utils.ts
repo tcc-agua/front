@@ -78,7 +78,7 @@ const useUtilsStore = create<UtilState>((set) => ({
             }
             return expirado;
         }
-        return true; // Caso não haja expires_at, considere como expirado
+        return true; 
     }
 }));
 
