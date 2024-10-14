@@ -15,6 +15,7 @@ export function Collect() {
   const [na, setNa] = useState<Point[]>([]);
   const [pb, setPb] = useState<Point[]>([]);
   const [ca, setCa] = useState<Point[]>([]);
+
   const { createColetaMeasure } = useColetaStore();
   const [showPointButtons, setShowPointButtons] = useState<boolean>(false);
   const location = useLocation(); 
@@ -47,6 +48,22 @@ export function Collect() {
     setPlanilha(planilha);
     navigate("/inicial/pontos_de_coleta");
   };
+
+  function calculatePercentageCollected(points: Point[]): string {
+    if (points.length === 0) return "0%";
+  
+    const collectedPoints = points.filter((point) => point.statusEnum === "COLETADO");
+    const percentage = (collectedPoints.length / points.length) * 100;
+  
+    return `${percentage.toFixed(0)}%`;
+  }
+
+  const etasPercentage = calculatePercentageCollected(etas);
+  const naPercentage = calculatePercentageCollected(na);
+  const pbPercentage = calculatePercentageCollected(pb);
+  const caPercentage = calculatePercentageCollected(ca);
+
+  
 
   useEffect(() => {
     const storedDate = localStorage.getItem("coletaDia");
@@ -125,7 +142,7 @@ export function Collect() {
                 <PointButton
                   onClick={() => handlePoint("DADOS ETAS")}
                   title="Estações de Tratamento de Águas S."
-                  percentage="40%"
+                  percentage={etasPercentage}
                   points={etas.length}
                   filledText="Preenchido"
                   pointsText="Pontos"
@@ -137,7 +154,7 @@ export function Collect() {
                 <PointButton
                   onClick={() => handlePoint("NA")}
                   title="Nível D'água"
-                  percentage="10%"
+                  percentage={naPercentage}
                   points={na.length}
                   filledText="Preenchido"
                   pointsText="Pontos"
@@ -149,7 +166,7 @@ export function Collect() {
                 <PointButton
                   onClick={() => handlePoint("PBS")}
                   title="Poços de Bombeamento"
-                  percentage="75%"
+                  percentage={pbPercentage}
                   points={pb.length}
                   filledText="Preenchido"
                   pointsText="Pontos"
@@ -161,7 +178,7 @@ export function Collect() {
                 <PointButton
                   onClick={() => handlePoint("CA")}
                   title="Consumo de Água"
-                  percentage="75%"
+                  percentage={caPercentage}
                   points={ca.length}
                   filledText="Preenchido"
                   pointsText="Pontos"
