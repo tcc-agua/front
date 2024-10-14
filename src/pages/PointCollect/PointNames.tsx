@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import useUtilsStore from "../../store/utils";
 import { fetchPointBySheet } from "../../api/api";
 import styles from './PointCollect.module.css';
-import { updatePontoStatus } from "../../services/PontoService";
 
 export interface Point {
     id: string;
@@ -64,11 +63,6 @@ export function PointNames({ onSelectPoint }: PointNamesProps) {
     
                         if (storedDate === currentDate) {
                             setPontosPreenchidos(response.filter(point => point.statusEnum === "COLETADO"));
-                        } else {
-                            response.forEach(point => {
-                                updatePontoStatus(point.nome, "NAO_COLETADO");
-                                console.log("UPDATE");
-                            });
                         }
                     } else {
                         setPoints([]);
