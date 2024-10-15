@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import Swal from 'sweetalert2';
 import DropdownButton from '../../components/DropdownButton/DropdownButton';
-import ExcelTable from '../../components/ExcelTable/ExcelTable';
 import { fetchExport, postNotif } from '../../api/api';
 import styles from './ExportExcel.module.css';
 
@@ -206,17 +205,6 @@ const ExportExcel: React.FC = () => {
                     </div>
                 </div>
             </div>
-            <div className={styles.container1}>
-                {selectedTable && selectedMonth && selectedYear && (
-                    <ExcelTable
-                        key={`${selectedTable.value}-${selectedMonth?.id}-${selectedYear.label}`}
-                        sheetName={String(selectedTable.value)}
-                        monthProps={selectedMonth?.id || '0'}
-                        yearProps={selectedYear.label}
-                    />
-                )}
-            </div>
-
             <div className="footer">
                 <button className={styles.export} onClick={handleExportClick}>
                     Exportar Arquivo

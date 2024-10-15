@@ -11,6 +11,7 @@ import MaisIMG from '../../assets/images/mais.svg';
 import HistoricoIMG from '../../assets/images/historico.svg';
 import ExportarIMG from '../../assets/images/exportar.svg';
 import MenuIMG from '../../assets/images/menu.svg';
+import ConsumoAguaIMG from '../../assets/images/torneira.svg';
 
 //blue icons
 import HomeBlueIMG from '../../assets/images/home-blue.svg';
@@ -18,6 +19,7 @@ import MapaBlueIMG from '../../assets/images/mapa-blue.svg';
 import MaisBlueIMG from '../../assets/images/mais-blue.svg';
 import HistoricoBlueIMG from '../../assets/images/historico-blue.svg';
 import ExportarBlueIMG from '../../assets/images/exportar-blue.svg';
+import ConsumoAguaBlueIMG from '../../assets/images/torneira-blue.svg'
 
 //white icons
 import HomeWhite from '../../assets/images/darkmode_icons/home_white.svg';
@@ -26,6 +28,7 @@ import MaisWhite from '../../assets/images/darkmode_icons/plus_white.svg';
 import HistoricoWhite from '../../assets/images/darkmode_icons/historic_white.svg';
 import ExportarWhite from '../../assets/images/darkmode_icons/export_white.svg';
 import MenuWhite from '../../assets/images/menuWhite.svg';
+import ConsumoAguaWhite from '../../assets/images/darkmode_icons/torneira_white.svg'
 
 const HamburgerMenu: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -57,12 +60,12 @@ const HamburgerMenu: React.FC = () => {
         className={`${styles.menu} ${isOpen ? styles.open : ''}`}
         aria-hidden={!isOpen}
       >
-        <button 
+        <button
           className={styles.voltar}
           onClick={toggleMenu}
           aria-label="Menu"
           aria-expanded={isOpen}>
-            <pre>←     Voltar</pre>
+          <pre>←     Voltar</pre>
         </button>
         <section className={styles.container}>
           <div className={`${styles.options} ${location.pathname === '/inicial' ? styles.active : ''}`}>
@@ -96,6 +99,17 @@ const HamburgerMenu: React.FC = () => {
                 alt="mais"
               />
               <p className={styles.pages}>Coleta de Dados</p>
+            </Link>
+          </div>
+
+          <div className={`${styles.options} ${location.pathname === '/inicial/consumo_de_agua' ? styles.active : ''}`}>
+            <Link className={styles.content_options} to={"/inicial/consumo_de_agua"}>
+              <div className={styles.blue}></div>
+              <img
+                src={getIcon(ConsumoAguaIMG, ConsumoAguaBlueIMG, ConsumoAguaWhite, '/inicial/consumo_de_agua')}
+                alt="consumo_agua"
+              />
+              <p className={styles.pages}>Consumo de água</p>
             </Link>
           </div>
 

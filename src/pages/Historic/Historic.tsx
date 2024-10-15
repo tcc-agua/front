@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import DropdownButton from '../../components/DropdownButton/DropdownButton';
 import ColetaItem from '../../components/Colects/ColectItem';
-import ModalError from '../../components/ModalError/ModalError';
 import styles from './Historic.module.css';
 import dayjs from 'dayjs';
 import { fetchColetasByData } from '../../api/api';
@@ -198,10 +197,6 @@ const Historic: React.FC = () => {
           </div>
         </div>
       </div>
-
-      {isErrorModalOpen && (
-        <ModalError message={errorMessage} onClose={closeErrorModal} />
-      )}
 
       <p className={styles.title}>Últimas coletas:</p>
       <div className={styles.colects}>

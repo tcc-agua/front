@@ -11,11 +11,9 @@ import { Point } from "../PointCollect/PointNames";
 import { updatePontoStatus } from "../../services/PontoService";
 
 export function Collect() {
-  const [etas, setEtas] = useState<Point[]>([]);
-  const [na, setNa] = useState<Point[]>([]);
-  const [pb, setPb] = useState<Point[]>([]);
-  const [ca, setCa] = useState<Point[]>([]);
-
+  const [etas, setEtas] = useState<number>(0);
+  const [na, setNa] = useState<number>(0);
+  const [pb, setPb] = useState<number>(0);
   const { createColetaMeasure } = useColetaStore();
   const [showPointButtons, setShowPointButtons] = useState<boolean>(false);
   const location = useLocation(); 
@@ -80,18 +78,15 @@ export function Collect() {
   useEffect(() => {
     const fetchQtdPontos = async () => {
       try {
-        const [etasResponse, naResponse, pbResponse, caResponse] = await Promise.all([
+        const [etasResponse, naResponse, pbResponse] = await Promise.all([
           fetchPointBySheet("DADOS ETAS"),
           fetchPointBySheet("NA"),
           fetchPointBySheet("PBS"),
-          fetchPointBySheet("CA"),
         ]);
 
-        setEtas(etasResponse);
-        setNa(naResponse);
-        setPb(pbResponse);
-        setCa(caResponse);
-
+        setEtas(etasResponse.length);
+        setNa(naResponse.length);
+        setPb(pbResponse.length);
       } catch (error) {
         console.error("Erro ao buscar pontos:", error);
       }
@@ -174,18 +169,6 @@ export function Collect() {
                   titleClass={styles.title_data_content_pb}
                   percentageClass={styles.percentage_content_pb}
                   pointsClass={styles.points_content_pb}
-                />
-                <PointButton
-                  onClick={() => handlePoint("CA")}
-                  title="Consumo de Água"
-                  percentage={caPercentage}
-                  points={ca.length}
-                  filledText="Preenchido"
-                  pointsText="Pontos"
-                  containerClass={styles.data_ca_content}
-                  titleClass={styles.title_data_content_ca}
-                  percentageClass={styles.percentage_content_ca}
-                  pointsClass={styles.points_content_ca}
                 />
               </div>
             </section>

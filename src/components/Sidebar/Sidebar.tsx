@@ -85,17 +85,6 @@ export function Sidebar({ className }: SidebarProps) {
                     </Link>
                 </div>
 
-                <div className={`${styles.options} ${location.pathname === '/inicial/historico' ? styles.active : ''}`}>
-                    <Link className={styles.content_options} to={"/inicial/historico"}>
-                        <div className={styles.blue}></div>
-                        <img
-                            src={getIcon(HistoricoIMG, HistoricoBlueIMG, HistoricoWhite, '/inicial/historico')}
-                            alt="historic"
-                        />
-                        <p>Histórico</p>
-                    </Link>
-                </div>
-
                 <div className={`${styles.options} ${location.pathname === '/inicial/consumo_de_agua' ? styles.active : ''}`}>
                     <Link className={styles.content_options} to={"/inicial/consumo_de_agua"}>
                         <div className={styles.blue}></div>
@@ -104,6 +93,17 @@ export function Sidebar({ className }: SidebarProps) {
                             alt="consumo_agua"
                         />
                         <p>Consumo de água</p>
+                    </Link>
+                </div>
+
+                <div className={`${styles.options} ${location.pathname === '/inicial/historico' ? styles.active : ''}`}>
+                    <Link className={styles.content_options} to={"/inicial/historico"}>
+                        <div className={styles.blue}></div>
+                        <img
+                            src={getIcon(HistoricoIMG, HistoricoBlueIMG, HistoricoWhite, '/inicial/historico')}
+                            alt="historic"
+                        />
+                        <p>Histórico</p>
                     </Link>
                 </div>
 
