@@ -43,19 +43,20 @@ const ExportExcel: React.FC = () => {
         { id: '2', label: 'NA', value: 'NA' },
         { id: '3', label: 'PBS', value: 'PBS' },
         { id: '4', label: 'CA', value: 'CA' },
+        { id: '5', label: 'LH', value: 'LH' },
     ];
 
     // Função de exportação usando SweetAlert2 para feedback
     async function fetchExportExcel(startDate: string, endDate: string) {
         try {
-            const endpoint = selectedTable?.value === 'CA' ? '/exportExcel/hidrometro' : '/exportExcel';
+            const endpoint = selectedTable?.value === 'CA' ||  selectedTable?.value === 'LH' ? '/exportExcel/hidrometro' : '/exportExcel';
             const response = await fetchExport(startDate, endDate, endpoint);
             console.log(response);
 
             const url = window.URL.createObjectURL(response);
             const link = document.createElement('a');
             link.href = url;
-            const nomeExcel = selectedTable?.value === 'CA' ? 'coletas_hidrometro.xlsx' : 'coletas.xlsx';
+            const nomeExcel = selectedTable?.value === 'CA' ||  selectedTable?.value === 'LH' ? 'coletas_hidrometro.xlsx' : 'coletas.xlsx';
             link.setAttribute('download', nomeExcel);
             document.body.appendChild(link);
             link.click();

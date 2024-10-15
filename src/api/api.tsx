@@ -52,7 +52,7 @@ export const fetchExport = async (startDate: string, endDate: string, endpoint: 
 };
 
 // Get Planilhas
-export const fetchSheet = async (sheetName: string, startDate: string, endDate: string) => {
+export const fetchSheet = async (sheetName: string, startDate: string, endDate: string, definicao: boolean) => {
     try {
         const token = localStorage.getItem("id_token")
         const formattedStartDate = dayjs(startDate).format('YYYY-MM-DD');
@@ -60,11 +60,13 @@ export const fetchSheet = async (sheetName: string, startDate: string, endDate: 
 
         const endpoint = sheetName === 'CA' ? `${API_BASE_URL}/excel/${sheetName}/hidrometro` : `${API_BASE_URL}/excel/${sheetName}`;
 
+        const params = definicao === true ? { startDate: formattedStartDate, endDate: formattedEndDate, definicao: definicao } : { startDate: formattedStartDate, endDate: formattedEndDate } ;
+
         const response = await axios.get(endpoint, {
             headers: {
                 Authorization: `Bearer ${token}`,
             },
-            params: { startDate: formattedStartDate, endDate: formattedEndDate },
+            params: params,
         });
         return response.data;
     } catch (error) {

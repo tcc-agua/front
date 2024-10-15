@@ -38,11 +38,14 @@ const useUtilsStore = create<UtilState>((set) => ({
 
             console.log(response.id_token)
 
+            const data = new Date();
+
+            const expiresAt = new Date(data.getTime() + 3600000);
+
             localStorage.setItem("id_token", response.id_token);
             localStorage.setItem("access_token", response.access_token);
-            localStorage.setItem("expires_at", response.expires_at);
-
-            console.log(`EXPIRES AT ${response.expires_at}`);
+            localStorage.setItem("data_token", data.toString());
+            localStorage.setItem("expires_at", expiresAt.toString())
 
             if(localStorage.getItem("id_token") != null){
                 set({
@@ -61,24 +64,25 @@ const useUtilsStore = create<UtilState>((set) => ({
             return true;
         }
 
+        const currentTime = new Date();
+
         const expiresAtString = localStorage.getItem("expires_at")
 
-        if(expiresAtString !== null) {
+        if(expiresAtString !== null){
             const expiresAt = new Date(expiresAtString);
-            const currentTime = new Date();
 
-            const expirado = currentTime > expiresAt;
-
-            console.log(`Token expirado: ${expirado}`)
-
-            if(expirado) {
+            const isExpired = currentTime > expiresAt; // se o tempo atual for maior que o tempo armazenado no expiresAt, o token está expirado.
+    
+            console.log(`Token expirado: ${isExpired}`)
+    
+            if(isExpired) {
                 localStorage.removeItem("id_token");
                 localStorage.removeItem("access_token");
                 localStorage.removeItem("expires_at");
             }
-            return expirado;
+            return isExpired;
         }
-        return true; 
+        return true; // Caso não haja expires_at, considere como expirado
     }
 }));
 

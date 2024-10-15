@@ -19,11 +19,13 @@ const ExcelTable: React.FC<ExcelTableProps> = ({ sheetName, monthProps, yearProp
   const [columnHeaders, setColumnHeaders] = useState<string[]>([]);  // Cabeçalhos das colunas
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
+  let definicao = true;
+
   const month = parseInt(monthProps); // Mês como número
   const year = parseInt(yearProps); // Ano como número
 
   useEffect(() => {
-    if (!sheetName || (sheetName !== 'DADOS ETAS' && sheetName !== 'NA' && sheetName !== 'PBS' && sheetName !== 'CA')) {
+    if (!sheetName || (sheetName !== 'DADOS ETAS' && sheetName !== 'NA' && sheetName !== 'PBS' && sheetName !== 'CA' && sheetName !== 'LH')) {
       setErrorMessage('Selecione uma das planilhas!');
       return;
     }
@@ -38,8 +40,16 @@ const ExcelTable: React.FC<ExcelTableProps> = ({ sheetName, monthProps, yearProp
       try {
         const token = localStorage.getItem('id_token');
 
+        if(sheetName === "CA") {
+          definicao = true;
+        } else if(sheetName === "LH"){
+          definicao = false;
+          sheetName = "CA";
+        }
+
+
         if (token) {
-          const response = await fetchSheet(sheetName, startDateString, endDateString);
+          const response = await fetchSheet(sheetName, startDateString, endDateString, definicao);
           setDataPonto(response);
           console.log(response);
         }
