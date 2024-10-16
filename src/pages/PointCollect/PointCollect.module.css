@@ -64,6 +64,14 @@
     cursor: pointer;
 }
 
+.select_point.preenchido {
+    background-color: var(--font_color3); 
+}
+
+.select_point.naoPreenchido {
+    background-color: var(--font_color4);
+}
+
 .pagination_buttons {
     display: flex;
     justify-content: space-between;
@@ -236,7 +244,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    margin-top: -40%;
+    margin-top: -150px;
 }
 
 .arrow_modal:disabled {
@@ -382,6 +390,7 @@ input[type="number"] {
     justify-content: center;
 }
 
+
 @media (max-width: 1080px) {
     .title {
         font-size: calc(1.4vw + 0.3em);
@@ -418,6 +427,14 @@ input[type="number"] {
         font-size: calc(1.3vw + 0.2em);
     }
 
+    .pointName {
+        font-size: calc(1.7vw + 0.3em);
+    }
+
+    .type {
+        font-size: calc(1.5vw + 0.3em);
+    }
+
     .status_point {
         font-size: calc(1.05vw + 0.2em);
     }
@@ -442,6 +459,79 @@ input[type="number"] {
         color: white;
         cursor: pointer;
     }
+
+    .arrow {
+     padding: 0.5rem 0.5rem;
+     font-size: 2.5vw;
+    }
+
+    .arrow_modal {
+        border: none;
+        padding: 0.3rem 0.8rem;
+        font-size: 2vw;
+        margin-top: -50%;
+    }
+
+    .information {
+        width: 60%;
+        height: 65%;
+    }
+
+    .buttonEnviar {
+        margin-top: 0px;
+        height: 12%;
+    }
+
+    input[type="number"] {
+        font-size: calc(2vw + 0.5em);
+    }
+
+    .modalContent {
+        width: 45%;
+    }
+    
+}
+
+@media (max-width: 865px) {
+    .pointName {
+        font-size: calc(1.7vw + 0.3em);
+    }
+
+    .type {
+        font-size: calc(1.5vw + 0.3em);
+    }
+
+    input[type="number"] {
+        font-size: calc(2.5vw + 0.3em);
+    }
+    
+    .modalContent {
+        width: 65%;
+    }
+
+    .arrow_modal {
+        font-size: 3vw;
+    }
+}
+
+@media (max-width: 750px) {
+    .modalContent {
+        width: 65%;
+    }
+
+    .arrow_modal {
+        font-size: 3vw;
+    }
+
+    .information {
+        width: 55%;
+        height: 55%;
+    }
+
+    input[type="number"] {
+        font-size: calc(2.5vw + 0.8em);
+    }
+
 }
 
 @media (max-width: 680px) {
@@ -479,17 +569,21 @@ input[type="number"] {
     }
 
     .modalContent {
-        width: 80%;
-        height: 350px;
+        width: 90%;
+        height: 40%;
     }
 
-    .pointName, .type {
-        font-size: 3.5vw;
+    .pointName {
+        font-size: calc(1.7vw + 0.8em);
+    }
+
+    .type {
+        font-size: calc(1.5vw + 1em);
     }
 
     .information {
-        width: 60%;
-        height: 110px;
+        width: 55%;
+        height: 65%;
     }
 
     input[type="number"] {
@@ -498,14 +592,38 @@ input[type="number"] {
     }
 
     .buttonEnviar {
-        width: 60%;
-        height: auto;
+        width: 40%;
+        height: 15%;
         padding: 10px;
-        font-size: 4vw;
+        font-size: 3vw;
     }
 
     .close {
+        margin-top: 3px;
         margin-left: 90%;
         font-size: 1.5rem;
+    }
+
+    .arrow {
+        padding: 0.8rem 0.8rem;
+        font-size: 4.5vw;
+    }
+
+    .infoContainer {
+        height: 90%;
+    }
+
+    .buttonEnviar {
+        margin-top: 0px;
+    }
+
+    .arrow {
+        padding: 5px;
+    }
+
+    .arrow_modal {
+        padding: 0.3rem 0.3rem;
+        font-size: 4vw;
+        margin-top: -60%;
     }
 }
