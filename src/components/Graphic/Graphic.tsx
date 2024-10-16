@@ -53,7 +53,7 @@ const Graphic = ({ chartDataProp }: GraphicProps) => {
 
     const series = [
         {
-            name: chartDataProp?.nome,
+            name: "Leitura do hidrômetro",
             data: chartDataProp ? chartDataProp.volumes : [],
         }
     ];

@@ -18,7 +18,7 @@ interface DropdownItem {
 interface Hidrometro {
     id: number;
     volume: number;
-    ponto: string
+    ponto: string;
 }
 
 interface Notification {
@@ -38,34 +38,35 @@ interface Nivel {
     nivel: number
 }
 
-// Função que permite ao usuário escolher o ponto que os dados serão exibidos no gráfico
+// Função que permite ao usuário escolher os dados serão exibidos no gráfico
 const GraphicDropdown: React.FC = () => {
     const [chartData, setChartData] = useState<ChartDataProp | undefined>(undefined);
     const [selectedHidro, setSelectedHidro] = useState<DropdownItem | undefined>(undefined);
     const [hidroVolume, setHidroVolume] = useState<number[]>([]);
-    const [selectedDate, setSelectedDate] = useState<DropdownItem>({ id: '1', label: '2024', value: '2024' });
+    const [selectedDate, setSelectedDate] = useState< DropdownItem>({ id: '1', label: '2024', value: '2024' });
+    const [selectedTable, setSelectedTable] = useState<DropdownItem>({ id: '1', label: 'Leitura hidrômetros', value: 'leitura'});
 
-    // Opções de pontos que o usuário pode escolher
+    // Opções de hidrômetros que o usuário pode escolher para visualizar no gráfico
     const hidro: DropdownItem[] = [
-        { id: '53', label: 'Geral Fábrica', value: 'Geral Fabrica' },
-        { id: '54', label: 'Kinderhaus', value: 'Kinderhaus' },
-        { id: '55', label: 'Refeitório', value: 'Refeitorio' },
-        { id: '56', label: 'Geral 222', value: 'Geral222' },
-        { id: '57', label: 'Entrada Desmi', value: 'EntradaDesmi' },
-        { id: '58', label: 'Daída Desmi', value: 'SaidaDesmi' },
-        { id: '59', label: 'Geral 210', value: 'Geral210' },
-        { id: '60', label: 'Descarte', value: 'Descarte' },
-        { id: '61', label: 'Geral 401', value: 'Geral401' },
-        { id: '62', label: 'Geral 215', value: 'Geral215' },
-        { id: '63', label: 'Água Quente', value: 'Agua Quente' },
-        { id: '64', label: 'Água Industrial', value: 'Agua industrial' },
-        { id: '65', label: 'Geral 303', value: 'Geral303' },
-        { id: '66', label: 'Geral 304', value: 'Geral304' },
-        { id: '67', label: 'Central de Óleo', value: 'CentraldeOleo' },
-        { id: '68', label: 'Geral 115', value: 'Geral115' },
-        { id: '69', label: 'Tanque Reman', value: 'tanqueReman' },
+        { id: '1', label: 'Geral Fábrica', value: 'Geral Fabrica' },
+        { id: '2', label: 'Kinderhaus', value: 'Kinderhaus' },
+        { id: '3', label: 'Refeitório', value: 'Refeitorio' },
+        { id: '4', label: 'Geral222', value: 'Geral222' },
+        { id: '5', label: 'Entrada Desmi', value: 'EntradaDesmi' },
+        { id: '6', label: 'Saída Desmi', value: 'SaidaDesmi' },
+        { id: '7', label: 'Geral 210', value: 'Geral210' },
+        { id: '8', label: 'Descarte', value: 'Descarte' },
+        { id: '9', label: 'Geral 401', value: 'Geral401' },
+        { id: '10', label: 'Água Quente', value: 'Agua Quente' },
+        { id: '11', label: 'Água Industrial', value: 'Agua industrial' },
+        { id: '12', label: 'Geral 303', value: 'Geral303' },
+        { id: '13', label: 'Geral 304', value: 'Geral304' },
+        { id: '14', label: 'Geral 115', value: 'Geral115' },
+        { id: '15', label: 'Geral 101', value: 'Geral101' },
+        { id: '16', label: 'Tanque Reman', value: 'Tanque Reman' },
     ]
 
+    // Opções de período de coleta que ele deseja visualizar
     const dateOptions: DropdownItem[] = [
         { id: '1', label: '2024', value: '2024' },
         { id: '2', label: '2025', value: '2025' },
@@ -76,21 +77,52 @@ const GraphicDropdown: React.FC = () => {
         { id: '7', label: '2030', value: '2030' }
     ]
 
+    // Opções de tipos de dado que ele deseja finalizar 
+    const tableOptions: DropdownItem[] = [
+        {id: '1', label: 'Leitura hidrômetros', value: 'leitura'},
+        {id: '2', label: 'Consumo de água', value: 'consumo'},
+    ]
+
     // Função para buscar os dados do hidrometro selecionado
     useEffect(() => {
-        const FetchHidrometro = async (ponto: string, year: string) => {
+        const FetchHidrometro = async (ponto: string, year: string, table: string) => {
             try {
                 const data: Hidrometro[] = await fetchHidrometro(ponto, year);
+                const lastYear = (parseInt(year) - 1).toString();
                 const volumes = data.map(hidrometro => hidrometro.volume);
                 const nome = selectedHidro?.label ?? 'Hidrometro não selecionado.';
                 setHidroVolume(volumes);
 
-                // Definindo o que o gráfico irá receber
-                setChartData({
-                    meses: ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'],
-                    nome,
-                    volumes,
-                })
+                // Pegando o registro de volume de dezembro do ano anterior, a fim de fazer 
+                // a conta do consumo de água desde janeiro
+                const dezData: Hidrometro[] = await fetchHidrometro(ponto, lastYear)
+                const volumeDezembroAnterior = dezData[11]?.volume || 0
+              
+                // Iniciando o array de consumo com o valor da diferença entre janeiro e dezembro
+                const consumo: number[] = [(volumes[0]- parseFloat(volumeDezembroAnterior.toFixed(2)))];
+
+                // Fazendo a diferença entre o mês atual e o anterior 
+                for (let i = 1; i < volumes.length; i++) {
+                    const diferrence = volumes[i]-volumes[i-1]
+                    consumo.push(parseFloat(diferrence.toFixed(2)))
+                }
+
+                if (table === 'leitura') {
+                    // Definindo o que o gráfico irá receber
+                    setChartData({
+                        meses: ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'],
+                        nome,
+                        volumes
+                    })
+                } else if (table === 'consumo') {
+                    // Definindo o que o gráfico irá receber
+                    setChartData({
+                        meses: ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'],
+                        nome,
+                        volumes: consumo
+                    })
+                }
+                
 
             } catch (error) {
                 console.error("Erro ao buscar dados do hidrometro selecionado.");
@@ -98,15 +130,17 @@ const GraphicDropdown: React.FC = () => {
             }
         };
 
+        // Estanciando as variáveis com base na escolha do usuário no dropdown
         const ponto = selectedHidro ? selectedHidro.value.toString() : 'Geral Fabrica';
         const year = selectedDate.value.toString();
+        const table = selectedTable.value.toString();
 
         if (selectedHidro) {
-            FetchHidrometro(ponto, year);
+            FetchHidrometro(ponto, year, table);
         } else {
-            FetchHidrometro('Geral Fabrica', '2024') // Seleciona um valor base, caso nenhum ponto seja escolhido ainda, para o gráfico não sumir
+            FetchHidrometro('Geral Fabrica', '2024', 'leitura') // Seleciona um valor base, caso nenhum ponto seja escolhido ainda, para o gráfico não sumir
         }
-    }, [selectedHidro, selectedDate]);
+    }, [selectedHidro, selectedDate, selectedTable]);
 
     return (
         <div>
@@ -126,6 +160,13 @@ const GraphicDropdown: React.FC = () => {
                 onSelect={setSelectedDate}
             />
 
+            <DropdownButton
+                id="tableDropdown"
+                title={selectedDate ? selectedDate.label : 'Selecione a tabela'}
+                options={tableOptions}
+                selectedOption={selectedTable}
+                onSelect={setSelectedTable}
+            />
             {hidroVolume && (
                 <div>
                     <Graphic chartDataProp={chartData} />
