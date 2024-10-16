@@ -14,7 +14,6 @@ export function Collect() {
   const [etas, setEtas] = useState<Point[]>([]);
   const [na, setNa] = useState<Point[]>([]);
   const [pb, setPb] = useState<Point[]>([]);
-  const [ca, setCa] = useState<Point[]>([]);
 
   const { createColetaMeasure } = useColetaStore();
   const [showPointButtons, setShowPointButtons] = useState<boolean>(false);
@@ -61,9 +60,7 @@ export function Collect() {
   const etasPercentage = calculatePercentageCollected(etas);
   const naPercentage = calculatePercentageCollected(na);
   const pbPercentage = calculatePercentageCollected(pb);
-  const caPercentage = calculatePercentageCollected(ca);
 
-  
 
   useEffect(() => {
     const storedDate = localStorage.getItem("coletaDia");
@@ -90,7 +87,6 @@ export function Collect() {
         setEtas(etasResponse);
         setNa(naResponse);
         setPb(pbResponse);
-        setCa(caResponse);
 
       } catch (error) {
         console.error("Erro ao buscar pontos:", error);
@@ -114,11 +110,8 @@ export function Collect() {
         pb.forEach((i) => {
             updatePontoStatus(i.nome, "NAO_COLETADO");
         });
-        ca.forEach((i) => {
-            updatePontoStatus(i.nome, "NAO_COLETADO");
-        });
     }
-}, [etas, na, pb, ca, location]); 
+}, [etas, na, pb, location]); 
 
   return (
     <div className={styles.container}>

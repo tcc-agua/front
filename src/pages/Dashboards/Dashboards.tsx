@@ -43,7 +43,7 @@ const GraphicDropdown: React.FC = () => {
     const [chartData, setChartData] = useState<ChartDataProp | undefined>(undefined);
     const [selectedHidro, setSelectedHidro] = useState<DropdownItem | undefined>(undefined);
     const [hidroVolume, setHidroVolume] = useState<number[]>([]);
-    const [selectedDate, setSelectedDate] = useState< DropdownItem>({ id: '1', label: '2024', value: '2024' });
+    const [selectedDate, setSelectedDate] = useState<DropdownItem>({ id: '1', label: '2024', value: '2024' });
 
     // Opções de pontos que o usuário pode escolher
     const hidro: DropdownItem[] = [
@@ -67,19 +67,19 @@ const GraphicDropdown: React.FC = () => {
     ]
 
     const dateOptions: DropdownItem[] = [
-        {id: '1', label: '2024', value: '2024'},
-        {id: '2', label: '2025', value: '2025'},
-        {id: '3', label: '2026', value: '2026'},
-        {id: '4', label: '2027', value: '2027'},
-        {id: '5', label: '2028', value: '2028'},
-        {id: '6', label: '2029', value: '2029'},
-        {id: '7', label: '2030', value: '2030'}
+        { id: '1', label: '2024', value: '2024' },
+        { id: '2', label: '2025', value: '2025' },
+        { id: '3', label: '2026', value: '2026' },
+        { id: '4', label: '2027', value: '2027' },
+        { id: '5', label: '2028', value: '2028' },
+        { id: '6', label: '2029', value: '2029' },
+        { id: '7', label: '2030', value: '2030' }
     ]
 
     // Função para buscar os dados do hidrometro selecionado
     useEffect(() => {
         const FetchHidrometro = async (ponto: string, year: string) => {
-            try {                
+            try {
                 const data: Hidrometro[] = await fetchHidrometro(ponto, year);
                 const volumes = data.map(hidrometro => hidrometro.volume);
                 const nome = selectedHidro?.label ?? 'Hidrometro não selecionado.';
@@ -384,12 +384,11 @@ export function Dashboards() {
                     <Notifications />
                 </div>
                 <div className={styles.mapview}>
-                    <p className={styles.title}>Mapa de Curitiba</p>
+                    <p className={styles.title_map}>Mapa de Curitiba</p>
                     <div className={styles.map}>
                         <MapHome />
                     </div>
                 </div>
-
             </div>
         </div>
     );

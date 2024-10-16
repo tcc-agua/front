@@ -10,9 +10,11 @@ const MapHome = () => {
   useEffect(() => {
     const canvas = canvasRef.current;
 
+    // Criar o renderizador e configurar a proporção de pixels
     const renderer = new THREE.WebGLRenderer({ canvas });
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 
+    // Criar a cena e a câmera
     const scene = new THREE.Scene();
     scene.background = new THREE.Color('#a2d6ff');
 
@@ -22,9 +24,10 @@ const MapHome = () => {
       0.1,
       1000
     );
-    camera.position.set(80, 25, 70);
+    camera.position.set(80, 30, 80);
     scene.add(camera);
 
+    // Configurar os controles
     const controls = new OrbitControls(camera, canvas);
     controls.enableDamping = true;
     controls.minPolarAngle = Math.PI / 2.8; // Limitar para cima
@@ -41,6 +44,7 @@ const MapHome = () => {
     directionalLight.position.set(20, 20, 20); // Posição
     scene.add(directionalLight);
 
+    // Carregar o modelo GLTF
     const loader = new GLTFLoader();
     loader.load(
       '/map/map.glb',
@@ -88,7 +92,7 @@ const MapHome = () => {
               child.material.color.set('#e0e0e0'); // Detalhes cinza claro
             } else if (child.name.startsWith('texto_ponto')) {
               child.material.color.set('#FFFFFF'); // Texto dos pontos
-            } 
+            }
           }
         });
       },
@@ -98,6 +102,7 @@ const MapHome = () => {
       }
     );
 
+    // Função para lidar com o redimensionamento da janela
     const handleResize = () => {
       const width = canvas.clientWidth;
       const height = canvas.clientHeight;
@@ -106,9 +111,11 @@ const MapHome = () => {
       camera.updateProjectionMatrix();
     };
 
+    // Chamar o resize inicialmente
     handleResize();
     window.addEventListener('resize', handleResize);
 
+    // Função de animação
     const tick = () => {
       controls.update();
       renderer.render(scene, camera);
@@ -117,12 +124,13 @@ const MapHome = () => {
 
     tick();
 
+    // Limpar o event listener ao desmontar
     return () => {
       window.removeEventListener('resize', handleResize);
     };
   }, []);
 
-  return <canvas ref={canvasRef} className={styles.sizemap}></canvas>;
+  return <canvas ref={canvasRef} className={styles.sizemap} style={{ width: '100%', height: '100%', display: 'block' }}></canvas>;
 };
 
 export default MapHome;

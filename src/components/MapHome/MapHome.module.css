@@ -1,7 +1,6 @@
 .sizemap {
-    width: 100%;  /* Ajuste conforme necessário */
-    height: 100%; /* Ajuste conforme necessário */
-    display: block; /* Remove qualquer espaço em branco ao redor do canvas */
-
-  }
-  
+  width: 100%;  /* Ajuste conforme necessário */
+  height: 100% !important; /* Ajuste conforme necessário */
+  display: block; /* Remove qualquer espaço em branco ao redor do canvas */
+  margin: 0;
+}
