@@ -11,9 +11,11 @@ import { Point } from "../PointCollect/PointNames";
 import { updatePontoStatus } from "../../services/PontoService";
 
 export function Collect() {
-  const [etas, setEtas] = useState<number>(0);
-  const [na, setNa] = useState<number>(0);
-  const [pb, setPb] = useState<number>(0);
+  const [etas, setEtas] = useState<Point[]>([]);
+  const [na, setNa] = useState<Point[]>([]);
+  const [pb, setPb] = useState<Point[]>([]);
+  const [ca, setCa] = useState<Point[]>([]);
+
   const { createColetaMeasure } = useColetaStore();
   const [showPointButtons, setShowPointButtons] = useState<boolean>(false);
   const location = useLocation(); 
@@ -78,15 +80,18 @@ export function Collect() {
   useEffect(() => {
     const fetchQtdPontos = async () => {
       try {
-        const [etasResponse, naResponse, pbResponse] = await Promise.all([
+        const [etasResponse, naResponse, pbResponse, caResponse] = await Promise.all([
           fetchPointBySheet("DADOS ETAS"),
           fetchPointBySheet("NA"),
           fetchPointBySheet("PBS"),
+          fetchPointBySheet("CA"),
         ]);
 
-        setEtas(etasResponse.length);
-        setNa(naResponse.length);
-        setPb(pbResponse.length);
+        setEtas(etasResponse);
+        setNa(naResponse);
+        setPb(pbResponse);
+        setCa(caResponse);
+
       } catch (error) {
         console.error("Erro ao buscar pontos:", error);
       }

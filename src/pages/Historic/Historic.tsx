@@ -4,6 +4,7 @@ import ColetaItem from '../../components/Colects/ColectItem';
 import styles from './Historic.module.css';
 import dayjs from 'dayjs';
 import { fetchColetasByData } from '../../api/api';
+import { useLocation } from 'react-router-dom';
 
 interface DropdownItem {
   id: string;
@@ -33,16 +34,19 @@ const Historic: React.FC = () => {
   const [selectedDetail, setSelectedDetail] = useState<Detail | null>(null);
   const [coletasPonto, setColetasPonto] = useState<Coleta[]>([]);
   const [carouselIndex, setCarouselIndex] = useState(0);
-  
+  const [isErrorModalOpen, setIsErrorModalOpen] = useState(false);
+  const [errorMessage, setErrorMessage] = useState<string>('');
   const [page, setPage] = useState(0);
-  const [size, setSize] = useState(6);
+  const [size, setSize] = useState(1000); // rever
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+
+  const location = useLocation(); 
 
   const days: DropdownItem[] = Array.from({ length: 31 }, (_, i) => ({
     id: (i + 1).toString(),
     label: (i + 1).toString(),
-    value: i + 1,
+    value: i + 1
   }));
 
   const months: DropdownItem[] = [
@@ -63,69 +67,53 @@ const Historic: React.FC = () => {
   const years: DropdownItem[] = ['2024', '2025', '2026', '2027'].map(year => ({
     id: year,
     label: year,
-    value: year,
+    value: year
   }));
 
-  // Função para buscar coletas, com filtros opcionais
-  const fetchPontosPorColeta = async () => {
-    setLoading(true);
-    setError(null);
-    try {
-      const token = localStorage.getItem('id_token');
-      if (!token) {
-        setError('Token não encontrado.');
-        return;
-      }
-
-      let paramsData: { startDate?: string; endDate?: string; page?: number; size?: number } = {};
-
-      // Se o usuário selecionou dia, mês e ano
-      if (selectedDay?.value != null && selectedMonth?.value != null && selectedYear?.value != null) {
-        const year = Number(selectedYear.value);
-        const month = Number(selectedMonth.id) - 1; // Ajuste do índice do mês
-        const day = Number(selectedDay.value);
-
-        const startDate = dayjs(new Date(year, month, day)).format('YYYY-MM-DD');
-        paramsData = { startDate, endDate: startDate, page, size };
-      } else {
-        // Caso contrário, buscar dos últimos 15 dias
-        const endDate = dayjs().format('YYYY-MM-DD');
-        const startDate = dayjs().subtract(15, 'day').format('YYYY-MM-DD');
-        paramsData = { startDate, endDate, page, size };
-      }
-
-      const response = await fetchColetasByData(paramsData);
-      if (response.content) {
-        const pontos = response.content;
-        setColetasPonto(pontos);
-      } else {
-        setError('Nenhum dado retornado.');
-      }
-    } catch (e) {
-      if (e instanceof Error) {
-        console.error('Error fetching data:', e.message);
-        setError('Erro ao buscar dados: ' + e.message);
-      } else {
-        setError('Erro ao buscar dados: Erro desconhecido.');
-      }
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  // Carregar coletas dos últimos 15 dias automaticamente ao carregar a página
   useEffect(() => {
-    fetchPontosPorColeta();
-  }, [page, size]);
+    async function fetchPontosPorColeta() {
+      setLoading(true);
+      setError(null);
+      try {
+        const token = localStorage.getItem('id_token');
+        if (!token) {
+          setError('Token não encontrado.');
+          return;
+        }
 
-  // Lógica do filtro
-  const handleFilter = () => {
-    if (selectedDay && selectedMonth && selectedYear) {
-      fetchPontosPorColeta();
-    } else {
-      setError('Selecione dia, mês e ano para aplicar o filtro.');
+        let paramsData: { startDate?: string; endDate?: string; page?: number; size?: number } = {};
+
+        if (selectedDay?.value != null && selectedMonth?.value != null && selectedYear?.value != null) {
+          const year = Number(selectedYear.value);
+          const month = Number(selectedMonth.id) - 1;
+          const day = Number(selectedDay.value);
+
+          const startDate = dayjs(new Date(year, month, day)).format('YYYY-MM-DD');
+          paramsData = { startDate, endDate: startDate, page, size };
+        } else {
+          const endDate = dayjs().format('YYYY-MM-DD');
+          const startDate = dayjs().subtract(30, 'day').format('YYYY-MM-DD');
+          paramsData = { startDate, endDate, page, size };
+        }
+
+        const response = await fetchColetasByData(paramsData);
+
+        if (response.content) {
+          setColetasPonto(response.content);
+        } else {
+          setError('Nenhum dado retornado.');
+        }
+      } catch (e) {
+        const errorMessage = e instanceof Error ? e.message : 'Erro desconhecido.';
+        setError('Erro ao buscar dados: ' + errorMessage);
+      } finally {
+        setLoading(false);
+      }
     }
-  };
+
+    fetchPontosPorColeta();
+
+  }, [selectedDay, selectedMonth, selectedYear, page, size, location]);
 
   const handleOpenDetail = (detail: Detail) => {
     setSelectedDetail(detail);
@@ -155,17 +143,15 @@ const Historic: React.FC = () => {
       .filter(([key]) => key !== 'id' && key !== '')
       .slice(carouselIndex, carouselIndex + 2)
     : [];
-    ? Object.entries(selectedDetail.dados)
-      .filter(([key]) => key !== 'id' && key !== '')
-      .slice(carouselIndex, carouselIndex + 2)
-    : [];
+
+  console.log('Coletas Ponto:', coletasPonto);
 
   return (
     <div className={styles.container}>
       <p className={styles.title_filter}>Selecione uma data:</p>
       <div className={styles.content_buttons}>
         <div className={styles.filterContainer}>
-          <button className={styles.filtrar} onClick={handleFilter}>Filtrar</button>
+          <button className={styles.filtrar}>Filtrar</button>
         </div>
         <div className={styles.buttons}>
           <div className={styles.dropdownContainer}>
@@ -196,23 +182,29 @@ const Historic: React.FC = () => {
 
       <p className={styles.title}>Últimas coletas:</p>
       <div className={styles.colects}>
-        {loading ? (
-          <p>Carregando...</p>
-        ) : error ? (
-          <p>{error}</p>
-        ) : (
+        {coletasPonto &&
           coletasPonto
-            .filter(coleta => coleta.details.length > 0)
-            .map(coleta => (
-              <ColetaItem
-                key={coleta.id}
-                date={coleta.date}
-                description={coleta.description}
-                details={coleta.details.filter(detail => Object.keys(detail.dados).length > 0)}
-                onOpenDetail={handleOpenDetail}
-              />
-            ))
-        )}
+            .filter(coleta => coleta.details.length >= 0)
+            .map(coleta => {
+              // Define paramsData com base na coleta
+              const paramsData = {
+                startDate: coleta.date, // exemplo, ajuste conforme necessário
+                endDate: coleta.date,   // exemplo, ajuste conforme necessário
+                page,
+                size
+              };
+
+              return (
+                <ColetaItem
+                  key={coleta.id}
+                  date={coleta.date}
+                  description={coleta.description}
+                  details={coleta.details.filter(detail => Object.keys(detail.dados).length >= 0)}
+                  onOpenDetail={handleOpenDetail}
+                  paramsData={paramsData} // Passando paramsData
+                />
+              );
+            })}
       </div>
 
       {modalOpen && selectedDetail && (
@@ -224,29 +216,28 @@ const Historic: React.FC = () => {
             <main className={styles.carousel}>
               <button
                 className={`${styles.carousel_button} ${carouselIndex === 0 ? styles.carousel_button_invisible : ''}`}
-              <button
-                className={`${styles.carousel_button} ${carouselIndex === 0 ? styles.carousel_button_invisible : ''}`}
                 onClick={handlePrevious}
                 disabled={carouselIndex === 0}
               >
                 ‹
               </button>
 
-              <div className={styles.info_container}>
-                {visibleInfoContainers.map(([key, value]) => (
-                  <div key={key} className={styles.dado}>
-                    <strong>{key}:</strong>
-                    <span>{typeof value === 'string' || typeof value === 'number' ? value.toString() : 'Valor desconhecido'}</span>
-                  </div>
-                ))}
-              </div>
+              {visibleInfoContainers.map(([key, value]) => (
+                <div
+                  key={key}
+                  className={`${styles.infoContainer} ${key === "*" ? styles.hidden : ''}`}
+                >
+                  <p className={styles.type}>
+                    {key.replace(/([a-z])([A-Z])/g, '$1 $2').toUpperCase()}:
+                  </p>
+                  <p className={styles.value}>{value}</p>
+                </div>
+              ))}
 
               <button
-                className={`${styles.carousel_button} ${
-                  carouselIndex + 2 >= Object.keys(selectedDetail.dados).length ? styles.carousel_button_invisible : ''
-                }`}
+                className={`${styles.carousel_button} ${carouselIndex + 2 >= visibleInfoContainers.length ? styles.carousel_button_invisible : ''}`}
                 onClick={handleNext}
-                disabled={carouselIndex + 2 >= Object.keys(selectedDetail.dados).length}
+                disabled={carouselIndex + 2 >= visibleInfoContainers.length}
               >
                 ›
               </button>
@@ -254,13 +245,9 @@ const Historic: React.FC = () => {
           </div>
         </div>
       )}
-    </div>
-  );
-              </button>
-            </main>
-          </div>
-        </div>
-      )}
+
+      {error && <div className={styles.error}>{error}</div>}
+      {loading && <div className={styles.loading}>Carregando...</div>}
     </div>
   );
 };

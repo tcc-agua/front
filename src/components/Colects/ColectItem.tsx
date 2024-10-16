@@ -31,19 +31,21 @@ const ColetaItem: React.FC<ColetaItemProps> = ({ date, description, paramsData, 
       setLoading(true);
       try {
         const response = await fetchColetasByData(paramsData);
+        console.log('Response:', response); // Adicione este log
         if (response.content) {
-          setDetails(response.content);
-          setItemsPerPage(response.size);
+            setDetails(response.content);
+            setItemsPerPage(response.size);
         } else {
-          setError('Nenhum dado retornado.');
+            setError('Nenhum dado retornado.');
         }
-      } catch (e) {
+    } catch (e) {
         if (e instanceof Error) {
-          console.error('Error fetching data:', e.message);
-          setError('Erro ao buscar dados: ' + e.message);
+            console.error('Error fetching data:', e.message);
+            setError('Erro ao buscar dados: ' + e.message);
         } else {
-          setError('Erro ao buscar dados: Erro desconhecido.');
+            setError('Erro ao buscar dados: Erro desconhecido.');
         }
+    
       } finally {
         setLoading(false);
       }
