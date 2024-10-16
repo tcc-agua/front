@@ -5,7 +5,7 @@ import icon_export from "../../assets/images/export_activity.svg"
 import Graphic, { ChartDataProp } from "../../components/Graphic/Graphic"
 import Forecast from "../../components/Forecast/Forecast"
 import { useEffect, useState } from "react";
-import { fetchHidrometro, fetchNotif, fetchPH, fetchTQ01 } from "../../api/api";
+import { deleteNotifByID, fetchHidrometro, fetchNotif, fetchPH, fetchTQ01 } from "../../api/api";
 import MapHome from '../../components/MapHome/MapHome';
 import DropdownButton from "../../components/DropdownButton/DropdownButton"
 
@@ -314,8 +314,17 @@ export const Notifications: React.FC = () => {
             try {
                 const data: Notification[] = await fetchNotif();
                 const sortedNotifications = data.sort((a, b) => b.id - a.id);
-
                 setNotifications(sortedNotifications);
+
+                // Filtra as notificações com mais de 7 dias
+                const oldNotifications = sortedNotifications.filter((notification) => {
+                    return parseInt(getDateDifference(notification.data)) >= 7;
+                });
+
+                // Exclui as notificações antigas
+                for (const notification of oldNotifications) {
+                    await deleteNotifByID(notification.id);
+                }
 
             } catch (error) {
                 console.error("Erro ao buscar notificações.");

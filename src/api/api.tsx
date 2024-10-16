@@ -233,3 +233,39 @@ export const fetchHidrometro = async (ponto: string, year: string) => {
             throw error
          }
 };
+
+// Delete notifications by id
+export const deleteNotifByID = async(id: number) => {
+    const token = await waitForToken();
+    try {
+        const response = await axios.delete(`${API_BASE_URL}/notificacoes/${id}`, {
+            headers: {
+                Authorization: `Bearer ${token}`
+            },
+        
+        });
+        return response.data;
+    } catch (error) {
+        console.error("Erro ao deletar notificações de sete diás atrás")
+        console.error(error)
+        throw error;
+    }
+};
+
+// Delete all notifications
+// export const deleteAllNotif = async () => {
+//     const token = await waitForToken();
+//     try {
+//         const response = await axios.delete(`${API_BASE_URL}/notificacoes`, {
+//             headers: {
+//                 Authorization: `Bearer ${token}`
+//             }
+//         });
+
+//         return response.data;
+//     } catch (error) {
+//         console.error("Erro ao deletar as notificações.")
+//         console.error(error)
+//         throw error;
+//     }
+// }
