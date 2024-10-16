@@ -76,30 +76,35 @@ export const fetchSheet = async (sheetName: string, startDate: string, endDate: 
 // Get coletas by data (historico)
 export const fetchColetasByData = async (paramsData: { startDate?: string; endDate?: string; page?: number; size?: number }) => {
     try {
-        const token = localStorage.getItem("id_token");
-        
+        const token = localStorage.getItem("id_token");        
         if (!paramsData.startDate) {
             throw new Error("startDate é obrigatório");
         }
         if (paramsData.endDate && new Date(paramsData.endDate) < new Date(paramsData.startDate)) {
             throw new Error("endDate deve ser maior ou igual a startDate");
         }
-
         const response = await axios.get("http://localhost:5173/coleta/get-by-date", {
             headers: {
                 Authorization: `Bearer ${token}`
             },
-            params: paramsData
+            params: {
+                startDate: paramsData.startDate,
+                endDate: paramsData.endDate,
+                page: paramsData.page || 0,
+                size: paramsData.size || 6  
+            }
         });
-
         if (!response.data || !response.data.content) {
-            throw new Error("Invalid response format");
+            throw new Error("Formato de resposta inválido");
         }
-
-        return response.data;
+        return {
+            page: response.data.page,
+            size: response.data.size,      
+            content: response.data.content 
+        };
 
     } catch (e) {
-        console.error("Error fetching coletas by data:", e);
+        console.error("Erro ao buscar coletas por data:", e);
         throw e; 
     }
 }

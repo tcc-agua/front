@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styles from './ColectItem.module.css';
 import arrow from '../../assets/images/arrow.svg';
 import ReactPaginate from 'react-paginate';
+import { fetchColetasByData } from '../../api/api';
 
 interface Detail {
   id: number;
@@ -13,14 +14,43 @@ interface Detail {
 interface ColetaItemProps {
   date: string;
   description: string;
-  details: Detail[];  
+  paramsData: any; 
   onOpenDetail: (detail: Detail) => void;
 }
 
-const ColetaItem: React.FC<ColetaItemProps> = ({ date, description, details, onOpenDetail }) => {
+const ColetaItem: React.FC<ColetaItemProps> = ({ date, description, paramsData, onOpenDetail }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [currentPage, setCurrentPage] = useState(0);
-  const itemsPerPage = 6; 
+  const [itemsPerPage, setItemsPerPage] = useState(6);
+  const [details, setDetails] = useState<Detail[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState('');
+
+  useEffect(() => {
+    const fetchData = async () => {
+      setLoading(true);
+      try {
+        const response = await fetchColetasByData(paramsData);
+        if (response.content) {
+          setDetails(response.content);
+          setItemsPerPage(response.size);
+        } else {
+          setError('Nenhum dado retornado.');
+        }
+      } catch (e) {
+        if (e instanceof Error) {
+          console.error('Error fetching data:', e.message);
+          setError('Erro ao buscar dados: ' + e.message);
+        } else {
+          setError('Erro ao buscar dados: Erro desconhecido.');
+        }
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchData();
+  }, [paramsData]);
 
   // Cálculo do deslocamento e dos itens atuais
   const offset = currentPage * itemsPerPage;
@@ -48,14 +78,19 @@ const ColetaItem: React.FC<ColetaItemProps> = ({ date, description, details, onO
             e.stopPropagation(); 
             toggleOpen();  
           }}
-          style={{ transform: isOpen ? 'rotate(180deg)' : 'rotate(0deg)' }}>
+          style={{ transform: isOpen ? 'rotate(180deg)' : 'rotate(0deg)' }}
+        >
           <img src={arrow} alt="Arrow" style={{ width: '16px', height: '16px' }} />
         </span>
       </div>
 
       <div className={`${styles.detailsWrapper} ${isOpen ? styles.open : ''}`}>
         <div className={styles.details}>
-          {currentItems.length === 0 ? (
+          {loading ? (
+            <p>Carregando...</p>
+          ) : error ? (
+            <p>{error}</p>
+          ) : currentItems.length === 0 ? (
             <p>Nenhum detalhe disponível.</p>
           ) : (
             currentItems.map(detail => (
@@ -72,7 +107,7 @@ const ColetaItem: React.FC<ColetaItemProps> = ({ date, description, details, onO
                   <span
                     className={styles.viewButton}
                     onClick={(e) => { e.stopPropagation(); onOpenDetail(detail); }} 
-                  > 
+                  >
                     <p className={styles.viewP}>visualizar</p>
                     <pre className={styles.arrow}>⟶</pre>
                   </span>
