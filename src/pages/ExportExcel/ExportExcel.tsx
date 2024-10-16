@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import Swal from 'sweetalert2';
 import DropdownButton from '../../components/DropdownButton/DropdownButton';
-import ExcelTable from '../../components/ExcelTable/ExcelTable';
 import { fetchExport, postNotif } from '../../api/api';
 import styles from './ExportExcel.module.css';
 
@@ -43,19 +42,20 @@ const ExportExcel: React.FC = () => {
         { id: '2', label: 'NA', value: 'NA' },
         { id: '3', label: 'PBS', value: 'PBS' },
         { id: '4', label: 'CA', value: 'CA' },
+        { id: '5', label: 'LH', value: 'LH' },
     ];
 
     // Função de exportação usando SweetAlert2 para feedback
     async function fetchExportExcel(startDate: string, endDate: string) {
         try {
-            const endpoint = selectedTable?.value === 'CA' ? '/exportExcel/hidrometro' : '/exportExcel';
+            const endpoint = selectedTable?.value === 'CA' ||  selectedTable?.value === 'LH' ? '/exportExcel/hidrometro' : '/exportExcel';
             const response = await fetchExport(startDate, endDate, endpoint);
             console.log(response);
 
             const url = window.URL.createObjectURL(response);
             const link = document.createElement('a');
             link.href = url;
-            const nomeExcel = selectedTable?.value === 'CA' ? 'coletas_hidrometro.xlsx' : 'coletas.xlsx';
+            const nomeExcel = selectedTable?.value === 'CA' ||  selectedTable?.value === 'LH' ? 'coletas_hidrometro.xlsx' : 'coletas.xlsx';
             link.setAttribute('download', nomeExcel);
             document.body.appendChild(link);
             link.click();
@@ -205,17 +205,6 @@ const ExportExcel: React.FC = () => {
                     </div>
                 </div>
             </div>
-            <div className={styles.container1}>
-                {selectedTable && selectedMonth && selectedYear && (
-                    <ExcelTable
-                        key={`${selectedTable.value}-${selectedMonth?.id}-${selectedYear.label}`}
-                        sheetName={String(selectedTable.value)}
-                        monthProps={selectedMonth?.id || '0'}
-                        yearProps={selectedYear.label}
-                    />
-                )}
-            </div>
-
             <div className="footer">
                 <button className={styles.export} onClick={handleExportClick}>
                     Exportar Arquivo

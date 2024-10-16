@@ -46,7 +46,7 @@ export function Map() {
                             <div
                                 className={`${styles.azulclaro} ${selectedCategory && selectedCategory !== 'CD' ? styles.grayscale : ''}`}
                             ></div>
-                            <p className={styles.subtitle}>Caixas D’água (CD)</p>
+                            <p className={styles.subtitle}>Caixas de Drenagem (CD)</p>
                         </div>
                         <div
                             className={`${styles.pointsContent} ${selectedCategory === 'PB' ? styles.selected : ''}`}
