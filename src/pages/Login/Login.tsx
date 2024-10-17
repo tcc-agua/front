@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import styles from './Login.module.css';
 import { useNavigate } from 'react-router-dom';
+import useUtilsStore from '../../store/utils';
 
 const Login: React.FC = () => {
   const navigate = useNavigate();
@@ -8,11 +9,14 @@ const Login: React.FC = () => {
     window.location.href = 'http://localhost:5173/oauth2/authorization/azure';
   };
 
+  const { setDataToken } = useUtilsStore();
+
   useEffect(() => {
-    if(localStorage.getItem("id_token") || localStorage.getItem("access_token")){
-      navigate("/inicial")
+    if(localStorage.getItem("id_token") || localStorage.getItem("access_token")) {
+        setDataToken();  // Definir a expiração do token
+        navigate("/inicial");  // Redirecionar após a configuração do token
     }
-  }, [navigate])
+}, [navigate, setDataToken]);
 
   return (
     <div className={styles.container}>

@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { Navigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import useUtilsStore from "../store/utils";
 
 interface PrivateRouteProps {
@@ -8,17 +8,23 @@ interface PrivateRouteProps {
 
 const PrivateRoute: React.FC<PrivateRouteProps> = ({children}) => {
     const { isTokenExpired } = useUtilsStore();
-    const tokenExpired = isTokenExpired();
+
+    const navigate = useNavigate();
 
     useEffect(() => {
-        if(tokenExpired){
-            console.log("TOKEN EXPIRADO!")
-        }
-    }, [tokenExpired]);
+        const checkToken = () => {
+            if (isTokenExpired()) {
+                console.log("TOKEN EXPIRADO! Redirecionando para o login.");
+                navigate("/login", { replace: true });
+            }
+        };
 
-    if (tokenExpired) {
-        return <Navigate to="/login" replace />;
-    }
+        // Verificar a cada 5 segundos
+        const interval = setInterval(checkToken, 5000);
+
+        // Limpar intervalo quando o componente for desmontado
+        return () => clearInterval(interval);
+    }, [isTokenExpired, navigate]);
 
     return <>{children}</> // Renderizando as rotas protegidas
 };

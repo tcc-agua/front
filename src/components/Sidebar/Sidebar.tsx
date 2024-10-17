@@ -42,6 +42,7 @@ export function Sidebar({ className }: SidebarProps) {
         localStorage.removeItem("id_token");
         localStorage.removeItem("access_token");
         localStorage.removeItem("expires_at");
+        localStorage.removeItem("data_token");
     };
 
     return (
