@@ -4,10 +4,11 @@ import icon_correct from "../../assets/images/correct.svg"
 import icon_export from "../../assets/images/export_activity.svg"
 import Graphic, { ChartDataProp } from "../../components/Graphic/Graphic"
 import Forecast from "../../components/Forecast/Forecast"
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { deleteNotifByID, fetchHidrometro, fetchNotif, fetchPH, fetchTQ01 } from "../../api/api";
 import MapHome from '../../components/MapHome/MapHome';
 import DropdownButton from "../../components/DropdownButton/DropdownButton"
+import icon_alert from "../../assets/images/alert.svg"
 
 interface DropdownItem {
     id: string;
@@ -45,6 +46,10 @@ const GraphicDropdown: React.FC = () => {
     const [hidroVolume, setHidroVolume] = useState<number[]>([]);
     const [selectedDate, setSelectedDate] = useState< DropdownItem>({ id: '1', label: '2024', value: '2024' });
     const [selectedTable, setSelectedTable] = useState<DropdownItem>({ id: '1', label: 'Leitura hidrômetros', value: 'leitura'});
+
+    const iconClass = useRef('');
+    const message = useRef('');
+
 
     // Opções de hidrômetros que o usuário pode escolher para visualizar no gráfico
     const hidro: DropdownItem[] = [
@@ -120,11 +125,30 @@ const GraphicDropdown: React.FC = () => {
                 // Iniciando o array de consumo com o valor da diferença entre janeiro e dezembro
                 const consumo: number[] = [(volumes[0]- parseFloat(volumeDezembroAnterior.toFixed(2)))];
 
+                const mesesVazamento: string[] = [];
+
                 // Fazendo a diferença entre o mês atual e o anterior 
                 for (let i = 1; i < volumes.length; i++) {
                     const diferrence = volumes[i]-volumes[i-1]
                     consumo.push(parseFloat(diferrence.toFixed(2)))
                 }
+
+                // Calculando a média do array consumo
+                const somaConsumo = consumo.reduce((acc, val) => acc + val, 0);
+                const mediaConsumo = somaConsumo / consumo.length;
+
+                const limiteVazamento = mediaConsumo * 1.5;
+                let vazamentoDetectado = false;
+                
+                 // Verificando se algum consumo mensal excede o limite
+                consumo.forEach((valor, index) => {
+                    if (valor > limiteVazamento) {
+                        vazamentoDetectado = true;
+                        const mes = ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'][index];
+                        mesesVazamento.push(mes);
+                        console.warn(`Possível vazamento detectado no mês ${index + 1}. Consumo: ${valor}, Limite: ${limiteVazamento}`);
+                    }
+                });
 
                 if (table === 'leitura') {
                     // Definindo o que o gráfico irá receber
@@ -141,7 +165,11 @@ const GraphicDropdown: React.FC = () => {
                         volumes: consumo
                     })
                 }
-                
+
+                if (vazamentoDetectado) {
+                    iconClass.current = icon_alert; // Presumindo que você tenha essa variável definida
+                    message.current = `Possível vazamento detectado nos meses: ${mesesVazamento.join(', ')}`;
+                }
 
             } catch (error) {
                 console.error("Erro ao buscar dados do hidrometro selecionado.");
@@ -189,6 +217,14 @@ const GraphicDropdown: React.FC = () => {
             {hidroVolume && (
                 <div>
                     <Graphic chartDataProp={chartData} />
+                    <div className={styles.coleta_activity}>
+                        <div className={styles.icon_alert}>
+                            <img className={styles.imgs_coleta} src={iconClass.current} alt="Ícone" />
+                        </div>
+                        <div className={styles.text_coleta}>
+                            <p className={styles.data_coleta}>{message.current}</p>
+                        </div>
+                    </div>
                 </div>
             )}
         </div>
