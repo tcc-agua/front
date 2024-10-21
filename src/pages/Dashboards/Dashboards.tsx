@@ -48,22 +48,22 @@ const GraphicDropdown: React.FC = () => {
 
     // Opções de hidrômetros que o usuário pode escolher para visualizar no gráfico
     const hidro: DropdownItem[] = [
-        { id: '1', label: 'Geral Fábrica', value: 'Geral Fabrica' },
-        { id: '2', label: 'Kinderhaus', value: 'Kinderhaus' },
-        { id: '3', label: 'Refeitório', value: 'Refeitorio' },
-        { id: '4', label: 'Geral222', value: 'Geral222' },
-        { id: '5', label: 'Entrada Desmi', value: 'EntradaDesmi' },
-        { id: '6', label: 'Saída Desmi', value: 'SaidaDesmi' },
-        { id: '7', label: 'Geral 210', value: 'Geral210' },
-        { id: '8', label: 'Descarte', value: 'Descarte' },
-        { id: '9', label: 'Geral 401', value: 'Geral401' },
-        { id: '10', label: 'Água Quente', value: 'Agua Quente' },
-        { id: '11', label: 'Água Industrial', value: 'Agua industrial' },
-        { id: '12', label: 'Geral 303', value: 'Geral303' },
-        { id: '13', label: 'Geral 304', value: 'Geral304' },
-        { id: '14', label: 'Geral 115', value: 'Geral115' },
-        { id: '15', label: 'Geral 101', value: 'Geral101' },
-        { id: '16', label: 'Tanque Reman', value: 'Tanque Reman' },
+        { id: '53', label: 'Geral Fábrica', value: 'Geral Fabrica' },
+        { id: '54', label: 'Kinderhaus', value: 'Kinderhaus' },
+        { id: '55', label: 'Refeitório', value: 'Refeitorio' },
+        { id: '56', label: 'Geral222', value: 'Geral222' },
+        { id: '57', label: 'Entrada Desmi', value: 'EntradaDesmi' },
+        { id: '58', label: 'Saída Desmi', value: 'SaidaDesmi' },
+        { id: '59', label: 'Geral 210', value: 'Geral210' },
+        { id: '60', label: 'Descarte', value: 'Descarte' },
+        { id: '61', label: 'Geral 401', value: 'Geral401' },
+        { id: '62', label: 'Água Quente', value: 'Agua Quente' },
+        { id: '63', label: 'Água Industrial', value: 'Agua industrial' },
+        { id: '64', label: 'Geral 303', value: 'Geral303' },
+        { id: '65', label: 'Geral 304', value: 'Geral304' },
+        { id: '66', label: 'Geral 115', value: 'Geral115' },
+        { id: '67', label: 'Geral 101', value: 'Geral101' },
+        { id: '68', label: 'Tanque Reman', value: 'Tanque Reman' },
     ]
 
     // Opções de período de coleta que ele deseja visualizar
@@ -95,9 +95,28 @@ const GraphicDropdown: React.FC = () => {
 
                 // Pegando o registro de volume de dezembro do ano anterior, a fim de fazer 
                 // a conta do consumo de água desde janeiro
-                const dezData: Hidrometro[] = await fetchHidrometro(ponto, lastYear)
-                const volumeDezembroAnterior = dezData[11]?.volume || 0
-              
+                let volumeDezembroAnterior = 0;
+                try {
+                    const dezDataResponse = await fetchHidrometro(ponto, lastYear);
+
+                    // Verifica se a resposta é ok 
+                    if (!dezDataResponse.ok) {
+                        if (dezDataResponse.status === 404) {
+                            console.warn(`Dados não encontrados para dezembro de ${lastYear}. Usando valor 0.`);
+                            volumeDezembroAnterior = 0;
+                        } else {
+                            throw new Error(`Erro na requisição: ${dezDataResponse.status}`);
+                        }
+                    } else {
+                        const dezData: Hidrometro[] = await dezDataResponse.json();
+                        volumeDezembroAnterior = dezData[11]?.volume || 0;
+                    }
+
+                } catch (error) {
+                    console.error("Erro ao buscar dados do ano anterior", error);
+                    volumeDezembroAnterior = 0; // Fallback para o valor 0 caso ocorra outro erro
+                }
+
                 // Iniciando o array de consumo com o valor da diferença entre janeiro e dezembro
                 const consumo: number[] = [(volumes[0]- parseFloat(volumeDezembroAnterior.toFixed(2)))];
 
