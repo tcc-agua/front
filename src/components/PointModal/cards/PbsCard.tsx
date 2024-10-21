@@ -52,6 +52,19 @@ function PbsCard({ name, idColeta }: PointNameProps) {
     };
 
     useEffect(() => {
+        const getModalWidth = () => {
+            const width = window.innerWidth;
+            
+            if (width <= 540) return '95%';
+            if (width <= 680) return '90%';
+            if (width <= 750) return '85%';
+            if (width <= 865) return '75%';
+            if (width <= 1300) return '40%';
+            if (width <= 1500) return '30%';
+            
+            return '30%'; 
+        };
+    
         if (isCreated) {
             Swal.fire({
                 title: 'Sucesso!',
@@ -59,16 +72,24 @@ function PbsCard({ name, idColeta }: PointNameProps) {
                 text: 'Coleta inserida com sucesso!',
                 showConfirmButton: false,
                 timer: 2000,
-                width: '30%'
+                width: getModalWidth(),
+                customClass: {
+                    popup: 'custom-swal-popup', 
+                },
             });
             resetState();
             setStatus(name, "COLETADO");
         }
+    
         if (isError) {
             Swal.fire({
                 title: 'Erro ao criar',
                 icon: 'error',
                 text: 'Ocorreu um erro durante a criação. Tente novamente!',
+                width: getModalWidth(), 
+                customClass: {
+                    popup: 'custom-swal-popup', 
+                },
             });
             resetState();
             setStatus(name, "NAO_COLETADO");

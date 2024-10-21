@@ -47,6 +47,20 @@ const ExportExcel: React.FC = () => {
 
     // Função de exportação usando SweetAlert2 para feedback
     async function fetchExportExcel(startDate: string, endDate: string) {
+        const getModalDimension = () => {
+            const width = window.innerWidth;
+    
+            // Retorna a largura e altura iguais para manter o modal quadrado
+            if (width <= 540) return '95%';
+            if (width <= 680) return '90%';
+            if (width <= 750) return '85%';
+            if (width <= 865) return '75%';
+            if (width <= 1300) return '40%';
+            if (width <= 1500) return '30%';
+    
+            return '30%';
+        };
+
         try {
             const endpoint = selectedTable?.value === 'CA' ||  selectedTable?.value === 'LH' ? '/exportExcel/hidrometro' : '/exportExcel';
             const response = await fetchExport(startDate, endDate, endpoint);
@@ -70,7 +84,10 @@ const ExportExcel: React.FC = () => {
                 icon: 'success',
                 title: 'Sucesso!',
                 text: 'O arquivo foi exportado com sucesso.',
-                width: '30%',
+                width: getModalDimension(),
+                customClass: {
+                    popup: 'custom-swal-popup', // Classe customizada para o modal
+                },
             });
 
         } catch (e) {
@@ -81,12 +98,28 @@ const ExportExcel: React.FC = () => {
                 icon: 'error',
                 title: 'Erro!',
                 text: 'Erro ao exportar o arquivo. Por favor, tente novamente.',
-                width: '30%',
+                width: getModalDimension(),
+                customClass: {
+                    popup: 'custom-swal-popup',
+                },
             });
         }
     }
 
     const notify = async () => {
+        const getModalDimension = () => {
+            const width = window.innerWidth;
+    
+            if (width <= 540) return '95%';
+            if (width <= 680) return '90%';
+            if (width <= 750) return '85%';
+            if (width <= 865) return '75%';
+            if (width <= 1300) return '40%';
+            if (width <= 1500) return '30%';
+    
+            return '30%'; 
+        };
+
         try {
             const result = await postNotif("EXCEL", "EXPORTADO");
             console.log("Dados salvos com sucesso:", result);
@@ -98,12 +131,28 @@ const ExportExcel: React.FC = () => {
                 icon: 'error',
                 title: 'Erro!',
                 text: 'Erro ao salvar os dados.',
-                width: '30%',
+                width: getModalDimension(),
+                customClass: {
+                    popup: 'custom-swal-popup', 
+                },
             });
         }
     };
 
     const handleExportClick = () => {
+        const getModalDimension = () => {
+            const width = window.innerWidth;
+    
+            if (width <= 540) return '95%';
+            if (width <= 680) return '90%';
+            if (width <= 750) return '85%';
+            if (width <= 865) return '75%';
+            if (width <= 1300) return '40%';
+            if (width <= 1500) return '30%';
+    
+            return '30%'; 
+        };
+
         if (selectedYear) {
             const year = parseInt(selectedYear.label);
             let startDate: Date;
@@ -134,7 +183,10 @@ const ExportExcel: React.FC = () => {
                 icon: 'warning',
                 title: 'Inválido!',
                 text: 'Selecione um mês para prosseguir.',
-                width: '30%',
+                width: getModalDimension(),
+                customClass: {
+                    popup: 'custom-swal-popup', // Classe customizada para o modal
+                },
             });
         } else if (!selectedYear){
             console.error("Selecione um ano válido.");
@@ -144,7 +196,10 @@ const ExportExcel: React.FC = () => {
                 icon: 'warning',
                 title: 'Inválido!',
                 text: 'Selecione um ano para prosseguir.',
-                width: '30%',
+                width: getModalDimension(),
+                customClass: {
+                    popup: 'custom-swal-popup', // Classe customizada para o modal
+                },
             });
         } else if (!selectedTable){
             console.error("Selecione uma tabela válida.");
@@ -154,7 +209,10 @@ const ExportExcel: React.FC = () => {
                 icon: 'warning',
                 title: 'Inválido!',
                 text: 'Selecione uma tabela para prosseguir.',
-                width: '30%',
+                width: getModalDimension(),
+                customClass: {
+                    popup: 'custom-swal-popup', // Classe customizada para o modal
+                },
             });
         }
     };

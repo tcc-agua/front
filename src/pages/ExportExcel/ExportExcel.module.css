@@ -14,6 +14,19 @@
     margin-top: 1%;
 }
 
+.export {
+    width: 15%;
+    font-size: 0.85rem;
+    color: #fff;
+    background-color: #01A4FD;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    padding: 1%;
+    margin-left: 5%;
+    margin-top: 20px;
+}
+
 .filter{
     display: block;
     margin-bottom: 3%;
@@ -43,19 +56,21 @@
     width: 97%;
 }
 
-/* Botão Exportar Arquivo */
+.custom-swal-popup {
+    width: 100%;
+    height: 0;
+    padding-bottom: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 16px;
+    padding: 20px;
+}
 
-.export {
-    width: 15%;
-    font-size: 0.85rem;
-    color: #fff;
-    background-color: #01A4FD;
-    border-radius: 8px;
-    border: none;
-    cursor: pointer;
-    padding: 1%;
-    margin-left: 5%;
-    margin-top: 20px;
+@media (max-width: 1500px) {
+    .custom-swal-popup {
+        font-size: 18px;
+    }
 }
 
 @media (max-width: 900px) {
@@ -79,6 +94,18 @@
     .exportYearContainer{
         align-content: center;
         width: 30%;
+    }
+
+    @media (max-width: 865px) {
+        .custom-swal-popup {
+            font-size: 16px;
+        }
+    }
+
+    @media (max-width: 750px) {
+        .custom-swal-popup {
+            font-size: 15px;
+        }
     }
     
 }
@@ -163,6 +190,20 @@
     
 }
 
+@media (max-width: 600px) {
+    .export {
+        width: 35%;
+        padding: 2%;
+    }
+    .exportYearContainer{
+        align-content: center;
+        width: 40%;
+    }
+    
+    .custom-swal-popup {
+        font-size: 13px;
+    }
+}
 
 @media (max-width: 370px) {
     .export {
