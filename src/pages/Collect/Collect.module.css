@@ -567,4 +567,8 @@
     .name_point {
         font-size: 3vw;
     }
+
+    .recent_points_container {
+        height: auto;
+    }
 }
