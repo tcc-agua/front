@@ -12,10 +12,10 @@
   transition: transform 0.3s ease;
   /* position: fixed; */
   left: 8%;
-  z-index: 99; 
-} 
+  z-index: 99;
+}
 
-.hamburgerIcon img{
+.hamburgerIcon img {
   width: 100%;
   height: 100%;
 }
@@ -23,7 +23,7 @@
 .menu {
   position: fixed;
   top: 0;
-  left: -250px; 
+  left: -250px;
   width: 250px;
   height: 100%;
   background-color: var(--backgroud_color2);
@@ -31,13 +31,13 @@
   transition: left 0.3s ease-in-out;
   display: flex;
   flex-direction: column;
-  padding-top: 60px; 
+  padding-top: 60px;
   z-index: 100;
   overflow-y: auto;
 }
 
 .menu.open {
-  left: 0; 
+  left: 0;
 }
 
 .menuList {
@@ -46,14 +46,14 @@
   margin: 0;
 }
 
-.voltar{
+.voltar {
   background: none;
   border: none;
   color: var(--font_color);
   width: 50%;
 }
 
-.container{
+.container {
   margin-top: 10%;
 }
 
@@ -65,11 +65,11 @@
   color: #01A4FD;
 }
 
-.content_options{
+.content_options {
   display: flex;
 }
 
-.pages{
+.pages {
   text-decoration: none;
   color: var(--font_color);
   margin-left: 9%;
@@ -82,7 +82,7 @@
   border-radius: 2px;
 }
 
-.content_options{
+.content_options {
   display: flex;
   text-decoration: none;
   font-size: 15px;
@@ -96,7 +96,7 @@
   width: 23px;
 }
 
-.content_options p{
+.content_options p {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -128,10 +128,48 @@
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(0, 0, 0, 0.5); /* fundo escuro com opacidade */
+  background-color: rgba(0, 0, 0, 0.5);
+  /* fundo escuro com opacidade */
   z-index: 100;
   transition: opacity 0.5s ease;
 }
+
+.hrLinha {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 100px 20px 20px;
+}
+
+.logout {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.logoutButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #01A4FD;
+  color: white;
+  padding: 5px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  width: 100px;
+}
+
+.logoutButton img {
+  width: 20px;
+  height: 20px;
+}
+
+.logoutButton span {
+  margin-left: 5px;
+  font-size: 15px;
+}
+
 
 @media (max-width: 680px) {
   .hamburgerIcon {
@@ -140,10 +178,10 @@
   }
 
   .menu {
-    left: -250px; 
+    left: -250px;
   }
 
   .menu.open {
-    left: 0; 
+    left: 0;
   }
 }

@@ -16,7 +16,7 @@ interface PointNamesProps {
 
 export function PointNames({ onSelectPoint }: PointNamesProps) {
     const [points, setPoints] = useState<Point[]>([]);
-    const [ pontosPreenchidos, setPontosPreenchidos ] = useState<Point[]>([]);
+    const [pontosPreenchidos, setPontosPreenchidos] = useState<Point[]>([]);
 
     const id_token = localStorage.getItem("id_token");
     const [currentPage, setCurrentPage] = useState<number>(0);
@@ -30,7 +30,7 @@ export function PointNames({ onSelectPoint }: PointNamesProps) {
         const month = String(date.getMonth() + 1).padStart(2, '0');
         const year = date.getFullYear();
         return `${year}-${month}-${day}`;
-      };
+    };
 
     useEffect(() => {
         const updatePointsPerPage = () => {
@@ -57,10 +57,10 @@ export function PointNames({ onSelectPoint }: PointNamesProps) {
                     if (Array.isArray(response)) {
                         setPoints(response);
                         setQtdPontos(response.length);
-    
+
                         const storedDate = localStorage.getItem("coletaDia");
                         const currentDate = formatDate(new Date());
-    
+
                         if (storedDate === currentDate) {
                             setPontosPreenchidos(response.filter(point => point.statusEnum === "COLETADO"));
                         }
@@ -74,10 +74,10 @@ export function PointNames({ onSelectPoint }: PointNamesProps) {
                 }
             }
         };
-    
+
         fetchPoints();
     }, [id_token, planilha, setQtdPontos, pontosPreenchidos]);
-    
+
 
     const handlePointSelect = async (selectedPoint: Point) => {
         try {
@@ -123,9 +123,12 @@ export function PointNames({ onSelectPoint }: PointNamesProps) {
                         <p className={styles.name_point}>
                             <span className={styles.name_point_type}>{point.nome}</span>
                         </p>
-                        <pre className={styles.status_point}>
-                             ⟶ {isPreenchido ? "Preenchido" : "Não Preenchido"}
+                        <pre
+                            className={`${styles.status_point} ${isPreenchido ? styles.preenchido : styles.naoPreenchido}`}
+                        >
+                            ⟶ {isPreenchido ? "Preenchido" : "Não Preenchido"}
                         </pre>
+
                     </button>
                 );
             })}

@@ -111,6 +111,10 @@
     color: var(--font_color2);
 }
 
+.preenchido {
+    color: #D543CB; /* Define roxo para "Preenchido" */
+  }
+
 .right_side {
     width: 50%;
     display: flex;

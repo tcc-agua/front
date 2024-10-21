@@ -28,7 +28,8 @@ import MaisWhite from '../../assets/images/darkmode_icons/plus_white.svg';
 import HistoricoWhite from '../../assets/images/darkmode_icons/historic_white.svg';
 import ExportarWhite from '../../assets/images/darkmode_icons/export_white.svg';
 import MenuWhite from '../../assets/images/menuWhite.svg';
-import ConsumoAguaWhite from '../../assets/images/darkmode_icons/torneira_white.svg'
+import ConsumoAguaWhite from '../../assets/images/darkmode_icons/torneira_white.svg';
+import logout from '../../assets/images/logout.svg';
 
 const HamburgerMenu: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -40,6 +41,13 @@ const HamburgerMenu: React.FC = () => {
 
   const toggleMenu = () => {
     setIsOpen(!isOpen);
+  };
+
+  const handleLogout = () => {
+    window.location.href = 'http://localhost:5173/logout';
+    localStorage.removeItem("id_token");
+    localStorage.removeItem("access_token");
+    localStorage.removeItem("expires_at");
   };
 
   return (
@@ -134,6 +142,18 @@ const HamburgerMenu: React.FC = () => {
               <p className={styles.pages}>Exportar Excel</p>
             </Link>
           </div>
+
+          <div className={styles.hrLinha}>
+            <hr />
+          </div>
+
+          <div className={styles.logout}>
+            <button className={styles.logoutButton} onClick={handleLogout}>
+              <img src={logout} alt="logout" />
+              <span>Sair</span>
+            </button>
+          </div>
+
         </section>
       </nav>
     </div>

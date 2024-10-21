@@ -221,6 +221,7 @@ pre {
 }
 
 .mapview {
+    color: var(--font_color);
     display: flex;
     flex-direction: column;
     background-color: var(--backgroud_color);
