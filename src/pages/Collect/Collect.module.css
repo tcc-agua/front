@@ -17,6 +17,23 @@
     cursor: pointer;
 }
 
+.button_container {
+    height: 10vh;
+    margin-top: 30px;
+    display: flex;
+    justify-content: end;
+}
+
+.button_complete {
+    width: 45%;
+    height: 70%;
+    background-color: #01A4FD;
+    border: none;
+    border-radius: 7px;
+    color: white;
+    cursor: pointer;
+}
+
 .data_color {
     color: #D543CB;
 }

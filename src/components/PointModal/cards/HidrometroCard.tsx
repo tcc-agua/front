@@ -97,7 +97,7 @@ function HidrometroCard({ name, idColeta }: PointNameProps) {
                         increment={() => increment(false)}
                         handleChange={handleChange}
                         valor={volume}
-                        titulo="Pressão"
+                        titulo="Volume"
                         isInteger={false}
                     />
                 </div>

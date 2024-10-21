@@ -252,6 +252,22 @@ export const deleteNotifByID = async(id: number) => {
     }
 };
 
+export const fetchColeta = async() => {
+    const token = await waitForToken();
+
+    try{
+        const response = await axios.get(`${API_BASE_URL}/coleta/coleta_ultima`, {
+            headers: {
+                Authorization: `Bearer ${token}`
+            },
+        });
+        return response.data;
+    }
+    catch(error){
+        console.error("Erro ao encontrar a coleta", error)
+    }
+};
+
 // Delete all notifications
 // export const deleteAllNotif = async () => {
 //     const token = await waitForToken();

@@ -2,13 +2,14 @@ import { useEffect, useState } from "react";
 import { Outlet, useLocation, useNavigate } from "react-router-dom";
 import styles from "./Collect.module.css";
 import useUtilsStore from "../../store/utils";
-import { fetchPointBySheet } from "../../api/api";
+import { fetchColeta, fetchPointBySheet } from "../../api/api";
 import PointButton from "../../components/PointButton/PointButton";
 import { COLETA } from "../../interfaces/postParams";
 import { NextCollects } from "../../components/Colects/NextCollects";
 import useColetaStore from "../../store/ColetaStore";
 import { Point } from "../PointCollect/PointNames";
 import { updatePontoStatus } from "../../services/PontoService";
+import { Coleta } from "../PointCollect/PointCollect";
 
 export function Collect() {
   const [etas, setEtas] = useState<Point[]>([]);
@@ -20,6 +21,73 @@ export function Collect() {
   const location = useLocation(); 
   const navigate = useNavigate();
   const { setPlanilha } = useUtilsStore();
+  const [ultimaColeta, setUltimaColeta] = useState<Coleta | null>(null);
+
+  useEffect(() => {
+    const storedDate = localStorage.getItem("coletaDia");
+    const currentDate = formatDate(new Date());
+
+    if (storedDate === currentDate) {
+      setShowPointButtons(true);
+    } else {
+      setShowPointButtons(false);
+    }
+
+  }, []);
+
+  useEffect(() => {
+    const fetchPontos = async () => {
+      try {
+        const [etasResponse, naResponse, pbResponse] = await Promise.all([
+          fetchPointBySheet("DADOS ETAS"),
+          fetchPointBySheet("NA"),
+          fetchPointBySheet("PBS"),
+          fetchPointBySheet("CA"),
+        ]);
+
+        setEtas(etasResponse);
+        setNa(naResponse);
+        setPb(pbResponse);
+
+      } catch (error) {
+        console.error("Erro ao buscar pontos:", error);
+      }
+    };
+
+    fetchPontos();
+  }, []);
+
+  useEffect(() =>{
+    const fetchColetaAtual = async () =>{
+        try{
+             const response = await fetchColeta();
+             console.log(response);
+             setUltimaColeta(response);
+        }
+        catch(error){
+            console.error("Erro ao buscar coleta:", error);
+        }
+    };
+
+    fetchColetaAtual();
+},[]);
+
+  useEffect(() => {
+    const storedDate = ultimaColeta?.dataColeta;
+    const currentDate = formatDate(new Date());
+
+    if (storedDate !== currentDate) {
+        etas.forEach((i) => {
+            updatePontoStatus(i.nome, "NAO_COLETADO");
+        });
+        na.forEach((i) => {
+            updatePontoStatus(i.nome, "NAO_COLETADO");
+        });
+        pb.forEach((i) => {
+            updatePontoStatus(i.nome, "NAO_COLETADO");
+        });
+    }
+}, [etas, na, pb, location, ultimaColeta]); 
 
   const formatDate = (date: Date): string => {
     const day = String(date.getDate()).padStart(2, '0');
@@ -60,58 +128,6 @@ export function Collect() {
   const etasPercentage = calculatePercentageCollected(etas);
   const naPercentage = calculatePercentageCollected(na);
   const pbPercentage = calculatePercentageCollected(pb);
-
-
-  useEffect(() => {
-    const storedDate = localStorage.getItem("coletaDia");
-    const currentDate = formatDate(new Date());
-
-    if (storedDate === currentDate) {
-      setShowPointButtons(true);
-    } else {
-      setShowPointButtons(false);
-    }
-
-  }, []);
-
-  useEffect(() => {
-    const fetchQtdPontos = async () => {
-      try {
-        const [etasResponse, naResponse, pbResponse, caResponse] = await Promise.all([
-          fetchPointBySheet("DADOS ETAS"),
-          fetchPointBySheet("NA"),
-          fetchPointBySheet("PBS"),
-          fetchPointBySheet("CA"),
-        ]);
-
-        setEtas(etasResponse);
-        setNa(naResponse);
-        setPb(pbResponse);
-
-      } catch (error) {
-        console.error("Erro ao buscar pontos:", error);
-      }
-    };
-
-    fetchQtdPontos();
-  }, []);
-
-  useEffect(() => {
-    const storedDate = localStorage.getItem("coletaDia");
-    const currentDate = formatDate(new Date());
-
-    if (storedDate !== currentDate) {
-        etas.forEach((i) => {
-            updatePontoStatus(i.nome, "NAO_COLETADO");
-        });
-        na.forEach((i) => {
-            updatePontoStatus(i.nome, "NAO_COLETADO");
-        });
-        pb.forEach((i) => {
-            updatePontoStatus(i.nome, "NAO_COLETADO");
-        });
-    }
-}, [etas, na, pb, location]); 
 
   return (
     <div className={styles.container}>

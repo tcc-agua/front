@@ -7,14 +7,24 @@ import PointButton from "../../components/PointButton/PointButton";
 import { COLETA } from "../../interfaces/postParams";
 import { NextCollects } from "../../components/Colects/NextCollects";
 import useColetaStore from "../../store/ColetaStore";
+import { Point } from '../PointCollect/PointNames';
 
 export function WaterConsumption() {
-    const [ca, setCa] = useState<number>(0);
+    const [ca, setCa] = useState<Point[]>([]);
     const { createColetaMeasure } = useColetaStore();
     const [showPointButtons, setShowPointButtons] = useState<boolean>(false);
 
     const navigate = useNavigate();
     const { setPlanilha } = useUtilsStore();
+
+    function calculatePercentageCollected(points: Point[]): string {
+        if (points.length === 0) return "0%";
+      
+        const collectedPoints = points.filter((point) => point.statusEnum === "COLETADO");
+        const percentage = (collectedPoints.length / points.length) * 100;
+      
+        return `${percentage.toFixed(0)}%`;
+      }
 
     const formatDate = (date: Date): string => {
         const day = String(date.getDate()).padStart(2, '0');
@@ -56,7 +66,7 @@ export function WaterConsumption() {
                     fetchPointBySheet("CA"),
                 ]);
 
-                setCa(caResponse.length);
+                setCa(caResponse);
             } catch (error) {
                 console.error("Erro ao buscar pontos:", error);
             }
@@ -69,6 +79,8 @@ export function WaterConsumption() {
         setPlanilha(planilha);
         navigate("/inicial/pontos_de_coleta");
     };
+
+    const caPercentage = calculatePercentageCollected(ca);
 
     return (
         <div className={styles.container}>
@@ -92,8 +104,8 @@ export function WaterConsumption() {
                                 <PointButton
                                     onClick={() => handlePoint("CA")}
                                     title="Consumo de Água"
-                                    percentage="75%"
-                                    points={ca}
+                                    percentage={caPercentage}
+                                    points={ca.length}
                                     filledText="Preenchido"
                                     pointsText="Pontos"
                                     containerClass={styles.data_ca_content}
