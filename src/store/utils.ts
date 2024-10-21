@@ -55,7 +55,7 @@ const useUtilsStore = create<UtilState>((set) => ({
 
     setDataToken: () => {
         const data = new Date();
-        const expiresAt = new Date(data.getTime() + 120000); // 1 hora
+        const expiresAt = new Date(data.getTime() + 3600000); // 1 hora
     
         localStorage.setItem("data_token", data.toString());
         localStorage.setItem("expires_at", expiresAt.toString());
