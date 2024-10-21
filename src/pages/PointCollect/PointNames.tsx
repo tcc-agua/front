@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import useUtilsStore from "../../store/utils";
-import { fetchPointBySheet } from "../../api/api";
+import { fetchColeta, fetchPointBySheet } from "../../api/api";
 import styles from './PointCollect.module.css';
 
 export interface Point {
@@ -58,7 +58,9 @@ export function PointNames({ onSelectPoint }: PointNamesProps) {
                         setPoints(response);
                         setQtdPontos(response.length);
 
-                        const storedDate = localStorage.getItem("coletaDia");
+                        const ultimaColeta = await fetchColeta();
+
+                        const storedDate = ultimaColeta?.dataColeta;
                         const currentDate = formatDate(new Date());
 
                         if (storedDate === currentDate) {
