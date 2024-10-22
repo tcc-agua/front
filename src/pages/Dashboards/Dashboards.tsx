@@ -217,12 +217,12 @@ const GraphicDropdown: React.FC = () => {
             {hidroVolume && (
                 <div>
                     <Graphic chartDataProp={chartData} />
-                    <div className={styles.coleta_activity}>
+                    <div className={styles.graphic_activity}>
                         <div className={styles.icon_alert}>
-                            <img className={styles.imgs_coleta} src={iconClass.current} alt="Ícone" />
+                            <img className={styles.imgs_graphic} src={iconClass.current} alt="Ícone" />
                         </div>
-                        <div className={styles.text_coleta}>
-                            <p className={styles.data_coleta}>{message.current}</p>
+                        <div className={styles.text_graphic}>
+                            <p className={styles.data_graphic}>{message.current}</p>
                         </div>
                     </div>
                 </div>
