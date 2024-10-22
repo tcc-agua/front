@@ -85,7 +85,7 @@ export const fetchColetasByData = async (paramsData: { startDate?: string; endDa
         if (paramsData.endDate && new Date(paramsData.endDate) < new Date(paramsData.startDate)) {
             throw new Error("Data final deve ser maior ou igual a startDate");
         }
-        const response = await axios.get("http://localhost:5173/coleta/get-by-date", {
+        const response = await axios.get(`${API_BASE_URL}/coleta/get-by-date`, {
             headers: {
                 Authorization: `Bearer ${token}`
             },

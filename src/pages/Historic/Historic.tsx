@@ -179,7 +179,7 @@ const Historic: React.FC = () => {
           key={coleta.id}
           date={coleta.date}
           description={coleta.description}
-          details={coleta.details.filter(detail => Object.keys(detail.dados).length)}
+          details={coleta.details.filter(detail => Object.keys(detail.dados).length > 0)}
           paramsData={{ page: 0, size: 6, content: '' }}
           onOpenDetail={handleOpenDetail}
         />

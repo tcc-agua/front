@@ -11,6 +11,13 @@ interface Detail {
   dados: any;
 }
 
+interface Content{
+  id: number;
+  date: string;
+  description: string;
+  details: Detail[]
+}
+
 interface ColetaItemProps {
   date: string; 
   description: string;
@@ -27,9 +34,14 @@ const ColetaItem: React.FC<ColetaItemProps> = ({
 }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [currentPage, setCurrentPage] = useState(paramsData?.page || 0);
-  const [details, setDetails] = useState<Detail[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
+  const [details, setDetails] = useState<Detail[]>([]);
+
+  const [present, setPresent] = useState<boolean>(false);
+
+  // setDetailsRecover(details);
+  // console.log(`DETAILS ANTES ${detailsRecover}`)
 
   useEffect(() => {
     const fetchData = async () => {
@@ -49,13 +61,20 @@ const ColetaItem: React.FC<ColetaItemProps> = ({
           page: currentPage,
           size: paramsData?.size || 6,
         });
-        console.log('testezinho:' + response)
-  
-        if (response.content) {
-          setDetails(response.content);
-        } else {
-          setError('Nenhum dado retornado.');
+
+        setDetails(response.content.map((item: Content) => item.details));
+
+        if(details != null){
+          setPresent(true);
         }
+
+          // Logando os detalhes de forma legível
+          response.content.forEach((item: Content) => {
+            console.log(`Details: ${JSON.stringify(item.details, null, 2)}`);
+          });
+
+          console.log("Details Setado: " + JSON.stringify(details))
+
       } catch (e) {
         if (e instanceof Error) {
           console.error('Error fetching data:', e.message);
@@ -69,10 +88,11 @@ const ColetaItem: React.FC<ColetaItemProps> = ({
     };
   
     fetchData();
-  }, [date, currentPage]);
+  }, [date, currentPage, present]);
 
   const handlePageClick = (data: { selected: number }) => {
     setCurrentPage(data.selected);
+    toggleOpen();
   };
 
   const toggleOpen = () => {
@@ -82,10 +102,6 @@ const ColetaItem: React.FC<ColetaItemProps> = ({
     }
   };
 
-  const filterLetters = (text: string) => text.match(/[a-zA-Z]+/g)?.join('') || '';
-  const filterNumbers = (text: string) => text.match(/[0-9]+/g)?.join('') || '';
-
-  console.log('detalhessss:' + details)
 
   return (
     <div className={styles.coleta} onClick={toggleOpen}>
@@ -104,7 +120,7 @@ const ColetaItem: React.FC<ColetaItemProps> = ({
           <img src={arrow} alt="Arrow" style={{ width: '16px', height: '16px' }} />
         </span>
       </div>
-
+  
       <div className={`${styles.detailsWrapper} ${isOpen ? styles.open : ''}`}>
         <div className={styles.details}>
           {loading ? (
@@ -122,7 +138,7 @@ const ColetaItem: React.FC<ColetaItemProps> = ({
                     e.stopPropagation();
                     onOpenDetail(detail);
                   }}
-                  >
+                >
                   <div className={styles.texts}>
                     <span className={styles.label}>{detail.tipo}</span>
                     <pre>–</pre>
@@ -134,7 +150,7 @@ const ColetaItem: React.FC<ColetaItemProps> = ({
                       e.stopPropagation();
                       onOpenDetail(detail);
                     }}
-                    >
+                  >
                     <p className={styles.viewP}>visualizar</p>
                     <pre className={styles.arrow}>⟶</pre>
                   </span>
@@ -143,8 +159,8 @@ const ColetaItem: React.FC<ColetaItemProps> = ({
             ))
           )}
         </div>
-
-        {details.length > (paramsData?.size || 6) && ( 
+  
+        {details.length > (paramsData?.size || 6) && (
           <div className={styles.paginationContainer}>
             <ReactPaginate
               previousLabel={'<'}
@@ -152,7 +168,7 @@ const ColetaItem: React.FC<ColetaItemProps> = ({
               breakLabel={'...'}
               pageCount={Math.ceil(details.length / (paramsData?.size || 6))}
               marginPagesDisplayed={2}
-              pageRangeDisplayed={10}
+              pageRangeDisplayed={6}
               onPageChange={handlePageClick}
               containerClassName={styles.pagination}
               activeClassName={styles.active}
@@ -163,6 +179,7 @@ const ColetaItem: React.FC<ColetaItemProps> = ({
       </div>
     </div>
   );
+  
 };
 
 export default ColetaItem;
