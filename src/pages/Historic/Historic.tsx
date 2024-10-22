@@ -4,7 +4,6 @@ import ColetaItem from '../../components/Colects/CollectItem';
 import styles from './Historic.module.css';
 import dayjs from 'dayjs';
 import { fetchColetasByData } from '../../api/api';
-import { useLocation } from 'react-router-dom';
 
 interface DropdownItem {
   id: string;
@@ -36,10 +35,8 @@ const Historic: React.FC = () => {
   const [carouselIndex, setCarouselIndex] = useState(0);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const location = useLocation(); 
-
-  const [currentPage, setCurrentPage] = useState(0); // Página atual
-  const itemsPerPage = 6; // Quantidade de itens por página
+  const [currentPage, setCurrentPage] = useState(0); 
+  const itemsPerPage = 2; 
 
   const days: DropdownItem[] = Array.from({ length: 31 }, (_, i) => ({
     id: (i + 1).toString(),
@@ -92,8 +89,10 @@ const Historic: React.FC = () => {
       }
 
       const response = await fetchColetasByData(paramsData);
-      if (response.content) {
-        setColetasPonto(response.content);
+      console.log("Dados recebidos:", response.content);
+      if (response && response.content) {
+        const coletas: Coleta[] = response.content; 
+        setColetasPonto(coletas);
       } else {
         setError('Nenhum dado retornado.');
       }
@@ -107,12 +106,11 @@ const Historic: React.FC = () => {
 
   useEffect(() => {
     fetchPontosPorColeta();
-  }, [selectedDay, selectedMonth, selectedYear, location]);
+  }, [selectedDay, selectedMonth, selectedYear]);
 
   const handleOpenDetail = (detail: Detail) => {
     setSelectedDetail(detail);
     setModalOpen(true);
-    setCurrentPage(0);
   };
 
   const handleCloseModal = () => {
@@ -122,14 +120,14 @@ const Historic: React.FC = () => {
   };
 
   const handleNext = () => {
-    if (selectedDetail && (currentPage + 1) * itemsPerPage < selectedDetail.dados.length) {
-      setCurrentPage(prevPage => prevPage + 1);
+    if (selectedDetail && carouselIndex + 2 < Object.keys(selectedDetail.dados).length) {
+      setCarouselIndex(prevIndex => prevIndex + 2);
     }
   };
 
   const handlePrevious = () => {
-    if (currentPage > 0) {
-      setCurrentPage(prevPage => prevPage - 1);
+    if (carouselIndex > 0) {
+      setCarouselIndex(prevIndex => prevIndex - 2);
     }
   };
 
@@ -137,7 +135,7 @@ const Historic: React.FC = () => {
   const visibleInfoContainers = selectedDetail
     ? Object.entries(selectedDetail.dados)
         .filter(([key]) => key !== 'id' && key !== '')
-        .slice(currentPage * itemsPerPage, (currentPage + 1) * itemsPerPage)
+        .slice(carouselIndex, carouselIndex + 2)
     : [];
 
   return (
@@ -178,12 +176,13 @@ const Historic: React.FC = () => {
       <div className={styles.colects}>
         {coletasPonto.map(coleta => (
           <ColetaItem
-            key={coleta.id}
-            date={coleta.date}
-            description={coleta.description}
-            details={coleta.details.filter(detail => Object.keys(detail.dados).length)}
-            onOpenDetail={handleOpenDetail}
-          />
+          key={coleta.id}
+          date={coleta.date}
+          description={coleta.description}
+          details={coleta.details.filter(detail => Object.keys(detail.dados).length)}
+          paramsData={{ page: 0, size: 6, content: '' }}
+          onOpenDetail={handleOpenDetail}
+        />
         ))}
       </div>
 

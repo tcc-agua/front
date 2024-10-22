@@ -80,20 +80,24 @@ export const fetchColetasByData = async (paramsData: { startDate?: string; endDa
     try {
         const token = localStorage.getItem("id_token");        
         if (!paramsData.startDate) {
-            throw new Error("startDate é obrigatório");
+            throw new Error("Data inicial é obrigatório");
         }
         if (paramsData.endDate && new Date(paramsData.endDate) < new Date(paramsData.startDate)) {
-            throw new Error("endDate deve ser maior ou igual a startDate");
+            throw new Error("Data final deve ser maior ou igual a startDate");
         }
         const response = await axios.get("http://localhost:5173/coleta/get-by-date", {
             headers: {
                 Authorization: `Bearer ${token}`
             },
             params: {
-                startDate: paramsData.startDate,
-                endDate: paramsData.endDate,
-                page: paramsData.page || 0,
-                size: paramsData.size || 6  
+                // startDate: paramsData.startDate,
+                // endDate: paramsData.endDate,
+                // page: paramsData.page || 0,
+                // size: paramsData.size || 6 
+                startDate: "2024-09-19",
+                endDate: "2024-09-19",
+                page: 0,
+                size: 6 
             }
         });
         if (!response.data || !response.data.content) {
@@ -104,7 +108,7 @@ export const fetchColetasByData = async (paramsData: { startDate?: string; endDa
             size: response.data.size,      
             content: response.data.content 
         };
-
+        
     } catch (e) {
         console.error("Erro ao buscar coletas por data:", e);
         throw e; 

@@ -8,13 +8,14 @@ interface Detail {
   id: number;
   tipo: string;
   ponto: string;
-  dados: Record<string, any>;
+  dados: any;
 }
 
 interface ColetaItemProps {
   date: string; 
   description: string;
-  paramsData: { page: number; size: number };
+  details: Detail[];
+  paramsData: { page: number; size: number; content: string };
   onOpenDetail: (detail: Detail) => void;
 }
 
@@ -39,6 +40,7 @@ const ColetaItem: React.FC<ColetaItemProps> = ({
           endDate: date,
           page: currentPage,
           size: paramsData?.size || 6,
+          // details: paramsData?.details,
         });
   
         const response = await fetchColetasByData({
@@ -47,6 +49,7 @@ const ColetaItem: React.FC<ColetaItemProps> = ({
           page: currentPage,
           size: paramsData?.size || 6,
         });
+        console.log('testezinho:' + response)
   
         if (response.content) {
           setDetails(response.content);
@@ -81,6 +84,8 @@ const ColetaItem: React.FC<ColetaItemProps> = ({
 
   const filterLetters = (text: string) => text.match(/[a-zA-Z]+/g)?.join('') || '';
   const filterNumbers = (text: string) => text.match(/[0-9]+/g)?.join('') || '';
+
+  console.log('detalhessss:' + details)
 
   return (
     <div className={styles.coleta} onClick={toggleOpen}>
@@ -117,11 +122,11 @@ const ColetaItem: React.FC<ColetaItemProps> = ({
                     e.stopPropagation();
                     onOpenDetail(detail);
                   }}
-                >
+                  >
                   <div className={styles.texts}>
-                    <span className={styles.label}>{filterLetters(detail.tipo)}</span>
+                    <span className={styles.label}>{detail.tipo}</span>
                     <pre>–</pre>
-                    <span className={styles.number}>{filterNumbers(detail.ponto)}</span>
+                    <span className={styles.number}>{detail.ponto}</span>
                   </div>
                   <span
                     className={styles.viewButton}
@@ -129,7 +134,7 @@ const ColetaItem: React.FC<ColetaItemProps> = ({
                       e.stopPropagation();
                       onOpenDetail(detail);
                     }}
-                  >
+                    >
                     <p className={styles.viewP}>visualizar</p>
                     <pre className={styles.arrow}>⟶</pre>
                   </span>
@@ -147,7 +152,7 @@ const ColetaItem: React.FC<ColetaItemProps> = ({
               breakLabel={'...'}
               pageCount={Math.ceil(details.length / (paramsData?.size || 6))}
               marginPagesDisplayed={2}
-              pageRangeDisplayed={3}
+              pageRangeDisplayed={10}
               onPageChange={handlePageClick}
               containerClassName={styles.pagination}
               activeClassName={styles.active}
