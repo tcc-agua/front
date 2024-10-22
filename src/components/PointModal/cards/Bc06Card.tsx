@@ -5,6 +5,7 @@ import { InputPoint } from "../InputPoint";
 import { BC06 } from "../../../interfaces/postParams";
 import useBc06Store from "../../../store/Bc06Store";
 import usePontoState from "../../../store/PontoStore";
+import useUtilsStore from "../../../store/utils";
 
 const itemsPerPage = 2;
 
@@ -15,6 +16,7 @@ interface PointNameProps {
 
 function Bc06Card({ name, idColeta }: PointNameProps) {
     const { setStatus } = usePontoState();
+    const { fetchPoints } = useUtilsStore();
 
     const [measurements, setMeasurements] = useState({
         pressure: 1,
@@ -52,8 +54,8 @@ function Bc06Card({ name, idColeta }: PointNameProps) {
             nomePonto: name,
             idColeta: idColeta,
         };
-
         createBc06Measure(obj);
+        fetchPoints();
     };
 
     useEffect(() => {
@@ -158,3 +160,5 @@ function Bc06Card({ name, idColeta }: PointNameProps) {
 }
 
 export default Bc06Card;
+
+

@@ -5,6 +5,7 @@ import { BooleanInput, InputPoint } from "../InputPoint";
 import useTq04Tq05Store from "../../../store/Tq04Tq05Store";
 import { TQ04_TQ05 } from "../../../interfaces/postParams";
 import usePontoState from "../../../store/PontoStore";
+import useUtilsStore from "../../../store/utils";
 
 const itemsPerPage = 2; // Define the number of items to show per page
 
@@ -33,6 +34,7 @@ function Tq04Tq05Card({ name, idColeta }: PointNameProps) {
     const [hidrometer, setHidrometer] = useState<number>(1);
     const [preparoSolucao, setPreparoSolucao] = useState<boolean>(false);
     const { createTq04Tq05Measure, isCreated, isError, resetState } = useTq04Tq05Store();
+    const { fetchPoints } = useUtilsStore();
     
     const [currentIndex, setCurrentIndex] = useState(0); // State for current index
 
@@ -66,6 +68,7 @@ function Tq04Tq05Card({ name, idColeta }: PointNameProps) {
             idColeta: idColeta
         };
         createTq04Tq05Measure(obj);
+        fetchPoints();
     };
 
     useEffect(() => {

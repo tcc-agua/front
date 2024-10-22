@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import styles from './PointCollect.module.css';
 import Swal from 'sweetalert2'; 
 import useUtilsStore from "../../store/utils";
-import { fetchColeta, fetchPointBySheet, postNotif } from "../../api/api";
+import { fetchColeta, postNotif } from "../../api/api";
 import { PointModal } from "../../components/PointModal";
 import MapPoints from "../../components/MapPoints/MapPoints";
 import { Point, PointNames } from "./PointNames";
@@ -18,11 +18,9 @@ export interface Coleta {
 export function PointCollect() {
     const [isModalOpen, setModalOpen] = useState<boolean>(false);
     const [selectedPoint, setSelectedPoint] = useState<Point | null>(null);
-    const { planilha, qtdPontos } = useUtilsStore();
-    const [etas, setEtas] = useState<Point[]>([]);
-    const [na, setNa] = useState<Point[]>([]);
-    const [pb, setPb] = useState<Point[]>([]);
+    const { planilha, qtdPontos, fetchPoints, etasResponse, naResponse, pbResponse, isUpdated, resetState } = useUtilsStore();
     const [ultimaColeta, setUltimaColeta] = useState<Coleta | null>(null);
+
 
     useEffect(() =>{
         const fetchColetaAtual = async () =>{
@@ -39,28 +37,15 @@ export function PointCollect() {
         fetchColetaAtual();
     },[]);
 
-    useEffect(() => {
-        const fetchPontos = async () => {
-          try {
-            const [etasResponse, naResponse, pbResponse] = await Promise.all([
-              fetchPointBySheet("DADOS ETAS"),
-              fetchPointBySheet("NA"),
-              fetchPointBySheet("PBS"),
-            ]);
-    
-            setEtas(etasResponse);
-            setNa(naResponse);
-            setPb(pbResponse);
-    
-          } catch (error) {
-            console.error("Erro ao buscar pontos:", error);
-          }
-        };
-    
-        fetchPontos();
-      }, []);
+    const coletaId = ultimaColeta?.id;
 
-    function calculatePercentageCollected(points: Point[]): string {
+    useEffect(() => {
+    
+        fetchPoints();
+        
+      }, [isUpdated, fetchPoints]);
+
+      function calculatePercentageCollected(points: Point[]): string {
         if (points.length === 0) return "0%";
       
         const collectedPoints = points.filter((point) => point.statusEnum === "COLETADO");
@@ -69,13 +54,15 @@ export function PointCollect() {
         return `${percentage.toFixed(0)}%`;
       }
 
-      const etasPercentage = calculatePercentageCollected(etas);
-      const naPercentage = calculatePercentageCollected(na);
-      const pbPercentage = calculatePercentageCollected(pb);
-    
-      const coletaId = ultimaColeta?.id;
+      const etasPercentage = calculatePercentageCollected(etasResponse);
+      const naPercentage = calculatePercentageCollected(naResponse);
+      const pbPercentage = calculatePercentageCollected(pbResponse);
 
-    useEffect(() => {
+      useEffect(() =>{
+        console.log(etasPercentage, naPercentage, pbPercentage)
+      }, [etasPercentage, naPercentage, pbPercentage])
+
+      useEffect(() => {
         const fetchColetaId = async () => {
           try {
                 if(coletaId != null){
@@ -92,7 +79,7 @@ export function PointCollect() {
     
         fetchColetaId();
       }, [coletaId]);
-
+    
     const openModal = (point: Point) => {
         setSelectedPoint(point);
         setModalOpen(true);
@@ -263,6 +250,7 @@ export function PointCollect() {
     }
 
     function getPlanilhaTitle(planilha: string | null) {
+
         switch (planilha) {
             case "DADOS ETAS":
                 return "Estações de Tratamento de Águas Subterrâneas";
@@ -279,9 +267,11 @@ export function PointCollect() {
 
     const coleta = localStorage.getItem("coletaId");
 
-    const shouldShowButton = planilha === "DADOS ETAS" && etasPercentage === "100%" || 
-                                                 planilha === "NA" && naPercentage === "100%" || 
-                                                 planilha === "PBS" && pbPercentage === "100%";
+    const shouldShowButton = (
+        (planilha === "DADOS ETAS" && etasPercentage === "100%") ||
+        (planilha === "NA" && naPercentage === "100%") ||
+        (planilha === "PBS" && pbPercentage === "100%")
+      );
 
     return (
         <>
@@ -319,13 +309,11 @@ export function PointCollect() {
                             </div>
                         </div>
     
-                        {/* Renderizar o botão condicionalmente */}
                         {shouldShowButton && (
                             <div className={styles.button_container}>
                                 <button className={styles.button_complete} onClick={notify}>Salvar dados</button>
                             </div>
                         )}
-    
                     </div>
                 </div>
             </main>

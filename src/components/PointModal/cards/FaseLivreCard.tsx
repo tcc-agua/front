@@ -5,6 +5,7 @@ import { BooleanInput, InputPoint } from "../InputPoint";
 import useFaseLivreStore from "../../../store/FaseLivreStore";
 import { FASE_LIVRE } from "../../../interfaces/postParams";
 import usePontoState from "../../../store/PontoStore";
+import useUtilsStore from "../../../store/utils";
 
 interface PointNameProps{
     name: string;
@@ -16,6 +17,7 @@ function FaseLivreCard({ name, idColeta }: PointNameProps) {
     const [volume, setVolume] = useState<number>(1);
     const [houveTroca, setHouveTroca] = useState<boolean>(false);
     const { createFaseLivreMeasure, isCreated, isError, resetState } = useFaseLivreStore();
+    const { fetchPoints } = useUtilsStore();
 
     const increment = (setter: React.Dispatch<React.SetStateAction<number>>, isInteger?: boolean) => {
         setter(prev => isInteger ? prev + 1 : Math.round((prev + 0.1) * 10) / 10);
@@ -44,6 +46,7 @@ function FaseLivreCard({ name, idColeta }: PointNameProps) {
             idColeta: idColeta
         }
         createFaseLivreMeasure(obj);
+        fetchPoints();
     };
 
     useEffect(() => {

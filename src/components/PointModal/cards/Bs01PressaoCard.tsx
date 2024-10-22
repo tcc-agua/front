@@ -5,6 +5,7 @@ import { InputPoint } from "../InputPoint";
 import useBs01PressaoStore from "../../../store/Bs01PressaoStore";
 import { BS01_PRESSAO } from "../../../interfaces/postParams";
 import usePontoState from "../../../store/PontoStore";
+import useUtilsStore from "../../../store/utils";
 
 interface PointNameProps{
     name: string;
@@ -15,6 +16,7 @@ function Bs01PressaoCard({ name, idColeta }: PointNameProps) {
     const { setStatus } = usePontoState();
     const [pressure, setPressure] = useState<number>(1);
     const { createBs01PressaoMeasure, isCreated, isError, resetState } = useBs01PressaoStore();
+    const { fetchPoints } = useUtilsStore();
 
     const increment = (setter: React.Dispatch<React.SetStateAction<number>>, isInteger?: boolean) => {
         setter(prev => isInteger ? prev + 1 : Math.round((prev + 0.1) * 10) / 10);
@@ -39,6 +41,7 @@ function Bs01PressaoCard({ name, idColeta }: PointNameProps) {
             idColeta: idColeta
         }
         createBs01PressaoMeasure(obj);
+        fetchPoints();
     };
 
     useEffect(() => {

@@ -5,6 +5,7 @@ import { DropdownInput, InputPoint } from "../InputPoint";
 import useCdStore from "../../../store/CdStore";
 import { CD } from "../../../interfaces/postParams";
 import usePontoState from "../../../store/PontoStore";
+import useUtilsStore from "../../../store/utils";
 
 const itemsPerPage = 2; // Definindo itens por página
 
@@ -23,6 +24,7 @@ function CdCard({ name, idColeta }: PointNameProps) {
 
     const { createCdMeasure, isCreated, isError, resetState } = useCdStore();
     const [currentIndex, setCurrentIndex] = useState(0);
+    const { fetchPoints } = useUtilsStore();
 
     const increment = useCallback((key: keyof typeof measurements, isInteger: boolean) => {
         setMeasurements(prevState => {
@@ -79,6 +81,7 @@ function CdCard({ name, idColeta }: PointNameProps) {
             idColeta: idColeta,
         };
         createCdMeasure(obj);
+        fetchPoints();
     };
 
     useEffect(() => {

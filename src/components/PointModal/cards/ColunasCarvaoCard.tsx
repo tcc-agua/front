@@ -5,6 +5,7 @@ import { BooleanInput, InputPoint } from "../InputPoint";
 import useColunasCarvaoStore from "../../../store/ColunasCarvaoStore";
 import { COLUNAS_CARVAO } from "../../../interfaces/postParams";
 import usePontoState from "../../../store/PontoStore";
+import useUtilsStore from "../../../store/utils";
 
 const itemsPerPage = 2;
 
@@ -26,6 +27,7 @@ function ColunasCarvaoCard({ name, idColeta }: PointNameProps) {
 
     const { createColunasCarvaoMeasure, isCreated, isError, resetState } = useColunasCarvaoStore();
     const [currentIndex, setCurrentIndex] = useState(0);
+    const { fetchPoints } = useUtilsStore();
 
     const increment = useCallback((key: keyof typeof measurements, isInteger: boolean) => {
         setMeasurements(prevState => ({
@@ -66,6 +68,7 @@ function ColunasCarvaoCard({ name, idColeta }: PointNameProps) {
             idColeta: idColeta
         };
         createColunasCarvaoMeasure(obj);
+        fetchPoints();
     };
 
     useEffect(() => {

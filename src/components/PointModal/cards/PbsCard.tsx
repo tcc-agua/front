@@ -5,6 +5,7 @@ import { InputPoint } from "../InputPoint";
 import usePbsStore from "../../../store/PbsStore";
 import { PBS } from "../../../interfaces/postParams";
 import usePontoState from "../../../store/PontoStore";
+import useUtilsStore from "../../../store/utils";
 
 const itemsPerPage = 2; // Definir o número de itens por página
 
@@ -22,6 +23,7 @@ function PbsCard({ name, idColeta }: PointNameProps) {
     const [volRemOleo, setVolRemOleo] = useState<number>(1);
     const { createPbsMeasure, isCreated, isError, resetState } = usePbsStore();
     const [currentIndex, setCurrentIndex] = useState<number>(0);
+    const { fetchPoints } = useUtilsStore();
 
     const increment = (setter: React.Dispatch<React.SetStateAction<number>>, isInteger: boolean = false) => {
         setter(prev => isInteger ? prev + 1 : Math.round((prev + 0.1) * 10) / 10);
@@ -49,6 +51,7 @@ function PbsCard({ name, idColeta }: PointNameProps) {
             idColeta: idColeta
         };
         createPbsMeasure(obj);
+        fetchPoints();
     };
 
     useEffect(() => {

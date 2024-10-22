@@ -5,6 +5,7 @@ import { InputPoint } from "../InputPoint";
 import useHorimetroStore from "../../../store/HorimetroStore";
 import { HORIMETRO } from "../../../interfaces/postParams";
 import usePontoState from "../../../store/PontoStore";
+import useUtilsStore from "../../../store/utils";
 
 interface PointNameProps{
     name: string
@@ -15,6 +16,7 @@ function HorimetroCard({ name, idColeta }: PointNameProps) {
     const { setStatus } = usePontoState();
     const [horimeter, setHorimeter] = useState<number>(1);
     const { createHorimetroMeasure, isCreated, isError, resetState } = useHorimetroStore();
+    const { fetchPoints } = useUtilsStore();
 
     const increment = (setter: React.Dispatch<React.SetStateAction<number>>, isInteger?: boolean) => {
         setter(prev => isInteger ? prev + 1 : Math.round((prev + 0.1) * 10) / 10);
@@ -38,6 +40,7 @@ function HorimetroCard({ name, idColeta }: PointNameProps) {
             idColeta: idColeta
         }
         createHorimetroMeasure(obj);
+        fetchPoints();
     };
 
     useEffect(() => {

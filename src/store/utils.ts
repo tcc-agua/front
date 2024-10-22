@@ -1,6 +1,7 @@
 import { create } from 'zustand';
-import { fetchUserInfo } from '../api/api';
+import { fetchPointBySheet, fetchUserInfo } from '../api/api';
 import { GlobalState } from '../interfaces/auth';
+import { Point } from '../pages/PointCollect/PointNames';
 
 interface UtilState{
     token: string | null;
@@ -15,16 +16,37 @@ interface UtilState{
     isTokenExpired: () => boolean;
 
     setDataToken: () => void;
+
+    fetchPoints: () => void;
+
+    resetState: () => void;
+
+
+    etasResponse: Point[] | [];
+    naResponse: Point[] | [];
+    pbResponse: Point[] | [];
+
+    isUpdated: boolean;
 }
 
 const useUtilsStore = create<UtilState>((set) => ({
     qtdPontos: 0,
     planilha: null,
     token: null,
+    isUpdated: false,
+    etasResponse: [],
+    naResponse: [],
+    pbResponse: [],
 
     setPlanilha: (value) => {
         set({
             planilha: value 
+        })
+    },
+
+    resetState: () =>{
+        set({
+            isUpdated: false
         })
     },
 
@@ -63,6 +85,27 @@ const useUtilsStore = create<UtilState>((set) => ({
         console.log(`Token configurado para expirar em: ${expiresAt}`);
     },
 
+    fetchPoints: async () => {
+        try {
+            const [etasResponse, naResponse, pbResponse]:Point[][] = await Promise.all([
+                fetchPointBySheet("DADOS ETAS"),
+                fetchPointBySheet("NA"),
+                fetchPointBySheet("PBS"),
+            ]);
+            console.log("Executou bigodera")
+            set({
+                etasResponse,
+                naResponse,
+                pbResponse,
+                isUpdated: true
+            })
+
+        } catch (error) {
+            console.error("Erro ao buscar pontos:", error);
+            throw new Error("Falha ao buscar pontos");
+        }
+    },
+    
     isTokenExpired: () => {
         const idToken = localStorage.getItem("id_token");
         

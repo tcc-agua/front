@@ -5,6 +5,7 @@ import { InputPoint } from "../InputPoint";
 import useTq02Store from "../../../store/Tq02Store";
 import { TQ02 } from "../../../interfaces/postParams";
 import usePontoState from "../../../store/PontoStore";
+import useUtilsStore from "../../../store/utils";
 
 interface PointNameProps{
     name: string;
@@ -16,6 +17,8 @@ function Tq02Card({ name, idColeta,  }: PointNameProps) {
     const [ph, setPh] = useState<number>(1);
     const [lt_02_1, setLt_02_1] = useState<number>(1);
     const { createTq02Measure, isCreated, isError, resetState } = useTq02Store();
+    const { fetchPoints } = useUtilsStore();
+
 
     const increment = (setter: React.Dispatch<React.SetStateAction<number>>, isInteger?: boolean) => {
         setter(prev => isInteger ? prev + 1 : Math.round((prev + 0.1) * 10) / 10);
@@ -40,6 +43,7 @@ function Tq02Card({ name, idColeta,  }: PointNameProps) {
             idColeta: idColeta
         }
         createTq02Measure(obj);
+        fetchPoints();
     };
 
     useEffect(() => {

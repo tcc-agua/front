@@ -5,6 +5,7 @@ import { InputPoint } from "../InputPoint";
 import usePmPtStore from "../../../store/PmPtStore";
 import { PMPT } from "../../../interfaces/postParams";
 import usePontoState from "../../../store/PontoStore";
+import useUtilsStore from "../../../store/utils";
 
 interface PointNameProps {
     name: string;
@@ -20,6 +21,7 @@ function PmPtCard({ name, idColeta }: PointNameProps) {
     const [flRemoManual, setFlRemoManual] = useState<number>(1);
     const { createPmPtMeasure, isCreated, isError, resetState } = usePmPtStore();
     const [currentIndex, setCurrentIndex] = useState(0);
+    const { fetchPoints } = useUtilsStore();
 
     const increment = useCallback(
         (setter: React.Dispatch<React.SetStateAction<number>>, isInteger?: boolean) => {
@@ -51,6 +53,7 @@ function PmPtCard({ name, idColeta }: PointNameProps) {
             idColeta: idColeta
         };
         createPmPtMeasure(obj);
+        fetchPoints();
     };
 
     useEffect(() => {

@@ -5,6 +5,7 @@ import { InputPoint } from "../InputPoint";
 import useBombaBc03Store from "../../../store/BombaBc03Store";
 import { BOMBA_BC03 } from "../../../interfaces/postParams";
 import usePontoState from "../../../store/PontoStore";
+import useUtilsStore from "../../../store/utils";
 
 const itemsPerPage = 2;
 
@@ -15,6 +16,7 @@ interface PointNameProps {
 
 function BombaBc03Card({ name, idColeta }: PointNameProps) {
     const { setStatus } = usePontoState();
+    const { fetchPoints } = useUtilsStore();
 
     const [measurements, setMeasurements] = useState({
         pressure: 1,
@@ -54,8 +56,8 @@ function BombaBc03Card({ name, idColeta }: PointNameProps) {
             nomePonto: name,
             idColeta: idColeta,
         };
-
         createBombaBc03Measure(obj);
+        fetchPoints();
     };
 
     useEffect(() => {

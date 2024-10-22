@@ -5,6 +5,7 @@ import { InputPoint } from "../InputPoint";
 import useBs01HidrometroStore from "../../../store/Bs01HidrometroStore";
 import { BS01_HIDROMETRO } from "../../../interfaces/postParams";
 import usePontoState from "../../../store/PontoStore";
+import useUtilsStore from "../../../store/utils";
 
 interface PointNameProps{
     name: string;
@@ -15,6 +16,8 @@ function Bs01HidrometroCard({ name , idColeta}:PointNameProps ) {
     const { setStatus, status } = usePontoState();
     const [volume, setVolume] = useState<number>(1);
     const { createBs01HidrometroMeasure, isCreated, isError, resetState } = useBs01HidrometroStore();
+    const { fetchPoints } = useUtilsStore();
+
 
     const increment = (setter: React.Dispatch<React.SetStateAction<number>>, isInteger?: boolean) => {
         setter(prev => isInteger ? prev + 1 : Math.round((prev + 0.1) * 10) / 10);
@@ -38,8 +41,8 @@ function Bs01HidrometroCard({ name , idColeta}:PointNameProps ) {
             nomePonto: name,
             idColeta: idColeta
         }
-
         createBs01HidrometroMeasure(obj);
+        fetchPoints();
 
     };
     

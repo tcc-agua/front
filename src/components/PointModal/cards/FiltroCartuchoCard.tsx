@@ -5,6 +5,7 @@ import { InputPoint } from "../InputPoint";
 import useFiltroCartuchoStore from "../../../store/FiltroCartuchoStore";
 import { FILTRO_CARTUCHO } from "../../../interfaces/postParams";
 import usePontoState from "../../../store/PontoStore";
+import useUtilsStore from "../../../store/utils";
 
 interface PointNameProps{
     name: string;
@@ -17,6 +18,8 @@ function FiltroCartuchoCard({ name, idColeta }:PointNameProps) {
     const [outletPressure, setOutletPressure] = useState<number>(1);
     const [inletPressure, setInletPressure] = useState<number>(1);
     const { createFiltroCartuchoMeasure, isCreated, isError, resetState } = useFiltroCartuchoStore();
+    const { fetchPoints } = useUtilsStore();
+
 
     const increment = (setter: React.Dispatch<React.SetStateAction<number>>, isInteger?: boolean) => {
         setter(prev => isInteger ? prev + 1 : Math.round((prev + 0.1) * 10) / 10);
@@ -41,6 +44,7 @@ function FiltroCartuchoCard({ name, idColeta }:PointNameProps) {
             idColeta: idColeta
         }
         createFiltroCartuchoMeasure(obj);
+        fetchPoints();
     };
 
     useEffect(() => {

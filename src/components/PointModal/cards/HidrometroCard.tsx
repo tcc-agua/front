@@ -5,6 +5,7 @@ import { InputPoint } from "../InputPoint";
 import useHidrometroStore from "../../../store/HidrometroStore";
 import { HIDROMETRO } from "../../../interfaces/postParams";
 import usePontoState from "../../../store/PontoStore";
+import useUtilsStore from "../../../store/utils";
 
 interface PointNameProps {
     name: string;
@@ -15,6 +16,7 @@ function HidrometroCard({ name, idColeta }: PointNameProps) {
     const { setStatus } = usePontoState();
     const { createHidrometroMeasure, isCreated, isError, resetState } = useHidrometroStore();
     const [volume, setVolume] = useState<number>(1);
+    const { fetchPoints } = useUtilsStore();
 
     const increment = useCallback((isInteger: boolean) => {
         setVolume(prev =>
@@ -42,6 +44,7 @@ function HidrometroCard({ name, idColeta }: PointNameProps) {
             idColeta: idColeta,
         };
         createHidrometroMeasure(obj);
+        fetchPoints();
     };
 
     useEffect(() => {

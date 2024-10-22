@@ -5,6 +5,7 @@ import { InputPoint } from "../InputPoint";
 import useSensorPhStore from "../../../store/SensorPhStore";
 import { SENSOR_PH } from "../../../interfaces/postParams";
 import usePontoState from "../../../store/PontoStore";
+import useUtilsStore from "../../../store/utils";
 
 interface PointNameProps{
     name: string;
@@ -15,6 +16,7 @@ function SensorPHCard({ name, idColeta }: PointNameProps) {
     const { setStatus } = usePontoState();
     const [ph, setPh] = useState<number>(1);
     const { createSensorPhMeasure, isCreated, isError, resetState } = useSensorPhStore();
+    const { fetchPoints } = useUtilsStore();
 
     const increment = (setter: React.Dispatch<React.SetStateAction<number>>, isInteger?: boolean) => {
         setter(prev => isInteger ? prev + 1 : Math.round((prev + 0.1) * 10) / 10);
@@ -39,6 +41,7 @@ function SensorPHCard({ name, idColeta }: PointNameProps) {
             idColeta: idColeta
         }
         createSensorPhMeasure(obj);
+        fetchPoints();
     };
 
     useEffect(() => {

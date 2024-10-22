@@ -5,6 +5,7 @@ import { InputPoint } from "../InputPoint";
 import { BH02 } from "../../../interfaces/postParams";
 import useBh02Store from "../../../store/Bh02Store";
 import usePontoState from "../../../store/PontoStore";
+import useUtilsStore from "../../../store/utils";
 
 const itemsPerPage = 2;
 
@@ -15,6 +16,7 @@ interface PointNameProps {
 
 function Bh02Card({ name, idColeta }: PointNameProps) {
     const { setStatus } = usePontoState();
+    const { fetchPoints } = useUtilsStore();
     
     const [measurements, setMeasurements] = useState({
         pressure: 1,
@@ -54,8 +56,8 @@ function Bh02Card({ name, idColeta }: PointNameProps) {
             nomePonto: name,
             idColeta: idColeta,
         };
-
         createBh02Measure(obj);
+        fetchPoints();
     };
 
     useEffect(() => {

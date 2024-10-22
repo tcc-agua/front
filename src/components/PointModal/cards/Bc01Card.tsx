@@ -5,6 +5,7 @@ import { InputPoint } from "../InputPoint";
 import { BC01 } from "../../../interfaces/postParams";
 import useBc01Store from "../../../store/Bc01Store";
 import usePontoState from "../../../store/PontoStore";
+import useUtilsStore from "../../../store/utils";
 
 const itemsPerPage = 2;
 
@@ -17,6 +18,7 @@ function Bc01Card({ name, idColeta }: PointNameProps) {
     const { createBc01Measure, isCreated, isError, resetState } = useBc01Store();
     const [currentIndex, setCurrentIndex] = useState(0);
     const { setStatus } = usePontoState();
+    const { fetchPoints } = useUtilsStore();
 
     const [measurements, setMeasurements] = useState({
         pressure: 1,
@@ -57,8 +59,9 @@ function Bc01Card({ name, idColeta }: PointNameProps) {
             nomePonto: name,
             idColeta: idColeta,
         };
-
+        
         createBc01Measure(obj);
+        fetchPoints();
     };
 
     useEffect(() => {
