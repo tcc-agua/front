@@ -81,8 +81,6 @@ const useUtilsStore = create<UtilState>((set) => ({
     
         localStorage.setItem("data_token", data.toString());
         localStorage.setItem("expires_at", expiresAt.toString());
-    
-        console.log(`Token configurado para expirar em: ${expiresAt}`);
     },
 
     fetchPoints: async () => {
@@ -119,8 +117,6 @@ const useUtilsStore = create<UtilState>((set) => ({
         if (expiresAtString !== null) {
             const expiresAt = new Date(expiresAtString).getTime();
             const isExpired = currentTime > expiresAt;
-    
-            console.log(`Token expirado: ${isExpired}`);
         
             if (isExpired) {
                 localStorage.clear();  // Remove tudo relacionado ao token de uma vez
