@@ -262,6 +262,12 @@ hr {
     opacity: 30%;
 }
 
+.graphic_activity {
+    display: flex;
+    padding: 0 15px;
+    gap: 15px;
+}
+
 
 @media (max-width: 1180px) {
     .container {
