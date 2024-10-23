@@ -3,6 +3,7 @@ import styles from './CollectItem.module.css';
 import arrow from '../../assets/images/arrow.svg';
 import { fetchColetasByData } from '../../api/api';
 import ColetaDetails from './CollectDetails';
+import ReactPaginate from 'react-paginate';
 
 interface Detail {
   id: number;
@@ -27,7 +28,14 @@ const ColetaItem: React.FC<ColetaItemProps> = ({ paramsData, onOpenDetail }) => 
   const [content, setContent] = useState<Content[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
-  const [isOpen, setIsOpen] = useState<number | null>(null); // Expande uma coleta de cada vez
+  const [isOpen, setIsOpen] = useState<number | null>(null);
+  const [currentPage, setCurrentPage] = useState(0);
+  const itemsPerPage = paramsData.size; // Define o número de itens por página com base nos parâmetros
+
+  // Calcular o deslocamento e obter os itens da página atual
+  const offset = currentPage * itemsPerPage;
+  const currentItems = content.slice(offset, offset + itemsPerPage);
+  const pageCount = Math.ceil(content.length / itemsPerPage);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -50,8 +58,14 @@ const ColetaItem: React.FC<ColetaItemProps> = ({ paramsData, onOpenDetail }) => 
     fetchData();
   }, [paramsData]);
 
+  // Alternar a expansão/colapso dos detalhes de um item
   const toggleOpen = (id: number) => {
-    setIsOpen(isOpen === id ? null : id); // Expande ou recolhe com base no ID da coleta
+    setIsOpen(isOpen === id ? null : id);
+  };
+
+  // Manipular a mudança de página ao clicar na paginação
+  const handlePageClick = (data: { selected: number }) => {
+    setCurrentPage(data.selected);
   };
 
 
@@ -62,7 +76,7 @@ const ColetaItem: React.FC<ColetaItemProps> = ({ paramsData, onOpenDetail }) => 
       ) : error ? (
         <p>{error}</p>
       ) : (
-        content.map((item) => (
+        currentItems.map((item) => ( // Usar currentItems para exibir apenas os itens da página atual
           <div key={item.id} className={styles.coleta}>
             <div className={styles.title} onClick={() => toggleOpen(item.id)}>
               <p className={styles.date}>{item.date}</p>
@@ -82,6 +96,18 @@ const ColetaItem: React.FC<ColetaItemProps> = ({ paramsData, onOpenDetail }) => 
           </div>
         ))
       )}
+      <ReactPaginate
+        previousLabel={'<'}
+        nextLabel={'>'}
+        breakLabel={'...'}
+        pageCount={pageCount}
+        marginPagesDisplayed={2}
+        pageRangeDisplayed={3}
+        onPageChange={handlePageClick}
+        containerClassName={styles.pagination}
+        activeClassName={styles.active}
+        aria-label="Pagination"
+      />
     </div>
     
   );

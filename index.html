@@ -15,18 +15,6 @@
         <img class="narradora-icon" src="./src/assets/images/sound.svg" alt="Narradora">
     </button>
 
-    <!-- VLibras -->
-    <div vw class="enabled">
-        <div vw-access-button class="active"></div>
-        <div vw-plugin-wrapper>
-            <div class="vw-plugin-top-wrapper"></div>
-        </div>
-    </div>
-    <script src="https://vlibras.gov.br/app/vlibras-plugin.js"></script>
-    <script>
-        new window.VLibras.Widget('https://vlibras.gov.br/app');
-    </script>
-
     <!-- Script narradora -->
     <script>
         let isSpeaking = false; // Estado da narração
@@ -63,12 +51,12 @@
 
     .narrator-button {
         position: fixed;
-        bottom: 360px;
-        right: 10px;
+        bottom: 50%;
+        right: 9px;
         background-color: #2a76e2;
         color: white;
         border: none;
-        padding: 10px 11px;
+        padding: 10px 10px;
         border-radius: 8px;
         cursor: pointer;
         z-index: 1000;
