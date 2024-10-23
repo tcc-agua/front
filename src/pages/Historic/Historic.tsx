@@ -35,8 +35,12 @@ const Historic: React.FC = () => {
   const [carouselIndex, setCarouselIndex] = useState(0);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [currentPage, setCurrentPage] = useState(0); 
-  const itemsPerPage = 2; 
+
+  const [startDateState, setStartDateState] = useState<string>('');
+  const [endDateState, setEndDateState] = useState<string>('');
+
+
+
 
   const days: DropdownItem[] = Array.from({ length: 31 }, (_, i) => ({
     id: (i + 1).toString(),
@@ -76,22 +80,28 @@ const Historic: React.FC = () => {
       }
 
       let paramsData: { startDate?: string; endDate?: string } = {};
+      let startDate: string;
+      let endDate: string;
+
       if (selectedDay?.value && selectedMonth?.value && selectedYear?.value) {
         const year = Number(selectedYear.value);
         const month = Number(selectedMonth.id) - 1;
         const day = Number(selectedDay.value);
-        const startDate = dayjs(new Date(year, month, day)).format('YYYY-MM-DD');
-        paramsData = { startDate, endDate: startDate };
+
+        startDate = dayjs(new Date(year, month, day)).format('YYYY-MM-DD');
+        endDate = startDate; 
       } else {
-        const endDate = dayjs().format('YYYY-MM-DD');
-        const startDate = dayjs().subtract(60, 'day').format('YYYY-MM-DD');
-        paramsData = { startDate, endDate };
+        endDate = dayjs().format('YYYY-MM-DD');
+        startDate = dayjs().subtract(60, 'day').format('YYYY-MM-DD');
       }
+      setStartDateState(startDate);
+      setEndDateState(endDate);
+
+      paramsData = { startDate, endDate };
 
       const response = await fetchColetasByData(paramsData);
-      console.log("Dados recebidos:", response.content);
       if (response && response.content) {
-        const coletas: Coleta[] = response.content; 
+        const coletas: Coleta[] = response.content;
         setColetasPonto(coletas);
       } else {
         setError('Nenhum dado retornado.');
@@ -105,8 +115,9 @@ const Historic: React.FC = () => {
   };
 
   useEffect(() => {
-    fetchPontosPorColeta();
-  }, [selectedDay, selectedMonth, selectedYear]);
+    fetchPontosPorColeta()
+  },[selectedDay, selectedMonth, selectedYear]);
+  
 
   const handleOpenDetail = (detail: Detail) => {
     setSelectedDetail(detail);
@@ -174,16 +185,16 @@ const Historic: React.FC = () => {
 
       <p className={styles.title}>Últimas coletas:</p>
       <div className={styles.colects}>
-        {coletasPonto.map(coleta => (
-          <ColetaItem
-          key={coleta.id}
-          date={coleta.date}
-          description={coleta.description}
-          details={coleta.details.filter(detail => Object.keys(detail.dados).length > 0)}
-          paramsData={{ page: 0, size: 6, content: '' }}
-          onOpenDetail={handleOpenDetail}
-        />
-        ))}
+        {loading ? (
+          <p>Carregando...</p>
+        ) : error ? (
+          <p>{error}</p>
+        ) : (
+            <ColetaItem
+              paramsData={{ page: 0, size: 6, startDate: startDateState , endDate: endDateState  }} 
+              onOpenDetail={handleOpenDetail}
+            />
+        )}
       </div>
 
       {/* Informações individuais de cada ponto */}
@@ -195,9 +206,9 @@ const Historic: React.FC = () => {
 
             <main className={styles.carousel}>
               <button
-                className={`${styles.carousel_button} ${currentPage === 0 ? styles.carousel_button_invisible : ''}`}
+                className={`${styles.carousel_button} ${carouselIndex === 0 ? styles.carousel_button_invisible : ''}`}
                 onClick={handlePrevious}
-                disabled={currentPage === 0}
+                disabled={carouselIndex === 0}
               >
                 ‹
               </button>
@@ -212,9 +223,9 @@ const Historic: React.FC = () => {
               ))}
 
               <button
-                className={`${styles.carousel_button} ${currentPage * itemsPerPage + itemsPerPage >= selectedDetail.dados.length ? styles.carousel_button_invisible : ''}`}
+                className={`${styles.carousel_button} ${carouselIndex + 2 >= Object.keys(selectedDetail.dados).length ? styles.carousel_button_invisible : ''}`}
                 onClick={handleNext}
-                disabled={currentPage * itemsPerPage + itemsPerPage >= selectedDetail.dados.length}
+                disabled={carouselIndex + 2 >= Object.keys(selectedDetail.dados).length}
               >
                 ›
               </button>
@@ -222,9 +233,6 @@ const Historic: React.FC = () => {
           </div>
         </div>
       )}
-
-      {loading && <p>Carregando...</p>}
-      {error && <p>{error}</p>}
     </div>
   );
 };

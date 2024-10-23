@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styles from './CollectItem.module.css';
 import arrow from '../../assets/images/arrow.svg';
-import ReactPaginate from 'react-paginate';
 import { fetchColetasByData } from '../../api/api';
+import ColetaDetails from './CollectDetails';
 
 interface Detail {
   id: number;
@@ -11,192 +11,78 @@ interface Detail {
   dados: any;
 }
 
-interface Content{
+interface Content {
   id: number;
   date: string;
   description: string;
-  details: Detail[]
+  details: Detail[];
 }
 
 interface ColetaItemProps {
-  date: string; 
-  description: string;
-  details: Detail[];
-  paramsData: { page: number; size: number; content: string };
+  paramsData: { page: number; size: number; startDate: string; endDate: string; };
   onOpenDetail: (detail: Detail) => void;
 }
 
-interface GroupedDetails {
-  id: number;
-  details: Detail[];
-}
-
-const ColetaItem: React.FC<ColetaItemProps> = ({
-  date,
-  description,
-  paramsData,
-  onOpenDetail,
-}) => {
-  const [isOpen, setIsOpen] = useState(false);
-  const [currentPage, setCurrentPage] = useState(paramsData?.page || 0);
+const ColetaItem: React.FC<ColetaItemProps> = ({ paramsData, onOpenDetail }) => {
+  const [content, setContent] = useState<Content[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
-  // const [details, setDetails] = useState<Detail[]>([]);
-  const [content, setContent] = useState<Content[]>([]);
-
-  const [present, setPresent] = useState<boolean>(false);
-
-  // setDetailsRecover(details);
-  // console.log(`DETAILS ANTES ${detailsRecover}`)
+  const [isOpen, setIsOpen] = useState<number | null>(null); // Expande uma coleta de cada vez
 
   useEffect(() => {
     const fetchData = async () => {
       setLoading(true);
       try {
-        console.log("Fetching data with:", {
-          startDate: date,
-          endDate: date,
-          page: currentPage,
-          size: paramsData?.size || 6,
-          // details: paramsData?.details,
-        });
-  
         const response = await fetchColetasByData({
-          startDate: date,
-          endDate: date,
-          page: currentPage,
-          size: paramsData?.size || 6,
+          startDate: paramsData.startDate,
+          endDate: paramsData.endDate,
+          page: paramsData.page,
+          size: paramsData.size,
         });
-
-        // Função para agrupar todos os details pela descrição 
-        const groupDetailsByDescription = (content: Content[]): Detail[] => {
-            const groupedDetails: Detail[] = [];
-
-            content.forEach((item: Content) => {
-              groupedDetails.push(...item.details);
-            });
-
-            return groupedDetails;
-        };
-
         setContent(response.content);
-
-        if(details != null){
-          setPresent(true);
-        }
-
-          // Logando os detalhes de forma legível
-          response.content.forEach((item: Content) => {
-            console.log(`Details: ${JSON.stringify(item.details, null, 2)}`);
-          });
-
-          console.log("Details Setado: " + JSON.stringify(details))
-
       } catch (e) {
-        if (e instanceof Error) {
-          console.error('Error fetching data:', e.message);
-          setError('Erro ao buscar dados: ' + e.message);
-        } else {
-          setError('Erro ao buscar dados: Erro desconhecido.');
-        }
+        setError('Erro ao buscar dados.');
       } finally {
         setLoading(false);
       }
     };
-  
+
     fetchData();
-  }, [date, currentPage, present]);
+  }, [paramsData]);
 
-  const handlePageClick = (data: { selected: number }) => {
-    setCurrentPage(data.selected);
-    toggleOpen();
+  const toggleOpen = (id: number) => {
+    setIsOpen(isOpen === id ? null : id); // Expande ou recolhe com base no ID da coleta
   };
-
-  const toggleOpen = () => {
-    setIsOpen((prev) => !prev);
-    if (!isOpen) {
-      setCurrentPage(0);
-    }
-  };
-
 
   return (
-    <div className={styles.coleta} onClick={toggleOpen}>
-      <div className={styles.title}>
-        <p className={styles.date}>{date}</p>
-        <div className={styles.separator}></div>
-        <p className={styles.description}>{description}</p>
-        <span
-          className={styles.rotateArrow}
-          onClick={(e) => {
-            e.stopPropagation();
-            toggleOpen();
-          }}
-          style={{ transform: isOpen ? 'rotate(180deg)' : 'rotate(0deg)' }}
-        >
-          <img src={arrow} alt="Arrow" style={{ width: '16px', height: '16px' }} />
-        </span>
-      </div>
-  
-      <div className={`${styles.detailsWrapper} ${isOpen ? styles.open : ''}`}>
-        <div className={styles.details}>
-          {loading ? (
-            <p>Carregando...</p>
-          ) : error ? (
-            <p>{error}</p>
-          ) : details.length === 0 ? (
-            <p>Nenhum detalhe disponível.</p>
-          ) : (
-            content.map((content).filter(Para cada id renderize um) => (
-              <div key={detail.id} className={styles.detailContainer}>
-                <div
-                  className={styles.detailButton}
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    onOpenDetail(detail);
-                  }}
-                >
-                  <div className={styles.texts}>
-                    <span className={styles.label}>{detail.tipo}</span>
-                    <pre>–</pre>
-                    <span className={styles.number}>{detail.ponto}</span>
-                  </div>
-                  <span
-                    className={styles.viewButton}
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      onOpenDetail(detail);
-                    }}
-                  >
-                    <p className={styles.viewP}>visualizar</p>
-                    <pre className={styles.arrow}>⟶</pre>
-                  </span>
-                </div>
-              </div>
-            ))
-          )}
-        </div>
-  
-        {details.length > (paramsData?.size || 6) && (
-          <div className={styles.paginationContainer}>
-            <ReactPaginate
-              previousLabel={'<'}
-              nextLabel={'>'}
-              breakLabel={'...'}
-              pageCount={Math.ceil(details.length / (paramsData?.size || 6))}
-              marginPagesDisplayed={2}
-              pageRangeDisplayed={6}
-              onPageChange={handlePageClick}
-              containerClassName={styles.pagination}
-              activeClassName={styles.active}
-              aria-label="Pagination"
-            />
+    <div className={styles.coletaList}>
+      {loading ? (
+        <p>Carregando...</p>
+      ) : error ? (
+        <p>{error}</p>
+      ) : (
+        content.map((item) => (
+          <div key={item.id} className={styles.coleta}>
+            <div className={styles.title} onClick={() => toggleOpen(item.id)}>
+              <p className={styles.date}>{item.date}</p>
+              <div className={styles.separator}></div>
+              <p className={styles.description}>{item.description}</p>
+              <span
+                className={styles.rotateArrow}
+                style={{ transform: isOpen === item.id ? 'rotate(180deg)' : 'rotate(0deg)' }}
+              >
+                <img src={arrow} alt="Arrow" style={{ width: '16px', height: '16px' }} />
+              </span>
+            </div>
+
+            {isOpen === item.id && (
+              <ColetaDetails details={item.details} onOpenDetail={onOpenDetail} />
+            )}
           </div>
-        )}
-      </div>
+        ))
+      )}
     </div>
   );
-  
 };
 
 export default ColetaItem;
