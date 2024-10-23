@@ -26,6 +26,11 @@ interface ColetaItemProps {
   onOpenDetail: (detail: Detail) => void;
 }
 
+interface GroupedDetails {
+  id: number;
+  details: Detail[];
+}
+
 const ColetaItem: React.FC<ColetaItemProps> = ({
   date,
   description,
@@ -36,7 +41,8 @@ const ColetaItem: React.FC<ColetaItemProps> = ({
   const [currentPage, setCurrentPage] = useState(paramsData?.page || 0);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
-  const [details, setDetails] = useState<Detail[]>([]);
+  // const [details, setDetails] = useState<Detail[]>([]);
+  const [content, setContent] = useState<Content[]>([]);
 
   const [present, setPresent] = useState<boolean>(false);
 
@@ -62,7 +68,18 @@ const ColetaItem: React.FC<ColetaItemProps> = ({
           size: paramsData?.size || 6,
         });
 
-        setDetails(response.content.map((item: Content) => item.details));
+        // Função para agrupar todos os details pela descrição 
+        const groupDetailsByDescription = (content: Content[]): Detail[] => {
+            const groupedDetails: Detail[] = [];
+
+            content.forEach((item: Content) => {
+              groupedDetails.push(...item.details);
+            });
+
+            return groupedDetails;
+        };
+
+        setContent(response.content);
 
         if(details != null){
           setPresent(true);
@@ -130,7 +147,7 @@ const ColetaItem: React.FC<ColetaItemProps> = ({
           ) : details.length === 0 ? (
             <p>Nenhum detalhe disponível.</p>
           ) : (
-            details.map((detail) => (
+            content.map((content).filter(Para cada id renderize um) => (
               <div key={detail.id} className={styles.detailContainer}>
                 <div
                   className={styles.detailButton}
