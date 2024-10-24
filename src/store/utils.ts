@@ -2,85 +2,79 @@ import { create } from 'zustand';
 import { fetchPointBySheet, fetchUserInfo } from '../api/api';
 import { GlobalState } from '../interfaces/auth';
 import { Point } from '../pages/PointCollect/PointNames';
+import { calculatePercentageCollected } from '../pages/PointCollect/PointCollectUtils/renderCardInfo';
 
 interface UtilState{
     token: string | null;
+    getTokenInfo: () => Promise <void>;
+    isTokenExpired: () => boolean;
+    setDataToken: () => void;
+
     planilha: string | null;
     setPlanilha: (value: string) => void;
 
     qtdPontos: number | 0;
     setQtdPontos: (value: number) => void;
 
-    getTokenInfo: () => Promise <void>;
-
-    isTokenExpired: () => boolean;
-
-    setDataToken: () => void;
-
     fetchPoints: () => void;
-
-    resetState: () => void;
-
 
     etasResponse: Point[] | [];
     naResponse: Point[] | [];
-    pbResponse: Point[] | [];
+    pbResponse: Point[] | []; 
+    
+    etasPercentage: string | "0%";
+    naPercentage: string | "0%";
+    pbPercentage: string | "0%";
 
-    isUpdated: boolean;
 }
 
 const useUtilsStore = create<UtilState>((set) => ({
     qtdPontos: 0,
     planilha: null,
     token: null,
-    isUpdated: false,
+  
     etasResponse: [],
     naResponse: [],
     pbResponse: [],
-
+  
+    etasPercentage: "0%",
+    naPercentage: "0%",
+    pbPercentage: "0%",
+  
     setPlanilha: (value) => {
-        set({
-            planilha: value 
-        })
+      set({
+        planilha: value 
+      });
     },
-
-    resetState: () =>{
-        set({
-            isUpdated: false
-        })
-    },
-
+  
     setQtdPontos: (value) => {
-        set({
-            qtdPontos: value
-        })
+      set({
+        qtdPontos: value
+      });
     },
-
+  
     getTokenInfo: async () => {
-        try {
-            const response: GlobalState = await fetchUserInfo();
-
-            console.log(response.id_token)
-
-            localStorage.setItem("id_token", response.id_token);
-            localStorage.setItem("access_token", response.access_token);
-
-            if(localStorage.getItem("id_token") != null){
-                set({
-                    token: response.id_token,
-                })
-            }
-        } catch (error) {
-            throw new Error("Erro");
+      try {
+        const response: GlobalState = await fetchUserInfo();
+        localStorage.setItem("id_token", response.id_token);
+        localStorage.setItem("access_token", response.access_token);
+  
+        if(localStorage.getItem("id_token") != null){
+          set({
+            token: response.id_token,
+          });
         }
+      } catch (error) {
+        throw new Error("Erro");
+      }
     },
-
+  
     setDataToken: () => {
 
         if(!localStorage.getItem("expires_at")){
             const data = new Date();
-            // const expiresAt = new Date(data.getTime() + 3600000); // 1 hora
-            const expiresAt = new Date(data.getTime() + 120000);
+            const expiresAt = new Date(data.getTime() + 3600000); // 1 hora
+            // const expiresAt = new Date(data.getTime() + 120000);
         
             localStorage.setItem("data_token", data.toString());
             localStorage.setItem("expires_at", expiresAt.toString());
@@ -88,28 +82,35 @@ const useUtilsStore = create<UtilState>((set) => ({
             console.log(`Token configurado para expirar em: ${expiresAt}`);
         }
     },
-
+  
     fetchPoints: async () => {
-        try {
-            const [etasResponse, naResponse, pbResponse]:Point[][] = await Promise.all([
-                fetchPointBySheet("DADOS ETAS"),
-                fetchPointBySheet("NA"),
-                fetchPointBySheet("PBS"),
-            ]);
-            console.log("Executou bigodera")
-            set({
-                etasResponse,
-                naResponse,
-                pbResponse,
-                isUpdated: true
-            })
-
-        } catch (error) {
-            console.error("Erro ao buscar pontos:", error);
-            throw new Error("Falha ao buscar pontos");
-        }
+      try {
+        const [etasResponse, naResponse, pbResponse]: Point[][] = await Promise.all([
+          fetchPointBySheet("DADOS ETAS"),
+          fetchPointBySheet("NA"),
+          fetchPointBySheet("PBS"),
+        ]);
+        console.log("Executou bigodera");
+  
+        const etasPercentage = calculatePercentageCollected(etasResponse);
+        const naPercentage = calculatePercentageCollected(naResponse);
+        const pbPercentage = calculatePercentageCollected(pbResponse);
+  
+        set({
+          etasResponse,
+          naResponse,
+          pbResponse,
+          etasPercentage,
+          naPercentage,
+          pbPercentage,
+        });
+  
+      } catch (error) {
+        console.error("Erro ao buscar pontos:", error);
+        throw new Error("Falha ao buscar pontos");
+      }
     },
-    
+  
     isTokenExpired: () => {
         const idToken = localStorage.getItem("id_token");
         

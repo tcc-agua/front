@@ -16,14 +16,12 @@ interface PointNamesProps {
 
 export function PointNames({ onSelectPoint }: PointNamesProps) {
     const [points, setPoints] = useState<Point[]>([]);
-    const [pontosPreenchidos, setPontosPreenchidos] = useState<Point[]>([]);
-
     const id_token = localStorage.getItem("id_token");
     const [currentPage, setCurrentPage] = useState<number>(0);
     const [pointsPerPage, setPointsPerPage] = useState<number>(8);
     const isNextDisabled = (currentPage + 1) * pointsPerPage >= points.length;
     const isPrevDisabled = currentPage === 0;
-    const { planilha, setQtdPontos } = useUtilsStore();
+    const { planilha, setQtdPontos, naPercentage, etasPercentage, pbPercentage } = useUtilsStore();
 
     const formatDate = (date: Date): string => {
         const day = String(date.getDate()).padStart(2, '0');
@@ -50,7 +48,7 @@ export function PointNames({ onSelectPoint }: PointNamesProps) {
     }, []);
 
     useEffect(() => {
-        const fetchPoints = async () => {
+        const fetchPointsBySheet = async () => {
             if (planilha) {
                 try {
                     const response = await fetchPointBySheet(planilha);
@@ -63,11 +61,9 @@ export function PointNames({ onSelectPoint }: PointNamesProps) {
                         const storedDate = ultimaColeta?.dataColeta;
                         const currentDate = formatDate(new Date());
 
-                        if (storedDate === currentDate) {
-                            setPontosPreenchidos(response.filter(point => point.statusEnum === "COLETADO"));
+                        if (storedDate !== currentDate) {
+                            setPoints([]);
                         }
-                    } else {
-                        setPoints([]);
                     }
                 } catch (error) {
                     console.error("Erro ao buscar pontos:", error);
@@ -77,19 +73,13 @@ export function PointNames({ onSelectPoint }: PointNamesProps) {
             }
         };
 
-        fetchPoints();
-    }, [id_token, planilha, setQtdPontos, pontosPreenchidos]);
+        fetchPointsBySheet();
+    }, [id_token, planilha, setQtdPontos, etasPercentage, naPercentage, pbPercentage ]);
 
 
     const handlePointSelect = async (selectedPoint: Point) => {
         try {
-            await onSelectPoint(selectedPoint);
-
-            setPoints((prevPoints) =>
-                prevPoints.map((point) =>
-                    point.id === selectedPoint.id ? { ...point, status: "COLETADO" } : point
-                )
-            );
+            onSelectPoint(selectedPoint);
         } catch (error) {
             console.error("Erro ao selecionar ponto:", error);
         }

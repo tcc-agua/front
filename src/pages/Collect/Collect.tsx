@@ -19,7 +19,7 @@ export function Collect() {
   const [showPointButtons, setShowPointButtons] = useState<boolean>(false);
   const location = useLocation(); 
   const navigate = useNavigate();
-  const { setPlanilha } = useUtilsStore();
+  const { setPlanilha,  } = useUtilsStore();
 
   // Buscar Pontos
 
@@ -56,8 +56,6 @@ useEffect(() => {
       const currentDate = formatDate(new Date());
 
       setShowPointButtons(storedDate === currentDate);
-
-      // Caso o dia for diferente, zera todas as coletas
 
       if (storedDate !== currentDate) {
         [...etas, ...na, ...pb].forEach((i) => {
