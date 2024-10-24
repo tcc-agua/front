@@ -10,11 +10,12 @@ const Login: React.FC = () => {
   };
 
   const { setDataToken } = useUtilsStore();
+  const { isTokenExpired } = useUtilsStore();
 
   useEffect(() => {
     if(localStorage.getItem("id_token") || localStorage.getItem("access_token")) {
-        setDataToken();  // Definir a expiração do token
-        navigate("/inicial");  // Redirecionar após a configuração do token
+        navigate("/inicial");  // Só redireciona se o token ainda for válido
+        setDataToken();  // Define a expiração do token se necessário
     }
 }, [navigate, setDataToken]);
 

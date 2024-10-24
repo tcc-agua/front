@@ -54,6 +54,7 @@ const ColetaItem: React.FC<ColetaItemProps> = ({ paramsData, onOpenDetail }) => 
     setIsOpen(isOpen === id ? null : id); // Expande ou recolhe com base no ID da coleta
   };
 
+
   return (
     <div className={styles.coletaList}>
       {loading ? (
@@ -82,6 +83,7 @@ const ColetaItem: React.FC<ColetaItemProps> = ({ paramsData, onOpenDetail }) => 
         ))
       )}
     </div>
+    
   );
 };
 

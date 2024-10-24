@@ -76,13 +76,17 @@ const useUtilsStore = create<UtilState>((set) => ({
     },
 
     setDataToken: () => {
-        const data = new Date();
-        const expiresAt = new Date(data.getTime() + 3600000); // 1 hora
-    
-        localStorage.setItem("data_token", data.toString());
-        localStorage.setItem("expires_at", expiresAt.toString());
-    
-        console.log(`Token configurado para expirar em: ${expiresAt}`);
+
+        if(!localStorage.getItem("expires_at")){
+            const data = new Date();
+            // const expiresAt = new Date(data.getTime() + 3600000); // 1 hora
+            const expiresAt = new Date(data.getTime() + 120000);
+        
+            localStorage.setItem("data_token", data.toString());
+            localStorage.setItem("expires_at", expiresAt.toString());
+        
+            console.log(`Token configurado para expirar em: ${expiresAt}`);
+        }
     },
 
     fetchPoints: async () => {
@@ -124,6 +128,7 @@ const useUtilsStore = create<UtilState>((set) => ({
         
             if (isExpired) {
                 localStorage.clear();  // Remove tudo relacionado ao token de uma vez
+                document.cookie = "SESSION" + "=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
             }
             return isExpired;
         }
