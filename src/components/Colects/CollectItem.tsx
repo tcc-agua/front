@@ -30,12 +30,17 @@ const ColetaItem: React.FC<ColetaItemProps> = ({ paramsData, onOpenDetail }) => 
   const [error, setError] = useState('');
   const [isOpen, setIsOpen] = useState<number | null>(null);
   const [currentPage, setCurrentPage] = useState(0);
-  const itemsPerPage = paramsData.size; // Define o número de itens por página com base nos parâmetros
-
-  // Calcular o deslocamento e obter os itens da página atual
+  const itemsPerPage = paramsData.size; 
   const offset = currentPage * itemsPerPage;
-  const currentItems = content.slice(offset, offset + itemsPerPage);
-  const pageCount = Math.ceil(content.length / itemsPerPage);
+
+  // Filtrando para aparecer somente coletas com details
+  const currentItems = content
+  .filter(item => item.details.length > 0)
+  .slice(offset, offset + itemsPerPage);
+
+  const pageCount = Math.ceil(
+    content.filter(item => item.details.length > 0).length / itemsPerPage
+  );
 
   useEffect(() => {
     const fetchData = async () => {
@@ -58,12 +63,10 @@ const ColetaItem: React.FC<ColetaItemProps> = ({ paramsData, onOpenDetail }) => 
     fetchData();
   }, [paramsData]);
 
-  // Alternar a expansão/colapso dos detalhes de um item
   const toggleOpen = (id: number) => {
     setIsOpen(isOpen === id ? null : id);
   };
 
-  // Manipular a mudança de página ao clicar na paginação
   const handlePageClick = (data: { selected: number }) => {
     setCurrentPage(data.selected);
   };
@@ -76,7 +79,7 @@ const ColetaItem: React.FC<ColetaItemProps> = ({ paramsData, onOpenDetail }) => 
       ) : error ? (
         <p>{error}</p>
       ) : (
-        currentItems.map((item) => ( // Usar currentItems para exibir apenas os itens da página atual
+        currentItems.map((item) => (
           <div key={item.id} className={styles.coleta}>
             <div className={styles.title} onClick={() => toggleOpen(item.id)}>
               <p className={styles.date}>{item.date}</p>
@@ -91,23 +94,23 @@ const ColetaItem: React.FC<ColetaItemProps> = ({ paramsData, onOpenDetail }) => 
             </div>
 
             {isOpen === item.id && (
-              <ColetaDetails details={item.details} onOpenDetail={onOpenDetail} />
+              <><ColetaDetails details={item.details} onOpenDetail={onOpenDetail} /><div className={styles.pagination}>
+                <ReactPaginate
+                  previousLabel={'<'}
+                  nextLabel={'>'}
+                  breakLabel={'...'}
+                  pageCount={pageCount}
+                  // marginPagesDisplayed={2}
+                  // pageRangeDisplayed={3}
+                  onPageChange={handlePageClick}
+                  containerClassName={styles.pagination}
+                  activeClassName={styles.active}
+                  aria-label="Pagination" />
+              </div></>
             )}
           </div>
         ))
       )}
-      <ReactPaginate
-        previousLabel={'<'}
-        nextLabel={'>'}
-        breakLabel={'...'}
-        pageCount={pageCount}
-        marginPagesDisplayed={2}
-        pageRangeDisplayed={3}
-        onPageChange={handlePageClick}
-        containerClassName={styles.pagination}
-        activeClassName={styles.active}
-        aria-label="Pagination"
-      />
     </div>
     
   );
