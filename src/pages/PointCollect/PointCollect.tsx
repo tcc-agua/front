@@ -19,7 +19,7 @@ export interface Coleta {
 export function PointCollect() {
     const [isModalOpen, setModalOpen] = useState<boolean>(false);
     const [selectedPoint, setSelectedPoint] = useState<Point | null>(null);
-    const { planilha, qtdPontos, etasPercentage, naPercentage, pbPercentage, caPercentage} = useUtilsStore();
+    const { planilha, qtdPontos, etasPercentage, naPercentage, pbPercentage, caPercentage, fetchPoints} = useUtilsStore();
     const [ultimaColeta, setUltimaColeta] = useState<Coleta | null>(null);
     const [showSaveButton, setShowSaveButton] = useState(false);
 
@@ -28,6 +28,7 @@ export function PointCollect() {
     useEffect(() => {
         const fetchColetaAtual = async () => {
             try {
+                fetchPoints();
                 const response = await fetchColeta();
                 setUltimaColeta(response);
             } catch (error) {
