@@ -36,6 +36,7 @@ function Bc01Card({ name, idColeta }: PointNameProps) {
         { type: "Volume", key: "volume", value: measurements.volume, isInteger: true },
     ];
 
+
     const increment = useCallback((key: keyof typeof measurements, isInteger: boolean) => {
         setMeasurements(prevState => ({
             ...prevState,
@@ -92,7 +93,6 @@ function Bc01Card({ name, idColeta }: PointNameProps) {
             nomePonto: name,
             idColeta: idColeta,
         };
-    
         try {
             await createBc01Measure(obj);
             Swal.fire({
@@ -109,8 +109,8 @@ function Bc01Card({ name, idColeta }: PointNameProps) {
     
             setStatus(name, 'COLETADO');
             fetchPoints();
-    
-        } catch (error) {
+        } 
+        catch (error) {
             console.error("Erro ao enviar medida:", error);
             Swal.fire({
                 icon: 'error',
@@ -124,6 +124,7 @@ function Bc01Card({ name, idColeta }: PointNameProps) {
                 },
             });
         }
+        fetchPoints();
     };
 
     return (

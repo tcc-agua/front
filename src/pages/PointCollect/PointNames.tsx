@@ -21,7 +21,7 @@ export function PointNames({ onSelectPoint }: PointNamesProps) {
     const [pointsPerPage, setPointsPerPage] = useState<number>(8);
     const isNextDisabled = (currentPage + 1) * pointsPerPage >= points.length;
     const isPrevDisabled = currentPage === 0;
-    const { planilha, setQtdPontos, naPercentage, etasPercentage, pbPercentage } = useUtilsStore();
+    const { planilha, setQtdPontos, naPercentage, etasPercentage, pbPercentage, caPercentage } = useUtilsStore();
 
     const formatDate = (date: Date): string => {
         const day = String(date.getDate()).padStart(2, '0');
@@ -74,7 +74,7 @@ export function PointNames({ onSelectPoint }: PointNamesProps) {
         };
 
         fetchPointsBySheet();
-    }, [id_token, planilha, setQtdPontos, etasPercentage, naPercentage, pbPercentage ]);
+    }, [id_token, planilha, setQtdPontos, etasPercentage, naPercentage, pbPercentage, caPercentage ]);
 
 
     const handlePointSelect = async (selectedPoint: Point) => {

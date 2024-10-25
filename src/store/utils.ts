@@ -20,11 +20,13 @@ interface UtilState{
 
     etasResponse: Point[] | [];
     naResponse: Point[] | [];
-    pbResponse: Point[] | []; 
+    pbResponse: Point[] | [];
+    caResponse: Point[] | [];
     
     etasPercentage: string | "0%";
     naPercentage: string | "0%";
     pbPercentage: string | "0%";
+    caPercentage: string | "0%";
 
 }
 
@@ -36,10 +38,12 @@ const useUtilsStore = create<UtilState>((set) => ({
     etasResponse: [],
     naResponse: [],
     pbResponse: [],
+    caResponse: [],
   
     etasPercentage: "0%",
     naPercentage: "0%",
     pbPercentage: "0%",
+    caPercentage: "0%",
   
     setPlanilha: (value) => {
       set({
@@ -85,25 +89,32 @@ const useUtilsStore = create<UtilState>((set) => ({
   
     fetchPoints: async () => {
       try {
-        const [etasResponse, naResponse, pbResponse]: Point[][] = await Promise.all([
+        const [etasResponse, naResponse, pbResponse, caResponse]: Point[][] = await Promise.all([
           fetchPointBySheet("DADOS ETAS"),
           fetchPointBySheet("NA"),
           fetchPointBySheet("PBS"),
+          fetchPointBySheet("CA"),
         ]);
         console.log("Executou bigodera");
   
         const etasPercentage = calculatePercentageCollected(etasResponse);
         const naPercentage = calculatePercentageCollected(naResponse);
         const pbPercentage = calculatePercentageCollected(pbResponse);
+        const caPercentage = calculatePercentageCollected(caResponse);
   
         set({
           etasResponse,
           naResponse,
           pbResponse,
+          caResponse,
+
           etasPercentage,
           naPercentage,
           pbPercentage,
+          caPercentage,
         });
+
+        console.log(etasPercentage, naPercentage, pbPercentage, caPercentage);
   
       } catch (error) {
         console.error("Erro ao buscar pontos:", error);

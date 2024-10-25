@@ -115,6 +115,7 @@ function PbsCard({ name, idColeta }: PointNameProps) {
                 },
             });
         }
+        fetchPoints();
     };
 
     return (

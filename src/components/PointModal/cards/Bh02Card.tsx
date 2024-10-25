@@ -117,6 +117,7 @@ function Bh02Card({ name, idColeta }: PointNameProps) {
                 },
             });
         }
+        fetchPoints();
     };
 
     return (

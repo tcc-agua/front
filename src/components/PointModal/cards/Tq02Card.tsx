@@ -1,5 +1,5 @@
 import styles from "../../../pages/PointCollect/PointCollect.module.css";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Swal from 'sweetalert2';
 import { InputPoint } from "../InputPoint";
 import useTq02Store from "../../../store/Tq02Store";
@@ -16,7 +16,7 @@ function Tq02Card({ name, idColeta,  }: PointNameProps) {
     const { setStatus } = usePontoState();
     const [ph, setPh] = useState<number>(1);
     const [lt_02_1, setLt_02_1] = useState<number>(1);
-    const { createTq02Measure, isCreated, isError, resetState } = useTq02Store();
+    const { createTq02Measure } = useTq02Store();
     const { fetchPoints } = useUtilsStore();
 
 
@@ -35,36 +35,32 @@ function Tq02Card({ name, idColeta,  }: PointNameProps) {
         }
     };
 
-    const sendInformation = () => {
+    const getModalWidth = () => {
+        const width = window.innerWidth;
+
+        if (width <= 540) return '95%';
+        if (width <= 680) return '90%';
+        if (width <= 750) return '85%';
+        if (width <= 865) return '75%';
+        if (width <= 1300) return '40%';
+        if (width <= 1500) return '30%';
+        
+        return '30%'; 
+    };
+
+    const sendInformation = async () => {
         const obj: TQ02 = {
             sensor_ph: ph,
             Lt_02_1: lt_02_1,
             nomePonto: name,
             idColeta: idColeta
         }
-        createTq02Measure(obj);
-        fetchPoints();
-    };
-
-    useEffect(() => {
-        const getModalWidth = () => {
-            const width = window.innerWidth;
-            
-            if (width <= 540) return '95%';
-            if (width <= 680) return '90%';
-            if (width <= 750) return '85%';
-            if (width <= 865) return '75%';
-            if (width <= 1300) return '40%';
-            if (width <= 1500) return '30%';
-            
-            return '30%'; 
-        };
-    
-        if (isCreated) {
+        try{
+            await createTq02Measure(obj);
             Swal.fire({
-                title: 'Sucesso!',
                 icon: 'success',
-                text: 'Coleta inserida com sucesso!',
+                title: 'Sucesso',
+                text: 'Medida enviada com sucesso!',
                 showConfirmButton: false,
                 timer: 2000,
                 width: getModalWidth(),
@@ -72,25 +68,27 @@ function Tq02Card({ name, idColeta,  }: PointNameProps) {
                     popup: 'custom-swal-popup', 
                 },
             });
-            resetState();
-            setStatus(name, "COLETADO");
-        }
     
-        if (isError) {
+            setStatus(name, 'COLETADO');
+            fetchPoints();
+        }
+        catch(error){
+            console.error("Erro ao enviar medida:", error);
             Swal.fire({
-                title: 'Erro ao criar',
                 icon: 'error',
-                text: 'Ocorreu um erro durante a criação. Tente novamente!',
-                width: getModalWidth(), 
+                title: 'Erro',
+                text: 'Erro ao enviar a medida.',
+                showConfirmButton: false,
+                timer: 2000,
+                width: getModalWidth(),
                 customClass: {
                     popup: 'custom-swal-popup', 
                 },
             });
-            resetState();
-            setStatus(name, "NAO_COLETADO");
         }
-    }, [isCreated, resetState, isError, name, setStatus]);
-    
+        fetchPoints();
+    };
+
     return (
         <>
             <p className={styles.pointName}>Dados de coleta do ponto '{name}'</p>

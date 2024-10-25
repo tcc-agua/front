@@ -117,6 +117,7 @@ function Bc06Card({ name, idColeta }: PointNameProps) {
                 },
             });
         }
+        fetchPoints();
     };
 
     return (

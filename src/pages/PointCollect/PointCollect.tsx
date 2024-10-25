@@ -19,7 +19,7 @@ export interface Coleta {
 export function PointCollect() {
     const [isModalOpen, setModalOpen] = useState<boolean>(false);
     const [selectedPoint, setSelectedPoint] = useState<Point | null>(null);
-    const { planilha, qtdPontos, etasPercentage, naPercentage, pbPercentage} = useUtilsStore();
+    const { planilha, qtdPontos, etasPercentage, naPercentage, pbPercentage, caPercentage} = useUtilsStore();
     const [ultimaColeta, setUltimaColeta] = useState<Coleta | null>(null);
     const [showSaveButton, setShowSaveButton] = useState(false);
 
@@ -42,13 +42,14 @@ export function PointCollect() {
         if (
           (planilha === "DADOS ETAS" && etasPercentage === "100%") ||
           (planilha === "NA" && naPercentage === "100%") ||
-          (planilha === "PBS" && pbPercentage === "100%")
+          (planilha === "PBS" && pbPercentage === "100%") ||
+          (planilha === "CA" && caPercentage === "100%")
         ) {
             setShowSaveButton(true);
         } else {
             setShowSaveButton(false);
         }
-    }, [etasPercentage, naPercentage, pbPercentage, planilha]);
+    }, [etasPercentage, naPercentage, pbPercentage, planilha, caPercentage]);
     
     const openModal = (point: Point) => {
         setSelectedPoint(point);
