@@ -6,7 +6,7 @@ import { fetchColeta, postNotif } from "../../api/api";
 import { PointModal } from "../../components/PointModal";
 import MapPoints from "../../components/MapPoints/MapPoints";
 import { Point, PointNames } from "./PointNames";
-import { calculatePercentageCollected, getPlanilhaTitle, renderCardInfo } from "./PointCollectUtils/renderCardInfo";
+import {  getPlanilhaTitle, renderCardInfo } from "./PointCollectUtils/renderCardInfo";
 
 export interface Coleta {
     id: number;
@@ -19,19 +19,17 @@ export interface Coleta {
 export function PointCollect() {
     const [isModalOpen, setModalOpen] = useState<boolean>(false);
     const [selectedPoint, setSelectedPoint] = useState<Point | null>(null);
-    const { planilha, qtdPontos, fetchPoints, etasResponse, naResponse, pbResponse, isUpdated, resetState } = useUtilsStore();
+    const { planilha, qtdPontos, etasPercentage, naPercentage, pbPercentage, caPercentage, fetchPoints} = useUtilsStore();
     const [ultimaColeta, setUltimaColeta] = useState<Coleta | null>(null);
-    
-    const etasPercentage = calculatePercentageCollected(etasResponse);
-    const naPercentage = calculatePercentageCollected(naResponse);
-    const pbPercentage = calculatePercentageCollected(pbResponse);
+    const [showSaveButton, setShowSaveButton] = useState(false);
+
     const coleta = ultimaColeta?.id;
 
     useEffect(() => {
         const fetchColetaAtual = async () => {
             try {
+                fetchPoints();
                 const response = await fetchColeta();
-                console.log(response);
                 setUltimaColeta(response);
             } catch (error) {
                 console.error("Erro ao buscar coleta:", error);
@@ -39,32 +37,20 @@ export function PointCollect() {
         };
     
         fetchColetaAtual();
-    }, []); // Executa apenas uma vez, ao montar o componente
-    
+    }, []); 
+
     useEffect(() => {
-        fetchPoints(); // Chama a função para buscar pontos sempre que necessário
-    }, []); // Sem `isUpdated`, para evitar loops
-    
-    useEffect(() => {
-        console.log(etasPercentage, naPercentage, pbPercentage);
-    }, [etasPercentage, naPercentage, pbPercentage]); // Atualiza somente ao alterar as porcentagens
-    
-    useEffect(() => {
-        const fetchColetaId = async () => {
-            try {
-                if (coleta != null) {
-                    localStorage.setItem("coletaId", String(coleta));
-                } else {
-                    throw new Error("Coleta não encontrada");
-                }
-            } catch (error) {
-                console.error("Erro ao armazenar coletaId:", error);
-            }
-        };
-    
-        fetchColetaId();
-    }, [coleta]); // Executa sempre que `coleta` for alterada
-    
+        if (
+          (planilha === "DADOS ETAS" && etasPercentage === "100%") ||
+          (planilha === "NA" && naPercentage === "100%") ||
+          (planilha === "PBS" && pbPercentage === "100%") ||
+          (planilha === "CA" && caPercentage === "100%")
+        ) {
+            setShowSaveButton(true);
+        } else {
+            setShowSaveButton(false);
+        }
+    }, [etasPercentage, naPercentage, pbPercentage, planilha, caPercentage]);
     
     const openModal = (point: Point) => {
         setSelectedPoint(point);
@@ -98,12 +84,6 @@ export function PointCollect() {
             });
         }
     };
-
-    const shouldShowButton = (
-        (planilha === "DADOS ETAS" && etasPercentage === "100%") ||
-        (planilha === "NA" && naPercentage === "100%") ||
-        (planilha === "PBS" && pbPercentage === "100%")
-      );
 
     return (
         <>
@@ -141,7 +121,7 @@ export function PointCollect() {
                             </div>
                         </div>
     
-                        {shouldShowButton && (
+                        { showSaveButton && (
                             <div className={styles.button_container}>
                                 <button className={styles.button_complete} onClick={notify}>Salvar dados</button>
                             </div>

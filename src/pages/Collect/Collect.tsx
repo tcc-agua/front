@@ -9,6 +9,7 @@ import { NextCollects } from "../../components/Colects/NextCollects";
 import useColetaStore from "../../store/ColetaStore";
 import { Point } from "../PointCollect/PointNames";
 import { updatePontoStatus } from "../../services/PontoService";
+import { calculatePercentageCollected } from "../PointCollect/PointCollectUtils/renderCardInfo";
 
 export function Collect() {
   const [etas, setEtas] = useState<Point[]>([]);
@@ -19,9 +20,7 @@ export function Collect() {
   const [showPointButtons, setShowPointButtons] = useState<boolean>(false);
   const location = useLocation(); 
   const navigate = useNavigate();
-  const { setPlanilha } = useUtilsStore();
-
-  // Buscar Pontos
+  const { setPlanilha,  } = useUtilsStore();
 
   useEffect(() => {
     const fetchPontos = async () => {
@@ -57,8 +56,6 @@ useEffect(() => {
 
       setShowPointButtons(storedDate === currentDate);
 
-      // Caso o dia for diferente, zera todas as coletas
-
       if (storedDate !== currentDate) {
         [...etas, ...na, ...pb].forEach((i) => {
           updatePontoStatus(i.nome, "NAO_COLETADO");
@@ -91,22 +88,12 @@ useEffect(() => {
 
     createColetaMeasure(obj);
     setShowPointButtons(true);
-    localStorage.setItem("coletaDia", formatDate(new Date()));
   };
 
   const handlePoint = (planilha: string) => {
     setPlanilha(planilha);
     navigate("/inicial/pontos_de_coleta");
   };
-
-  function calculatePercentageCollected(points: Point[]): string {
-    if (points.length === 0) return "0%";
-  
-    const collectedPoints = points.filter((point) => point.statusEnum === "COLETADO");
-    const percentage = (collectedPoints.length / points.length) * 100;
-  
-    return `${percentage.toFixed(0)}%`;
-  }
 
   const etasPercentage = calculatePercentageCollected(etas);
   const naPercentage = calculatePercentageCollected(na);

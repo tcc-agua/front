@@ -36,6 +36,7 @@ const useBc01Store = create<Bc01State>((set) => ({
 
         try {
             const response = await postBc01(data) ;
+            
 
             console.log(response)
             

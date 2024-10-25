@@ -1,5 +1,5 @@
 import styles from "../../../pages/PointCollect/PointCollect.module.css"
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Swal from 'sweetalert2';
 import { BooleanInput, InputPoint } from "../InputPoint";
 import useFaseLivreStore from "../../../store/FaseLivreStore";
@@ -16,7 +16,7 @@ function FaseLivreCard({ name, idColeta }: PointNameProps) {
     const { setStatus } = usePontoState();
     const [volume, setVolume] = useState<number>(1);
     const [houveTroca, setHouveTroca] = useState<boolean>(false);
-    const { createFaseLivreMeasure, isCreated, isError, resetState } = useFaseLivreStore();
+    const { createFaseLivreMeasure } = useFaseLivreStore();
     const { fetchPoints } = useUtilsStore();
 
     const increment = (setter: React.Dispatch<React.SetStateAction<number>>, isInteger?: boolean) => {
@@ -38,36 +38,32 @@ function FaseLivreCard({ name, idColeta }: PointNameProps) {
         }
     };
 
-    const sendInformation = () => {
+    const getModalWidth = () => {
+        const width = window.innerWidth;
+
+        if (width <= 540) return '95%';
+        if (width <= 680) return '90%';
+        if (width <= 750) return '85%';
+        if (width <= 865) return '75%';
+        if (width <= 1300) return '40%';
+        if (width <= 1500) return '30%';
+        
+        return '30%'; 
+    };
+
+    const sendInformation = async () => {
         const obj: FASE_LIVRE ={
             houve_troca: houveTroca,
             volume: volume,
             nomePonto: name,
             idColeta: idColeta
         }
-        createFaseLivreMeasure(obj);
-        fetchPoints();
-    };
-
-    useEffect(() => {
-        const getModalWidth = () => {
-            const width = window.innerWidth;
-            
-            if (width <= 540) return '95%';
-            if (width <= 680) return '90%';
-            if (width <= 750) return '85%';
-            if (width <= 865) return '75%';
-            if (width <= 1300) return '40%';
-            if (width <= 1500) return '30%';
-            
-            return '30%'; 
-        };
-    
-        if (isCreated) {
+        try{
+            await createFaseLivreMeasure(obj);
             Swal.fire({
-                title: 'Sucesso!',
                 icon: 'success',
-                text: 'Coleta inserida com sucesso!',
+                title: 'Sucesso',
+                text: 'Medida enviada com sucesso!',
                 showConfirmButton: false,
                 timer: 2000,
                 width: getModalWidth(),
@@ -75,24 +71,25 @@ function FaseLivreCard({ name, idColeta }: PointNameProps) {
                     popup: 'custom-swal-popup', 
                 },
             });
-            resetState();
-            setStatus(name, "COLETADO");
+            setStatus(name, 'COLETADO');
+            fetchPoints();
         }
-    
-        if (isError) {
+        catch(error){
+            console.error("Erro ao enviar medida:", error);
             Swal.fire({
-                title: 'Erro ao criar',
                 icon: 'error',
-                text: 'Ocorreu um erro durante a criação. Tente novamente!',
-                width: getModalWidth(), 
+                title: 'Erro',
+                text: 'Erro ao enviar a medida.',
+                showConfirmButton: false,
+                timer: 2000,
+                width: getModalWidth(),
                 customClass: {
                     popup: 'custom-swal-popup', 
                 },
             });
-            resetState();
-            setStatus(name, "NAO_COLETADO");
         }
-    }, [isCreated, resetState, isError, name, setStatus]);
+        fetchPoints();
+    };
 
     return (
         <>

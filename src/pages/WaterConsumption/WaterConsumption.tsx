@@ -1,30 +1,61 @@
 import styles from './WaterConsumption.module.css';
 import { useEffect, useState } from "react";
-import { Outlet, useNavigate } from "react-router-dom";
+import { Outlet, useLocation, useNavigate } from "react-router-dom";
 import useUtilsStore from "../../store/utils";
-import { fetchPointBySheet } from "../../api/api";
+import { fetchColeta, fetchPointBySheet } from "../../api/api";
 import PointButton from "../../components/PointButton/PointButton";
 import { COLETA } from "../../interfaces/postParams";
 import { NextCollects } from "../../components/Colects/NextCollects";
 import useColetaStore from "../../store/ColetaStore";
 import { Point } from '../PointCollect/PointNames';
+import { calculatePercentageCollected } from '../PointCollect/PointCollectUtils/renderCardInfo';
+import { updatePontoStatus } from '../../services/PontoService';
 
 export function WaterConsumption() {
     const [ca, setCa] = useState<Point[]>([]);
     const { createColetaMeasure } = useColetaStore();
     const [showPointButtons, setShowPointButtons] = useState<boolean>(false);
+    const location = useLocation(); 
 
     const navigate = useNavigate();
     const { setPlanilha } = useUtilsStore();
 
-    function calculatePercentageCollected(points: Point[]): string {
-        if (points.length === 0) return "0%";
-      
-        const collectedPoints = points.filter((point) => point.statusEnum === "COLETADO");
-        const percentage = (collectedPoints.length / points.length) * 100;
-      
-        return `${percentage.toFixed(0)}%`;
+    useEffect(() => {
+        const fetchPontos = async () => {
+        try {
+            const caResponse = await fetchPointBySheet("CA");
+        
+            setCa(caResponse)
+
+        } catch (error) {
+            console.error("Erro ao buscar pontos:", error);
+        }
+    };
+    fetchPontos();
+  }, []);
+
+  useEffect(() => {
+    const fetchColetaAtual = async () => {
+      try {
+        const response = await fetchColeta();
+  
+        const storedDate = response?.dataColeta;
+        const currentDate = formatDate(new Date());
+  
+        setShowPointButtons(storedDate === currentDate);
+  
+        if (storedDate !== currentDate) {
+          [...ca].forEach((i) => {
+            updatePontoStatus(i.nome, "NAO_COLETADO");
+          });
+        }
+      } catch (error) {
+        console.error("Erro ao buscar coleta:", error);
       }
+    };
+  
+    fetchColetaAtual();
+  }, [ca, location]);
 
     const formatDate = (date: Date): string => {
         const day = String(date.getDate()).padStart(2, '0');
@@ -45,35 +76,7 @@ export function WaterConsumption() {
 
         createColetaMeasure(obj);
         setShowPointButtons(true);
-        localStorage.setItem("coletaDia", formatDate(new Date()));
     };
-
-    useEffect(() => {
-        const storedDate = localStorage.getItem("coletaDia");
-        const currentDate = formatDate(new Date());
-
-        if (storedDate === currentDate) {
-            setShowPointButtons(true);
-        } else {
-            setShowPointButtons(false);
-        }
-    }, []);
-
-    useEffect(() => {
-        const fetchQtdPontos = async () => {
-            try {
-                const [caResponse] = await Promise.all([
-                    fetchPointBySheet("CA"),
-                ]);
-
-                setCa(caResponse);
-            } catch (error) {
-                console.error("Erro ao buscar pontos:", error);
-            }
-        };
-
-        fetchQtdPontos();
-    }, []);
 
     const handlePoint = (planilha: string) => {
         setPlanilha(planilha);

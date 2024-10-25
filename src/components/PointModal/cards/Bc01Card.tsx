@@ -1,5 +1,5 @@
 import styles from "../../../pages/PointCollect/PointCollect.module.css";
-import React, { useEffect, useState, useCallback } from "react";
+import React, { useState, useCallback } from "react";
 import Swal from 'sweetalert2';
 import { InputPoint } from "../InputPoint"; 
 import { BC01 } from "../../../interfaces/postParams";
@@ -15,10 +15,10 @@ interface PointNameProps {
 }
 
 function Bc01Card({ name, idColeta }: PointNameProps) {
-    const { createBc01Measure, isCreated, isError, resetState } = useBc01Store();
+    const { createBc01Measure } = useBc01Store();
     const [currentIndex, setCurrentIndex] = useState(0);
     const { setStatus } = usePontoState();
-    const { fetchPoints } = useUtilsStore();
+    const { fetchPoints  } = useUtilsStore();
 
     const [measurements, setMeasurements] = useState({
         pressure: 1,
@@ -27,6 +27,15 @@ function Bc01Card({ name, idColeta }: PointNameProps) {
         leak: 1,
         volume: 1,
     });
+
+    const infoContentData = [
+        { type: "Pressão", key: "pressure", value: measurements.pressure, isInteger: false },
+        { type: "Frequência", key: "frequency", value: measurements.frequency, isInteger: true },
+        { type: "Horímetro", key: "horimeter", value: measurements.horimeter, isInteger: true },
+        { type: "Vazão", key: "leak", value: measurements.leak, isInteger: false },
+        { type: "Volume", key: "volume", value: measurements.volume, isInteger: true },
+    ];
+
 
     const increment = useCallback((key: keyof typeof measurements, isInteger: boolean) => {
         setMeasurements(prevState => ({
@@ -49,74 +58,6 @@ function Bc01Card({ name, idColeta }: PointNameProps) {
         }
     };
 
-    const sendInformation = () => {
-        const obj: BC01 = {
-            horimetro: measurements.horimeter,
-            pressao: measurements.pressure,
-            frequencia: measurements.frequency,
-            vazao: measurements.leak,
-            volume: measurements.volume,
-            nomePonto: name,
-            idColeta: idColeta,
-        };
-        
-        createBc01Measure(obj);
-        fetchPoints();
-    };
-
-    useEffect(() => {
-        const getModalWidth = () => {
-            const width = window.innerWidth;
-            
-            if (width <= 540) return '95%';
-            if (width <= 680) return '90%';
-            if (width <= 750) return '85%';
-            if (width <= 865) return '75%';
-            if (width <= 1300) return '40%';
-            if (width <= 1500) return '30%';
-            
-            return '30%'; 
-        };
-    
-        if (isCreated) {
-            Swal.fire({
-                title: 'Sucesso!',
-                icon: 'success',
-                text: 'Coleta inserida com sucesso!',
-                showConfirmButton: false,
-                timer: 2000,
-                width: getModalWidth(),
-                customClass: {
-                    popup: 'custom-swal-popup', 
-                },
-            });
-            resetState();
-            setStatus(name, "COLETADO");
-        }
-    
-        if (isError) {
-            Swal.fire({
-                title: 'Erro ao criar',
-                icon: 'error',
-                text: 'Ocorreu um erro durante a criação. Tente novamente!',
-                width: getModalWidth(), 
-                customClass: {
-                    popup: 'custom-swal-popup', 
-                },
-            });
-            resetState();
-            setStatus(name, "NAO_COLETADO");
-        }
-    }, [isCreated, resetState, isError, name, setStatus]);
-
-    const infoContentData = [
-        { type: "Pressão", key: "pressure", value: measurements.pressure, isInteger: false },
-        { type: "Frequência", key: "frequency", value: measurements.frequency, isInteger: true },
-        { type: "Horímetro", key: "horimeter", value: measurements.horimeter, isInteger: true },
-        { type: "Vazão", key: "leak", value: measurements.leak, isInteger: false },
-        { type: "Volume", key: "volume", value: measurements.volume, isInteger: true },
-    ];
-
     const nextPage = () => {
         if (currentIndex + itemsPerPage < infoContentData.length) {
             setCurrentIndex(currentIndex + itemsPerPage);
@@ -127,6 +68,63 @@ function Bc01Card({ name, idColeta }: PointNameProps) {
         if (currentIndex - itemsPerPage >= 0) {
             setCurrentIndex(currentIndex - itemsPerPage);
         }
+    };
+
+    const getModalWidth = () => {
+        const width = window.innerWidth;
+
+        if (width <= 540) return '95%';
+        if (width <= 680) return '90%';
+        if (width <= 750) return '85%';
+        if (width <= 865) return '75%';
+        if (width <= 1300) return '40%';
+        if (width <= 1500) return '30%';
+        
+        return '30%'; 
+    };
+
+    const sendInformation = async () => {
+        const obj: BC01 = {
+            horimetro: measurements.horimeter,
+            pressao: measurements.pressure,
+            frequencia: measurements.frequency,
+            vazao: measurements.leak,
+            volume: measurements.volume,
+            nomePonto: name,
+            idColeta: idColeta,
+        };
+        try {
+            await createBc01Measure(obj);
+            Swal.fire({
+                icon: 'success',
+                title: 'Sucesso',
+                text: 'Medida enviada com sucesso!',
+                showConfirmButton: false,
+                timer: 2000,
+                width: getModalWidth(),
+                customClass: {
+                    popup: 'custom-swal-popup', 
+                },
+            });
+    
+            setStatus(name, 'COLETADO');
+            fetchPoints();
+        } 
+        catch (error) {
+            console.error("Erro ao enviar medida:", error);
+            Swal.fire({
+                icon: 'error',
+                title: 'Erro',
+                text: 'Erro ao enviar a medida.',
+                showConfirmButton: false,
+                timer: 2000,
+                width: getModalWidth(),
+                customClass: {
+                    popup: 'custom-swal-popup', 
+                },
+            });
+        }
+        fetchPoints();
     };
 
     return (

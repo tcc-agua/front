@@ -1,5 +1,5 @@
 import styles from "../../../pages/PointCollect/PointCollect.module.css";
-import React, { useEffect, useState, useCallback } from "react";
+import React, { useState, useCallback } from "react";
 import Swal from 'sweetalert2';
 import { BooleanInput, InputPoint } from "../InputPoint";
 import useColunasCarvaoStore from "../../../store/ColunasCarvaoStore";
@@ -25,7 +25,17 @@ function ColunasCarvaoCard({ name, idColeta }: PointNameProps) {
         retroLavagem: false,
     });
 
-    const { createColunasCarvaoMeasure, isCreated, isError, resetState } = useColunasCarvaoStore();
+    const infoContentData = [
+        { type: "Pressão C01", key: "pressure_c01", value: measurements.pressure_c01, isInteger: false, isBoolean: false },
+        { type: "Pressão C02", key: "pressure_c02", value: measurements.pressure_c02, isInteger: false, isBoolean: false },
+        { type: "Pressão C03", key: "pressure_c03", value: measurements.pressure_c03, isInteger: false, isBoolean: false },
+        { type: "Pressão de Saída", key: "outletPressure", value: measurements.outletPressure, isInteger: false, isBoolean: false },
+        { type: "Houve troca de carvão?", key: "trocaCarvao", value: measurements.trocaCarvao, isBoolean: true },
+        { type: "Houve retrolavagem?", key: "retroLavagem", value: measurements.retroLavagem, isBoolean: true },
+    ];
+
+
+    const { createColunasCarvaoMeasure } = useColunasCarvaoStore();
     const [currentIndex, setCurrentIndex] = useState(0);
     const { fetchPoints } = useUtilsStore();
 
@@ -56,74 +66,6 @@ function ColunasCarvaoCard({ name, idColeta }: PointNameProps) {
         }
     };
 
-    const sendInformation = () => {
-        const obj: COLUNAS_CARVAO = {
-            houve_retrolavagem: measurements.retroLavagem,
-            houve_troca_carvao: measurements.trocaCarvao,
-            pressao_c01: measurements.pressure_c01,
-            pressao_c02: measurements.pressure_c02,
-            pressao_c03: measurements.pressure_c03,
-            pressao_saida: measurements.outletPressure,
-            nomePonto: name,
-            idColeta: idColeta
-        };
-        createColunasCarvaoMeasure(obj);
-        fetchPoints();
-    };
-
-    useEffect(() => {
-        const getModalWidth = () => {
-            const width = window.innerWidth;
-            
-            if (width <= 540) return '95%';
-            if (width <= 680) return '90%';
-            if (width <= 750) return '85%';
-            if (width <= 865) return '75%';
-            if (width <= 1300) return '40%';
-            if (width <= 1500) return '30%';
-            
-            return '30%'; 
-        };
-    
-        if (isCreated) {
-            Swal.fire({
-                title: 'Sucesso!',
-                icon: 'success',
-                text: 'Coleta inserida com sucesso!',
-                showConfirmButton: false,
-                timer: 2000,
-                width: getModalWidth(),
-                customClass: {
-                    popup: 'custom-swal-popup', 
-                },
-            });
-            resetState();
-            setStatus(name, "COLETADO");
-        }
-    
-        if (isError) {
-            Swal.fire({
-                title: 'Erro ao criar',
-                icon: 'error',
-                text: 'Ocorreu um erro durante a criação. Tente novamente!',
-                width: getModalWidth(), 
-                customClass: {
-                    popup: 'custom-swal-popup', 
-                },
-            });
-            resetState();
-            setStatus(name, "NAO_COLETADO");
-        }
-    }, [isCreated, resetState, isError, name, setStatus]);
-    const infoContentData = [
-        { type: "Pressão C01", key: "pressure_c01", value: measurements.pressure_c01, isInteger: false, isBoolean: false },
-        { type: "Pressão C02", key: "pressure_c02", value: measurements.pressure_c02, isInteger: false, isBoolean: false },
-        { type: "Pressão C03", key: "pressure_c03", value: measurements.pressure_c03, isInteger: false, isBoolean: false },
-        { type: "Pressão de Saída", key: "outletPressure", value: measurements.outletPressure, isInteger: false, isBoolean: false },
-        { type: "Houve troca de carvão?", key: "trocaCarvao", value: measurements.trocaCarvao, isBoolean: true },
-        { type: "Houve retrolavagem?", key: "retroLavagem", value: measurements.retroLavagem, isBoolean: true },
-    ];
-
     const nextPage = () => {
         if (currentIndex + itemsPerPage < infoContentData.length) {
             setCurrentIndex(currentIndex + itemsPerPage);
@@ -134,6 +76,65 @@ function ColunasCarvaoCard({ name, idColeta }: PointNameProps) {
         if (currentIndex - itemsPerPage >= 0) {
             setCurrentIndex(currentIndex - itemsPerPage);
         }
+    };
+
+
+    const getModalWidth = () => {
+        const width = window.innerWidth;
+
+        if (width <= 540) return '95%';
+        if (width <= 680) return '90%';
+        if (width <= 750) return '85%';
+        if (width <= 865) return '75%';
+        if (width <= 1300) return '40%';
+        if (width <= 1500) return '30%';
+        
+        return '30%'; 
+    };
+
+    const sendInformation = async () => {
+        const obj: COLUNAS_CARVAO = {
+            houve_retrolavagem: measurements.retroLavagem,
+            houve_troca_carvao: measurements.trocaCarvao,
+            pressao_c01: measurements.pressure_c01,
+            pressao_c02: measurements.pressure_c02,
+            pressao_c03: measurements.pressure_c03,
+            pressao_saida: measurements.outletPressure,
+            nomePonto: name,
+            idColeta: idColeta
+        };
+
+        try{
+            await createColunasCarvaoMeasure(obj);
+            Swal.fire({
+                icon: 'success',
+                title: 'Sucesso',
+                text: 'Medida enviada com sucesso!',
+                showConfirmButton: false,
+                timer: 2000,
+                width: getModalWidth(),
+                customClass: {
+                    popup: 'custom-swal-popup', 
+                },
+            });
+            setStatus(name, 'COLETADO');
+            fetchPoints();
+        }
+        catch(error){
+            console.error("Erro ao enviar medida:", error);
+            Swal.fire({
+                icon: 'error',
+                title: 'Erro',
+                text: 'Erro ao enviar a medida.',
+                showConfirmButton: false,
+                timer: 2000,
+                width: getModalWidth(),
+                customClass: {
+                    popup: 'custom-swal-popup', 
+                },
+            });
+        }
+        fetchPoints();
     };
 
     return (

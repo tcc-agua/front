@@ -1,5 +1,5 @@
 import styles from "../../../pages/PointCollect/PointCollect.module.css";
-import { useEffect, useState, useCallback } from "react";
+import { useState, useCallback } from "react";
 import Swal from 'sweetalert2';
 import { DropdownInput, InputPoint } from "../InputPoint";
 import useCdStore from "../../../store/CdStore";
@@ -21,8 +21,13 @@ function CdCard({ name, idColeta }: PointNameProps) {
         hidrometer: 1,
         tipoRede: "ETAS",
     });
+    const infoContentData = [
+        { type: "Pressão", key: "pressure", value: measurements.pressure, isInteger: false },
+        { type: "Hidrometro", key: "hidrometer", value: measurements.hidrometer, isInteger: true },
+        { type: "Tipo de Rede", key: "tipoRede", value: measurements.tipoRede, isInteger: false },
+    ];
 
-    const { createCdMeasure, isCreated, isError, resetState } = useCdStore();
+    const { createCdMeasure } = useCdStore();
     const [currentIndex, setCurrentIndex] = useState(0);
     const { fetchPoints } = useUtilsStore();
 
@@ -52,7 +57,7 @@ function CdCard({ name, idColeta }: PointNameProps) {
                             : 0,
                 };
             }
-            return prevState; // No caso de não ser um número, não faz nada
+            return prevState; 
         });
     }, []);
 
@@ -68,73 +73,6 @@ function CdCard({ name, idColeta }: PointNameProps) {
         }
     };
 
-    const handleChangeDropdown = (e: React.ChangeEvent<HTMLSelectElement>) => {
-        setMeasurements(prev => ({ ...prev, tipoRede: e.target.value }));
-    };
-
-    const sendInformation = () => {
-        const obj: CD = {
-            hidrometro: measurements.hidrometer,
-            pressao: measurements.pressure,
-            tipo_rede: measurements.tipoRede,
-            nomePonto: name,
-            idColeta: idColeta,
-        };
-        createCdMeasure(obj);
-        fetchPoints();
-    };
-
-    useEffect(() => {
-        const getModalWidth = () => {
-            const width = window.innerWidth;
-            
-            if (width <= 540) return '95%';
-            if (width <= 680) return '90%';
-            if (width <= 750) return '85%';
-            if (width <= 865) return '75%';
-            if (width <= 1300) return '40%';
-            if (width <= 1500) return '30%';
-            
-            return '30%'; 
-        };
-    
-        if (isCreated) {
-            Swal.fire({
-                title: 'Sucesso!',
-                icon: 'success',
-                text: 'Coleta inserida com sucesso!',
-                showConfirmButton: false,
-                timer: 2000,
-                width: getModalWidth(),
-                customClass: {
-                    popup: 'custom-swal-popup', 
-                },
-            });
-            resetState();
-            setStatus(name, "COLETADO");
-        }
-    
-        if (isError) {
-            Swal.fire({
-                title: 'Erro ao criar',
-                icon: 'error',
-                text: 'Ocorreu um erro durante a criação. Tente novamente!',
-                width: getModalWidth(), 
-                customClass: {
-                    popup: 'custom-swal-popup', 
-                },
-            });
-            resetState();
-            setStatus(name, "NAO_COLETADO");
-        }
-    }, [isCreated, resetState, isError, name, setStatus]);
-
-    const infoContentData = [
-        { type: "Pressão", key: "pressure", value: measurements.pressure, isInteger: false },
-        { type: "Hidrometro", key: "hidrometer", value: measurements.hidrometer, isInteger: true },
-        { type: "Tipo de Rede", key: "tipoRede", value: measurements.tipoRede, isInteger: false },
-    ];
-
     const nextPage = () => {
         if (currentIndex + itemsPerPage < infoContentData.length) {
             setCurrentIndex(currentIndex + itemsPerPage);
@@ -145,6 +83,65 @@ function CdCard({ name, idColeta }: PointNameProps) {
         if (currentIndex - itemsPerPage >= 0) {
             setCurrentIndex(currentIndex - itemsPerPage);
         }
+    };
+
+    const handleChangeDropdown = (e: React.ChangeEvent<HTMLSelectElement>) => {
+        setMeasurements(prev => ({ ...prev, tipoRede: e.target.value }));
+    };
+
+    const getModalWidth = () => {
+        const width = window.innerWidth;
+
+        if (width <= 540) return '95%';
+        if (width <= 680) return '90%';
+        if (width <= 750) return '85%';
+        if (width <= 865) return '75%';
+        if (width <= 1300) return '40%';
+        if (width <= 1500) return '30%';
+        
+        return '30%'; 
+    };
+
+    const sendInformation = async () => {
+        const obj: CD = {
+            hidrometro: measurements.hidrometer,
+            pressao: measurements.pressure,
+            tipo_rede: measurements.tipoRede,
+            nomePonto: name,
+            idColeta: idColeta,
+        };
+        try{
+            await createCdMeasure(obj);
+            Swal.fire({
+                icon: 'success',
+                title: 'Sucesso',
+                text: 'Medida enviada com sucesso!',
+                showConfirmButton: false,
+                timer: 2000,
+                width: getModalWidth(),
+                customClass: {
+                    popup: 'custom-swal-popup', 
+                },
+            });
+    
+            setStatus(name, 'COLETADO');
+            fetchPoints();
+        }
+        catch (error) {
+            console.error("Erro ao enviar medida:", error);
+            Swal.fire({
+                icon: 'error',
+                title: 'Erro',
+                text: 'Erro ao enviar a medida.',
+                showConfirmButton: false,
+                timer: 2000,
+                width: getModalWidth(),
+                customClass: {
+                    popup: 'custom-swal-popup', 
+                },
+            });
+        }
+        fetchPoints();
     };
 
     return (

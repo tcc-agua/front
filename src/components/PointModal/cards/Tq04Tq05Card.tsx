@@ -57,7 +57,20 @@ function Tq04Tq05Card({ name, idColeta }: PointNameProps) {
         }
     };
 
-    const sendInformation = () => {
+    const getModalWidth = () => {
+        const width = window.innerWidth;
+
+        if (width <= 540) return '95%';
+        if (width <= 680) return '90%';
+        if (width <= 750) return '85%';
+        if (width <= 865) return '75%';
+        if (width <= 1300) return '40%';
+        if (width <= 1500) return '30%';
+        
+        return '30%'; 
+    };
+
+    const sendInformation = async () => {
         const obj: TQ04_TQ05 = {
             qtd_bombonas: qtdBombonas,
             kg_bombonas: kgBombonas,
@@ -67,7 +80,36 @@ function Tq04Tq05Card({ name, idColeta }: PointNameProps) {
             nomePonto: name,
             idColeta: idColeta
         };
-        createTq04Tq05Measure(obj);
+        try{
+            await createTq04Tq05Measure(obj);
+            Swal.fire({
+                icon: 'success',
+                title: 'Sucesso',
+                text: 'Medida enviada com sucesso!',
+                showConfirmButton: false,
+                timer: 2000,
+                width: getModalWidth(),
+                customClass: {
+                    popup: 'custom-swal-popup', 
+                },
+            });
+            setStatus(name, 'COLETADO');
+            fetchPoints();
+        }
+        catch(error){
+            console.error("Erro ao enviar medida:", error);
+            Swal.fire({
+                icon: 'error',
+                title: 'Erro',
+                text: 'Erro ao enviar a medida.',
+                showConfirmButton: false,
+                timer: 2000,
+                width: getModalWidth(),
+                customClass: {
+                    popup: 'custom-swal-popup', 
+                },
+            });
+        }
         fetchPoints();
     };
 

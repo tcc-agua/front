@@ -1,5 +1,5 @@
 import styles from "../../../pages/PointCollect/PointCollect.module.css";
-import { useEffect, useState} from "react";
+import { useState } from "react";
 import Swal from 'sweetalert2';
 import { InputPoint } from "../InputPoint";
 import usePbsStore from "../../../store/PbsStore";
@@ -7,7 +7,7 @@ import { PBS } from "../../../interfaces/postParams";
 import usePontoState from "../../../store/PontoStore";
 import useUtilsStore from "../../../store/utils";
 
-const itemsPerPage = 2; // Definir o número de itens por página
+const itemsPerPage = 2; 
 
 interface PointNameProps {
     name: string;
@@ -21,9 +21,17 @@ function PbsCard({ name, idColeta }: PointNameProps) {
     const [oilLevel, setOilLevel] = useState<number>(1);
     const [waterLevel, setWaterLevel] = useState<number>(1);
     const [volRemOleo, setVolRemOleo] = useState<number>(1);
-    const { createPbsMeasure, isCreated, isError, resetState } = usePbsStore();
+    const { createPbsMeasure } = usePbsStore();
     const [currentIndex, setCurrentIndex] = useState<number>(0);
     const { fetchPoints } = useUtilsStore();
+
+    const infoContentData = [
+        { type: "Pressão", key: "pressure", value: pressure, setter: setPressure, isInteger: false },
+        { type: "Pulsos", key: "pulses", value: pulses, setter: setPulses, isInteger: false },
+        { type: "Nível do óleo", key: "oilLevel", value: oilLevel, setter: setOilLevel, isInteger: false },
+        { type: "Nível da água", key: "waterLevel", value: waterLevel, setter: setWaterLevel, isInteger: false },
+        { type: "Vol Rem Óleo", key: "volRemOleo", value: volRemOleo, setter: setVolRemOleo, isInteger: false }
+    ];
 
     const increment = (setter: React.Dispatch<React.SetStateAction<number>>, isInteger: boolean = false) => {
         setter(prev => isInteger ? prev + 1 : Math.round((prev + 0.1) * 10) / 10);
@@ -40,73 +48,6 @@ function PbsCard({ name, idColeta }: PointNameProps) {
         }
     };
 
-    const sendInformation = () => {
-        const obj: PBS = {
-            vol_rem_oleo: volRemOleo,
-            pulsos: pulses,
-            pressao: pressure,
-            nivel_agua: waterLevel,
-            nivel_oleo: oilLevel,
-            nomePonto: name,
-            idColeta: idColeta
-        };
-        createPbsMeasure(obj);
-        fetchPoints();
-    };
-
-    useEffect(() => {
-        const getModalWidth = () => {
-            const width = window.innerWidth;
-            
-            if (width <= 540) return '95%';
-            if (width <= 680) return '90%';
-            if (width <= 750) return '85%';
-            if (width <= 865) return '75%';
-            if (width <= 1300) return '40%';
-            if (width <= 1500) return '30%';
-            
-            return '30%'; 
-        };
-    
-        if (isCreated) {
-            Swal.fire({
-                title: 'Sucesso!',
-                icon: 'success',
-                text: 'Coleta inserida com sucesso!',
-                showConfirmButton: false,
-                timer: 2000,
-                width: getModalWidth(),
-                customClass: {
-                    popup: 'custom-swal-popup', 
-                },
-            });
-            resetState();
-            setStatus(name, "COLETADO");
-        }
-    
-        if (isError) {
-            Swal.fire({
-                title: 'Erro ao criar',
-                icon: 'error',
-                text: 'Ocorreu um erro durante a criação. Tente novamente!',
-                width: getModalWidth(), 
-                customClass: {
-                    popup: 'custom-swal-popup', 
-                },
-            });
-            resetState();
-            setStatus(name, "NAO_COLETADO");
-        }
-    }, [isCreated, resetState, isError, name, setStatus]);
-
-    const infoContentData = [
-        { type: "Pressão", key: "pressure", value: pressure, setter: setPressure, isInteger: false },
-        { type: "Pulsos", key: "pulses", value: pulses, setter: setPulses, isInteger: false },
-        { type: "Nível do óleo", key: "oilLevel", value: oilLevel, setter: setOilLevel, isInteger: false },
-        { type: "Nível da água", key: "waterLevel", value: waterLevel, setter: setWaterLevel, isInteger: false },
-        { type: "Vol Rem Óleo", key: "volRemOleo", value: volRemOleo, setter: setVolRemOleo, isInteger: false }
-    ];
-
     const nextPage = () => {
         if (currentIndex + itemsPerPage < infoContentData.length) {
             setCurrentIndex(prev => prev + itemsPerPage);
@@ -117,6 +58,64 @@ function PbsCard({ name, idColeta }: PointNameProps) {
         if (currentIndex - itemsPerPage >= 0) {
             setCurrentIndex(prev => prev - itemsPerPage);
         }
+    };
+
+    const getModalWidth = () => {
+        const width = window.innerWidth;
+
+        if (width <= 540) return '95%';
+        if (width <= 680) return '90%';
+        if (width <= 750) return '85%';
+        if (width <= 865) return '75%';
+        if (width <= 1300) return '40%';
+        if (width <= 1500) return '30%';
+        
+        return '30%'; 
+    };
+
+    const sendInformation = async () => {
+        const obj: PBS = {
+            vol_rem_oleo: volRemOleo,
+            pulsos: pulses,
+            pressao: pressure,
+            nivel_agua: waterLevel,
+            nivel_oleo: oilLevel,
+            nomePonto: name,
+            idColeta: idColeta
+        };
+        try{
+            await createPbsMeasure(obj);
+            Swal.fire({
+                icon: 'success',
+                title: 'Sucesso',
+                text: 'Medida enviada com sucesso!',
+                showConfirmButton: false,
+                timer: 2000,
+                width: getModalWidth(),
+                customClass: {
+                    popup: 'custom-swal-popup', 
+                },
+            });
+
+            setStatus(name, 'COLETADO');
+            fetchPoints();
+
+        }
+        catch(error){
+            console.error("Erro ao enviar medida:", error);
+            Swal.fire({
+                icon: 'error',
+                title: 'Erro',
+                text: 'Erro ao enviar a medida.',
+                showConfirmButton: false,
+                timer: 2000,
+                width: getModalWidth(),
+                customClass: {
+                    popup: 'custom-swal-popup', 
+                },
+            });
+        }
+        fetchPoints();
     };
 
     return (

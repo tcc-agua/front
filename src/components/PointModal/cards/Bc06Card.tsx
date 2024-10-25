@@ -1,5 +1,5 @@
 import styles from "../../../pages/PointCollect/PointCollect.module.css";
-import React, { useEffect, useState, useCallback } from "react";
+import React, { useState, useCallback } from "react";
 import Swal from 'sweetalert2';
 import { InputPoint } from "../InputPoint";
 import { BC06 } from "../../../interfaces/postParams";
@@ -17,14 +17,18 @@ interface PointNameProps {
 function Bc06Card({ name, idColeta }: PointNameProps) {
     const { setStatus } = usePontoState();
     const { fetchPoints } = useUtilsStore();
+    const { createBc06Measure } = useBc06Store();
+    const [currentIndex, setCurrentIndex] = useState(0);
 
     const [measurements, setMeasurements] = useState({
         pressure: 1,
         horimeter: 1,
     });
 
-    const { createBc06Measure, isCreated, isError, resetState } = useBc06Store();
-    const [currentIndex, setCurrentIndex] = useState(0);
+    const infoContentData = [
+        { type: "Pressão", key: "pressure", value: measurements.pressure, isInteger: false },
+        { type: "Horímetro", key: "horimeter", value: measurements.horimeter, isInteger: true },
+    ];
 
     const increment = useCallback((key: keyof typeof measurements, isInteger: boolean) => {
         setMeasurements(prevState => ({
@@ -47,67 +51,6 @@ function Bc06Card({ name, idColeta }: PointNameProps) {
         }
     };
 
-    const sendInformation = () => {
-        const obj: BC06 = {
-            horimetro: measurements.horimeter,
-            pressao: measurements.pressure,
-            nomePonto: name,
-            idColeta: idColeta,
-        };
-        createBc06Measure(obj);
-        fetchPoints();
-    };
-
-    useEffect(() => {
-        const getModalWidth = () => {
-            const width = window.innerWidth;
-            
-            if (width <= 540) return '95%';
-            if (width <= 680) return '90%';
-            if (width <= 750) return '85%';
-            if (width <= 865) return '75%';
-            if (width <= 1300) return '40%';
-            if (width <= 1500) return '30%';
-            
-            return '30%'; 
-        };
-    
-        if (isCreated) {
-            Swal.fire({
-                title: 'Sucesso!',
-                icon: 'success',
-                text: 'Coleta inserida com sucesso!',
-                showConfirmButton: false,
-                timer: 2000,
-                width: getModalWidth(),
-                customClass: {
-                    popup: 'custom-swal-popup', 
-                },
-            });
-            resetState();
-            setStatus(name, "COLETADO");
-        }
-    
-        if (isError) {
-            Swal.fire({
-                title: 'Erro ao criar',
-                icon: 'error',
-                text: 'Ocorreu um erro durante a criação. Tente novamente!',
-                width: getModalWidth(), 
-                customClass: {
-                    popup: 'custom-swal-popup', 
-                },
-            });
-            resetState();
-            setStatus(name, "NAO_COLETADO");
-        }
-    }, [isCreated, resetState, isError, name, setStatus]);
-
-    const infoContentData = [
-        { type: "Pressão", key: "pressure", value: measurements.pressure, isInteger: false },
-        { type: "Horímetro", key: "horimeter", value: measurements.horimeter, isInteger: true },
-    ];
-
     const nextPage = () => {
         if (currentIndex + itemsPerPage < infoContentData.length) {
             setCurrentIndex(currentIndex + itemsPerPage);
@@ -118,6 +61,63 @@ function Bc06Card({ name, idColeta }: PointNameProps) {
         if (currentIndex - itemsPerPage >= 0) {
             setCurrentIndex(currentIndex - itemsPerPage);
         }
+    };
+
+    const getModalWidth = () => {
+        const width = window.innerWidth;
+
+        if (width <= 540) return '95%';
+        if (width <= 680) return '90%';
+        if (width <= 750) return '85%';
+        if (width <= 865) return '75%';
+        if (width <= 1300) return '40%';
+        if (width <= 1500) return '30%';
+        
+        return '30%'; 
+    };
+
+    const sendInformation = async ()  => {
+
+        const obj: BC06 = {
+            horimetro: measurements.horimeter,
+            pressao: measurements.pressure,
+            nomePonto: name,
+            idColeta: idColeta,
+        };
+
+        try {
+            await createBc06Measure(obj);
+            Swal.fire({
+                icon: 'success',
+                title: 'Sucesso',
+                text: 'Medida enviada com sucesso!',
+                showConfirmButton: false,
+                timer: 2000,
+                width: getModalWidth(),
+                customClass: {
+                    popup: 'custom-swal-popup', 
+                },
+            });
+
+            setStatus(name, 'COLETADO');
+            fetchPoints();
+
+        } 
+        catch (error) {
+            console.error("Erro ao enviar medida:", error);
+            Swal.fire({
+                icon: 'error',
+                title: 'Erro',
+                text: 'Erro ao enviar a medida.',
+                showConfirmButton: false,
+                timer: 2000,
+                width: getModalWidth(),
+                customClass: {
+                    popup: 'custom-swal-popup', 
+                },
+            });
+        }
+        fetchPoints();
     };
 
     return (
@@ -160,5 +160,3 @@ function Bc06Card({ name, idColeta }: PointNameProps) {
 }
 
 export default Bc06Card;
-
-

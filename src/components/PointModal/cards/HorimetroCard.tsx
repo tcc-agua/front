@@ -1,5 +1,5 @@
 import styles from "../../../pages/PointCollect/PointCollect.module.css";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Swal from 'sweetalert2';
 import { InputPoint } from "../InputPoint";
 import useHorimetroStore from "../../../store/HorimetroStore";
@@ -15,7 +15,7 @@ interface PointNameProps{
 function HorimetroCard({ name, idColeta }: PointNameProps) {
     const { setStatus } = usePontoState();
     const [horimeter, setHorimeter] = useState<number>(1);
-    const { createHorimetroMeasure, isCreated, isError, resetState } = useHorimetroStore();
+    const { createHorimetroMeasure } = useHorimetroStore();
     const { fetchPoints } = useUtilsStore();
 
     const increment = (setter: React.Dispatch<React.SetStateAction<number>>, isInteger?: boolean) => {
@@ -33,35 +33,31 @@ function HorimetroCard({ name, idColeta }: PointNameProps) {
         }
     };
 
-    const sendInformation = () => {
+    const getModalWidth = () => {
+        const width = window.innerWidth;
+
+        if (width <= 540) return '95%';
+        if (width <= 680) return '90%';
+        if (width <= 750) return '85%';
+        if (width <= 865) return '75%';
+        if (width <= 1300) return '40%';
+        if (width <= 1500) return '30%';
+        
+        return '30%'; 
+    };
+
+    const sendInformation = async () => {
         const obj: HORIMETRO = {
             horimetro: horimeter,
             nomePonto: name,
             idColeta: idColeta
         }
-        createHorimetroMeasure(obj);
-        fetchPoints();
-    };
-
-    useEffect(() => {
-        const getModalWidth = () => {
-            const width = window.innerWidth;
-            
-            if (width <= 540) return '95%';
-            if (width <= 680) return '90%';
-            if (width <= 750) return '85%';
-            if (width <= 865) return '75%';
-            if (width <= 1300) return '40%';
-            if (width <= 1500) return '30%';
-            
-            return '30%'; 
-        };
-    
-        if (isCreated) {
+        try{
+            await createHorimetroMeasure(obj);
             Swal.fire({
-                title: 'Sucesso!',
                 icon: 'success',
-                text: 'Coleta inserida com sucesso!',
+                title: 'Sucesso',
+                text: 'Medida enviada com sucesso!',
                 showConfirmButton: false,
                 timer: 2000,
                 width: getModalWidth(),
@@ -69,24 +65,26 @@ function HorimetroCard({ name, idColeta }: PointNameProps) {
                     popup: 'custom-swal-popup', 
                 },
             });
-            resetState();
-            setStatus(name, "COLETADO");
-        }
     
-        if (isError) {
+            setStatus(name, 'COLETADO');
+            fetchPoints();
+        }
+        catch(error){
+            console.error("Erro ao enviar medida:", error);
             Swal.fire({
-                title: 'Erro ao criar',
                 icon: 'error',
-                text: 'Ocorreu um erro durante a criação. Tente novamente!',
-                width: getModalWidth(), 
+                title: 'Erro',
+                text: 'Erro ao enviar a medida.',
+                showConfirmButton: false,
+                timer: 2000,
+                width: getModalWidth(),
                 customClass: {
                     popup: 'custom-swal-popup', 
                 },
             });
-            resetState();
-            setStatus(name, "NAO_COLETADO");
         }
-    }, [isCreated, resetState, isError, name, setStatus]);
+        fetchPoints();
+    };
 
     return (
         <>
