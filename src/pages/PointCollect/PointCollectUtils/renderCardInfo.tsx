@@ -3,36 +3,41 @@ import { Point } from "../PointNames"
 
 // UTILS
 
-export function renderCardInfo(name: string, idColeta: number) {
+export function renderCardInfo(name: string, idColeta: number,  closeModal: () => void) {
 
     if (name.startsWith("PM") || name.startsWith("PT")) {
         return <PointModal.PMPT
             name={name}
             idColeta={idColeta}
+            closeModal={closeModal}
         />
     }
     if (name.startsWith("PB")) {
         return <PointModal.PBS
             name={name}
             idColeta={idColeta}
+            closeModal={closeModal}
         />
     }
     if (name.startsWith("CD")) {
         return <PointModal.CD
             name={name}
             idColeta={idColeta}
+            closeModal={closeModal}
         />
     }
     if (name == "TQ04" || name == "TQ05") {
         return <PointModal.TQ04_TQ05
             name={name}
             idColeta={idColeta}
+            closeModal={closeModal}
         />
     }
     if (name.startsWith("AG") || name == "BS01 HORIMETRO") {
         return <PointModal.HORIMETRO
             name={name}
             idColeta={idColeta}
+            closeModal={closeModal}
         />
     }
     if (name.startsWith("Geral") ||
@@ -48,93 +53,108 @@ export function renderCardInfo(name: string, idColeta: number) {
         name.startsWith("Tanque")) {
 
         return <PointModal.HIDROMETRO
-        name={name}
-        idColeta={idColeta}
+            name={name}
+            idColeta={idColeta}
+            closeModal={closeModal}
         />
     }
 
     switch (name) {
         case "BC01":
-                return <PointModal.BC01
+            return <PointModal.BC01
                 name={name}
                 idColeta={idColeta}
-            />
+                closeModal={closeModal} // closeModal nova props para conseguir fechar o modal inteiro ;)
+            />;
         case "BC06":
             return <PointModal.BC06
                 name={name}
                 idColeta={idColeta}
+                closeModal={closeModal}
             />
 
         case "BH02":
             return <PointModal.BH02
                 name={name}
                 idColeta={idColeta}
+                closeModal={closeModal}
             />
 
         case "BOMBA BC03":
             return <PointModal.BOMBA_BC03
                 name={name}
                 idColeta={idColeta}
+                closeModal={closeModal}
             />
 
         case "BS01 HIDROMETRO":
             return <PointModal.BS01_HIDROMETRO
                 name={name}
                 idColeta={idColeta}
+                closeModal={closeModal}
             />
 
         case "BS01 PRESSAO":
             return <PointModal.BS01_PRESSAO
                 name={name}
                 idColeta={idColeta}
+                closeModal={closeModal}
             />
 
         case "COLUNAS CARVAO":
             return <PointModal.COLUNAS_CARVAO
                 name={name}
                 idColeta={idColeta}
+                closeModal={closeModal}
             />
 
         case "FASE LIVRE":
             return <PointModal.FASE_LIVRE
                 name={name}
                 idColeta={idColeta}
+                closeModal={closeModal}
             />
 
         case "FILTRO CARTUCHO":
             return <PointModal.FILTRO_CARTUCHO
                 name={name}
                 idColeta={idColeta}
+                closeModal={closeModal}
             />
 
         case "HORIMETRO":
             return <PointModal.HORIMETRO
                 name={name}
                 idColeta={idColeta}
+                closeModal={closeModal}
             />
 
         case "SENSOR PH":
             return <PointModal.SENSOR_PH
                 name={name}
                 idColeta={idColeta}
+                closeModal={closeModal}
             />
 
         case "TQ01":
             return <PointModal.TQ01
                 name={name}
                 idColeta={idColeta}
+                closeModal={closeModal}
             />
 
         case "TQ02":
             return <PointModal.TQ02
                 name={name}
                 idColeta={idColeta}
+                closeModal={closeModal}
             />
 
         case "TQ04 TQ05":
             return <PointModal.TQ04_TQ05
                 name={name}
                 idColeta={idColeta}
+                closeModal={closeModal}
             />
     }
 }
@@ -143,12 +163,12 @@ export function renderCardInfo(name: string, idColeta: number) {
 
 export function calculatePercentageCollected(points: Point[]): string {
     if (points.length === 0) return "0%";
-  
+
     const collectedPoints = points.filter((point) => point.statusEnum === "COLETADO");
     const percentage = (collectedPoints.length / points.length) * 100;
-  
+
     return `${percentage.toFixed(0)}%`;
-  }
+}
 
 // Buscar nome da planilha
 

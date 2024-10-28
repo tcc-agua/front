@@ -9,10 +9,11 @@ import useUtilsStore from "../../../store/utils";
 
 interface PointNameProps{
     name: string;
-    idColeta: number
+    idColeta: number;
+    closeModal: () => void; 
 }
 
-function SensorPHCard({ name, idColeta }: PointNameProps) {
+function SensorPHCard({ name, idColeta, closeModal }: PointNameProps) {
     const { setStatus } = usePontoState();
     const [ph, setPh] = useState<number>(1);
     const { createSensorPhMeasure} = useSensorPhStore();
@@ -68,6 +69,7 @@ function SensorPHCard({ name, idColeta }: PointNameProps) {
     
             setStatus(name, 'COLETADO');
             fetchPoints();
+            closeModal();
         }
         catch(error){
             console.error("Erro ao enviar medida:", error);

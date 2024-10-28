@@ -12,9 +12,10 @@ const itemsPerPage = 2;
 interface PointNameProps {
     name: string;
     idColeta: number;
+    closeModal: () => void; 
 }
 
-function BombaBc03Card({ name, idColeta }: PointNameProps) {
+function BombaBc03Card({ name, idColeta, closeModal }: PointNameProps) {
     const { setStatus } = usePontoState();
     const { fetchPoints } = useUtilsStore();
 
@@ -103,6 +104,7 @@ function BombaBc03Card({ name, idColeta }: PointNameProps) {
 
         setStatus(name, 'COLETADO');
         fetchPoints();
+        closeModal();
 
         } catch(error){
             console.error("Erro ao enviar medida:", error);

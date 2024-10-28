@@ -10,11 +10,12 @@ import useUtilsStore from "../../../store/utils";
 interface PointNameProps {
     name: string;
     idColeta: number;
+    closeModal: () => void; 
 }
 
 const itemsPerPage = 2;
 
-function PmPtCard({ name, idColeta }: PointNameProps) {
+function PmPtCard({ name, idColeta, closeModal }: PointNameProps) {
     const { setStatus } = usePontoState();
     const [oilLevel, setOilLevel] = useState<number>(1);
     const [waterLevel, setWaterLevel] = useState<number>(1);
@@ -81,6 +82,7 @@ function PmPtCard({ name, idColeta }: PointNameProps) {
     
             setStatus(name, 'COLETADO');
             fetchPoints();
+            closeModal();
         }
         catch(error){
             console.error("Erro ao enviar medida:", error);

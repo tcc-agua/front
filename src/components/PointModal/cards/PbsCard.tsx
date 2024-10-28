@@ -12,9 +12,10 @@ const itemsPerPage = 2;
 interface PointNameProps {
     name: string;
     idColeta: number;
+    closeModal: () => void; 
 }
 
-function PbsCard({ name, idColeta }: PointNameProps) {
+function PbsCard({ name, idColeta, closeModal }: PointNameProps) {
     const { setStatus } = usePontoState();
     const [pressure, setPressure] = useState<number>(1);
     const [pulses, setPulses] = useState<number>(1);
@@ -99,6 +100,7 @@ function PbsCard({ name, idColeta }: PointNameProps) {
 
             setStatus(name, 'COLETADO');
             fetchPoints();
+            closeModal();
 
         }
         catch(error){

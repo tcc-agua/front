@@ -10,9 +10,10 @@ import useUtilsStore from "../../../store/utils";
 interface PointNameProps{
     name: string;
     idColeta: number;
+    closeModal: () => void; 
 }
 
-function Tq02Card({ name, idColeta,  }: PointNameProps) {
+function Tq02Card({ name, idColeta, closeModal }: PointNameProps) {
     const { setStatus } = usePontoState();
     const [ph, setPh] = useState<number>(1);
     const [lt_02_1, setLt_02_1] = useState<number>(1);
@@ -71,6 +72,7 @@ function Tq02Card({ name, idColeta,  }: PointNameProps) {
     
             setStatus(name, 'COLETADO');
             fetchPoints();
+            closeModal();
         }
         catch(error){
             console.error("Erro ao enviar medida:", error);

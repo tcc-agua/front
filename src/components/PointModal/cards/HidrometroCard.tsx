@@ -10,9 +10,10 @@ import useUtilsStore from "../../../store/utils";
 interface PointNameProps {
     name: string;
     idColeta: number;
+    closeModal: () => void; 
 }
 
-function HidrometroCard({ name, idColeta }: PointNameProps) {
+function HidrometroCard({ name, idColeta, closeModal }: PointNameProps) {
     const { setStatus } = usePontoState();
     const { createHidrometroMeasure } = useHidrometroStore();
     const [volume, setVolume] = useState<number>(1);
@@ -72,6 +73,7 @@ function HidrometroCard({ name, idColeta }: PointNameProps) {
     
             setStatus(name, 'COLETADO');
             fetchPoints();
+            closeModal();
         }
         catch(error){
             console.error("Erro ao enviar medida:", error);

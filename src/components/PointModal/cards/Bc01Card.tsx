@@ -1,7 +1,7 @@
 import styles from "../../../pages/PointCollect/PointCollect.module.css";
 import React, { useState, useCallback } from "react";
 import Swal from 'sweetalert2';
-import { InputPoint } from "../InputPoint"; 
+import { InputPoint } from "../InputPoint";
 import { BC01 } from "../../../interfaces/postParams";
 import useBc01Store from "../../../store/Bc01Store";
 import usePontoState from "../../../store/PontoStore";
@@ -12,13 +12,14 @@ const itemsPerPage = 2;
 interface PointNameProps {
     name: string;
     idColeta: number;
+    closeModal: () => void; // para fechar o modal completo
 }
 
-function Bc01Card({ name, idColeta }: PointNameProps) {
+function Bc01Card({ name, idColeta, closeModal }: PointNameProps) { // Recebendo a prop closeModal
     const { createBc01Measure } = useBc01Store();
     const [currentIndex, setCurrentIndex] = useState(0);
     const { setStatus } = usePontoState();
-    const { fetchPoints  } = useUtilsStore();
+    const { fetchPoints } = useUtilsStore();
 
     const [measurements, setMeasurements] = useState({
         pressure: 1,
@@ -36,14 +37,13 @@ function Bc01Card({ name, idColeta }: PointNameProps) {
         { type: "Volume", key: "volume", value: measurements.volume, isInteger: true },
     ];
 
-
     const increment = useCallback((key: keyof typeof measurements, isInteger: boolean) => {
         setMeasurements(prevState => ({
             ...prevState,
             [key]: isInteger ? prevState[key] + 1 : parseFloat((prevState[key] + 0.1).toFixed(1))
         }));
     }, []);
-    
+
     const decrement = useCallback((key: keyof typeof measurements, isInteger: boolean) => {
         setMeasurements(prevState => ({
             ...prevState,
@@ -79,8 +79,8 @@ function Bc01Card({ name, idColeta }: PointNameProps) {
         if (width <= 865) return '75%';
         if (width <= 1300) return '40%';
         if (width <= 1500) return '30%';
-        
-        return '30%'; 
+
+        return '30%';
     };
 
     const sendInformation = async () => {
@@ -103,13 +103,15 @@ function Bc01Card({ name, idColeta }: PointNameProps) {
                 timer: 2000,
                 width: getModalWidth(),
                 customClass: {
-                    popup: 'custom-swal-popup', 
+                    popup: 'custom-swal-popup',
                 },
             });
-    
+
             setStatus(name, 'COLETADO');
             fetchPoints();
-        } 
+            
+            closeModal(); // Chama a função closeModal para fechar o modal após o envio bem-sucedido
+        }
         catch (error) {
             console.error("Erro ao enviar medida:", error);
             Swal.fire({
@@ -120,7 +122,7 @@ function Bc01Card({ name, idColeta }: PointNameProps) {
                 timer: 2000,
                 width: getModalWidth(),
                 customClass: {
-                    popup: 'custom-swal-popup', 
+                    popup: 'custom-swal-popup',
                 },
             });
         }
@@ -137,8 +139,8 @@ function Bc01Card({ name, idColeta }: PointNameProps) {
                             key={index}
                             titulo={item.type}
                             valor={item.value}
-                            increment={() => increment(item.key as keyof typeof measurements, item.isInteger)} 
-                            decrement={() => decrement(item.key as keyof typeof measurements, item.isInteger)} 
+                            increment={() => increment(item.key as keyof typeof measurements, item.isInteger)}
+                            decrement={() => decrement(item.key as keyof typeof measurements, item.isInteger)}
                             isInteger={item.isInteger}
                             handleChange={(e: React.ChangeEvent<HTMLInputElement>) => handleChange(e, item.key as keyof typeof measurements)}
                         />

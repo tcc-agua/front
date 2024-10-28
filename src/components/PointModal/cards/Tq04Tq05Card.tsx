@@ -12,6 +12,7 @@ const itemsPerPage = 2; // Define the number of items to show per page
 interface PointNameProps {
     name: string;
     idColeta: number;
+    closeModal: () => void; 
 }
 
 // Define um tipo que representa os setters para diferentes tipos de estado
@@ -26,7 +27,7 @@ interface InfoContentData {
     setter: Setter<number> | Setter<boolean>; // Define o setter como um tipo de união
 }
 
-function Tq04Tq05Card({ name, idColeta }: PointNameProps) {
+function Tq04Tq05Card({ name, idColeta, closeModal }: PointNameProps) {
     const { setStatus } = usePontoState();
     const [kgBombonas, setKgBombonas] = useState<number>(1);
     const [qtdBombonas, setQtdBombonas] = useState<number>(1);
@@ -95,6 +96,7 @@ function Tq04Tq05Card({ name, idColeta }: PointNameProps) {
             });
             setStatus(name, 'COLETADO');
             fetchPoints();
+            closeModal();
         }
         catch(error){
             console.error("Erro ao enviar medida:", error);

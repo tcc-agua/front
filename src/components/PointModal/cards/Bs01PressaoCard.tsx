@@ -10,9 +10,10 @@ import useUtilsStore from "../../../store/utils";
 interface PointNameProps{
     name: string;
     idColeta: number;
+    closeModal: () => void; 
 }
 
-function Bs01PressaoCard({ name, idColeta }: PointNameProps) {
+function Bs01PressaoCard({ name, idColeta, closeModal }: PointNameProps) {
     const { setStatus } = usePontoState();
     const [pressure, setPressure] = useState<number>(1);
     const { createBs01PressaoMeasure } = useBs01PressaoStore();
@@ -69,6 +70,7 @@ function Bs01PressaoCard({ name, idColeta }: PointNameProps) {
     
             setStatus(name, 'COLETADO');
             fetchPoints();
+            closeModal();
         }
         catch(error){
             console.error("Erro ao enviar medida:", error);

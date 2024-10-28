@@ -10,9 +10,10 @@ import useUtilsStore from "../../../store/utils";
 interface PointNameProps{
     name: string;
     idColeta: number;
+    closeModal: () => void; 
 }
 
-function FaseLivreCard({ name, idColeta }: PointNameProps) {
+function FaseLivreCard({ name, idColeta, closeModal }: PointNameProps) {
     const { setStatus } = usePontoState();
     const [volume, setVolume] = useState<number>(1);
     const [houveTroca, setHouveTroca] = useState<boolean>(false);
@@ -73,6 +74,7 @@ function FaseLivreCard({ name, idColeta }: PointNameProps) {
             });
             setStatus(name, 'COLETADO');
             fetchPoints();
+            closeModal();
         }
         catch(error){
             console.error("Erro ao enviar medida:", error);

@@ -12,9 +12,10 @@ const itemsPerPage = 2;
 interface PointNameProps {
     name: string;
     idColeta: number;
+    closeModal: () => void; 
 }
 
-function ColunasCarvaoCard({ name, idColeta }: PointNameProps) {
+function ColunasCarvaoCard({ name, idColeta, closeModal }: PointNameProps) {
     const { setStatus } = usePontoState();
     const [measurements, setMeasurements] = useState({
         pressure_c01: 1,
@@ -119,6 +120,7 @@ function ColunasCarvaoCard({ name, idColeta }: PointNameProps) {
             });
             setStatus(name, 'COLETADO');
             fetchPoints();
+            closeModal();
         }
         catch(error){
             console.error("Erro ao enviar medida:", error);

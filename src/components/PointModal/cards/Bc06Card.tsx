@@ -12,9 +12,10 @@ const itemsPerPage = 2;
 interface PointNameProps {
     name: string;
     idColeta: number;
+    closeModal: () => void;
 }
 
-function Bc06Card({ name, idColeta }: PointNameProps) {
+function Bc06Card({ name, idColeta, closeModal }: PointNameProps) {
     const { setStatus } = usePontoState();
     const { fetchPoints } = useUtilsStore();
     const { createBc06Measure } = useBc06Store();
@@ -101,6 +102,7 @@ function Bc06Card({ name, idColeta }: PointNameProps) {
 
             setStatus(name, 'COLETADO');
             fetchPoints();
+            closeModal(); 
 
         } 
         catch (error) {

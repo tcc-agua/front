@@ -10,10 +10,10 @@ import useUtilsStore from "../../../store/utils";
 interface PointNameProps{
     name: string;
     idColeta: number;
-
+    closeModal: () => void; 
 }
 
-function FiltroCartuchoCard({ name, idColeta }:PointNameProps) {
+function FiltroCartuchoCard({ name, idColeta, closeModal }:PointNameProps) {
     const { setStatus } = usePontoState();
     const [outletPressure, setOutletPressure] = useState<number>(1);
     const [inletPressure, setInletPressure] = useState<number>(1);
@@ -71,6 +71,7 @@ function FiltroCartuchoCard({ name, idColeta }:PointNameProps) {
             });
             setStatus(name, 'COLETADO');
             fetchPoints();
+            closeModal();
         }
         catch(error){
             console.error("Erro ao enviar medida:", error);

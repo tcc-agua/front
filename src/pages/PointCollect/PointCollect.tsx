@@ -134,7 +134,7 @@ export function PointCollect() {
                 <PointModal.Container closeModal={closeModal}>
                     {(() => {
                         if (coleta != null) {
-                            return renderCardInfo(selectedPoint.nome, Number(coleta));
+                            return renderCardInfo(selectedPoint.nome, Number(coleta), closeModal); //coloquei esse close modal :0
                         }
                         return <><p className={styles.point_information_text}>ERRO</p></>;
                     })()}

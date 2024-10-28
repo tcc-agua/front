@@ -12,9 +12,10 @@ const itemsPerPage = 2; // Definindo itens por página
 interface PointNameProps {
     name: string;
     idColeta: number;
+    closeModal: () => void; 
 }
 
-function CdCard({ name, idColeta }: PointNameProps) {
+function CdCard({ name, idColeta, closeModal }: PointNameProps) {
     const { setStatus } = usePontoState();
     const [measurements, setMeasurements] = useState({
         pressure: 1,
@@ -126,6 +127,7 @@ function CdCard({ name, idColeta }: PointNameProps) {
     
             setStatus(name, 'COLETADO');
             fetchPoints();
+            closeModal();
         }
         catch (error) {
             console.error("Erro ao enviar medida:", error);
