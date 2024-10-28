@@ -46,6 +46,7 @@ const ColetaItem: React.FC<ColetaItemProps> = ({ paramsData, onOpenDetail }) => 
   const [isOpen, setIsOpen] = useState<number | null>(null);
   const { currentPage, setHistoricContent } = useUtilsStore();
 
+  console.log(`DATAS RECEBIDAS: ${paramsData.startDate}, ${paramsData.endDate}`)
   useEffect(() => {
     const fetchData = async () => {
       setLoading(true);
@@ -55,14 +56,14 @@ const ColetaItem: React.FC<ColetaItemProps> = ({ paramsData, onOpenDetail }) => 
         setContent(fetchDataResult.content);
   
       } catch (error) {
-        setError('Erro ao buscar dados.');
+        setError(`Erro ao buscar dados. ${error}`);
       } finally {
         setLoading(false);
       }
     };
 
     fetchData();
-  }, [currentPage]);
+  }, [currentPage, paramsData.startDate, paramsData.endDate]);
 
   const toggleOpen = (id: number) => {
     setIsOpen(isOpen === id ? null : id);

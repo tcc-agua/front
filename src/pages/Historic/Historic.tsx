@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import DropdownButton from '../../components/DropdownButton/DropdownButton';
 import ColetaItem from '../../components/Colects/CollectItem';
 import styles from './Historic.module.css';
@@ -93,10 +93,10 @@ const Historic: React.FC = () => {
       } else {
         endDate = dayjs().format('YYYY-MM-DD');
         startDate = dayjs().subtract(60, 'day').format('YYYY-MM-DD');
+        
       }
       setStartDateState(startDate);
       setEndDateState(endDate);
-
     } catch (e) {
       const errorMessage = e instanceof Error ? e.message : 'Erro desconhecido.';
       setError('Erro ao buscar dados: ' + errorMessage);
@@ -104,6 +104,10 @@ const Historic: React.FC = () => {
       setLoading(false);
     }
   };
+
+  useEffect(() => {
+    fetchPontosPorColeta();
+  }, [startDateState, endDateState])
 
   const handleOpenDetail = (detail: Detail) => {
     setSelectedDetail(detail);
