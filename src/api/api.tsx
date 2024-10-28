@@ -103,10 +103,10 @@ export const fetchColetasByData = async (paramsData: { startDate?: string; endDa
                 Authorization: `Bearer ${token}`
             },
             params: {
-                // startDate: paramsData.startDate,
-                // endDate: paramsData.endDate,
-                startDate: "2024-09-19",
-                endDate: "2024-09-19",
+                startDate: paramsData.startDate,
+                endDate: paramsData.endDate,
+                // startDate: "2024-09-19",
+                // endDate: "2024-09-19",
                 page: paramsData.page || 0,
                 size: paramsData.size || 6
             }

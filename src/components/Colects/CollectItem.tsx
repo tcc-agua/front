@@ -27,7 +27,7 @@ export interface ResponseColeta {
   content: Content[];
 }
 
-export interface paramsDataInterface {
+export interface ParamsDataInterface {
   startDate: string;
   endDate: string;
   page: number;
@@ -35,7 +35,7 @@ export interface paramsDataInterface {
 }
 
 interface ColetaItemProps {
-  paramsData: paramsDataInterface;
+  paramsData: ParamsDataInterface;
   onOpenDetail: (detail: Detail) => void;
 }
 
@@ -50,7 +50,8 @@ const ColetaItem: React.FC<ColetaItemProps> = ({ paramsData, onOpenDetail }) => 
     const fetchData = async () => {
       setLoading(true);
       try {
-        const fetchDataResult = await setHistoricContent({ ...paramsData, page: currentPage });
+        const fetchDataResult = await setHistoricContent( paramsData );
+        console.log("ParamsData CollectItem: " + paramsData);
         setContent(fetchDataResult.content);
   
       } catch (error) {

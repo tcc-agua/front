@@ -177,7 +177,12 @@ const Historic: React.FC = () => {
           <p>{error}</p>
         ) : (
             <ColetaItem
-              paramsData={{ page: currentPage, size: 6, startDate: startDateState , endDate: endDateState  }} 
+            paramsData={{
+              startDate: startDateState,
+              endDate: endDateState,
+              page: currentPage,
+              size: 6
+            }}
               onOpenDetail={handleOpenDetail}
             />
         )}

@@ -3,7 +3,7 @@ import { fetchColetasByData, fetchPointBySheet, fetchUserInfo } from '../api/api
 import { GlobalState } from '../interfaces/auth';
 import { Point } from '../pages/PointCollect/PointNames';
 import { calculatePercentageCollected } from '../pages/PointCollect/PointCollectUtils/renderCardInfo';
-import { paramsDataInterface, ResponseColeta } from '../components/Colects/CollectItem';
+import { ParamsDataInterface, ResponseColeta } from '../components/Colects/CollectItem';
 
 interface UtilState{
     token: string | null;
@@ -33,7 +33,7 @@ interface UtilState{
     setCurrentPage: (value: number) => void;
 
     historicContent: ResponseColeta | 0;
-    setHistoricContent: (data: paramsDataInterface) => Promise<ResponseColeta>;
+    setHistoricContent: (data: ParamsDataInterface) => Promise<ResponseColeta>;
 }
 
 const useUtilsStore = create<UtilState>((set) => ({
