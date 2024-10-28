@@ -23,12 +23,11 @@ const ColetaDetails: React.FC<ColetaDetailsProps> = ({ details, onOpenDetail, it
 
   useEffect(() => {
     const offset = currentPage * itemsPerPage;
-    const newDetails = details.slice(offset, offset + itemsPerPage);
-    setCurrentDetails(newDetails);
+    setCurrentDetails(details);
   }, [currentPage, details, itemsPerPage]);
 
   const handlePageClick = (data: { selected: number }) => {
-    setCurrentPage(data.selected); // Atualiza a página no estado global
+    setCurrentPage(data.selected);
   };
 
   return (
@@ -64,8 +63,8 @@ const ColetaDetails: React.FC<ColetaDetailsProps> = ({ details, onOpenDetail, it
           onPageChange={handlePageClick}
           containerClassName={styles.pagination}
           activeClassName={styles.active}
+          forcePage={currentPage}
           aria-label="Pagination"
-          
         />
       )}
     </div>

@@ -50,10 +50,11 @@ const ColetaItem: React.FC<ColetaItemProps> = ({ paramsData, onOpenDetail }) => 
     const fetchData = async () => {
       setLoading(true);
       try {
-        // Chama o backend com a página atual
         const fetchDataResult = await setHistoricContent({ ...paramsData, page: currentPage });
         setContent(fetchDataResult.content);
+        
         setTotalPages(fetchDataResult.totalPages);
+
       } catch (error) {
         setError('Erro ao buscar dados.');
       } finally {
@@ -62,7 +63,7 @@ const ColetaItem: React.FC<ColetaItemProps> = ({ paramsData, onOpenDetail }) => 
     };
 
     fetchData();
-  }, [currentPage, setHistoricContent]);
+  }, [currentPage]);
 
   const toggleOpen = (id: number) => {
     setIsOpen(isOpen === id ? null : id);
