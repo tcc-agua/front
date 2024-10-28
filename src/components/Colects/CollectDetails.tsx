@@ -1,5 +1,7 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import styles from './CollectItem.module.css';
+import ReactPaginate from 'react-paginate';
+import useUtilsStore from '../../store/utils';
 
 interface Detail {
   id: number;
@@ -11,12 +13,27 @@ interface Detail {
 interface ColetaDetailsProps {
   details: Detail[];
   onOpenDetail: (detail: Detail) => void;
+  itemsPerPage: number; 
+  totalPages: number;
 }
 
-const ColetaDetails: React.FC<ColetaDetailsProps> = ({ details, onOpenDetail }) => {
+const ColetaDetails: React.FC<ColetaDetailsProps> = ({ details, onOpenDetail, itemsPerPage, totalPages }) => {
+  const { setCurrentPage, currentPage } = useUtilsStore();
+  const [currentDetails, setCurrentDetails] = useState<Detail[]>([]);
+
+  useEffect(() => {
+    const offset = currentPage * itemsPerPage;
+    const newDetails = details.slice(offset, offset + itemsPerPage);
+    setCurrentDetails(newDetails);
+  }, [currentPage, details, itemsPerPage]);
+
+  const handlePageClick = (data: { selected: number }) => {
+    setCurrentPage(data.selected); // Atualiza a página no estado global
+  };
+
   return (
     <div className={styles.details}>
-      {details.map((detail) => (
+      {currentDetails.map((detail) => (
         <div key={detail.id} className={styles.detailContainer}>
           <div
             className={styles.detailButton}
@@ -37,9 +54,22 @@ const ColetaDetails: React.FC<ColetaDetailsProps> = ({ details, onOpenDetail }) 
           </div>
         </div>
       ))}
+
+      {totalPages > 1 && (
+        <ReactPaginate
+          previousLabel={'<'}
+          nextLabel={'>'}
+          breakLabel={'...'}
+          pageCount={totalPages}
+          onPageChange={handlePageClick}
+          containerClassName={styles.pagination}
+          activeClassName={styles.active}
+          aria-label="Pagination"
+          
+        />
+      )}
     </div>
   );
 };
 
 export default ColetaDetails;
-

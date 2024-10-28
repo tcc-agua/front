@@ -1,8 +1,9 @@
 import { create } from 'zustand';
-import { fetchPointBySheet, fetchUserInfo } from '../api/api';
+import { fetchColetasByData, fetchPointBySheet, fetchUserInfo } from '../api/api';
 import { GlobalState } from '../interfaces/auth';
 import { Point } from '../pages/PointCollect/PointNames';
 import { calculatePercentageCollected } from '../pages/PointCollect/PointCollectUtils/renderCardInfo';
+import { paramsDataInterface, ResponseColeta } from '../components/Colects/CollectItem';
 
 interface UtilState{
     token: string | null;
@@ -29,9 +30,10 @@ interface UtilState{
     caPercentage: string | "0%";
 
     currentPage: number | 0;
-
     setCurrentPage: (value: number) => void;
 
+    historicContent: ResponseColeta | 0;
+    setHistoricContent: (data: paramsDataInterface) => Promise<ResponseColeta>;
 }
 
 const useUtilsStore = create<UtilState>((set) => ({
@@ -50,6 +52,19 @@ const useUtilsStore = create<UtilState>((set) => ({
     caPercentage: "0%",
 
     currentPage: 0,
+
+    historicContent:  0,
+
+    setHistoricContent: async (data) => {
+      const fetchData = await fetchColetasByData({
+          startDate: data.startDate,
+          endDate: data.endDate,
+          page: data.page,
+          size: data.size,
+      });
+      set({ historicContent: fetchData });
+      return fetchData; 
+  },
   
     setPlanilha: (value) => {
       set({

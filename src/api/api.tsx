@@ -76,15 +76,28 @@ export const fetchSheet = async (sheetName: string, startDate: string, endDate: 
 };
 
 // Get coletas by data (historico)
-export const fetchColetasByData = async (paramsData: { startDate?: string; endDate?: string; page?: number; size?: number }) => {
+interface ColetasResponse {
+    totalPages: number;
+    totalElements: number;
+    page: number;
+    size: number;
+    content: any[]; 
+}
+
+export const fetchColetasByData = async (paramsData: { startDate?: string; endDate?: string; page?: number; size?: number }): Promise<ColetasResponse> => {
     try {
-        const token = localStorage.getItem("id_token");        
-        if (!paramsData.startDate) {
-            throw new Error("Data inicial é obrigatório");
-        }
-        if (paramsData.endDate && new Date(paramsData.endDate) < new Date(paramsData.startDate)) {
-            throw new Error("Data final deve ser maior ou igual a startDate");
-        }
+        const token = localStorage.getItem("id_token");
+        
+        console.log("StartDate API : " + paramsData.startDate);
+
+        // if (!paramsData.startDate) {
+        //     throw new Error("Data inicial é obrigatória");
+        // }
+
+        // if (paramsData.endDate && new Date(paramsData.endDate) < new Date(paramsData.startDate)) {
+        //     throw new Error("Data final deve ser maior ou igual a Data Inicial");
+        // }
+
         const response = await axios.get(`${API_BASE_URL}/coleta/get-by-date`, {
             headers: {
                 Authorization: `Bearer ${token}`
@@ -92,32 +105,31 @@ export const fetchColetasByData = async (paramsData: { startDate?: string; endDa
             params: {
                 // startDate: paramsData.startDate,
                 // endDate: paramsData.endDate,
-                // page: paramsData.page || 0,
-                // size: paramsData.size || 6 
                 startDate: "2024-09-19",
                 endDate: "2024-09-19",
-                // page: 0,
-                // size: 6 
-                page: paramsData.page || 1,
-                size: paramsData.size || 6 
+                page: paramsData.page || 0,
+                size: paramsData.size || 6
             }
         });
+
         if (!response.data || !response.data.content) {
             throw new Error("Formato de resposta inválido");
         }
+
         return {
             totalPages: response.data.totalPages,
             totalElements: response.data.totalElements,
             page: response.data.page,
-            size: response.data.size,      
-            content: response.data.content 
+            size: response.data.size,
+            content: response.data.content
         };
-        
+
     } catch (e) {
         console.error("Erro ao buscar coletas por data:", e);
         throw e; 
     }
 }
+
 
 // Get point by Sheet
 export const fetchPointBySheet = async (sheetName: string) => {

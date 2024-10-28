@@ -1,9 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import DropdownButton from '../../components/DropdownButton/DropdownButton';
 import ColetaItem from '../../components/Colects/CollectItem';
 import styles from './Historic.module.css';
 import dayjs from 'dayjs';
-import { fetchColetasByData } from '../../api/api';
 import useUtilsStore from '../../store/utils';
 
 interface DropdownItem {
@@ -32,7 +31,6 @@ const Historic: React.FC = () => {
   const [selectedYear, setSelectedYear] = useState<DropdownItem | undefined>(undefined);
   const [modalOpen, setModalOpen] = useState(false);
   const [selectedDetail, setSelectedDetail] = useState<Detail | null>(null);
-  const [, setColetasPonto] = useState<Coleta[]>([]);
   const [carouselIndex, setCarouselIndex] = useState(0);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -82,7 +80,6 @@ const Historic: React.FC = () => {
         return;
       }
 
-      let paramsData: { startDate?: string; endDate?: string } = {};
       let startDate: string;
       let endDate: string;
 
@@ -100,15 +97,6 @@ const Historic: React.FC = () => {
       setStartDateState(startDate);
       setEndDateState(endDate);
 
-      paramsData = { startDate, endDate };
-
-      const response = await fetchColetasByData(paramsData);
-      if (response && response.content) {
-        const coletas: Coleta[] = response.content;
-        setColetasPonto(coletas);
-      } else {
-        setError('Nenhum dado retornado.');
-      }
     } catch (e) {
       const errorMessage = e instanceof Error ? e.message : 'Erro desconhecido.';
       setError('Erro ao buscar dados: ' + errorMessage);
@@ -116,11 +104,6 @@ const Historic: React.FC = () => {
       setLoading(false);
     }
   };
-
-  useEffect(() => {
-    fetchPontosPorColeta()
-  },[selectedDay, selectedMonth, selectedYear]);
-  
 
   const handleOpenDetail = (detail: Detail) => {
     setSelectedDetail(detail);
