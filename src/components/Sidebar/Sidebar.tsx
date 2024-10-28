@@ -93,7 +93,7 @@ export function Sidebar({ className }: SidebarProps) {
                             src={getIcon(ConsumoAguaIMG, ConsumoAguaBlueIMG, ConsumoAguaWhite, '/inicial/consumo_de_agua')}
                             alt="consumo_agua"
                         />
-                        <p>Consumo de água</p>
+                        <p>Consumo de Água</p>
                     </Link>
                 </div>
 

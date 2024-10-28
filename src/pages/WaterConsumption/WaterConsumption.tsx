@@ -98,7 +98,7 @@ export function WaterConsumption() {
 
             {showPointButtons && (
                 <div>
-                    <p className={styles.text}>Selecione a planilha desejada:</p>
+                    <p className={styles.text}>Selecione a planilha:</p>
                     <div className={styles.main_content}>
                         <section className={styles.left_side}>
                             <div className={styles.options_data}>

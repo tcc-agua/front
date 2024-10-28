@@ -117,7 +117,7 @@ const HamburgerMenu: React.FC = () => {
                 src={getIcon(ConsumoAguaIMG, ConsumoAguaBlueIMG, ConsumoAguaWhite, '/inicial/consumo_de_agua')}
                 alt="consumo_agua"
               />
-              <p className={styles.pages}>Consumo de água</p>
+              <p className={styles.pages}>Consumo de Água</p>
             </Link>
           </div>
 
