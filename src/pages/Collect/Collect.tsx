@@ -9,7 +9,6 @@ import { NextCollects } from "../../components/Colects/NextCollects";
 import useColetaStore from "../../store/ColetaStore";
 import { Point } from "../PointCollect/PointNames";
 import { updatePontoStatus } from "../../services/PontoService";
-import { calculatePercentageCollected } from "../PointCollect/PointCollectUtils/renderCardInfo";
 
 export function Collect() {
   const [etas, setEtas] = useState<Point[]>([]);
@@ -20,11 +19,12 @@ export function Collect() {
   const [showPointButtons, setShowPointButtons] = useState<boolean>(false);
   const location = useLocation(); 
   const navigate = useNavigate();
-  const { setPlanilha,  } = useUtilsStore();
+  const { setPlanilha, naPercentage, etasPercentage, pbPercentage, fetchPoints } = useUtilsStore();
 
   useEffect(() => {
     const fetchPontos = async () => {
       try {
+        fetchPoints();
         const [etasResponse, naResponse, pbResponse] = await Promise.all([
           fetchPointBySheet("DADOS ETAS"),
           fetchPointBySheet("NA"),
@@ -42,7 +42,7 @@ export function Collect() {
     };
 
     fetchPontos();
-  }, []);
+  }, [fetchPoints]);
 
 // Buscar e comparar coleta atual 
 
@@ -94,10 +94,6 @@ useEffect(() => {
     setPlanilha(planilha);
     navigate("/inicial/pontos_de_coleta");
   };
-
-  const etasPercentage = calculatePercentageCollected(etas);
-  const naPercentage = calculatePercentageCollected(na);
-  const pbPercentage = calculatePercentageCollected(pb);
 
   return (
     <div className={styles.container}>

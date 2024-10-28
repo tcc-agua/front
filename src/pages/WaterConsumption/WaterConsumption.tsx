@@ -8,7 +8,6 @@ import { COLETA } from "../../interfaces/postParams";
 import { NextCollects } from "../../components/Colects/NextCollects";
 import useColetaStore from "../../store/ColetaStore";
 import { Point } from '../PointCollect/PointNames';
-import { calculatePercentageCollected } from '../PointCollect/PointCollectUtils/renderCardInfo';
 import { updatePontoStatus } from '../../services/PontoService';
 
 export function WaterConsumption() {
@@ -18,11 +17,12 @@ export function WaterConsumption() {
     const location = useLocation(); 
 
     const navigate = useNavigate();
-    const { setPlanilha } = useUtilsStore();
+    const { setPlanilha, caPercentage, fetchPoints } = useUtilsStore();
 
     useEffect(() => {
         const fetchPontos = async () => {
         try {
+            fetchPoints();
             const caResponse = await fetchPointBySheet("CA");
         
             setCa(caResponse)
@@ -32,7 +32,7 @@ export function WaterConsumption() {
         }
     };
     fetchPontos();
-  }, []);
+  }, [fetchPoints, caPercentage]);
 
   useEffect(() => {
     const fetchColetaAtual = async () => {
@@ -82,8 +82,6 @@ export function WaterConsumption() {
         setPlanilha(planilha);
         navigate("/inicial/pontos_de_coleta");
     };
-
-    const caPercentage = calculatePercentageCollected(ca);
 
     return (
         <div className={styles.container}>

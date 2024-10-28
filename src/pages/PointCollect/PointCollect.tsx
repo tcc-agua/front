@@ -37,7 +37,7 @@ export function PointCollect() {
         };
     
         fetchColetaAtual();
-    }, []); 
+    }, [fetchPoints]); 
 
     useEffect(() => {
         if (
