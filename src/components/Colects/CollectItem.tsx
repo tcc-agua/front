@@ -15,6 +15,7 @@ export interface Content {
   id: number;
   date: string;
   description: string;
+  totalElementsIndividual: number;
   details: Detail[];
 }
 
@@ -44,7 +45,6 @@ const ColetaItem: React.FC<ColetaItemProps> = ({ paramsData, onOpenDetail }) => 
   const [error, setError] = useState<string | null>(null);
   const [isOpen, setIsOpen] = useState<number | null>(null);
   const { currentPage, setHistoricContent } = useUtilsStore();
-  const [totalPages, setTotalPages] = useState<number>(0);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -52,9 +52,7 @@ const ColetaItem: React.FC<ColetaItemProps> = ({ paramsData, onOpenDetail }) => 
       try {
         const fetchDataResult = await setHistoricContent({ ...paramsData, page: currentPage });
         setContent(fetchDataResult.content);
-        
-        setTotalPages(fetchDataResult.totalPages);
-
+  
       } catch (error) {
         setError('Erro ao buscar dados.');
       } finally {
@@ -95,8 +93,8 @@ const ColetaItem: React.FC<ColetaItemProps> = ({ paramsData, onOpenDetail }) => 
                 details={item.details}
                 onOpenDetail={onOpenDetail}
                 itemsPerPage={paramsData.size}
-                totalPages={totalPages}
-              />
+                totalPages={Math.ceil(item.totalElementsIndividual / paramsData.size)}              
+                />
             )}
           </div>
         ))

@@ -22,7 +22,6 @@ const ColetaDetails: React.FC<ColetaDetailsProps> = ({ details, onOpenDetail, it
   const [currentDetails, setCurrentDetails] = useState<Detail[]>([]);
 
   useEffect(() => {
-    const offset = currentPage * itemsPerPage;
     setCurrentDetails(details);
   }, [currentPage, details, itemsPerPage]);
 
