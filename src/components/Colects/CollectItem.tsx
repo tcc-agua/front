@@ -46,23 +46,23 @@ const ColetaItem: React.FC<ColetaItemProps> = ({ paramsData, onOpenDetail }) => 
   const [isOpen, setIsOpen] = useState<number | null>(null);
   const { currentPage, setHistoricContent } = useUtilsStore();
 
-  console.log(`DATAS RECEBIDAS: ${paramsData.startDate}, ${paramsData.endDate}`)
   useEffect(() => {
-    const fetchData = async () => {
-      setLoading(true);
-      try {
-        const fetchDataResult = await setHistoricContent( paramsData );
-        console.log("ParamsData CollectItem: " + paramsData);
-        setContent(fetchDataResult.content);
-  
-      } catch (error) {
-        setError(`Erro ao buscar dados. ${error}`);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchData();
+    if(paramsData.startDate && paramsData.endDate){
+      const fetchData = async () => {
+        setLoading(true);
+        try {
+          const fetchDataResult = await setHistoricContent( paramsData );
+          console.log("ParamsData CollectItem: " + paramsData);
+          setContent(fetchDataResult.content);
+    
+        } catch (error) {
+          setError(`Erro ao buscar dados. ${error}`);
+        } finally {
+          setLoading(false);
+        }
+      };
+      fetchData();
+    }
   }, [currentPage, paramsData.startDate, paramsData.endDate]);
 
   const toggleOpen = (id: number) => {
@@ -76,7 +76,9 @@ const ColetaItem: React.FC<ColetaItemProps> = ({ paramsData, onOpenDetail }) => 
       ) : error ? (
         <p>{error}</p>
       ) : (
-        content.map((item) => (
+        content
+        .filter((item) => item.details.length > 0)
+        .map((item) => (
           <div key={item.id} className={styles.coleta}>
             <div className={styles.title} onClick={() => toggleOpen(item.id)}>
               <p className={styles.date}>{item.date}</p>
