@@ -4,6 +4,7 @@ import arrow from '../../assets/images/arrow.svg';
 import { fetchColetasByData } from '../../api/api';
 import ColetaDetails from './CollectDetails';
 import ReactPaginate from 'react-paginate';
+import useUtilsStore from '../../store/utils';
 
 interface Detail {
   id: number;
@@ -19,6 +20,7 @@ interface Content {
   details: Detail[];
 }
 
+
 interface ColetaItemProps {
   paramsData: { page: number; size: number; startDate: string; endDate: string; };
   onOpenDetail: (detail: Detail) => void;
@@ -27,10 +29,13 @@ interface ColetaItemProps {
 const ColetaItem: React.FC<ColetaItemProps> = ({ paramsData, onOpenDetail }) => {
   const [content, setContent] = useState<Content[]>([]);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState('');
+  const [error, setError] = useState();
   const [isOpen, setIsOpen] = useState<number | null>(null);
-  const [currentPage, setCurrentPage] = useState(0);
+  const[pageCount, setPageCount] = useState(0);
   const itemsPerPage = paramsData.size; 
+
+  const { setCurrentPage, currentPage } = useUtilsStore();
+
   const offset = currentPage * itemsPerPage;
 
   // Filtrando para aparecer somente coletas com details
@@ -38,9 +43,10 @@ const ColetaItem: React.FC<ColetaItemProps> = ({ paramsData, onOpenDetail }) => 
   .filter(item => item.details.length > 0)
   .slice(offset, offset + itemsPerPage);
 
-  const pageCount = Math.ceil(
-    content.filter(item => item.details.length > 0).length / itemsPerPage
-  );
+  // Contagem do número de páginas que deve aparecer
+  // const pageCount = Math.ceil(
+  //   content.filter(item => item.details.length > 0).length / itemsPerPage
+  // );
 
   useEffect(() => {
     const fetchData = async () => {
@@ -49,11 +55,13 @@ const ColetaItem: React.FC<ColetaItemProps> = ({ paramsData, onOpenDetail }) => 
         const response = await fetchColetasByData({
           startDate: paramsData.startDate,
           endDate: paramsData.endDate,
-          page: paramsData.page,
+          page: currentPage,
           size: paramsData.size,
         });
         setContent(response.content);
-      } catch (e) {
+        setPageCount(response.totalPages);
+        console.log(`Response: ${JSON.stringify(response)}`)
+      } catch (error) {
         setError('Erro ao buscar dados.');
       } finally {
         setLoading(false);
@@ -61,7 +69,7 @@ const ColetaItem: React.FC<ColetaItemProps> = ({ paramsData, onOpenDetail }) => 
     };
 
     fetchData();
-  }, [paramsData]);
+  }, [paramsData, currentPage]);
 
   const toggleOpen = (id: number) => {
     setIsOpen(isOpen === id ? null : id);

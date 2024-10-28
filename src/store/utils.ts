@@ -28,6 +28,10 @@ interface UtilState{
     pbPercentage: string | "0%";
     caPercentage: string | "0%";
 
+    currentPage: number | 0;
+
+    setCurrentPage: (value: number) => void;
+
 }
 
 const useUtilsStore = create<UtilState>((set) => ({
@@ -44,6 +48,8 @@ const useUtilsStore = create<UtilState>((set) => ({
     naPercentage: "0%",
     pbPercentage: "0%",
     caPercentage: "0%",
+
+    currentPage: 0,
   
     setPlanilha: (value) => {
       set({
@@ -140,11 +146,17 @@ const useUtilsStore = create<UtilState>((set) => ({
         
             if (isExpired) {
                 localStorage.clear();  // Remove tudo relacionado ao token de uma vez
-                document.cookie = "SESSION" + "=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+                document.cookie = "SESSION" + "=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;"; // Tirar o cookie da sessão
             }
             return isExpired;
         }
         return true;  // Considere expirado se não houver expires_at
+    },
+
+    setCurrentPage: (value) => {
+      set({
+        currentPage: value
+      });
     }
 }));
 

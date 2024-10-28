@@ -4,6 +4,7 @@ import ColetaItem from '../../components/Colects/CollectItem';
 import styles from './Historic.module.css';
 import dayjs from 'dayjs';
 import { fetchColetasByData } from '../../api/api';
+import useUtilsStore from '../../store/utils';
 
 interface DropdownItem {
   id: string;
@@ -31,7 +32,7 @@ const Historic: React.FC = () => {
   const [selectedYear, setSelectedYear] = useState<DropdownItem | undefined>(undefined);
   const [modalOpen, setModalOpen] = useState(false);
   const [selectedDetail, setSelectedDetail] = useState<Detail | null>(null);
-  const [coletasPonto, setColetasPonto] = useState<Coleta[]>([]);
+  const [, setColetasPonto] = useState<Coleta[]>([]);
   const [carouselIndex, setCarouselIndex] = useState(0);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -39,7 +40,7 @@ const Historic: React.FC = () => {
   const [startDateState, setStartDateState] = useState<string>('');
   const [endDateState, setEndDateState] = useState<string>('');
 
-
+  const { currentPage } = useUtilsStore();
 
 
   const days: DropdownItem[] = Array.from({ length: 31 }, (_, i) => ({
@@ -68,6 +69,8 @@ const Historic: React.FC = () => {
     label: year,
     value: year
   }));
+
+  console.log(`currentPage: ${currentPage}`)
 
   const fetchPontosPorColeta = async () => {
     setLoading(true);
@@ -191,7 +194,7 @@ const Historic: React.FC = () => {
           <p>{error}</p>
         ) : (
             <ColetaItem
-              paramsData={{ page: 0, size: 6, startDate: startDateState , endDate: endDateState  }} 
+              paramsData={{ page: currentPage, size: 6, startDate: startDateState , endDate: endDateState  }} 
               onOpenDetail={handleOpenDetail}
             />
         )}

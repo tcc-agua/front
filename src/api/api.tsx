@@ -96,14 +96,18 @@ export const fetchColetasByData = async (paramsData: { startDate?: string; endDa
                 // size: paramsData.size || 6 
                 startDate: "2024-09-19",
                 endDate: "2024-09-19",
-                page: 0,
-                size: 6 
+                // page: 0,
+                // size: 6 
+                page: paramsData.page || 1,
+                size: paramsData.size || 6 
             }
         });
         if (!response.data || !response.data.content) {
             throw new Error("Formato de resposta inválido");
         }
         return {
+            totalPages: response.data.totalPages,
+            totalElements: response.data.totalElements,
             page: response.data.page,
             size: response.data.size,      
             content: response.data.content 
