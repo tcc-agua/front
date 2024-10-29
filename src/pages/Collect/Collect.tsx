@@ -54,13 +54,15 @@ useEffect(() => {
       const storedDate = response?.dataColeta;
       const currentDate = formatDate(new Date());
 
-      setShowPointButtons(storedDate === currentDate);
-
       if (storedDate !== currentDate) {
         [...etas, ...na, ...pb].forEach((i) => {
+          console.log("UPDATE STATUS DOS PONTO!");
           updatePontoStatus(i.nome, "NAO_COLETADO");
         });
       }
+
+      setShowPointButtons(storedDate === currentDate);
+
     } catch (error) {
       console.error("Erro ao buscar coleta:", error);
     }
@@ -68,6 +70,18 @@ useEffect(() => {
 
   fetchColetaAtual();
 }, [etas, na, pb, location]);
+
+useEffect(() =>{
+  const fetchPercentage = async () => {
+    try{
+      fetchPoints();
+    }
+    catch(error){
+      console.error("Erro ao buscar coleta:", error);
+    }
+  };
+  fetchPercentage();
+}, [fetchPoints, pbPercentage, naPercentage, etasPercentage])
 
   const formatDate = (date: Date): string => {
     const day = String(date.getDate()).padStart(2, '0');
