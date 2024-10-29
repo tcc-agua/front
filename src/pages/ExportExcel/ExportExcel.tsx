@@ -38,11 +38,8 @@ const ExportExcel: React.FC = () => {
     }));
 
     const tables: DropdownItem[] = [
-        { id: '1', label: 'DADOS ETAS', value: 'DADOS ETAS' },
-        { id: '2', label: 'NA', value: 'NA' },
-        { id: '3', label: 'PBS', value: 'PBS' },
-        { id: '4', label: 'CA', value: 'CA' },
-        { id: '5', label: 'LH', value: 'LH' },
+        { id: '1', label: 'DADOS OPERACIONAIS', value: 'DADOS OPERACIONAIS' },
+        { id: '2', label: 'DADOS HIDROMETROS', value: 'DADOS HIDROMETROS' }
     ];
 
     // Função de exportação usando SweetAlert2 para feedback
@@ -62,14 +59,15 @@ const ExportExcel: React.FC = () => {
         };
 
         try {
-            const endpoint = selectedTable?.value === 'CA' ||  selectedTable?.value === 'LH' ? '/exportExcel/hidrometro' : '/exportExcel';
+            const endpoint = selectedTable?.value === 'DADOS HIDROMETROS' ? '/exportExcel/hidrometro' : '/exportExcel';
             const response = await fetchExport(startDate, endDate, endpoint);
             console.log(response);
 
             const url = window.URL.createObjectURL(response);
             const link = document.createElement('a');
             link.href = url;
-            const nomeExcel = selectedTable?.value === 'CA' ||  selectedTable?.value === 'LH' ? 'coletas_hidrometro.xlsx' : 'coletas.xlsx';
+            
+            const nomeExcel = selectedTable?.value === 'DADOS HIDROMETROS' ? `coletas_hidrometro - ${selectedMonth?.value}${selectedYear?.value}.xlsx` : `coletas - ${selectedMonth?.value}${selectedYear?.value}.xlsx`;
             link.setAttribute('download', nomeExcel);
             document.body.appendChild(link);
             link.click();
@@ -88,6 +86,8 @@ const ExportExcel: React.FC = () => {
                 customClass: {
                     popup: 'custom-swal-popup', // Classe customizada para o modal
                 },
+                background: 'var(--backgroud_color)',
+                color: 'var(--font_color)',
             });
 
         } catch (e) {
@@ -102,6 +102,8 @@ const ExportExcel: React.FC = () => {
                 customClass: {
                     popup: 'custom-swal-popup',
                 },
+                background: 'var(--backgroud_color)',
+                color: 'var(--font_color)',
             });
         }
     }
@@ -135,6 +137,8 @@ const ExportExcel: React.FC = () => {
                 customClass: {
                     popup: 'custom-swal-popup', 
                 },
+                background: 'var(--backgroud_color)',
+                color: 'var(--font_color)',
             });
         }
     };
@@ -187,6 +191,8 @@ const ExportExcel: React.FC = () => {
                 customClass: {
                     popup: 'custom-swal-popup', // Classe customizada para o modal
                 },
+                background: 'var(--backgroud_color)',
+                color: 'var(--font_color)',
             });
         } else if (!selectedYear){
             console.error("Selecione um ano válido.");
@@ -200,6 +206,8 @@ const ExportExcel: React.FC = () => {
                 customClass: {
                     popup: 'custom-swal-popup', // Classe customizada para o modal
                 },
+                background: 'var(--backgroud_color)',
+                color: 'var(--font_color)',
             });
         } else if (!selectedTable){
             console.error("Selecione uma tabela válida.");
@@ -213,6 +221,8 @@ const ExportExcel: React.FC = () => {
                 customClass: {
                     popup: 'custom-swal-popup', // Classe customizada para o modal
                 },
+                background: 'var(--backgroud_color)',
+                color: 'var(--font_color)',
             });
         }
     };

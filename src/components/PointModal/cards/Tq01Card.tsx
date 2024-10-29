@@ -65,6 +65,8 @@ function Tq01Card({ name, idColeta, closeModal }: PointNameProps) {
                 customClass: {
                     popup: 'custom-swal-popup', 
                 },
+                background: 'var(--backgroud_color)',
+                color: 'var(--font_color)',
             });
     
             setStatus(name, 'COLETADO');
@@ -83,6 +85,8 @@ function Tq01Card({ name, idColeta, closeModal }: PointNameProps) {
                 customClass: {
                     popup: 'custom-swal-popup', 
                 },
+                background: 'var(--backgroud_color)',
+                color: 'var(--font_color)',
             });
         }
         fetchPoints();

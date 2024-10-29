@@ -414,7 +414,7 @@ export const Notifications: React.FC = () => {
         } else if (['DADOS ETAS'].includes(tabela) && tipo === 'SALVO') {
             message = `Dados "ETAS" salvo com sucesso!`;
         } else if (['CA'].includes(tabela) && tipo === 'SALVO') {
-            message = `Dados de "Consumo de água" salvo com sucesso!`
+            message = `"Consumo de água" salvo com sucesso!`
         }
 
         let dayDiff = getDateDifference(data)
