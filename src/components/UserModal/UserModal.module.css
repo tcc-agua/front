@@ -1,0 +1,38 @@
+.modal {
+    display: flex;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.modalContent {
+    color: var(--font_color);
+    background-color: var(--backgroud_color);
+    margin: 15% auto;
+    padding: 20px;
+    width: 70%;
+    height: 35%;
+    text-align: center;
+    font-size: 1.1rem;
+    border-radius: 15px;
+}
+
+.name{
+    margin-top: 20%;
+}
+
+.email{
+    margin-top: 10%;
+}
+
+.close {
+    color: var(--font_color);
+    float: right;
+    font-size: 1.5rem;
+}
+
