@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import styles from './CollectItem.module.css';
 import arrow from '../../assets/images/arrow.svg';
-import { fetchColetasByData } from '../../api/api';
 import ColetaDetails from './CollectDetails';
-import ReactPaginate from 'react-paginate';
+import useUtilsStore from '../../store/utils';
 
 interface Detail {
   id: number;
@@ -12,65 +11,63 @@ interface Detail {
   dados: any;
 }
 
-interface Content {
+export interface Content {
   id: number;
   date: string;
   description: string;
+  totalElementsIndividual: number;
   details: Detail[];
 }
 
+export interface ResponseColeta {
+  totalPages: number;
+  totalElements: number;
+  page: number;
+  size: number;
+  content: Content[];
+}
+
+export interface ParamsDataInterface {
+  startDate: string;
+  endDate: string;
+  page: number;
+  size: number;
+}
+
 interface ColetaItemProps {
-  paramsData: { page: number; size: number; startDate: string; endDate: string; };
+  paramsData: ParamsDataInterface;
   onOpenDetail: (detail: Detail) => void;
 }
 
 const ColetaItem: React.FC<ColetaItemProps> = ({ paramsData, onOpenDetail }) => {
   const [content, setContent] = useState<Content[]>([]);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState('');
+  const [error, setError] = useState<string | null>(null);
   const [isOpen, setIsOpen] = useState<number | null>(null);
-  const [currentPage, setCurrentPage] = useState(0);
-  const itemsPerPage = paramsData.size; 
-  const offset = currentPage * itemsPerPage;
-
-  // Filtrando para aparecer somente coletas com details
-  const currentItems = content
-  .filter(item => item.details.length > 0)
-  .slice(offset, offset + itemsPerPage);
-
-  const pageCount = Math.ceil(
-    content.filter(item => item.details.length > 0).length / itemsPerPage
-  );
+  const { currentPage, setHistoricContent } = useUtilsStore();
 
   useEffect(() => {
-    const fetchData = async () => {
-      setLoading(true);
-      try {
-        const response = await fetchColetasByData({
-          startDate: paramsData.startDate,
-          endDate: paramsData.endDate,
-          page: paramsData.page,
-          size: paramsData.size,
-        });
-        setContent(response.content);
-      } catch (e) {
-        setError('Erro ao buscar dados.');
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchData();
-  }, [paramsData]);
+    if(paramsData.startDate && paramsData.endDate){
+      const fetchData = async () => {
+        setLoading(true);
+        try {
+          const fetchDataResult = await setHistoricContent( paramsData );
+          console.log("ParamsData CollectItem: " + paramsData);
+          setContent(fetchDataResult.content);
+    
+        } catch (error) {
+          setError(`Erro ao buscar dados. ${error}`);
+        } finally {
+          setLoading(false);
+        }
+      };
+      fetchData();
+    }
+  }, [currentPage, paramsData.startDate, paramsData.endDate]);
 
   const toggleOpen = (id: number) => {
     setIsOpen(isOpen === id ? null : id);
   };
-
-  const handlePageClick = (data: { selected: number }) => {
-    setCurrentPage(data.selected);
-  };
-
 
   return (
     <div className={styles.coletaList}>
@@ -79,7 +76,9 @@ const ColetaItem: React.FC<ColetaItemProps> = ({ paramsData, onOpenDetail }) => 
       ) : error ? (
         <p>{error}</p>
       ) : (
-        currentItems.map((item) => (
+        content
+        .filter((item) => item.details.length > 0)
+        .map((item) => (
           <div key={item.id} className={styles.coleta}>
             <div className={styles.title} onClick={() => toggleOpen(item.id)}>
               <p className={styles.date}>{item.date}</p>
@@ -94,25 +93,17 @@ const ColetaItem: React.FC<ColetaItemProps> = ({ paramsData, onOpenDetail }) => 
             </div>
 
             {isOpen === item.id && (
-              <><ColetaDetails details={item.details} onOpenDetail={onOpenDetail} /><div className={styles.pagination}>
-                <ReactPaginate
-                  previousLabel={'<'}
-                  nextLabel={'>'}
-                  breakLabel={'...'}
-                  pageCount={pageCount}
-                  // marginPagesDisplayed={2}
-                  // pageRangeDisplayed={3}
-                  onPageChange={handlePageClick}
-                  containerClassName={styles.pagination}
-                  activeClassName={styles.active}
-                  aria-label="Pagination" />
-              </div></>
+              <ColetaDetails
+                details={item.details}
+                onOpenDetail={onOpenDetail}
+                itemsPerPage={paramsData.size}
+                totalPages={Math.ceil(item.totalElementsIndividual / paramsData.size)}              
+                />
             )}
           </div>
         ))
       )}
     </div>
-    
   );
 };
 

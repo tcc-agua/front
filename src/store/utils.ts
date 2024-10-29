@@ -1,8 +1,9 @@
 import { create } from 'zustand';
-import { fetchPointBySheet, fetchUserInfo } from '../api/api';
+import { fetchColetasByData, fetchPointBySheet, fetchUserInfo } from '../api/api';
 import { GlobalState } from '../interfaces/auth';
 import { Point } from '../pages/PointCollect/PointNames';
 import { calculatePercentageCollected } from '../pages/PointCollect/PointCollectUtils/renderCardInfo';
+import { ParamsDataInterface, ResponseColeta } from '../components/Colects/CollectItem';
 
 interface UtilState{
     token: string | null;
@@ -28,6 +29,11 @@ interface UtilState{
     pbPercentage: string | "0%";
     caPercentage: string | "0%";
 
+    currentPage: number | 0;
+    setCurrentPage: (value: number) => void;
+
+    historicContent: ResponseColeta | 0;
+    setHistoricContent: (data: ParamsDataInterface) => Promise<ResponseColeta>;
 }
 
 const useUtilsStore = create<UtilState>((set) => ({
@@ -44,6 +50,21 @@ const useUtilsStore = create<UtilState>((set) => ({
     naPercentage: "0%",
     pbPercentage: "0%",
     caPercentage: "0%",
+
+    currentPage: 0,
+
+    historicContent:  0,
+
+    setHistoricContent: async (data) => {
+      const fetchData = await fetchColetasByData({
+          startDate: data.startDate,
+          endDate: data.endDate,
+          page: data.page,
+          size: data.size,
+      });
+      set({ historicContent: fetchData });
+      return fetchData; 
+  },
   
     setPlanilha: (value) => {
       set({
@@ -140,11 +161,17 @@ const useUtilsStore = create<UtilState>((set) => ({
         
             if (isExpired) {
                 localStorage.clear();  // Remove tudo relacionado ao token de uma vez
-                document.cookie = "SESSION" + "=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+                document.cookie = "SESSION" + "=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;"; // Tirar o cookie da sessão
             }
             return isExpired;
         }
         return true;  // Considere expirado se não houver expires_at
+    },
+
+    setCurrentPage: (value) => {
+      set({
+        currentPage: value
+      });
     }
 }));
 

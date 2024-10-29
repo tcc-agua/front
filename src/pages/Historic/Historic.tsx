@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import DropdownButton from '../../components/DropdownButton/DropdownButton';
 import ColetaItem from '../../components/Colects/CollectItem';
 import styles from './Historic.module.css';
 import dayjs from 'dayjs';
-import { fetchColetasByData } from '../../api/api';
+import useUtilsStore from '../../store/utils';
 
 interface DropdownItem {
   id: string;
@@ -18,20 +18,12 @@ interface Detail {
   dados: any;
 }
 
-interface Coleta {
-  id: number;
-  date: string;
-  description: string;
-  details: Detail[];
-}
-
 const Historic: React.FC = () => {
   const [selectedDay, setSelectedDay] = useState<DropdownItem | undefined>(undefined);
   const [selectedMonth, setSelectedMonth] = useState<DropdownItem | undefined>(undefined);
   const [selectedYear, setSelectedYear] = useState<DropdownItem | undefined>(undefined);
   const [modalOpen, setModalOpen] = useState(false);
   const [selectedDetail, setSelectedDetail] = useState<Detail | null>(null);
-  const [coletasPonto, setColetasPonto] = useState<Coleta[]>([]);
   const [carouselIndex, setCarouselIndex] = useState(0);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -39,7 +31,7 @@ const Historic: React.FC = () => {
   const [startDateState, setStartDateState] = useState<string>('');
   const [endDateState, setEndDateState] = useState<string>('');
 
-
+  const { currentPage } = useUtilsStore();
 
 
   const days: DropdownItem[] = Array.from({ length: 31 }, (_, i) => ({
@@ -69,6 +61,8 @@ const Historic: React.FC = () => {
     value: year
   }));
 
+  console.log(`currentPage: ${currentPage}`)
+
   const fetchPontosPorColeta = async () => {
     setLoading(true);
     setError(null);
@@ -79,7 +73,6 @@ const Historic: React.FC = () => {
         return;
       }
 
-      let paramsData: { startDate?: string; endDate?: string } = {};
       let startDate: string;
       let endDate: string;
 
@@ -92,20 +85,11 @@ const Historic: React.FC = () => {
         endDate = startDate; 
       } else {
         endDate = dayjs().format('YYYY-MM-DD');
-        startDate = dayjs().subtract(60, 'day').format('YYYY-MM-DD');
+        startDate = dayjs().subtract(15, 'day').format('YYYY-MM-DD');
+        
       }
       setStartDateState(startDate);
       setEndDateState(endDate);
-
-      paramsData = { startDate, endDate };
-
-      const response = await fetchColetasByData(paramsData);
-      if (response && response.content) {
-        const coletas: Coleta[] = response.content;
-        setColetasPonto(coletas);
-      } else {
-        setError('Nenhum dado retornado.');
-      }
     } catch (e) {
       const errorMessage = e instanceof Error ? e.message : 'Erro desconhecido.';
       setError('Erro ao buscar dados: ' + errorMessage);
@@ -115,9 +99,8 @@ const Historic: React.FC = () => {
   };
 
   useEffect(() => {
-    fetchPontosPorColeta()
-  },[selectedDay, selectedMonth, selectedYear]);
-  
+    fetchPontosPorColeta();
+  }, [startDateState, endDateState])
 
   const handleOpenDetail = (detail: Detail) => {
     setSelectedDetail(detail);
@@ -191,7 +174,12 @@ const Historic: React.FC = () => {
           <p>{error}</p>
         ) : (
             <ColetaItem
-              paramsData={{ page: 0, size: 6, startDate: startDateState , endDate: endDateState  }} 
+            paramsData={{
+              startDate: startDateState,
+              endDate: endDateState,
+              page: currentPage,
+              size: 6
+            }}
               onOpenDetail={handleOpenDetail}
             />
         )}
@@ -218,7 +206,7 @@ const Historic: React.FC = () => {
                   <p className={styles.type}>
                     {key.replace(/([a-z])([A-Z])/g, '$1 $2').toUpperCase()}:
                   </p>
-                  <p className={styles.info}>{value.toString()}</p>
+                  <p className={styles.info}>{String(value)}</p>
                 </div>
               ))}
 
