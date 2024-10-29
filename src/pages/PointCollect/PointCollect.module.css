@@ -283,11 +283,6 @@
 }
 
 
-.separator {
-    border-left: 1px solid var( --border_color);
-    height: 55%;
-    margin-top: 7%;
-}
 
 .buttonEnviar {
     width: 35%;
@@ -336,6 +331,10 @@
 .type {
     font-size: 1.5vw;
     font-family: "SF Pro Medium";
+}
+
+.dropdownInput{
+    border: none;
 }
 
 input[type="number"]::-webkit-inner-spin-button,

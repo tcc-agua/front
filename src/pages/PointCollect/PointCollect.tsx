@@ -1,12 +1,14 @@
 import { useState, useEffect } from "react";
 import styles from './PointCollect.module.css';
-import Swal from 'sweetalert2'; 
+import Swal from 'sweetalert2';
 import useUtilsStore from "../../store/utils";
 import { fetchColeta, postNotif } from "../../api/api";
 import { PointModal } from "../../components/PointModal";
 import MapPoints from "../../components/MapPoints/MapPoints";
 import { Point, PointNames } from "./PointNames";
-import {  getPlanilhaTitle, renderCardInfo } from "./PointCollectUtils/renderCardInfo";
+import { getPlanilhaTitle, renderCardInfo } from "./PointCollectUtils/renderCardInfo";
+import Loading from '../../components/LoadingMap/LoadingMap';
+
 
 export interface Coleta {
     id: number;
@@ -19,11 +21,20 @@ export interface Coleta {
 export function PointCollect() {
     const [isModalOpen, setModalOpen] = useState<boolean>(false);
     const [selectedPoint, setSelectedPoint] = useState<Point | null>(null);
-    const { planilha, qtdPontos, etasPercentage, naPercentage, pbPercentage, caPercentage, fetchPoints} = useUtilsStore();
+    const { planilha, qtdPontos, etasPercentage, naPercentage, pbPercentage, caPercentage, fetchPoints } = useUtilsStore();
     const [ultimaColeta, setUltimaColeta] = useState<Coleta | null>(null);
     const [showSaveButton, setShowSaveButton] = useState(false);
+    const [isLoading, setIsLoading] = useState(true);
 
     const coleta = ultimaColeta?.id;
+
+    useEffect(() => {
+        const timer = setTimeout(() => {
+            setIsLoading(false);
+        }, 1000);
+
+        return () => clearTimeout(timer);
+    }, []);
 
     useEffect(() => {
         const fetchColetaAtual = async () => {
@@ -35,23 +46,23 @@ export function PointCollect() {
                 console.error("Erro ao buscar coleta:", error);
             }
         };
-    
+
         fetchColetaAtual();
-    }, [fetchPoints]); 
+    }, [fetchPoints]);
 
     useEffect(() => {
         if (
-          (planilha === "DADOS ETAS" && etasPercentage === "100%") ||
-          (planilha === "NA" && naPercentage === "100%") ||
-          (planilha === "PBS" && pbPercentage === "100%") ||
-          (planilha === "CA" && caPercentage === "100%")
+            (planilha === "DADOS ETAS" && etasPercentage === "100%") ||
+            (planilha === "NA" && naPercentage === "100%") ||
+            (planilha === "PBS" && pbPercentage === "100%") ||
+            (planilha === "CA" && caPercentage === "100%")
         ) {
             setShowSaveButton(true);
         } else {
             setShowSaveButton(false);
         }
     }, [etasPercentage, naPercentage, pbPercentage, planilha, caPercentage]);
-    
+
     const openModal = (point: Point) => {
         setSelectedPoint(point);
         setModalOpen(true);
@@ -66,7 +77,7 @@ export function PointCollect() {
         try {
             const result = await postNotif(planilha, "SALVO");
             console.log("Dados salvos com sucesso:", result);
-            Swal.fire({ 
+            Swal.fire({
                 icon: 'success',
                 title: 'Sucesso',
                 text: 'Dados salvos com sucesso!',
@@ -75,7 +86,7 @@ export function PointCollect() {
             });
         } catch (error) {
             console.error("Erro ao salvar os dados:", error);
-            Swal.fire({ 
+            Swal.fire({
                 icon: 'error',
                 title: 'Erro',
                 text: 'Erro ao salvar os dados.',
@@ -88,6 +99,11 @@ export function PointCollect() {
     return (
         <>
             <main className={styles.container}>
+                {isLoading && (
+                    <div className={styles.loadingContainer}>
+                        <Loading duration={5} /> {/* O círculo de carregamento */}
+                    </div>
+                )}
                 <p className={styles.title}>
                     {getPlanilhaTitle(planilha)}
                 </p>
@@ -120,8 +136,8 @@ export function PointCollect() {
                                 <MapPoints planilha={planilha} />
                             </div>
                         </div>
-    
-                        { showSaveButton && (
+
+                        {showSaveButton && (
                             <div className={styles.button_container}>
                                 <button className={styles.button_complete} onClick={notify}>Salvar dados</button>
                             </div>
@@ -129,7 +145,7 @@ export function PointCollect() {
                     </div>
                 </div>
             </main>
-    
+
             {isModalOpen && selectedPoint && (
                 <PointModal.Container closeModal={closeModal}>
                     {(() => {

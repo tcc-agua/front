@@ -491,4 +491,9 @@
     .name_point {
         font-size: 3vw;
     }
+
+    .iniciarcoleta{
+        width: 40%;
+        height: 5%;
+    }
 }

@@ -20,6 +20,10 @@
   flex-wrap: wrap;
 }
 
+.load {
+  color: var(--font_color);
+}
+
 .date {
   margin-left: 1%;
   font-family: 'SF Pro Medium';

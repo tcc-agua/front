@@ -72,7 +72,7 @@ const ColetaItem: React.FC<ColetaItemProps> = ({ paramsData, onOpenDetail }) => 
   return (
     <div className={styles.coletaList}>
       {loading ? (
-        <p>Carregando...</p>
+        <p className={styles.load}>Carregando...</p>
       ) : error ? (
         <p>{error}</p>
       ) : (

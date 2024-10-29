@@ -588,4 +588,9 @@
     .recent_points_container {
         height: auto;
     }
+
+    .iniciarcoleta{
+        width: 40%;
+        height: 5%;
+    }
 }
