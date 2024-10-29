@@ -18,13 +18,6 @@ interface Detail {
   dados: any;
 }
 
-interface Coleta {
-  id: number;
-  date: string;
-  description: string;
-  details: Detail[];
-}
-
 const Historic: React.FC = () => {
   const [selectedDay, setSelectedDay] = useState<DropdownItem | undefined>(undefined);
   const [selectedMonth, setSelectedMonth] = useState<DropdownItem | undefined>(undefined);
@@ -92,7 +85,7 @@ const Historic: React.FC = () => {
         endDate = startDate; 
       } else {
         endDate = dayjs().format('YYYY-MM-DD');
-        startDate = dayjs().subtract(60, 'day').format('YYYY-MM-DD');
+        startDate = dayjs().subtract(15, 'day').format('YYYY-MM-DD');
         
       }
       setStartDateState(startDate);
@@ -213,7 +206,7 @@ const Historic: React.FC = () => {
                   <p className={styles.type}>
                     {key.replace(/([a-z])([A-Z])/g, '$1 $2').toUpperCase()}:
                   </p>
-                  <p className={styles.info}>{value.toString()}</p>
+                  <p className={styles.info}>{String(value)}</p>
                 </div>
               ))}
 

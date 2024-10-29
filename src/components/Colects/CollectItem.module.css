@@ -164,11 +164,6 @@ pre {
   font-family: "SF Pro Regular";
 }
 
-/* paginação */
-.paginationContainer {
-
-}
-
 .pagination {
   display: flex;
   justify-content: center;
