@@ -86,6 +86,8 @@ const ExportExcel: React.FC = () => {
                 customClass: {
                     popup: 'custom-swal-popup', // Classe customizada para o modal
                 },
+                background: 'var(--backgroud_color)',
+                color: 'var(--font_color)',
             });
 
         } catch (e) {
@@ -100,6 +102,8 @@ const ExportExcel: React.FC = () => {
                 customClass: {
                     popup: 'custom-swal-popup',
                 },
+                background: 'var(--backgroud_color)',
+                color: 'var(--font_color)',
             });
         }
     }
@@ -133,6 +137,8 @@ const ExportExcel: React.FC = () => {
                 customClass: {
                     popup: 'custom-swal-popup', 
                 },
+                background: 'var(--backgroud_color)',
+                color: 'var(--font_color)',
             });
         }
     };
@@ -185,6 +191,8 @@ const ExportExcel: React.FC = () => {
                 customClass: {
                     popup: 'custom-swal-popup', // Classe customizada para o modal
                 },
+                background: 'var(--backgroud_color)',
+                color: 'var(--font_color)',
             });
         } else if (!selectedYear){
             console.error("Selecione um ano válido.");
@@ -198,6 +206,8 @@ const ExportExcel: React.FC = () => {
                 customClass: {
                     popup: 'custom-swal-popup', // Classe customizada para o modal
                 },
+                background: 'var(--backgroud_color)',
+                color: 'var(--font_color)',
             });
         } else if (!selectedTable){
             console.error("Selecione uma tabela válida.");
@@ -211,6 +221,8 @@ const ExportExcel: React.FC = () => {
                 customClass: {
                     popup: 'custom-swal-popup', // Classe customizada para o modal
                 },
+                background: 'var(--backgroud_color)',
+                color: 'var(--font_color)',
             });
         }
     };

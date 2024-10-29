@@ -404,6 +404,7 @@ input[type="number"] {
     padding: 20px;
 }
 
+
 @media (max-width: 1500px) {
     .custom-swal-popup {
         font-size: 18px;
