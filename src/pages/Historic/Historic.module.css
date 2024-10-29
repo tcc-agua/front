@@ -1,13 +1,15 @@
 .container {
     margin: 20px;
     width: 100%;
+    background-color: red;
 }
 
 .content_buttons {
-    width: 95%;
+    width: 100%;
     display: flex;
     height: 100px;
-    align-items: center; 
+    align-items: center;
+    background-color: bisque;
 }
 
 
@@ -15,6 +17,7 @@
     font-family: 'SF Pro Medium';
     font-size: 1.4vw;
     color: var(--font_color);
+    background-color: aquamarine;
 }
 
 .title {
@@ -23,7 +26,6 @@
 
 .title_filter {
     text-align: end;
-    margin-right: 5%;
 }
 
 
@@ -48,12 +50,14 @@
     height: 100%;
     width: 70%; 
     margin-left: 30px;
+    background-color: black;
 }
 
 .dropdownContainer {
     display: flex;
     gap: 1.5em;
     width: 100%;
+    background-color: blueviolet;
 }
 
 
@@ -65,26 +69,12 @@
     display: flex;
     flex-direction: column;
     width: 100%;
-}
-
-.coleta {
-    background-color: var(--backgroud_color);
-    border: 1px solid var(--border_color);
-    border-radius: 7px;
-    margin-bottom: 1rem;
-    cursor: pointer;
+    background-color: #303030;
 }
 
 .date {
     font-family: 'SF Pro Medium';
     font-size: 1rem;
-}
-
-.details {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-    width: 100%;
 }
 
 .modal {
@@ -100,17 +90,6 @@
     color: #303030;
 }
 
-.close {
-    cursor: pointer;
-    margin-left: 95%;
-    margin-top: -3%;
-    font-size: x-large;
-    font-weight: normal;
-    background-color: var(--backgroud_color);
-    color: var(--font_color);
-    border: none;
-}
-
 .modalContent {
     font-family: 'SF Pro Semibold';
     font-size: 1rem;
@@ -119,12 +98,26 @@
     padding: 3%;
     border-radius: 10px;
     width: 40%;
-    height: 60%;
+    height: 50%;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
   }
+
+.close {
+    cursor: pointer;
+    font-size: x-large;
+    border: none;
+    background-color: white;
+    margin-left: 105%;
+    margin-top: -6%;
+}
+
+.pointName {
+    text-align: center;
+    font-size: 1.4vw;
+}
 
   .carousel {
     display: flex;
@@ -133,12 +126,8 @@
     width: 100%;
   }
 
-
-.pointName {
-    margin-top: 5%;
-    margin-bottom: 10%;
-    text-align: center;
-    font-size: 1.4vw;
+.pontoSelecionado{
+    color: #01A4FD;
 }
 
 .carousel_button {
@@ -159,12 +148,12 @@
     cursor: auto;        
   }
 
-  .carousel_button_invisible {
+  .carousel_button_invisible,
+  .separator_invisible {
     opacity: 0; 
     background-color: transparent; 
     visibility: visible;
 }
-  
 
 main {
     display: flex;
@@ -182,6 +171,14 @@ main {
     width: 45%;
     height: 80%;
   }
+
+.info{
+    border-radius: 5px;
+    border: 1px solid var(--border_color);
+    padding: 15px;
+    font-size: 17px;
+    margin-top: 10%;
+}
 
 .information {
     display: flex;
@@ -217,197 +214,40 @@ main {
 
   .filterContainer {
     display: flex;
-    justify-content: flex-end; /* Alinha o botão à esquerda */
-    width: 50%; /* Garante que ocupe a largura total */
+    justify-content: flex-end; 
+    width: 50%; 
   }
 
-@media (max-width: 500px) {
-    .information {
-        width: 35%;
-        height: 55%;
-    }
-
-    main {
-        font-size: 0.8rem;
-        flex-direction: column;
-        align-items: center;
-    }
-
-    .modalContent {
-        width: 65%;
-        height: 70%;
-      }
-      
-      .infoContainer {
-        width: 90%;
-      }
-      
-      .separator {
-        display: none;
-      }
-    
-      .nextButton {
-        font-size: 1.5rem;
-      }
-}
-
-@media (max-width: 600px) {
-    .modalContent {
-        width: 65%;
-        height: 70%;
-    }
-    .content_buttons {
-        justify-content: center;
-        align-items: center;
-    }
-
-    .buttons {
-        width: 100%;
-        flex-direction: column;
-        align-items: center;
-        margin-left: 0;
-        margin-top: 5px;
-    }
-
-    .dropdownContainer {
-        width: 100%;
-        justify-content: center;
-        gap: 0.5em; 
-    }
-
-    .filtrar {
-        width: 90%;
-        padding: 12px;
-        font-size: 1rem; 
-    }
-
-    .title_filter {
-        font-size: 1.1rem; 
-        margin-right: 0; 
-        text-align: center; 
-    }
-
-    .title {
-        font-size: 1rem; 
-    }
-
-    
-}
-
-@media (max-width: 900px) {
-    .modalContent {
-        width: 100%;
-        height: 60%;
-    }
-    .content_buttons {
-        flex-direction: column-reverse; 
-        justify-content: center;
-        align-items: flex-end;
-        height: auto;
-        margin-bottom: 25px;
-        width: 100%;
-    }
-
-    .buttons {
-        width: 100%;
-        margin-left: 0; 
-        justify-content: center;
-        margin-top: 10px; 
-    }
-
-    .dropdownContainer {
-        flex-direction: column;
-        gap: 0.8em; 
-        width: 100%; 
-        justify-content: center;
-        margin-right: 25px;
-    }
-
-    .filtrar {
-        width: 23.5%; 
-        padding: 10px 0; 
-        margin-top: 10px;
-        margin-right: 25px;
-        width: 47%;
-    }
-
-    .title, .title_filter {
-        font-size: calc(1.4vw + 0.3em);
-    }
-    
-}
-
-@media (max-width: 700px) {
-    .modalContent {
-        width: 60%;
-        height: 60%;
-    }
-}
-
-@media (max-width: 600px) {
-    .buttons {
-        margin-left: 0;
-    }
-
-    .dropdownContainer {
-        gap: 0.5em;
-    }
-
-    .title {
-        font-family: 'SF Pro Medium';
-        font-size: 1.2rem;
-    }
-}
-
-@media (min-width: 300px) {
-    .dropdownContainer {
-        flex-direction: row;
-        justify-content: center;
-    }
-}
-
-@media (max-width: 1080px) {
-    .content_buttons {
-        justify-content: center;
-    }
-
-    .buttons {
+@media (max-width: 980px) {
+    .buttons, .infoContainer {
         width: 80%;
+    }
+    .modalContent {
+        width: 70%;
+    }
+    .info {
+        font-size: 1rem;
     }
 }
 
 @media (max-width: 680px) {
-    .title, .title_filter {
-        font-size: calc(1.4vw + 0.7em);
-    }
-
-    .title_filter {
-        text-align: start;
-    }
-
-    .content_buttons {
-        justify-content: center;
-        align-items: center;
-        padding: 0px 7px;
-    }
-
     .buttons {
-        width: 95%;
-        flex-direction: column;
-        align-items: center;
-        margin-left: 0;
-        margin-top: 5px;
-      }
-
-    .filterContainer {
-        justify-content: flex-start;
-        margin-left: 0;
         width: 100%;
-      }
-
-      .filtrar {
-        width: 30%;
-      }
-
-    
+        margin-left: 0;
+        justify-content: center;
+    }
+    .dropdownContainer, .filterContainer {
+        width: 100%;
+        justify-content: center;
+    }
+    .infoContainer {
+        width: 90%;
+    }
+    .modalContent {
+        width: 90%;
+    }
+    .information {
+        width: 90%;
+        height: auto;
+    }
 }

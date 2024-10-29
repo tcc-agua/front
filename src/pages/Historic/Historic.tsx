@@ -190,7 +190,7 @@ const Historic: React.FC = () => {
         <div className={styles.modal}>
           <div className={styles.modalContent}>
             <button className={styles.close} onClick={handleCloseModal}>x</button>
-            <p className={styles.pointName}>Dados de coleta do ponto {selectedDetail.ponto}</p>
+            <p className={styles.pointName}>Dados de coleta do ponto <span className={styles.pontoSelecionado}>{selectedDetail.ponto}</span></p>
 
             <main className={styles.carousel}>
               <button
@@ -201,13 +201,18 @@ const Historic: React.FC = () => {
                 ‹
               </button>
 
-              {visibleInfoContainers.map(([key, value]) => (
-                <div key={key} className={`${styles.infoContainer} ${key === "*" ? styles.hidden : ''}`}>
-                  <p className={styles.type}>
-                    {key.replace(/([a-z])([A-Z])/g, '$1 $2').toUpperCase()}:
-                  </p>
-                  <p className={styles.info}>{String(value)}</p>
-                </div>
+              {visibleInfoContainers.map(([key, value], index) => (
+                <>
+                  <div key={key} className={`${styles.infoContainer} ${key === "*" ? styles.hidden : ''}`}>
+                    <p className={styles.type}>
+                      {key.replace(/([a-z])([A-Z])/g, '$1 $2').toUpperCase()}
+                    </p>
+                    <p className={styles.info}>{String(value)}</p>
+                  </div>
+                  {index === Math.floor(visibleInfoContainers.length / 2) - 1 && visibleInfoContainers.length > 1 && (
+                    <div className={styles.separator}></div>
+                  )}
+                </>
               ))}
 
               <button

@@ -1,7 +1,7 @@
 .coleta {
   position: relative; 
   height: auto;
-  width: 95%;
+  width: 100%;
   background-color: var(--backgroud_color);
   padding: 1rem;
   border: 1px solid var(--border_color);
