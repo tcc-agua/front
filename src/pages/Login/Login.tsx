@@ -10,7 +10,6 @@ const Login: React.FC = () => {
   };
 
   const { setDataToken } = useUtilsStore();
-  const { isTokenExpired } = useUtilsStore();
 
   useEffect(() => {
     if(localStorage.getItem("id_token") || localStorage.getItem("access_token")) {
