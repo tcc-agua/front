@@ -4,10 +4,10 @@
   }
   
   .button {
-    width: 160px; /* Ajuste conforme necessário */
+    width: 160px; 
     white-space: nowrap;
     overflow: hidden;
-    text-overflow: ellipsis; /* Trunca texto longo */
+    text-overflow: ellipsis; 
     background-color: var(--backgroud_color);
     border: 1px solid var(--border_color);
     color: var( --font_color);
@@ -46,8 +46,8 @@
   }
   
   .open {
-    max-height: 300px; /* Altura máxima do dropdown */
-    overflow-y:auto; /* Adiciona rolagem vertical quando aberto */
+    max-height: 300px; 
+    overflow-y:auto; 
     opacity: 1;
     visibility: visible;
   }
@@ -71,4 +71,34 @@
   .selected {
     font-weight: bold;
   }
+
+@media (max-width:680px) {
+  .dropdownContainer{
+    /* background-color: red; */
+  }
+
+  .button{
+    display: flex;
+    flex-direction: column;
+    width: 85px; 
+    padding: 10px 0;
+  }
+
+  .dia_mes_ano{
+    /* background-color: purple; */
+    padding-bottom: 5px;
+  }
+
+  .arrow{
+    /* background-color: aqua; */
+  }
+
+  .options{
+    /* background-color: brown; */
+  }
+
+  .optionList{
+    /* background-color: green; */
+  }
+}
   

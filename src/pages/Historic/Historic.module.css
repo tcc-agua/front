@@ -1,17 +1,16 @@
+/* manipula o modal de dados individuais */
+main {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+}
+
 .container {
     margin: 20px;
     width: 100%;
-    background-color: red;
 }
-
-.content_buttons {
-    width: 100%;
-    display: flex;
-    height: 100px;
-    align-items: center;
-    background-color: bisque;
-}
-
 
 .title, .title_filter{
     font-family: 'SF Pro Medium';
@@ -28,6 +27,19 @@
     text-align: end;
 }
 
+.content_buttons {
+    width: 100%;
+    display: flex;
+    height: 100px;
+    align-items: center;
+    background-color: bisque;
+}
+
+.filterContainer {
+    display: flex;
+    justify-content: flex-end; 
+    width: 50%; 
+}
 
 .filtrar {
     padding: 10px 7%;
@@ -43,12 +55,16 @@
     width: 40%;
 }
 
+.filtrar:hover {
+    background-color: var(--PB_title);
+}
+
 .buttons {
     display: flex;
     justify-content: flex-end;
     align-items: center;
     height: 100%;
-    width: 70%; 
+    width: 60%; 
     margin-left: 30px;
     background-color: black;
 }
@@ -60,21 +76,10 @@
     background-color: blueviolet;
 }
 
-
-.filtrar:hover {
-    background-color: var(--PB_title);
-}
-
 .colects {
     display: flex;
     flex-direction: column;
     width: 100%;
-    background-color: #303030;
-}
-
-.date {
-    font-family: 'SF Pro Medium';
-    font-size: 1rem;
 }
 
 .modal {
@@ -103,7 +108,7 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-  }
+}
 
 .close {
     cursor: pointer;
@@ -119,16 +124,17 @@
     font-size: 1.4vw;
 }
 
-  .carousel {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    width: 100%;
-  }
-
 .pontoSelecionado{
     color: #01A4FD;
 }
+
+.carousel {
+display: flex;
+justify-content: space-between;
+align-items: center;
+width: 100%;
+}
+
 
 .carousel_button {
     border-radius: 50%;
@@ -144,23 +150,15 @@
     transition: opacity 0.3s;
 }
   
-  .carousel_button:disabled {          
+.carousel_button:disabled {          
     cursor: auto;        
-  }
+}
 
-  .carousel_button_invisible,
-  .separator_invisible {
+.carousel_button_invisible,
+.separator_invisible {
     opacity: 0; 
     background-color: transparent; 
     visibility: visible;
-}
-
-main {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    width: 100%;
-    height: 100%;
 }
 
 .infoContainer {
@@ -172,6 +170,10 @@ main {
     height: 80%;
   }
 
+.type{
+
+}
+
 .info{
     border-radius: 5px;
     border: 1px solid var(--border_color);
@@ -180,43 +182,14 @@ main {
     margin-top: 10%;
 }
 
-.information {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-    font-family: 'SF Pro Semibold';
-    font-size: 1rem;
-    border: 1px solid var(--border_color);
-    border-radius: 10px;
-    margin-top: 5%;
-    margin-bottom: 10%;
-    height: 60%;
-    width: 40%;
-}
-
 .separator {
     border-left: 1px solid var(--border_color);
     height: 55%;
-  }
+}  
 
-  .nextButton {
-    font-size: 2rem;
-    background: none;
-    border: none;
-    cursor: pointer;
-  }
+@media (max-width: 1080px) {
 
-  .transparentContainer {
-    opacity: 0;
-    visibility: hidden;
-  }
-
-  .filterContainer {
-    display: flex;
-    justify-content: flex-end; 
-    width: 50%; 
-  }
+}
 
 @media (max-width: 980px) {
     .buttons, .infoContainer {
@@ -231,13 +204,33 @@ main {
 }
 
 @media (max-width: 680px) {
+
+    .title, .title_filter{
+        font-family: 'SF Pro Medium';
+        font-size: 14px;
+        display: flex;
+        color: var(--font_color);
+    }
+
+    .content_buttons {
+        width: 100%;
+        display: flex;
+        height: 100px;
+        align-items: center;
+        background-color: bisque;
+    }
+
+    .filterContainer{
+        display: flex;
+        width: 20%;
+    }
+
     .buttons {
         width: 100%;
         margin-left: 0;
         justify-content: center;
     }
     .dropdownContainer, .filterContainer {
-        width: 100%;
         justify-content: center;
     }
     .infoContainer {

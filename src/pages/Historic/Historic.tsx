@@ -107,6 +107,18 @@ const Historic: React.FC = () => {
     setModalOpen(true);
   };
 
+  const limparDados= () =>{
+    setSelectedDay(undefined);
+    setSelectedMonth(undefined);
+    setSelectedYear(undefined);
+    
+    const startDate = dayjs().subtract(15, 'day').format('YYYY-MM-DD');
+    const endDate = dayjs().format('YYYY-MM-DD');
+  
+    setStartDateState(startDate);
+    setEndDateState(endDate);
+  }
+
   const handleCloseModal = () => {
     setModalOpen(false);
     setSelectedDetail(null);
@@ -139,6 +151,10 @@ const Historic: React.FC = () => {
         <div className={styles.filterContainer}>
           <button className={styles.filtrar} onClick={fetchPontosPorColeta}>Filtrar</button>
         </div>
+        <div className={styles.filterContainer}>
+          <button className={styles.limpar} onClick={limparDados}>Limpar</button>
+        </div>
+
         <div className={styles.buttons}>
           <div className={styles.dropdownContainer}>
             <DropdownButton
