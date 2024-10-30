@@ -116,7 +116,6 @@ const useUtilsStore = create<UtilState>((set) => ({
           fetchPointBySheet("PBS"),
           fetchPointBySheet("CA"),
         ]);
-        console.log("Executou bigodera");
   
         const etasPercentage = calculatePercentageCollected(etasResponse);
         const naPercentage = calculatePercentageCollected(naResponse);
@@ -134,8 +133,6 @@ const useUtilsStore = create<UtilState>((set) => ({
           pbPercentage,
           caPercentage,
         });
-
-        console.log(etasPercentage, naPercentage, pbPercentage, caPercentage);
   
       } catch (error) {
         console.error("Erro ao buscar pontos:", error);
