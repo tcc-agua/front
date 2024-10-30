@@ -15,7 +15,7 @@ export function WaterConsumption() {
     const [na, setNa] = useState<Point[]>([]);
     const [pb, setPb] = useState<Point[]>([]);
     const [ca, setCa] = useState<Point[]>([]);
-    
+
     const { createColetaMeasure } = useColetaStore();
     const [showPointButtons, setShowPointButtons] = useState<boolean>(false);
     const location = useLocation(); 
@@ -87,7 +87,6 @@ export function WaterConsumption() {
             horaFim: new Date().toLocaleTimeString(),
             tecnico: "BOSCH",
         };
-
         console.log(obj);
 
         createColetaMeasure(obj);
