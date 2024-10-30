@@ -26,6 +26,7 @@ export function WaterConsumption() {
     useEffect(() => {
         const fetchPontos = async () => {
           try {
+            fetchPoints();
             const [etasResponse, naResponse, pbResponse, caResponse] = await Promise.all([
               fetchPointBySheet("DADOS ETAS"),
               fetchPointBySheet("NA"),
@@ -44,7 +45,7 @@ export function WaterConsumption() {
         };
     
         fetchPontos();
-      }, []);
+      }, [fetchPoints]);
 
   useEffect(() => {
     const fetchColetaAtual = async () => {

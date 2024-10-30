@@ -133,7 +133,9 @@ const useUtilsStore = create<UtilState>((set) => ({
           pbPercentage,
           caPercentage,
         });
-  
+        
+        console.log("fetchPoints!!")
+
       } catch (error) {
         console.error("Erro ao buscar pontos:", error);
         throw new Error("Falha ao buscar pontos");

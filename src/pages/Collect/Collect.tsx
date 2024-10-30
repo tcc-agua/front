@@ -25,6 +25,7 @@ export function Collect() {
   useEffect(() => {
     const fetchPontos = async () => {
       try {
+        fetchPoints();
         const [etasResponse, naResponse, pbResponse, caResponse] = await Promise.all([
           fetchPointBySheet("DADOS ETAS"),
           fetchPointBySheet("NA"),
@@ -43,7 +44,7 @@ export function Collect() {
     };
 
     fetchPontos();
-  }, []);
+  }, [fetchPoints]);
 
 // Buscar e comparar coleta atual 
 
