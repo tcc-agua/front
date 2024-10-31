@@ -1,5 +1,5 @@
 import styles from "../../../pages/PointCollect/PointCollect.module.css";
-import React, { useState, useCallback } from "react";
+import React, { useState, useCallback, useEffect } from "react";
 import Swal from 'sweetalert2';
 import { InputPoint } from "../InputPoint";
 import { BC01 } from "../../../interfaces/postParams";
@@ -16,7 +16,7 @@ interface PointNameProps {
 }
 
 function Bc01Card({ name, idColeta, closeModal }: PointNameProps) { // Recebendo a prop closeModal
-    const { createBc01Measure } = useBc01Store();
+    const { createBc01Measure, isError } = useBc01Store();
     const [currentIndex, setCurrentIndex] = useState(0);
     const { setStatus } = usePontoState();
     const { fetchPoints } = useUtilsStore();
@@ -110,7 +110,7 @@ function Bc01Card({ name, idColeta, closeModal }: PointNameProps) { // Recebendo
             setStatus(name, 'COLETADO');
             fetchPoints();
             
-            closeModal(); // Chama a função closeModal para fechar o modal após o envio bem-sucedido
+            closeModal(); 
         }
         catch (error) {
             console.error("Erro ao enviar medida:", error);

@@ -16,7 +16,7 @@ main {
     font-family: 'SF Pro Medium';
     font-size: 1.4vw;
     color: var(--font_color);
-    background-color: aquamarine;
+    /* background-color: aquamarine; */
 }
 
 .title {
@@ -29,21 +29,36 @@ main {
 
 .content_buttons {
     width: 100%;
+    justify-content: space-between;
     display: flex;
     height: 100px;
     align-items: center;
-    background-color: bisque;
+    /* background-color: bisque; */
+}
+
+.filtrosContainer{
+    width: 50%;
 }
 
 .filterContainer {
     display: flex;
-    justify-content: flex-end; 
-    width: 50%; 
+    justify-content: flex-end;
+    padding: 0 10px;
+    /* width: 50%;  */
 }
 
-.filtrar {
-    padding: 10px 7%;
+.limpar{
+    background-color: red;
+}
+
+.filtrar{
     background-color: #01A4FD;
+}
+
+.filtrar, 
+.limpar {
+    padding: 10px;
+    /* background-color: #01A4FD; */
     border: none;
     color: white;
     border-radius: 5px;
@@ -52,7 +67,7 @@ main {
     display: flex;
     justify-content: center;
     align-items: center; 
-    width: 40%;
+    /* width: 40%; */
 }
 
 .filtrar:hover {
@@ -65,15 +80,16 @@ main {
     align-items: center;
     height: 100%;
     width: 60%; 
-    margin-left: 30px;
-    background-color: black;
+    margin-left: 28%;
+    /* margin-left: 38.3%; */
+    /* background-color: black; */
 }
 
 .dropdownContainer {
     display: flex;
     gap: 1.5em;
     width: 100%;
-    background-color: blueviolet;
+    /* background-color: blueviolet; */
 }
 
 .colects {
