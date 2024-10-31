@@ -157,10 +157,6 @@ const Historic: React.FC = () => {
             <button className={styles.filtrar} onClick={fetchPontosPorColeta}>Filtrar</button>
           </div>
 
-          
-        
-        
-
         <div className={styles.buttons}>
           <div className={styles.dropdownContainer}>
             <DropdownButton
@@ -233,7 +229,7 @@ const Historic: React.FC = () => {
                   </div>
                   {index === Math.floor(visibleInfoContainers.length / 2) - 1 && visibleInfoContainers.length > 1 && (
                     <div className={styles.separator}></div>
-                  )}
+                  )}                  
                 </>
               ))}
 

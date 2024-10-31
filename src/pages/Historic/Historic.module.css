@@ -16,7 +16,6 @@ main {
     font-family: 'SF Pro Medium';
     font-size: 1.4vw;
     color: var(--font_color);
-    /* background-color: aquamarine; */
 }
 
 .title {
@@ -33,7 +32,6 @@ main {
     display: flex;
     height: 100px;
     align-items: center;
-    /* background-color: bisque; */
 }
 
 .filtrosContainer{
@@ -44,7 +42,6 @@ main {
     display: flex;
     justify-content: flex-end;
     padding: 0 10px;
-    /* width: 50%;  */
 }
 
 .limpar{
@@ -58,7 +55,6 @@ main {
 .filtrar, 
 .limpar {
     padding: 10px;
-    /* background-color: #01A4FD; */
     border: none;
     color: white;
     border-radius: 5px;
@@ -67,7 +63,6 @@ main {
     display: flex;
     justify-content: center;
     align-items: center; 
-    /* width: 40%; */
 }
 
 .filtrar:hover {
@@ -81,15 +76,12 @@ main {
     height: 100%;
     width: 60%; 
     margin-left: 28%;
-    /* margin-left: 38.3%; */
-    /* background-color: black; */
 }
 
 .dropdownContainer {
     display: flex;
     gap: 1.5em;
     width: 100%;
-    /* background-color: blueviolet; */
 }
 
 .colects {
@@ -233,7 +225,6 @@ width: 100%;
         display: flex;
         height: 100px;
         align-items: center;
-        background-color: bisque;
     }
 
     .filterContainer{
@@ -243,7 +234,7 @@ width: 100%;
 
     .buttons {
         width: 100%;
-        margin-left: 0;
+        margin-left: 19%;
         justify-content: center;
     }
     .dropdownContainer, .filterContainer {
@@ -258,5 +249,51 @@ width: 100%;
     .information {
         width: 90%;
         height: auto;
+    }
+    
+    .modalContent {
+        /* background-color: blue; */
+        width: 50%;
+        height: 70%;
+    }
+    
+    .close {
+        padding-right: 10px;
+    }
+    
+    .pointName {
+        font-size: 16px;
+    }
+    
+    .carousel {
+        display: flex;
+        flex-direction: column;
+    }
+    
+    
+    .carousel_button {
+        display: inline; 
+        flex-direction: row;
+        align-self: flex-end;
+        background-color: gray;
+    }
+    
+    .infoContainer {
+        background-color: aquamarine;
+      }
+    
+    .type{
+        background-color: black; 
+    }
+    
+    .info{
+        background-color: purple;
+        margin-top: 10px;
+    }
+
+    .separator {
+        border-top: 1px solid var(--border_color);
+        height: 1px; 
+        width: 35%;
     }
 }

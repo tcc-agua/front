@@ -73,15 +73,12 @@
   }
 
 @media (max-width:680px) {
-  .dropdownContainer{
-    /* background-color: red; */
-  }
-
   .button{
     display: flex;
     flex-direction: column;
     width: 85px; 
     padding: 10px 0;
+    border-radius: 10px;
   }
 
   .dia_mes_ano{
