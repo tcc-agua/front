@@ -11,7 +11,11 @@ import { Point } from '../PointCollect/PointNames';
 import { updatePontoStatus } from '../../services/PontoService';
 
 export function WaterConsumption() {
+    const [etas, setEtas] = useState<Point[]>([]);
+    const [na, setNa] = useState<Point[]>([]);
+    const [pb, setPb] = useState<Point[]>([]);
     const [ca, setCa] = useState<Point[]>([]);
+
     const { createColetaMeasure } = useColetaStore();
     const [showPointButtons, setShowPointButtons] = useState<boolean>(false);
     const location = useLocation(); 
@@ -21,18 +25,27 @@ export function WaterConsumption() {
 
     useEffect(() => {
         const fetchPontos = async () => {
-        try {
+          try {
             fetchPoints();
-            const caResponse = await fetchPointBySheet("CA");
-        
+            const [etasResponse, naResponse, pbResponse, caResponse] = await Promise.all([
+              fetchPointBySheet("DADOS ETAS"),
+              fetchPointBySheet("NA"),
+              fetchPointBySheet("PBS"),
+              fetchPointBySheet("CA"),
+            ]);
+    
+            setEtas(etasResponse);
+            setNa(naResponse);
+            setPb(pbResponse);
             setCa(caResponse)
-
-        } catch (error) {
+    
+          } catch (error) {
             console.error("Erro ao buscar pontos:", error);
-        }
-    };
-    fetchPontos();
-  }, [fetchPoints, caPercentage]);
+          }
+        };
+    
+        fetchPontos();
+      }, [fetchPoints]);
 
   useEffect(() => {
     const fetchColetaAtual = async () => {
@@ -42,20 +55,24 @@ export function WaterConsumption() {
         const storedDate = response?.dataColeta;
         const currentDate = formatDate(new Date());
   
-        setShowPointButtons(storedDate === currentDate);
   
         if (storedDate !== currentDate) {
-          [...ca].forEach((i) => {
-            updatePontoStatus(i.nome, "NAO_COLETADO");
-          });
-        }
+            [...etas, ...na, ...pb, ...ca].forEach((i) => {
+              console.log("UPDATE STATUS DOS PONTO!");
+              updatePontoStatus(i.nome, "NAO_COLETADO");
+            });
+            fetchPoints();
+          }
+
+        setShowPointButtons(storedDate === currentDate);
+
       } catch (error) {
         console.error("Erro ao buscar coleta:", error);
       }
     };
   
     fetchColetaAtual();
-  }, [ca, location]);
+  }, [fetchPoints, etas, na, pb, ca, location]);
 
     const formatDate = (date: Date): string => {
         const day = String(date.getDate()).padStart(2, '0');
@@ -71,7 +88,6 @@ export function WaterConsumption() {
             horaFim: new Date().toLocaleTimeString(),
             tecnico: "BOSCH",
         };
-
         console.log(obj);
 
         createColetaMeasure(obj);

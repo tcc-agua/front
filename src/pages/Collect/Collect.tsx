@@ -14,6 +14,7 @@ export function Collect() {
   const [etas, setEtas] = useState<Point[]>([]);
   const [na, setNa] = useState<Point[]>([]);
   const [pb, setPb] = useState<Point[]>([]);
+  const [ca, setCa] = useState<Point[]>([]);
 
   const { createColetaMeasure } = useColetaStore();
   const [showPointButtons, setShowPointButtons] = useState<boolean>(false);
@@ -25,7 +26,7 @@ export function Collect() {
     const fetchPontos = async () => {
       try {
         fetchPoints();
-        const [etasResponse, naResponse, pbResponse] = await Promise.all([
+        const [etasResponse, naResponse, pbResponse, caResponse] = await Promise.all([
           fetchPointBySheet("DADOS ETAS"),
           fetchPointBySheet("NA"),
           fetchPointBySheet("PBS"),
@@ -35,6 +36,7 @@ export function Collect() {
         setEtas(etasResponse);
         setNa(naResponse);
         setPb(pbResponse);
+        setCa(caResponse)
 
       } catch (error) {
         console.error("Erro ao buscar pontos:", error);
@@ -54,20 +56,23 @@ useEffect(() => {
       const storedDate = response?.dataColeta;
       const currentDate = formatDate(new Date());
 
-      setShowPointButtons(storedDate === currentDate);
-
       if (storedDate !== currentDate) {
-        [...etas, ...na, ...pb].forEach((i) => {
+        [...etas, ...na, ...pb, ...ca].forEach((i) => {
+          console.log("UPDATE STATUS DOS PONTO!");
           updatePontoStatus(i.nome, "NAO_COLETADO");
         });
+        fetchPoints();
       }
+
+      setShowPointButtons(storedDate === currentDate);
+
     } catch (error) {
       console.error("Erro ao buscar coleta:", error);
     }
   };
 
   fetchColetaAtual();
-}, [etas, na, pb, location]);
+}, [fetchPoints, etas, na, pb, ca, location]);
 
   const formatDate = (date: Date): string => {
     const day = String(date.getDate()).padStart(2, '0');

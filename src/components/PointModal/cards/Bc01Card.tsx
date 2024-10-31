@@ -105,6 +105,8 @@ function Bc01Card({ name, idColeta, closeModal }: PointNameProps) { // Recebendo
                 customClass: {
                     popup: 'custom-swal-popup',
                 },
+                background: 'var(--backgroud_color)',
+                color: 'var(--font_color)',
             });
 
             setStatus(name, 'COLETADO');
@@ -124,6 +126,8 @@ function Bc01Card({ name, idColeta, closeModal }: PointNameProps) { // Recebendo
                 customClass: {
                     popup: 'custom-swal-popup',
                 },
+                background: 'var(--backgroud_color)',
+                color: 'var(--font_color)',
             });
         }
         fetchPoints();
