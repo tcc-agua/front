@@ -179,7 +179,24 @@ const ExportExcel: React.FC = () => {
 
             fetchExportExcel(startDateString, endDateString);
             notify();
-        } else if(!selectedMonth){
+        } else if (!selectedTable){
+            console.error("Selecione uma tabela válida.");
+
+            // Mensagem de erro de seleção com SweetAlert2
+            Swal.fire({
+                icon: 'warning',
+                title: 'Inválido!',
+                text: 'Selecione uma tabela para prosseguir.',
+                width: getModalDimension(),
+                customClass: {
+                    popup: 'custom-swal-popup', // Classe customizada para o modal
+                },
+                background: 'var(--backgroud_color)',
+                color: 'var(--font_color)',
+            });
+        }
+        
+        else if(!selectedMonth){
             console.error("Selecione um mês válido.");
 
             // Mensagem de erro de seleção com SweetAlert2
@@ -209,22 +226,7 @@ const ExportExcel: React.FC = () => {
                 background: 'var(--backgroud_color)',
                 color: 'var(--font_color)',
             });
-        } else if (!selectedTable){
-            console.error("Selecione uma tabela válida.");
-
-            // Mensagem de erro de seleção com SweetAlert2
-            Swal.fire({
-                icon: 'warning',
-                title: 'Inválido!',
-                text: 'Selecione uma tabela para prosseguir.',
-                width: getModalDimension(),
-                customClass: {
-                    popup: 'custom-swal-popup', // Classe customizada para o modal
-                },
-                background: 'var(--backgroud_color)',
-                color: 'var(--font_color)',
-            });
-        }
+        } 
     };
 
     return (
