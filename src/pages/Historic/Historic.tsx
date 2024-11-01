@@ -219,6 +219,8 @@ const Historic: React.FC = () => {
                 ‹
               </button>
 
+              <div className={styles.componentesContainer}>
+
               {visibleInfoContainers.map(([key, value], index) => (
                 <>
                   <div key={key} className={`${styles.infoContainer} ${key === "*" ? styles.hidden : ''}`}>
@@ -229,9 +231,10 @@ const Historic: React.FC = () => {
                   </div>
                   {index === Math.floor(visibleInfoContainers.length / 2) - 1 && visibleInfoContainers.length > 1 && (
                     <div className={styles.separator}></div>
-                  )}                  
-                </>
-              ))}
+                  )}    
+                  </>              
+                ))}
+                </div>
 
               <button
                 className={`${styles.carousel_button} ${carouselIndex + 2 >= Object.keys(selectedDetail.dados).length ? styles.carousel_button_invisible : ''}`}

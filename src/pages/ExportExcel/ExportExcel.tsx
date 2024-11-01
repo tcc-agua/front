@@ -238,7 +238,7 @@ const ExportExcel: React.FC = () => {
                         <div className={styles.month}>
                             <DropdownButton
                                 id="monthDropdown"
-                                title="Selecione o Mês"
+                                title="Mês"
                                 options={months}
                                 selectedOption={selectedMonth}
                                 onSelect={setSelectedMonth}
@@ -248,7 +248,7 @@ const ExportExcel: React.FC = () => {
                         <div className={styles.year}>
                             <DropdownButton
                                 id="yearDropdown"
-                                title="Selecione o Ano"
+                                title="Ano"
                                 options={years}
                                 selectedOption={selectedYear}
                                 onSelect={setSelectedYear}
@@ -257,7 +257,7 @@ const ExportExcel: React.FC = () => {
                         <div className={styles.selecionar_tabela}>
                             <DropdownButton
                                 id="tableDropdown"
-                                title="Selecione a Tabela"
+                                title="Tabela"
                                 options={tables}
                                 selectedOption={selectedTable}
                                 onSelect={setSelectedTable}
