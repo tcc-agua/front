@@ -41,9 +41,13 @@ const ColetaDetails: React.FC<ColetaDetailsProps> = ({ details, onOpenDetail, it
             }}
           >
             <div className={styles.texts}>
-              <span className={styles.label}>{detail.tipo}</span>
+              <span className={styles.label}>
+                {detail.tipo.replace(/[^A-Za-z]/g, '')}
+              </span>
               <pre>–</pre>
-              <span className={styles.number}>{detail.ponto}</span>
+              <span className={styles.number}>
+                {detail.ponto.replace(/[^0-9]/g, '')}
+              </span>
             </div>
             <span className={styles.viewButton}>
               <p className={styles.viewP}>visualizar</p>

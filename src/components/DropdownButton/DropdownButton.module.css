@@ -45,13 +45,6 @@
     transition: max-height 0.3s ease, opacity 0.3s ease, visibility 0.3s ease;
   }
   
-  .open {
-    max-height: 300px; 
-    overflow-y:auto; 
-    opacity: 1;
-    visibility: visible;
-  }
-  
   .optionList {
     list-style-type: none;
     margin: 0;
@@ -61,6 +54,13 @@
   .option {
     padding: 10px;
     cursor: pointer;
+  }
+
+  .open {
+    max-height: 300px; 
+    overflow-y:auto; 
+    opacity: 1;
+    visibility: visible;
   }
   
   .option:hover,
@@ -73,32 +73,16 @@
   }
 
 @media (max-width:680px) {
-  .dropdownContainer{
-    /* background-color: red; */
-  }
-
   .button{
     display: flex;
     flex-direction: column;
     width: 85px; 
     padding: 10px 0;
+    border-radius: 10px;
   }
 
   .dia_mes_ano{
-    /* background-color: purple; */
     padding-bottom: 5px;
-  }
-
-  .arrow{
-    /* background-color: aqua; */
-  }
-
-  .options{
-    /* background-color: brown; */
-  }
-
-  .optionList{
-    /* background-color: green; */
   }
 }
   

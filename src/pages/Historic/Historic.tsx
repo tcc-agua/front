@@ -149,17 +149,10 @@ const Historic: React.FC = () => {
       <p className={styles.title_filter}>Selecione uma data:</p>
       <div className={styles.content_buttons}>
 
-           <div className={styles.filterContainer}>
-            <button className={styles.limpar} onClick={limparDados}>Limpar</button>
-          </div>
-        
           <div className={styles.filterContainer}>
+            <button className={styles.limpar} onClick={limparDados}>Limpar</button>
             <button className={styles.filtrar} onClick={fetchPontosPorColeta}>Filtrar</button>
           </div>
-
-          
-        
-        
 
         <div className={styles.buttons}>
           <div className={styles.dropdownContainer}>
@@ -223,6 +216,8 @@ const Historic: React.FC = () => {
                 ‹
               </button>
 
+              <div className={styles.componentesContainer}>
+
               {visibleInfoContainers.map(([key, value], index) => (
                 <>
                   <div key={key} className={`${styles.infoContainer} ${key === "*" ? styles.hidden : ''}`}>
@@ -233,9 +228,10 @@ const Historic: React.FC = () => {
                   </div>
                   {index === Math.floor(visibleInfoContainers.length / 2) - 1 && visibleInfoContainers.length > 1 && (
                     <div className={styles.separator}></div>
-                  )}
-                </>
-              ))}
+                  )}    
+                  </>              
+                ))}
+                </div>
 
               <button
                 className={`${styles.carousel_button} ${carouselIndex + 2 >= Object.keys(selectedDetail.dados).length ? styles.carousel_button_invisible : ''}`}
