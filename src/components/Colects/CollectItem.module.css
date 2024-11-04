@@ -1,3 +1,4 @@
+/* CollectItem */
 .coleta {
   position: relative; 
   height: auto;
@@ -20,14 +21,14 @@
   flex-wrap: wrap;
 }
 
-.load {
-  color: var(--font_color);
-}
-
 .date {
   margin-left: 1%;
   font-family: 'SF Pro Medium';
   font-size: 1.3vw;
+}
+
+.load {
+  color: var(--font_color);
 }
 
 .separator {
@@ -47,6 +48,11 @@
   font-size: 1.1vw;
 }
 
+.rotateArrow {
+  transition: transform 1s ease-in-out;
+}
+
+/* ColetaDetails */
 .details {
   display: flex;
   justify-content: center;
@@ -81,55 +87,6 @@
   align-items: center;
   gap: 5px;
   width: 100%;
-}
-
-.detailsWrapper {
-  width: 100%;
-  overflow: hidden;
-  max-height: 0; 
-  transition: max-height 0.5s ease-in-out;
-}
-
-.detailsWrapper.open {
-  max-height: 900px; 
-}
-
-.details > .detailContainer:nth-child(2n),
-.details > .detailContainer:nth-child(2n-1) {
-  flex-basis: 45%;
-}
-
-.details > .detailContainer:last-child:nth-child(2n+1) {
-  flex-basis: 80%;
-}
-
-.rotateArrow {
-  transition: transform 1s ease-in-out;
-}
-
-pre {
-  margin-left: -1%;
-  color: var(--font_color);
-}
-
-@media (max-width: 1000px) {
-  .detailContainer {
-    flex-basis: 100%;
-    margin-bottom: 2%;
-  }
-
-  .detailButton {
-    font-size: large;
-  }
-
-  .details {
-    margin-left: 0;
-  }
-
-  .date{
-    font-family: 'SF Pro Medium';
-    font-size: 1rem;
-  }
 }
 
 .label {
@@ -168,6 +125,12 @@ pre {
   font-family: "SF Pro Regular";
 }
 
+pre {
+  margin-left: -1%;
+  color: var(--font_color);
+}
+
+/* PAGINAÇÃO */
 .pagination {
   display: flex;
   justify-content: center;
@@ -206,10 +169,30 @@ pre {
   opacity: 0.5;
 }
 
-
+/* RESPONSIVIDADE */
 @media (max-width: 1150px) {
   .viewButton{
     margin-left: -15%;
+  }
+}
+
+@media (max-width: 1000px) {
+  .detailContainer {
+    flex-basis: 100%;
+    margin-bottom: 2%;
+  }
+
+  .detailButton {
+    font-size: large;
+  }
+
+  .details {
+    margin-left: 0;
+  }
+
+  .date{
+    font-family: 'SF Pro Medium';
+    font-size: 1rem;
   }
 }
 
@@ -222,6 +205,28 @@ pre {
     .description {
       font-size: calc(1.1vw + 0.5em);
     }
+}
+
+@media (max-width: 680px){
+  .detailButton{
+
+  }
+
+  .texts {
+
+  }
+
+  .label,
+  pre,
+  .number {
+    font-size: 14px;
+  }
+}
+
+@media (max-width: 480px){
+  .coleta{
+    width: 100%;
+}
 }
 
 }

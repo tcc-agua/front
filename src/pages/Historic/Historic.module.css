@@ -40,8 +40,8 @@ main {
 
 .filterContainer {
     display: flex;
-    justify-content: flex-end;
-    padding: 0 10px;
+    justify-content: space-between;
+    gap: 10%;
 }
 
 .limpar{
@@ -75,7 +75,6 @@ main {
     align-items: center;
     height: 100%;
     width: 60%; 
-    /* margin-left: 28%; */
 }
 
 .dropdownContainer {
@@ -178,6 +177,12 @@ width: 100%;
     height: 80%;
   }
 
+.componentesContainer{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
 .info{
     border-radius: 5px;
     border: 1px solid var(--border_color);
@@ -189,23 +194,28 @@ width: 100%;
 .separator {
     border-left: 1px solid var(--border_color);
     height: 55%;
-}  
-
-
-@media (max-width: 480px) {
-    
 }
 
-@media (max-width: 645px){
-    .content_buttons{
-        width: 50%;
-        flex-direction: row-reverse;
-        justify-content: space-between;
+@media (max-width: 1080px) {
+    .pointName{
+        font-size: 14px;
     }
 
-    .buttons{
-        width: 50%;
-        margin: -10%;
+    .close{
+        padding-top: 15px;
+        padding-right: 2%;
+    }
+}
+
+@media (max-width: 980px) {
+    .buttons, .infoContainer {
+        width: 80%;
+    }
+    .modalContent {
+        width: 70%;
+    }
+    .info {
+        font-size: 1rem;
     }
 }
 
@@ -235,23 +245,20 @@ width: 100%;
 
     .filterContainer{
         display: flex;
-        width: 13%;
     }
 
     .buttons {
         justify-content: center;
     }
 
-    .dropdownContainer, .filterContainer {
-        justify-content: center;
-        gap: 1%;
+    .dropdownContainer {
+        justify-content: end;
     }
+
     .infoContainer {
         width: 90%;
     }
-    .modalContent {
-        width: 90%;
-    }
+
     .information {
         width: 90%;
         height: auto;
@@ -259,7 +266,7 @@ width: 100%;
     
     .modalContent {
         width: 50%;
-        height: 70%;
+        height: 40%;
     }
     
     .close {
@@ -291,25 +298,81 @@ width: 100%;
 
 }
 
-@media (max-width: 980px) {
-    .buttons, .infoContainer {
-        width: 80%;
+@media (max-width: 645px){
+    .title_filter{
+        margin-bottom: 20px;
     }
-    .modalContent {
-        width: 70%;
+    
+    .dropdownContainer{
+        justify-content: center;
     }
-    .info {
-        font-size: 1rem;
+
+    .colects{
+        width: 95%;
+    }
+
+    .content_buttons{
+        width: 100%;
+        height: 120px;
+        flex-direction: column-reverse;
+    }
+
+    .buttons{
+        display: flex;
+        justify-content:center;
+        align-items: center;
+        width: 100%;
+        margin-top: 0;
+        margin-bottom: 10px;
+    }
+
+    .filterContainer{
+        margin-top: 10px;
+        gap: 10%;
+    }
+
+    .filtrar,
+    .limpar{
+        padding: 20%;
     }
 }
 
-@media (max-width: 1080px) {
-    .pointName{
-        font-size: 14px;
+@media (max-width: 480px) {
+
+    .title_filter{
+        margin-bottom: 20px;
     }
 
-    .close{
-        padding-top: 15px;
-        padding-right: 2%;
+    .dropdownContainer{
+        justify-content: center;
+    }
+
+    .colects{
+        width: 95%;
+    }
+
+    .content_buttons{
+        width: 100%;
+        height: 120px;
+        flex-direction: column-reverse;
+    }
+
+    .buttons{
+        display: flex;
+        justify-content:center;
+        align-items: center;
+        width: 100%;
+        margin-top: 0;
+        margin-bottom: 10px;
+    }
+
+    .filterContainer{
+        margin-top: 10px;
+        gap: 10%;
+    }
+
+    .filtrar,
+    .limpar{
+        padding: 20%;
     }
 }
